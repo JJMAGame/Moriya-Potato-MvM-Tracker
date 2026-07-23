@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Moriya Vs Potato - Arquive</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #1a1a2e;
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: #16213e;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.6);
+            border: 1px solid #2a2a4a;
+        }
+
+        /* ============================================================
+           CABEÇALHO
+        ============================================================ */
+        .header {
+            text-align: center;
+            padding-bottom: 25px;
+            border-bottom: 2px solid #2a2a4a;
+            margin-bottom: 25px;
+        }
+
+        .header .event-badge {
+            display: inline-block;
+            background: #e94560;
+            color: white;
+            padding: 4px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+
+        .header h1 {
+            color: #e0e0e0;
+            font-size: 28px;
+            font-weight: 700;
+        }
+
+        .header h1 .highlight {
+            color: #e94560;
+        }
+
+        .header .subtitle {
+            color: #85c1e9;
+            font-size: 14px;
+            margin-top: 8px;
+            opacity: 0.8;
+        }
+
+        /* ============================================================
+           LISTA DE EVENTOS
+        ============================================================ */
+        .evento-card {
+            background: #1a1a2e;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 25px;
+            border: 1px solid #2a2a4a;
+            transition: all 0.3s ease;
+        }
+
+        .evento-card:hover {
+            border-color: #e94560;
+        }
+
+        .evento-card .evento-titulo {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 15px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid #2a2a4a;
+        }
+
+        .evento-card .evento-titulo h2 {
+            color: #e0e0e0;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .evento-card .evento-titulo h2 .icon {
+            margin-right: 8px;
+        }
+
+        .evento-card .evento-titulo .evento-badge {
+            font-size: 12px;
+            padding: 3px 14px;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+
+        .badge-ativo {
+            background: #27ae60;
+            color: white;
+        }
+
+        .badge-em-breve {
+            background: #f39c12;
+            color: white;
+        }
+
+        .badge-encerrado {
+            background: #7f8c8d;
+            color: white;
+        }
+
+        .evento-card .mapa-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 14px;
+            margin: 4px 0;
+            background: #0f1a2e;
+            border-radius: 6px;
+            border-left: 3px solid #e94560;
+            transition: all 0.3s ease;
+        }
+
+        .evento-card .mapa-item:hover {
+            background: #16213e;
+            transform: translateX(5px);
+        }
+
+        .evento-card .mapa-item .mapa-nome {
+            color: #e0e0e0;
+            font-size: 14px;
+        }
+
+        .evento-card .mapa-item .mapa-wave {
+            color: #85c1e9;
+            font-size: 12px;
+            background: #0f3460;
+            padding: 2px 12px;
+            border-radius: 12px;
+        }
+
+        .evento-card .sem-mapas {
+            color: #7f8c8d;
+            text-align: center;
+            padding: 15px;
+            font-style: italic;
+        }
+
+        /* ============================================================
+           VÍDEO SECTION (opcional)
+        ============================================================ */
+        .video-section {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #2a2a4a;
+        }
+
+        .video-section .video-wrapper {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            border-radius: 8px;
+            overflow: hidden;
+            background: #0f3460;
+        }
+
+        .video-section .video-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        /* ============================================================
+           BOTÃO VOLTAR
+        ============================================================ */
+        .btn-voltar {
+            display: inline-block;
+            background: #0f3460;
+            color: #85c1e9;
+            padding: 10px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+            border: 1px solid #2a2a4a;
+            text-align: center;
+        }
+
+        .btn-voltar:hover {
+            background: #1a1a4e;
+            transform: scale(1.02);
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        /* ============================================================
+           RESPONSIVO
+        ============================================================ */
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+            }
+
+            .header h1 {
+                font-size: 22px;
+            }
+
+            .evento-card {
+                padding: 15px;
+            }
+
+            .evento-card .evento-titulo {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .evento-card .mapa-item {
+                flex-wrap: wrap;
+                gap: 8px;
+            }
+
+            .btn-voltar {
+                display: block;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- ============================================================
+             CABEÇALHO
+        ============================================================ -->
+        <div class="header">
+            <span class="event-badge">🎯 Eventos</span>
+            <h1>Moriya Vs Potato <span class="highlight">Arquive</span></h1>
+            <p class="subtitle">📜 Lista de todos os eventos e suas missões</p>
+        </div>
+
+        <!-- ============================================================
+             LISTA DE EVENTOS
+        ============================================================ -->
+        <div id="eventosContainer">
+            <!-- Os eventos serão inseridos aqui -->
+        </div>
+
+        <!-- ============================================================
+             BOTÃO VOLTAR
+        ============================================================ -->
+        <div class="footer">
+            <a href="index.html" class="btn-voltar">⬅ Voltar para o Tracker</a>
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- JAVASCRIPT                                                    -->
+    <!-- ============================================================ -->
+
+    <script>
+        // ============================================================
+        // LISTA DE EVENTOS - CADASTRE AQUI!
+        // ============================================================
+        const eventos = [
+            {
+                // ============================================================
+                // EVENTO 1
+                // ============================================================
+                nome: "Moriya Vs Potato Arquive ( interlúdio )",
+                status: "ativo", // ativo | em-breve | encerrado
+                mapas: [
+                    { nome: "Yiresa - Black East", wave: "7 Wave" },
+                    { nome: "Sequoia - Forest Fight", wave: "7 Wave" },
+                    { nome: "Condemned - Trespasser", wave: "" }
+                ],
+                videoId: "" // Opcional: ID do YouTube
+            },
+            {
+                // ============================================================
+                // EVENTO 2
+                // ============================================================
+                nome: "Moriya Vs Potato Arquive ( Low Tier 1# )",
+                status: "ativo",
+                mapas: [
+                    { nome: "Akure - Bronze And Bristle", wave: "8 Wave" },
+                    { nome: "Area 52 - Nuclear Threat", wave: "6 Wave" },
+                    { nome: "Deathpour - Bloodpour", wave: "6 Wave" },
+                    { nome: "Legerdemain - Legacy Heresy", wave: "5 Wave" }
+                ],
+                videoId: "" // Opcional: ID do YouTube
+            },
+            {
+                // ============================================================
+                // EVENTO 3
+                // ============================================================
+                nome: "Moriya Vs Potato Arquive ( Padrão Tier 1# )",
+                status: "ativo",
+                mapas: [
+                    { nome: "Bogland - Bog Business", wave: "8 Wave" },
+                    { nome: "Condemned - Unholy Undead", wave: "5 Wave" },
+                    { nome: "Derelict - Shadow Wave", wave: "6 Wave" }
+                ],
+                videoId: "" // Opcional: ID do YouTube
+            },
+            {
+                // ============================================================
+                // EVENTO 4
+                // ============================================================
+                nome: "Moriya Vs Potato Arquive ( DELICIA Tier 1# )",
+                status: "encerrado",
+                mapas: [
+                    { nome: "Hurricane - The Thunderous Fury Of A Robotic Typhoon", wave: "5 Wave" },
+                    { nome: "Isolation - Depression", wave: "5 Wave" }
+                ],
+                videoId: "" // Opcional: ID do YouTube
+            },
+            {
+                // ============================================================
+                // EVENTO 5
+                // ============================================================
+                nome: "Moriya Vs Potato Arquive ( interlúdio )",
+                status: "em-breve",
+                mapas: [], // Sem mapas
+                videoId: "" // Opcional: ID do YouTube
+            },
+
+            // ============================================================
+            // 📌 TEMPLATE PARA ADICIONAR NOVOS EVENTOS:
+            // ============================================================
+            // {
+            //     nome: "Nome do Evento",
+            //     status: "ativo", // ativo | em-breve | encerrado
+            //     mapas: [
+            //         { nome: "Mapa 1", wave: "7 Wave" },
+            //         { nome: "Mapa 2", wave: "6 Wave" },
+            //     ],
+            //     videoId: "" // ID do YouTube (ex: "dQw4w9WgXcQ")
+            // },
+        ];
+
+        // ============================================================
+        // RENDERIZAR EVENTOS
+        // ============================================================
+        function renderizarEventos() {
+            const container = document.getElementById('eventosContainer');
+
+            if (eventos.length === 0) {
+                container.innerHTML = `
+                    <div style="color: #7f8c8d; text-align: center; padding: 30px;">
+                        📭 Nenhum evento cadastrado
+                    </div>
+                `;
+                return;
+            }
+
+            let html = '';
+            eventos.forEach((evento, index) => {
+                const statusClass = evento.status === 'ativo' ? 'badge-ativo' :
+                                   evento.status === 'em-breve' ? 'badge-em-breve' : 'badge-encerrado';
+                const statusText = evento.status === 'ativo' ? '🟢 Ativo' :
+                                  evento.status === 'em-breve' ? '🟡 Em breve' : '🔴 Encerrado';
+
+                // Monta a lista de mapas
+                let mapasHtml = '';
+                if (evento.mapas.length === 0) {
+                    mapasHtml = '<div class="sem-mapas">📭 Nenhum mapa registrado</div>';
+                } else {
+                    evento.mapas.forEach(mapa => {
+                        mapasHtml += `
+                            <div class="mapa-item">
+                                <span class="mapa-nome">${mapa.nome}</span>
+                                ${mapa.wave ? `<span class="mapa-wave">${mapa.wave}</span>` : ''}
+                            </div>
+                        `;
+                    });
+                }
+
+                // Vídeo (se tiver)
+                let videoHtml = '';
+                if (evento.videoId && evento.videoId.trim() !== '') {
+                    videoHtml = `
+                        <div class="video-section">
+                            <div class="video-wrapper">
+                                <iframe
+                                    src="https://www.youtube.com/embed/${evento.videoId}"
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                    allowfullscreen
+                                ></iframe>
+                            </div>
+                        </div>
+                    `;
+                }
+
+                html += `
+                    <div class="evento-card">
+                        <div class="evento-titulo">
+                            <h2><span class="icon">📌</span> ${evento.nome}</h2>
+                            <span class="evento-badge ${statusClass}">${statusText}</span>
+                        </div>
+                        ${mapasHtml}
+                        ${videoHtml}
+                    </div>
+                `;
+            });
+
+            container.innerHTML = html;
+        }
+
+        // ============================================================
+        // INICIALIZAR
+        // ============================================================
+        renderizarEventos();
+
+        console.log('✅ Eventos carregados!');
+        console.log(`📅 ${eventos.length} eventos`);
+        eventos.forEach(e => {
+            console.log(`  📌 ${e.nome} (${e.mapas.length} mapas)`);
+        });
+    </script>
+
+</body>
+</html>

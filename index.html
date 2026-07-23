@@ -480,6 +480,23 @@
         transform: scale(1.02);
     }
 
+    .btn-event {
+    background: #27ae60;
+    color: white;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 13px;
+    transition: all 0.3s ease;
+    }
+
+.btn-event:hover {
+    background: #2ecc71;
+    transform: scale(1.02);
+    }
+
     /* Botão Atualizar */
     .btn-refresh {
         background: #f39c12;
@@ -649,6 +666,7 @@
 
 <!-- Botão para abrir o modal -->
 <button class="btn-github" onclick="abrirModalGitHub()">📂 Arquivos Moriya </button>
+<button class="btn-event" onclick="window.open('event.html', 'Eventos', 'width=900,height=700')">📅 Eventos</button>
 
 <!-- Modal -->
 <div class="modal-overlay" id="githubModal">
