@@ -680,9 +680,15 @@
     // ============================================================
     // CONFIGURAÇÃO - ALTERE AQUI!
     // ============================================================
+
     const GITHUB_REPO = 'JJMAGame/Moriya-Potato-MvM-Tracker';  
     const GITHUB_BRANCH = 'main';                       // 'main' ou 'master'
     const SAVE_FOLDER = 'Save-progress';                // Nome da pasta
+    const GITHUB_TOKEN = ''; // Deixe vazio (repositório é público)
+
+    console.log('📂 Repositório:', GITHUB_REPO);
+    console.log('📁 Pasta:', SAVE_FOLDER);
+    console.log('🌿 Branch:', GITHUB_BRANCH);
 
     // ============================================================
     // FUNÇÕES
@@ -723,7 +729,7 @@
 
         try {
             // URL da API do GitHub para listar a pasta
-            const url = `https://api.github.com/repos/${GITHUB_REPO}/${SAVE_FOLDER}?ref=${GITHUB_BRANCH}`;
+            const url = `https://api.github.com/repos/${GITHUB_REPO}/contents/${SAVE_FOLDER}?ref=${GITHUB_BRANCH}`;
             const response = await fetch(url);
 
             if (!response.ok) {
