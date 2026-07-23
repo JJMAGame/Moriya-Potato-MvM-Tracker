@@ -849,6 +849,31 @@ async function importarArquivo(url, fileName) {
 }
 
 // ============================================================
+// NOMES PERSONALIZADOS
+// ============================================================
+const NOMES_PERSONALIZADOS = {
+    // "nome_do_arquivo.json": "Nome que vai aparecer",
+    "Zero.json": "⭐ Progresso Zero",
+    // "progresso_2024-01-15.json": "📌 Progresso - Início do Mês",
+};
+
+function getNomePersonalizado(nomeArquivo) {
+    // Se tiver nome personalizado, usa ele
+    if (NOMES_PERSONALIZADOS[nomeArquivo]) {
+        return NOMES_PERSONALIZADOS[nomeArquivo];
+    }
+    
+    // Se não tiver, formata o nome
+    const nomeSemExtensao = nomeArquivo.replace('.json', '');
+    const nomeFormatado = nomeSemExtensao
+        .replace(/_/g, ' ')
+        .replace(/-/g, ' ')
+        .replace(/\b\w/g, letra => letra.toUpperCase());
+    
+    return `📄 ${nomeFormatado}`;
+}
+
+// ============================================================
 // EXPORTAR PROGRESSO (DOWNLOAD)
 // ============================================================
 function exportarProgresso() {
