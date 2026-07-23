@@ -78,12 +78,17 @@
             margin-bottom: 25px;
             border: 1px solid #2a2a4a;
             transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
         }
 
         .evento-card:hover {
             border-color: #e94560;
         }
 
+        /* ============================================================
+           BADGE "AO VIVO" COM GLOW
+        ============================================================ */
         .evento-card .evento-titulo {
             display: flex;
             justify-content: space-between;
@@ -107,26 +112,60 @@
 
         .evento-card .evento-titulo .evento-badge {
             font-size: 12px;
-            padding: 3px 14px;
+            padding: 4px 16px;
             border-radius: 20px;
-            font-weight: 600;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
         }
 
-        .badge-ativo {
-            background: #27ae60;
+        /* ===== BADGE AO VIVO ===== */
+        .badge-ao-vivo {
+            background: #e74c3c;
             color: white;
+            animation: glowVermelho 1.5s ease-in-out infinite;
+            box-shadow: 0 0 20px rgba(231, 76, 60, 0.3);
         }
 
+        @keyframes glowVermelho {
+            0% { box-shadow: 0 0 10px rgba(231, 76, 60, 0.3); }
+            50% { box-shadow: 0 0 30px rgba(231, 76, 60, 0.8), 0 0 60px rgba(231, 76, 60, 0.3); }
+            100% { box-shadow: 0 0 10px rgba(231, 76, 60, 0.3); }
+        }
+
+        .badge-ao-vivo .pulse-dot {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background: white;
+            border-radius: 50%;
+            animation: piscar 1s ease-in-out infinite;
+        }
+
+        @keyframes piscar {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.2; }
+        }
+
+        /* ===== BADGE EM BREVE ===== */
         .badge-em-breve {
             background: #f39c12;
             color: white;
         }
 
+        /* ===== BADGE ENCERRADO ===== */
         .badge-encerrado {
             background: #7f8c8d;
             color: white;
         }
 
+        /* ============================================================
+           MAPAS
+        ============================================================ */
         .evento-card .mapa-item {
             display: flex;
             justify-content: space-between;
@@ -165,7 +204,7 @@
         }
 
         /* ============================================================
-           VÍDEO SECTION (opcional)
+           VÍDEO
         ============================================================ */
         .video-section {
             margin-top: 15px;
@@ -288,65 +327,55 @@
         // ============================================================
         const eventos = [
             {
-                // ============================================================
-                // EVENTO 1
-                // ============================================================
                 nome: "Moriya Vs Potato Arquive ( interlúdio )",
-                status: "ativo", // ativo | em-breve | encerrado
+                dataInicio: "2025-01-01", // Formato: YYYY-MM-DD
+                dataFim: "2025-01-07",
                 mapas: [
                     { nome: "Yiresa - Black East", wave: "7 Wave" },
                     { nome: "Sequoia - Forest Fight", wave: "7 Wave" },
                     { nome: "Condemned - Trespasser", wave: "" }
                 ],
-                videoId: "" // Opcional: ID do YouTube
+                videoId: ""
             },
             {
-                // ============================================================
-                // EVENTO 2
-                // ============================================================
                 nome: "Moriya Vs Potato Arquive ( Low Tier 1# )",
-                status: "ativo",
+                dataInicio: "2025-01-08",
+                dataFim: "2025-01-14",
                 mapas: [
                     { nome: "Akure - Bronze And Bristle", wave: "8 Wave" },
                     { nome: "Area 52 - Nuclear Threat", wave: "6 Wave" },
                     { nome: "Deathpour - Bloodpour", wave: "6 Wave" },
                     { nome: "Legerdemain - Legacy Heresy", wave: "5 Wave" }
                 ],
-                videoId: "" // Opcional: ID do YouTube
+                videoId: ""
             },
             {
-                // ============================================================
-                // EVENTO 3
-                // ============================================================
                 nome: "Moriya Vs Potato Arquive ( Padrão Tier 1# )",
-                status: "ativo",
+                dataInicio: "2025-01-15",
+                dataFim: "2025-01-21",
                 mapas: [
                     { nome: "Bogland - Bog Business", wave: "8 Wave" },
                     { nome: "Condemned - Unholy Undead", wave: "5 Wave" },
                     { nome: "Derelict - Shadow Wave", wave: "6 Wave" }
                 ],
-                videoId: "" // Opcional: ID do YouTube
+                videoId: ""
             },
             {
-                // ============================================================
-                // EVENTO 4
-                // ============================================================
                 nome: "Moriya Vs Potato Arquive ( DELICIA Tier 1# )",
-                status: "ativo",
+                dataInicio: "2024-12-20",
+                dataFim: "2024-12-26",
                 mapas: [
                     { nome: "Hurricane - The Thunderous Fury Of A Robotic Typhoon", wave: "5 Wave" },
                     { nome: "Isolation - Depression", wave: "5 Wave" }
                 ],
-                videoId: "" // Opcional: ID do YouTube
+                videoId: ""
             },
             {
-                // ============================================================
-                // EVENTO 5
-                // ============================================================
                 nome: "Moriya Vs Potato Arquive ( interlúdio )",
-                status: "em-breve",
-                mapas: [], // Sem mapas
-                videoId: "" // Opcional: ID do YouTube
+                dataInicio: "2025-02-01",
+                dataFim: "2025-02-07",
+                mapas: [],
+                videoId: ""
             },
 
             // ============================================================
@@ -354,7 +383,8 @@
             // ============================================================
             // {
             //     nome: "Nome do Evento",
-            //     status: "ativo", // ativo | em-breve | encerrado
+            //     dataInicio: "2025-01-01", // YYYY-MM-DD
+            //     dataFim: "2025-01-07",
             //     mapas: [
             //         { nome: "Mapa 1", wave: "7 Wave" },
             //         { nome: "Mapa 2", wave: "6 Wave" },
@@ -362,6 +392,37 @@
             //     videoId: "" // ID do YouTube (ex: "dQw4w9WgXcQ")
             // },
         ];
+
+        // ============================================================
+        // FUNÇÃO PARA DETERMINAR STATUS DO EVENTO
+        // ============================================================
+        function getStatusEvento(dataInicio, dataFim) {
+            const hoje = new Date();
+            hoje.setHours(0, 0, 0, 0);
+
+            const inicio = new Date(dataInicio + 'T00:00:00');
+            const fim = new Date(dataFim + 'T23:59:59');
+
+            if (hoje >= inicio && hoje <= fim) {
+                return 'ao-vivo';
+            } else if (hoje < inicio) {
+                return 'em-breve';
+            } else {
+                return 'encerrado';
+            }
+        }
+
+        // ============================================================
+        // FUNÇÃO PARA FORMATAR DATA
+        // ============================================================
+        function formatarData(data) {
+            const d = new Date(data + 'T00:00:00');
+            return d.toLocaleDateString('pt-BR', {
+                day: '2-digit',
+                month: '2-digit',
+                year: 'numeric'
+            });
+        }
 
         // ============================================================
         // RENDERIZAR EVENTOS
@@ -380,10 +441,25 @@
 
             let html = '';
             eventos.forEach((evento, index) => {
-                const statusClass = evento.status === 'ativo' ? 'badge-ativo' :
-                                   evento.status === 'em-breve' ? 'badge-em-breve' : 'badge-encerrado';
-                const statusText = evento.status === 'ativo' ? '🟢 Ativo' :
-                                  evento.status === 'em-breve' ? '🟡 Em breve' : '🔴 Encerrado';
+                const status = getStatusEvento(evento.dataInicio, evento.dataFim);
+
+                let badgeClass = '';
+                let badgeText = '';
+                let badgeIcon = '';
+
+                if (status === 'ao-vivo') {
+                    badgeClass = 'badge-ao-vivo';
+                    badgeText = 'AO VIVO';
+                    badgeIcon = '<span class="pulse-dot"></span>';
+                } else if (status === 'em-breve') {
+                    badgeClass = 'badge-em-breve';
+                    badgeText = '📅 Em breve';
+                    badgeIcon = '';
+                } else {
+                    badgeClass = 'badge-encerrado';
+                    badgeText = '✅ Encerrado';
+                    badgeIcon = '';
+                }
 
                 // Monta a lista de mapas
                 let mapasHtml = '';
@@ -399,6 +475,10 @@
                         `;
                     });
                 }
+
+                // Datas
+                const dataInicioFormatada = formatarData(evento.dataInicio);
+                const dataFimFormatada = formatarData(evento.dataFim);
 
                 // Vídeo (se tiver)
                 let videoHtml = '';
@@ -420,7 +500,14 @@
                     <div class="evento-card">
                         <div class="evento-titulo">
                             <h2><span class="icon">📌</span> ${evento.nome}</h2>
-                            <span class="evento-badge ${statusClass}">${statusText}</span>
+                            <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+                                <span style="color: #85c1e9; font-size: 12px;">
+                                    📅 ${dataInicioFormatada} - ${dataFimFormatada}
+                                </span>
+                                <span class="evento-badge ${badgeClass}">
+                                    ${badgeIcon} ${badgeText}
+                                </span>
+                            </div>
                         </div>
                         ${mapasHtml}
                         ${videoHtml}
@@ -439,7 +526,8 @@
         console.log('✅ Eventos carregados!');
         console.log(`📅 ${eventos.length} eventos`);
         eventos.forEach(e => {
-            console.log(`  📌 ${e.nome} (${e.mapas.length} mapas)`);
+            const status = getStatusEvento(e.dataInicio, e.dataFim);
+            console.log(`  📌 ${e.nome} → ${status} (${e.mapas.length} mapas)`);
         });
     </script>
 
