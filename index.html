@@ -649,7 +649,7 @@
 
 <!-- Botão para abrir o modal -->
 <button class="btn-github" onclick="abrirModalGitHub()">📂 Arquivos Moriya </button>
-<button class="btn-event" onclick="abrirEventos()">📅 Eventos </button>
+<button class="btn-event" onclick="abrirEventos()">📅 Eventos</button>
 
 <!-- Modal -->
 <div class="modal-overlay" id="githubModal">
@@ -676,10 +676,245 @@
 <!-- ============================================================ -->
 <!-- JAVASCRIPT                                                    -->
 <!-- ============================================================ -->
+ <!-- ============================================================ -->
+<!-- BOTÃO PARA ABRIR O EVENT.HTML DENTRO DO POP-UP               -->
+<!-- ============================================================ -->
+
+<style>
+    /* Botão Eventos - Verde Claro */
+    .btn-event {
+        background: #27ae60;
+        color: white;
+        padding: 8px 16px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: 600;
+        font-size: 13px;
+        transition: all 0.3s ease;
+    }
+
+    .btn-event:hover {
+        background: #2ecc71;
+        transform: scale(1.02);
+    }
+
+    /* ============================================================
+       POP-UP PARA EXIBIR O EVENT.HTML
+    ============================================================ */
+    .events-modal-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0,0,0,0.85);
+        z-index: 2000;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .events-modal-overlay.active {
+        display: flex;
+    }
+
+    .events-modal {
+        background: #16213e;
+        border-radius: 12px;
+        padding: 0;
+        max-width: 900px;
+        width: 95%;
+        max-height: 90vh;
+        overflow: hidden;
+        box-shadow: 0 8px 40px rgba(0,0,0,0.9);
+        border: 1px solid #2a2a4a;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .events-modal-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px 20px;
+        border-bottom: 2px solid #2a2a4a;
+        background: #0f3460;
+        flex-shrink: 0;
+    }
+
+    .events-modal-header h2 {
+        color: #e0e0e0;
+        margin: 0;
+        font-size: 20px;
+    }
+
+    .events-modal-header .close-btn {
+        background: #c0392b;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        padding: 8px 16px;
+        cursor: pointer;
+        font-weight: 600;
+        transition: all 0.3s ease;
+    }
+
+    .events-modal-header .close-btn:hover {
+        background: #e74c3c;
+    }
+
+    .events-modal-body {
+        padding: 20px;
+        overflow-y: auto;
+        flex: 1;
+        background: #1a1a2e;
+    }
+
+    .events-modal-body iframe {
+        width: 100%;
+        height: 100%;
+        min-height: 500px;
+        border: none;
+        border-radius: 8px;
+        background: #16213e;
+    }
+
+    .events-modal-body .loading {
+        color: #85c1e9;
+        text-align: center;
+        padding: 40px;
+        font-size: 18px;
+    }
+
+    .events-modal-body .error {
+        color: #e74c3c;
+        text-align: center;
+        padding: 40px;
+        font-size: 18px;
+    }
+
+    @media (max-width: 600px) {
+        .events-modal {
+            max-height: 95vh;
+        }
+
+        .events-modal-body iframe {
+            min-height: 400px;
+        }
+
+        .events-modal-header h2 {
+            font-size: 16px;
+        }
+    }
+</style>
+
+<!-- ============================================================ -->
+<!-- BOTÃO                                                         -->
+<!-- ============================================================ -->
+
+<button class="btn-event" onclick="abrirEventos()">📅 Eventos</button>
+
+<!-- ============================================================ -->
+<!-- POP-UP                                                        -->
+<!-- ============================================================ -->
+
+<div class="events-modal-overlay" id="eventsModal">
+    <div class="events-modal">
+        <div class="events-modal-header">
+            <h2>📅 Eventos</h2>
+            <button class="close-btn" onclick="fecharEventos()">✕ Fechar</button>
+        </div>
+        <div class="events-modal-body" id="eventsModalBody">
+            <div class="loading">⏳ Carregando eventos...</div>
+        </div>
+    </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- JAVASCRIPT                                                    -->
+<!-- ============================================================ -->
 
 <script>
     // ============================================================
-    // CONFIGURAÇÃO - ALTERE AQUI!
+    // ABRIR/FECHAR POP-UP
+    // ============================================================
+    function abrirEventos() {
+        const modal = document.getElementById('eventsModal');
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+        carregarEventHTML();
+    }
+
+    function fecharEventos() {
+        document.getElementById('eventsModal').classList.remove('active');
+        document.body.style.overflow = '';
+    }
+
+    // Fecha ao clicar fora
+    document.getElementById('eventsModal').addEventListener('click', function(e) {
+        if (e.target === this) {
+            fecharEventos();
+        }
+    });
+
+    // Fecha com ESC
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            fecharEventos();
+        }
+    });
+
+    // ============================================================
+    // CARREGAR O EVENT.HTML
+    // ============================================================
+    async function carregarEventHTML() {
+        const body = document.getElementById('eventsModalBody');
+
+        try {
+            // Tenta carregar o event.html
+            const response = await fetch('event.html');
+            
+            if (!response.ok) {
+                throw new Error(`Erro ${response.status}: ${response.statusText}`);
+            }
+            
+            const html = await response.text();
+            
+            // ============================================================
+            // IMPORTANTE: O HTML do event.html vai ser CARREGADO,
+            // mas os scripts NÃO vão executar automaticamente por segurança.
+            // ============================================================
+            
+            // Mostra o HTML carregado dentro de um iframe
+            // (isso permite que os scripts do event.html funcionem)
+            body.innerHTML = `
+                <iframe src="event.html" id="eventIframe"></iframe>
+            `;
+            
+        } catch (error) {
+            console.error('Erro ao carregar event.html:', error);
+            
+            // Se não conseguir carregar, mostra uma mensagem
+            body.innerHTML = `
+                <div class="error">
+                    ❌ Erro ao carregar eventos<br>
+                    <small style="color: #7f8c8d; font-size: 14px;">
+                        ${error.message}<br>
+                        <br>
+                        Verifique se o arquivo <strong>event.html</strong> existe na mesma pasta.
+                    </small>
+                </div>
+            `;
+        }
+    }
+
+    console.log('✅ Botão Eventos carregado!');
+</script>
+
+<script>
+    // ============================================================
+    // CONFIGURAÇÃO - ALTERE AQUI SE NECESSÁRIO
     // ============================================================
 
     const GITHUB_REPO = 'JJMAGame/Moriya-Potato-MvM-Tracker';  

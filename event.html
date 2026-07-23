@@ -1,11 +1,11 @@
 <!-- ============================================================ -->
-<!-- BOTÃO PARA ABRIR O POP-UP DE EVENTOS                          -->
+<!-- BOTÃO E POP-UP COM IFRAME                                     -->
 <!-- ============================================================ -->
 
 <style>
-    /* Botão Event */
+    /* Botão Eventos - Verde Claro */
     .btn-event {
-        background: #e67e22;
+        background: #27ae60;
         color: white;
         padding: 8px 16px;
         border: none;
@@ -17,12 +17,12 @@
     }
 
     .btn-event:hover {
-        background: #f39c12;
+        background: #2ecc71;
         transform: scale(1.02);
     }
 
     /* ============================================================
-       POP-UP DE EVENTOS (MODAL)
+       POP-UP
     ============================================================ */
     .events-modal-overlay {
         display: none;
@@ -31,79 +31,44 @@
         left: 0;
         width: 100%;
         height: 100%;
-        background: rgba(0, 0, 0, 0.85);
+        background: rgba(0,0,0,0.85);
         z-index: 2000;
         justify-content: center;
         align-items: center;
-        animation: fadeIn 0.3s ease;
     }
 
     .events-modal-overlay.active {
         display: flex;
     }
 
-    @keyframes fadeIn {
-        from { opacity: 0; }
-        to { opacity: 1; }
-    }
-
-    @keyframes slideUp {
-        from { transform: translateY(50px); opacity: 0; }
-        to { transform: translateY(0); opacity: 1; }
-    }
-
     .events-modal {
         background: #16213e;
-        border-radius: 16px;
-        padding: 30px;
-        max-width: 800px;
+        border-radius: 12px;
+        padding: 0;
+        max-width: 900px;
         width: 95%;
         max-height: 90vh;
-        overflow-y: auto;
-        box-shadow: 0 8px 40px rgba(0, 0, 0, 0.9);
-        animation: slideUp 0.3s ease;
+        overflow: hidden;
+        box-shadow: 0 8px 40px rgba(0,0,0,0.9);
         border: 1px solid #2a2a4a;
-    }
-
-    .events-modal::-webkit-scrollbar {
-        width: 8px;
-    }
-
-    .events-modal::-webkit-scrollbar-track {
-        background: #1a1a2e;
-        border-radius: 8px;
-    }
-
-    .events-modal::-webkit-scrollbar-thumb {
-        background: #e94560;
-        border-radius: 8px;
+        display: flex;
+        flex-direction: column;
     }
 
     .events-modal-header {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        margin-bottom: 20px;
-        padding-bottom: 15px;
+        padding: 15px 20px;
         border-bottom: 2px solid #2a2a4a;
-        flex-wrap: wrap;
-        gap: 10px;
+        background: #0f3460;
+        flex-shrink: 0;
     }
 
     .events-modal-header h2 {
         color: #e0e0e0;
-        font-size: 24px;
-        display: flex;
-        align-items: center;
-        gap: 10px;
-    }
-
-    .events-modal-header h2 .badge {
-        background: #e94560;
-        color: white;
-        font-size: 14px;
-        padding: 2px 12px;
-        border-radius: 20px;
+        margin: 0;
+        font-size: 20px;
     }
 
     .events-modal-header .close-btn {
@@ -111,192 +76,88 @@
         color: white;
         border: none;
         border-radius: 8px;
-        padding: 8px 18px;
+        padding: 8px 16px;
         cursor: pointer;
         font-weight: 600;
-        font-size: 14px;
         transition: all 0.3s ease;
     }
 
     .events-modal-header .close-btn:hover {
         background: #e74c3c;
-        transform: scale(1.02);
     }
 
-    /* ============================================================
-       LISTA DE EVENTOS
-    ============================================================ */
-    .events-list {
-        display: flex;
-        flex-direction: column;
-        gap: 12px;
-    }
-
-    .event-item {
-        background: #1a1a2e;
-        border-radius: 10px;
-        padding: 16px 20px;
-        border-left: 4px solid #e94560;
-        transition: all 0.3s ease;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        flex-wrap: wrap;
-        gap: 10px;
-    }
-
-    .event-item:hover {
-        background: #0f3460;
-        transform: translateX(5px);
-    }
-
-    .event-item .event-info {
-        display: flex;
-        flex-direction: column;
-        gap: 4px;
+    .events-modal-body {
+        padding: 0;
+        overflow-y: auto;
         flex: 1;
-    }
-
-    .event-item .event-name {
-        color: #e0e0e0;
-        font-size: 16px;
-        font-weight: 600;
-    }
-
-    .event-item .event-name .highlight {
-        color: #e94560;
-    }
-
-    .event-item .event-details {
-        color: #85c1e9;
-        font-size: 13px;
-        display: flex;
-        gap: 15px;
-        flex-wrap: wrap;
-    }
-
-    .event-item .event-details .tag {
-        background: #0f3460;
-        padding: 2px 10px;
-        border-radius: 12px;
-        font-size: 11px;
-        color: #85c1e9;
-    }
-
-    .event-item .event-status {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-    }
-
-    .event-item .event-status .status-badge {
-        padding: 4px 14px;
-        border-radius: 20px;
-        font-size: 12px;
-        font-weight: 600;
-    }
-
-    .status-active {
-        background: #27ae60;
-        color: white;
-    }
-
-    .status-upcoming {
-        background: #f39c12;
-        color: white;
-    }
-
-    .status-ended {
-        background: #7f8c8d;
-        color: white;
-    }
-
-    .event-item .event-checkbox {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        color: #c0c0c0;
-        font-size: 13px;
-    }
-
-    .event-item .event-checkbox input[type="checkbox"] {
-        width: 18px;
-        height: 18px;
-        cursor: pointer;
-        accent-color: #27ae60;
+        background: #1a1a2e;
+        min-height: 400px;
     }
 
     /* ============================================================
-       EVENTOS VAZIOS
+       IFRAME DENTRO DO POP-UP
     ============================================================ */
-    .events-empty {
+    .events-modal-body iframe {
+        width: 100%;
+        height: 100%;
+        min-height: 500px;
+        border: none;
+        border-radius: 0;
+        background: #16213e;
+        display: block;
+    }
+
+    .events-modal-body .loading {
+        color: #85c1e9;
         text-align: center;
-        padding: 40px 20px;
-        color: #7f8c8d;
+        padding: 40px;
+        font-size: 18px;
     }
 
-    .events-empty .icon {
-        font-size: 48px;
-        margin-bottom: 15px;
+    .events-modal-body .error {
+        color: #e74c3c;
+        text-align: center;
+        padding: 40px;
+        font-size: 18px;
     }
 
-    .events-empty h3 {
-        color: #e0e0e0;
-        margin-bottom: 8px;
-    }
-
-    /* ============================================================
-       RESPONSIVO
-    ============================================================ */
     @media (max-width: 600px) {
         .events-modal {
-            padding: 20px;
             max-height: 95vh;
+            width: 98%;
+        }
+
+        .events-modal-body iframe {
+            min-height: 400px;
         }
 
         .events-modal-header h2 {
-            font-size: 18px;
-        }
-
-        .event-item {
-            flex-direction: column;
-            align-items: flex-start;
-        }
-
-        .event-item .event-status {
-            width: 100%;
-            justify-content: flex-start;
-        }
-
-        .event-item .event-checkbox {
-            width: 100%;
-            justify-content: flex-start;
+            font-size: 16px;
         }
     }
 </style>
 
 <!-- ============================================================ -->
-<!-- BOTÃO PARA ABRIR O POP-UP                                     -->
+<!-- BOTÃO - COLOQUE NA SUA BARRA DE AÇÕES                        -->
 <!-- ============================================================ -->
 
 <button class="btn-event" onclick="abrirEventos()">📅 Eventos</button>
 
 <!-- ============================================================ -->
-<!-- POP-UP DE EVENTOS                                             -->
+<!-- POP-UP COM IFRAME                                             -->
 <!-- ============================================================ -->
 
 <div class="events-modal-overlay" id="eventsModal">
     <div class="events-modal">
         <div class="events-modal-header">
-            <h2>
-                📅 Eventos
-                <span class="badge" id="eventCount">0</span>
-            </h2>
+            <h2>📅 Eventos</h2>
             <button class="close-btn" onclick="fecharEventos()">✕ Fechar</button>
         </div>
-
-        <div class="events-list" id="eventsList">
-            <!-- Os eventos serão inseridos aqui via JavaScript -->
+        <div class="events-modal-body" id="eventsModalBody">
+            <!-- ============================================================
+                 O IFRAME VAI SER INSERIDO AQUI PELO JAVASCRIPT
+            ============================================================ -->
+            <div class="loading">⏳ Carregando eventos...</div>
         </div>
     </div>
 </div>
@@ -307,106 +168,13 @@
 
 <script>
     // ============================================================
-    // LISTA DE EVENTOS - ADICIONE/REMOVE AQUI!
-    // ============================================================
-    const eventos = [
-        // ============================================================
-        // 📌 TEMPLATE PARA ADICIONAR NOVOS EVENTOS
-        // ============================================================
-        // {
-        //     nome: "Nome do Evento",
-        //     descricao: "Descrição curta",
-        //     data: "DD/MM/AAAA",
-        //     status: "active", // active | upcoming | ended
-        //     tags: ["Tag1", "Tag2"],
-        //     feito: false // true = já concluído
-        // },
-        // ============================================================
-
-        // EXEMPLOS:
-        {
-            nome: "🎄 Smissmas 2024",
-            descricao: "Evento anual de Natal com missões especiais",
-            data: "25/12/2024",
-            status: "upcoming",
-            tags: ["Natal", "Especial"],
-            feito: false
-        },
-        {
-            nome: "👻 Halloween 2024",
-            descricao: "Evento de Halloween com missões assustadoras",
-            data: "31/10/2024",
-            status: "ended",
-            tags: ["Halloween", "Especial"],
-            feito: true
-        },
-        {
-            nome: "⚡ MvM Championship",
-            descricao: "Campeonato de Mann vs Machine",
-            data: "15/03/2025",
-            status: "active",
-            tags: ["Competitivo", "MvM"],
-            feito: false
-        },
-        {
-            nome: "🎮 Moriya Vs Potato",
-            descricao: "Evento especial da comunidade Moriya",
-            data: "01/02/2025",
-            status: "active",
-            tags: ["Comunidade", "Moriya"],
-            feito: false
-        },
-
-        // ============================================================
-        // ADICIONE SEUS EVENTOS AQUI!
-        // ============================================================
-        // {
-        //     nome: "Seu Evento",
-        //     descricao: "Descrição do evento",
-        //     data: "DD/MM/AAAA",
-        //     status: "upcoming", // active | upcoming | ended
-        //     tags: ["Tag1", "Tag2"],
-        //     feito: false
-        // },
-    ];
-
-    // ============================================================
-    // SALVAR PROGRESSO DOS EVENTOS
-    // ============================================================
-    const STORAGE_KEY_EVENTS = 'eventos_progress';
-
-    function carregarProgressoEventos() {
-        try {
-            const salvo = localStorage.getItem(STORAGE_KEY_EVENTS);
-            if (salvo) {
-                const parsed = JSON.parse(salvo);
-                if (Array.isArray(parsed) && parsed.length === eventos.length) {
-                    // Aplica o progresso salvo
-                    eventos.forEach((evento, index) => {
-                        evento.feito = parsed[index];
-                    });
-                    return true;
-                }
-            }
-        } catch (e) {}
-        return false;
-    }
-
-    function salvarProgressoEventos() {
-        const progress = eventos.map(e => e.feito);
-        localStorage.setItem(STORAGE_KEY_EVENTS, JSON.stringify(progress));
-    }
-
-    // Carrega o progresso salvo
-    carregarProgressoEventos();
-
-    // ============================================================
     // ABRIR/FECHAR POP-UP
     // ============================================================
     function abrirEventos() {
-        document.getElementById('eventsModal').classList.add('active');
+        const modal = document.getElementById('eventsModal');
+        modal.classList.add('active');
         document.body.style.overflow = 'hidden';
-        renderizarEventos();
+        carregarEventHTML();
     }
 
     function fecharEventos() {
@@ -421,7 +189,7 @@
         }
     });
 
-    // Fecha com a tecla ESC
+    // Fecha com ESC
     document.addEventListener('keydown', function(e) {
         if (e.key === 'Escape') {
             fecharEventos();
@@ -429,91 +197,22 @@
     });
 
     // ============================================================
-    // RENDERIZAR EVENTOS
+    // CARREGAR O EVENT.HTML DENTRO DO IFRAME
     // ============================================================
-    function renderizarEventos() {
-        const container = document.getElementById('eventsList');
-        const countBadge = document.getElementById('eventCount');
+    function carregarEventHTML() {
+        const body = document.getElementById('eventsModalBody');
 
-        if (eventos.length === 0) {
-            container.innerHTML = `
-                <div class="events-empty">
-                    <div class="icon">📭</div>
-                    <h3>Nenhum evento cadastrado</h3>
-                    <p>Adicione eventos na lista para aparecerem aqui.</p>
-                </div>
-            `;
-            countBadge.textContent = '0';
-            return;
-        }
+        // ============================================================
+        // 🔥 AQUI ESTÁ O IFRAME - ELE É INSERIDO AQUI!
+        // ============================================================
+        body.innerHTML = `
+            <iframe src="event.html" id="eventIframe"></iframe>
+        `;
 
-        countBadge.textContent = eventos.length;
-
-        let html = '';
-        eventos.forEach((evento, index) => {
-            const statusClass = evento.status === 'active' ? 'status-active' :
-                              evento.status === 'upcoming' ? 'status-upcoming' : 'status-ended';
-            const statusLabel = evento.status === 'active' ? '🟢 Ativo' :
-                               evento.status === 'upcoming' ? '🟡 Em breve' : '🔴 Encerrado';
-
-            const tagsHtml = evento.tags.map(tag => `<span class="tag">#${tag}</span>`).join('');
-
-            html += `
-                <div class="event-item">
-                    <div class="event-info">
-                        <div class="event-name">
-                            ${evento.nome}
-                        </div>
-                        <div class="event-details">
-                            <span>📝 ${evento.descricao}</span>
-                            <span>📅 ${evento.data}</span>
-                            ${tagsHtml}
-                        </div>
-                    </div>
-                    <div class="event-status">
-                        <span class="status-badge ${statusClass}">${statusLabel}</span>
-                        <label class="event-checkbox">
-                            <input type="checkbox" ${evento.feito ? 'checked' : ''} data-index="${index}">
-                            Feito
-                        </label>
-                    </div>
-                </div>
-            `;
-        });
-
-        container.innerHTML = html;
-
-        // Adiciona eventos aos checkboxes
-        document.querySelectorAll('.event-item .event-checkbox input[type="checkbox"]').forEach(cb => {
-            cb.addEventListener('change', function() {
-                const index = parseInt(this.dataset.index);
-                eventos[index].feito = this.checked;
-                salvarProgressoEventos();
-                renderizarEventos(); // Re-renderiza para atualizar
-            });
-        });
+        // O iframe carrega o event.html automaticamente
+        console.log('📄 event.html carregado no iframe');
     }
 
-    // ============================================================
-    // EXPORTAR EVENTOS (opcional)
-    // ============================================================
-    function exportarEventos() {
-        const data = {
-            version: '1.0',
-            exportedAt: new Date().toISOString(),
-            total: eventos.length,
-            eventos: eventos
-        };
-        const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = `eventos_${new Date().toISOString().slice(0,10)}.json`;
-        a.click();
-        URL.revokeObjectURL(url);
-    }
-
-    console.log('✅ Sistema de Eventos carregado!');
-    console.log(`📅 ${eventos.length} eventos cadastrados`);
-    console.log(`✅ ${eventos.filter(e => e.feito).length} concluídos`);
+    console.log('✅ Botão Eventos carregado!');
+    console.log('📄 O event.html será carregado dentro do iframe');
 </script>
