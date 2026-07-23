@@ -1,4 +1,463 @@
-<!-- ============================================================ -->
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MvM Missions Tracker</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #1a1a2e;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: #16213e;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+        }
+
+        h1 {
+            color: #e0e0e0;
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 28px;
+            letter-spacing: 2px;
+        }
+
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .stats {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .stat-box {
+            background: #0f3460;
+            padding: 8px 16px;
+            border-radius: 8px;
+            color: white;
+            font-size: 14px;
+        }
+
+        .stat-box span {
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .actions button {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 13px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-reset {
+            background: #c0392b;
+            color: white;
+        }
+
+        .btn-reset:hover {
+            background: #e74c3c;
+            transform: scale(1.02);
+        }
+
+        .btn-export {
+            background: #2980b9;
+            color: white;
+        }
+
+        .btn-export:hover {
+            background: #3498db;
+            transform: scale(1.02);
+        }
+
+        .btn-import {
+            background: #27ae60;
+            color: white;
+        }
+
+        .btn-import:hover {
+            background: #2ecc71;
+            transform: scale(1.02);
+        }
+
+        .search-box {
+            margin-bottom: 20px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .search-box input, .search-box select {
+            padding: 10px 15px;
+            border: 2px solid #0f3460;
+            border-radius: 8px;
+            background: #1a1a2e;
+            color: #e0e0e0;
+            font-size: 14px;
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .search-box input:focus, .search-box select:focus {
+            outline: none;
+            border-color: #e94560;
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
+            border-radius: 8px;
+            max-height: 70vh;
+            overflow-y: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+            background: #1a1a2e;
+        }
+
+        thead {
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        th {
+            background: #0f3460;
+            color: #e0e0e0;
+            padding: 12px 10px;
+            text-align: left;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 11px;
+            border-bottom: 3px solid #e94560;
+        }
+
+        td {
+            padding: 8px 10px;
+            border-bottom: 1px solid #2a2a4a;
+            color: #c0c0c0;
+            vertical-align: middle;
+        }
+
+        tr:hover td {
+            background: rgba(255,255,255,0.03);
+        }
+
+        /* ===== CORES DA DIFICULDADE ===== */
+        .difficulty-intermediate {
+            background-color: #2d7d46 !important;
+            color: #ffffff;
+            font-weight: 600;
+            padding: 4px 12px;
+            border-radius: 20px;
+            display: inline-block;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .difficulty-advanced {
+            background-color: #d4a017 !important;
+            color: #1a1a2e;
+            font-weight: 600;
+            padding: 4px 12px;
+            border-radius: 20px;
+            display: inline-block;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .difficulty-expert {
+            background-color: #e74c3c !important;
+            color: #ffffff;
+            font-weight: 600;
+            padding: 4px 12px;
+            border-radius: 20px;
+            display: inline-block;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .difficulty-nightmare {
+            background-color: #8e44ad !important;
+            color: #ffffff;
+            font-weight: 600;
+            padding: 4px 12px;
+            border-radius: 20px;
+            display: inline-block;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .difficulty-master {
+            background-color: #c0392b !important;
+            color: #ffffff;
+            font-weight: 600;
+            padding: 4px 12px;
+            border-radius: 20px;
+            display: inline-block;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .difficulty-reverse {
+            background-color: #2980b9 !important;
+            color: #ffffff;
+            font-weight: 600;
+            padding: 4px 12px;
+            border-radius: 20px;
+            display: inline-block;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* ===== LINHAS ESPECIAIS ===== */
+        .row-nightmare td:not(.feito-cell) {
+            background-color: rgba(142, 68, 173, 0.15) !important;
+        }
+        .row-nightmare td {
+            border-bottom-color: rgba(142, 68, 173, 0.3);
+        }
+        .row-nightmare:hover td:not(.feito-cell) {
+            background-color: rgba(142, 68, 173, 0.25) !important;
+        }
+
+        .row-master td:not(.feito-cell) {
+            background-color: rgba(192, 57, 43, 0.15) !important;
+        }
+        .row-master td {
+            border-bottom-color: rgba(192, 57, 43, 0.3);
+        }
+        .row-master:hover td:not(.feito-cell) {
+            background-color: rgba(192, 57, 43, 0.25) !important;
+        }
+
+        .row-reverse td:not(.feito-cell) {
+            background-color: rgba(41, 128, 185, 0.12) !important;
+        }
+        .row-reverse td {
+            border-bottom-color: rgba(41, 128, 185, 0.25);
+        }
+        .row-reverse:hover td:not(.feito-cell) {
+            background-color: rgba(41, 128, 185, 0.22) !important;
+        }
+
+        /* ===== CHECKBOX ===== */
+        .checkbox-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .checkbox-container input[type="checkbox"] {
+            display: none;
+        }
+
+        .checkmark {
+            width: 24px;
+            height: 24px;
+            border-radius: 6px;
+            border: 2px solid #555;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            background: #c0392b;
+        }
+
+        .checkbox-container input:checked + .checkmark {
+            background: #27ae60;
+            border-color: #27ae60;
+        }
+
+        .checkbox-container input:checked + .checkmark::after {
+            content: '✓';
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .checkbox-container input:not(:checked) + .checkmark::after {
+            content: '✗';
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .checkbox-container input:checked + .checkmark:hover {
+            background: #2ecc71;
+            transform: scale(1.05);
+        }
+
+        .checkbox-container input:not(:checked) + .checkmark:hover {
+            background: #e74c3c;
+            transform: scale(1.05);
+        }
+
+        .map-name {
+            font-weight: 600;
+            color: #e94560;
+        }
+
+        .mission-name {
+            color: #e0e0e0;
+        }
+
+        .operation-name {
+            color: #85c1e9;
+            font-size: 12px;
+        }
+
+        .feito-cell {
+            text-align: center;
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #27ae60;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.4s ease;
+            z-index: 999;
+        }
+
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .toast.error {
+            background: #c0392b;
+        }
+
+        /* ===== RESPONSIVO ===== */
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+
+            table {
+                font-size: 11px;
+            }
+
+            th, td {
+                padding: 6px 8px;
+            }
+
+            .top-bar {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .stats {
+                justify-content: center;
+            }
+
+            .actions {
+                justify-content: center;
+            }
+
+            .stat-box {
+                padding: 6px 12px;
+                font-size: 12px;
+            }
+
+            .difficulty-intermediate,
+            .difficulty-advanced,
+            .difficulty-expert,
+            .difficulty-nightmare,
+            .difficulty-master,
+            .difficulty-reverse {
+                font-size: 9px;
+                padding: 2px 8px;
+            }
+
+            .checkmark {
+                width: 18px;
+                height: 18px;
+            }
+
+            .checkbox-container input:checked + .checkmark::after,
+            .checkbox-container input:not(:checked) + .checkmark::after {
+                font-size: 12px;
+            }
+
+            h1 {
+                font-size: 20px;
+            }
+
+            .actions button {
+                font-size: 11px;
+                padding: 6px 12px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            table {
+                font-size: 10px;
+            }
+
+            th, td {
+                padding: 4px 5px;
+            }
+
+            .operation-name {
+                font-size: 9px;
+            }
+
+            .search-box input, .search-box select {
+                font-size: 12px;
+                padding: 6px 10px;
+                min-width: 120px;
+            }
+        }
+    </style>
+    <!-- ============================================================ -->
 <!-- BOTÃO E MODAL PARA LER A PASTA DO GITHUB                      -->
 <!-- ============================================================ -->
 
@@ -392,3 +851,972 @@
     console.log(`📂 Lendo pasta: ${SAVE_FOLDER}`);
     console.log(`🔗 Repositório: ${GITHUB_REPO}`);
 </script>
+</head>
+<body>
+    <div class="container">
+        <h1>⚙️ MvM Missions Tracker</h1>
+
+        <div class="top-bar">
+            <div class="stats">
+                <div class="stat-box">📊 Total: <span id="totalCount">0</span></div>
+                <div class="stat-box">✅ Concluídas: <span id="doneCount">0</span></div>
+                <div class="stat-box">⏳ Pendentes: <span id="pendingCount">0</span></div>
+                <div class="stat-box">📈 Progresso: <span id="progressPercent">0%</span></div>
+            </div>
+            <div class="actions">
+                <button class="btn-export" onclick="exportProgress()">📤 Exportar</button>
+                <button class="btn-import" onclick="document.getElementById('importFile').click()">📥 Importar</button>
+                <input type="file" id="importFile" accept=".json" style="display:none" onchange="importProgress(event)">
+                <button class="btn-reset" onclick="resetProgress()">🔄 Resetar</button>
+            </div>
+        </div>
+
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="🔍 Buscar missão ou mapa...">
+            <select id="filterDifficulty">
+                <option value="">Todas as Dificuldades</option>
+                <option value="Intermediate">Intermediate</option>
+                <option value="Advanced">Advanced</option>
+                <option value="Expert">Expert</option>
+                <option value="Nightmare">Nightmare</option>
+                <option value="Master">Master</option>
+                <option value="Reverse">Reverse</option>
+            </select>
+            <select id="filterStatus">
+                <option value="">Todos os Status</option>
+                <option value="done">✅ Concluídas</option>
+                <option value="pending">⏳ Pendentes</option>
+            </select>
+        </div>
+
+        <div class="table-wrapper">
+            <table id="missionTable">
+                <thead>
+                    <tr>
+                        <th>Mapa</th>
+                        <th>Missão</th>
+                        <th style="text-align: center; width: 80px;">Feito?</th>
+                        <th style="width: 130px;">Dificuldade</th>
+                        <th>Operação</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody">
+                    <!-- Dados via JavaScript -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div id="toast" class="toast"></div>
+
+    <script>
+        // ============================================================
+        // DADOS DAS MISSÕES (MANTIDOS IGUAIS)
+        // ============================================================
+        const missions = [
+            // Akure
+            { map: "Akure", mission: "Bronze And Bristle", difficulty: "Intermediate", operation: "Operation Galvanized Gauntlet" },
+            { map: "Akure", mission: "Gold And Grit", difficulty: "Advanced", operation: "Operation Galvanized Gauntlet" },
+            { map: "Akure", mission: "Reboot Rush", difficulty: "Advanced", operation: "Operation Digital Directive" },
+            { map: "Akure", mission: "Thermal Thunder", difficulty: "Advanced", operation: "Operation Digital Directive" },
+            { map: "Akure", mission: "Diamond And Dross", difficulty: "Expert", operation: "Operation Galvanized Gauntlet" },
+            // Apex
+            { map: "Apex", mission: "Glacial Gantlet", difficulty: "Advanced", operation: "Operation Bolted Barbecue" },
+            { map: "Apex", mission: "Malware Malfunction", difficulty: "Advanced", operation: "Operation Bolted Barbecue" },
+            // Area 52
+            { map: "Area 52", mission: "Anomalous Materials", difficulty: "Intermediate", operation: "Operation Voltaic Violence (Moonlight)" },
+            { map: "Area 52", mission: "Gatebot Apocalypse", difficulty: "Intermediate", operation: "Operation Madness vs Machines" },
+            { map: "Area 52", mission: "Nuclear Threat", difficulty: "Intermediate", operation: "Operation Anniversary Annihilation (Moonlight)" },
+            { map: "Area 52", mission: "Australian Christmas", difficulty: "Advanced", operation: "Operation Binary Blackout (Moonlight)" },
+            { map: "Area 52", mission: "Complex Chaos", difficulty: "Advanced", operation: "Operation Osmium Ordinance" },
+            { map: "Area 52", mission: "Extraterrestrial Epidemic", difficulty: "Advanced", operation: "Operation Canteen Crasher" },
+            { map: "Area 52", mission: "Interstellar Intervention", difficulty: "Advanced", operation: "Operation Canteen Crasher" },
+            { map: "Area 52", mission: "Tech Mechs", difficulty: "Advanced", operation: "Operation Canteen Crasher" },
+            { map: "Area 52", mission: "Unusual Onslaught", difficulty: "Advanced", operation: "Operation Canteen Crasher" },
+            // Autumnull
+            { map: "Autumnull", mission: "Urban Uprising", difficulty: "Intermediate", operation: "Operation Binary Blackout (Moonlight)" },
+            { map: "Autumnull", mission: "Dynamic Disaster", difficulty: "Advanced", operation: "Operation Digital Directive" },
+            { map: "Autumnull", mission: "Steelblock", difficulty: "Advanced", operation: "Operation Bolted Barbecue" },
+            { map: "Autumnull", mission: "Tincan Termination", difficulty: "Advanced", operation: "Operation Digital Directive" },
+            { map: "Autumnull", mission: "Codename Omega", difficulty: "Reverse Expert", operation: "Operation Rewired Rampage" },
+            // Barren
+            { map: "Barren", mission: "Wasteland Wonderland", difficulty: "Intermediate", operation: "Operation Voltaic Violence (Moonlight)" },
+            { map: "Barren", mission: "Binary Breaker", difficulty: "Advanced", operation: "Operation Madness vs Machines" },
+            { map: "Barren", mission: "Brushfire", difficulty: "Advanced", operation: "Operation Madness vs Machines" },
+            { map: "Barren", mission: "Clanker Carnage", difficulty: "Advanced", operation: "Operation Madness vs Machines" },
+            { map: "Barren", mission: "Crucial Revenge", difficulty: "Advanced", operation: "Operation Madness vs Machines" },
+            { map: "Barren", mission: "Dusty Dilemma", difficulty: "Advanced", operation: "Operation Canteen Crasher" },
+            { map: "Barren", mission: "Fabrication Plan", difficulty: "Advanced", operation: "Operation Madness vs Machines" },
+            { map: "Barren", mission: "Robotic Landscape", difficulty: "Advanced", operation: "Operation Canteen Crasher" },
+            // Bigrock
+            { map: "Bigrock", mission: "Bionic Breach", difficulty: "Intermediate", operation: "Operation Bolted Barbecue" },
+            { map: "Bigrock", mission: "Breaking Point", difficulty: "Advanced", operation: "Operation Bolted Barbecue" },
+            { map: "Bigrock", mission: "Denominator", difficulty: "Reverse Advanced", operation: "Operation Rewired Rampage" },
+            { map: "Bigrock", mission: "Numerator", difficulty: "Reverse Advanced", operation: "Operation Rewired Rampage" },
+            // Bloodlust
+            { map: "Bloodlust", mission: "Terminal Lucidity", difficulty: "Intermediate", operation: "Operation Holographic Harvest" },
+            { map: "Bloodlust", mission: "Wretched Witchery", difficulty: "Intermediate", operation: "Operation Hexadecimal Horrors" },
+            { map: "Bloodlust", mission: "Reanimation", difficulty: "Advanced", operation: "Operation Ghoulish Gambit" },
+            // Bloodmoon
+            { map: "Bloodmoon", mission: "Sed De Sangre", difficulty: "Advanced", operation: "Operation Ghoulish Gambit" },
+            { map: "Bloodmoon", mission: "Spooky Spiral", difficulty: "Advanced", operation: "Operation Ghoulish Gambit" },
+            // Bogland
+            { map: "Bogland", mission: "Crocodile Operation", difficulty: "Intermediate", operation: "Operation Bolted Barbecue" },
+            { map: "Bogland", mission: "Bog Business", difficulty: "Advanced", operation: "Operation Osmium Ordinance" },
+            { map: "Bogland", mission: "Dire Mire", difficulty: "Advanced", operation: "Operation Bolted Barbecue" },
+            { map: "Bogland", mission: "Mud Maker", difficulty: "Advanced", operation: "Operation Bolted Barbecue" },
+            { map: "Bogland", mission: "Swamp Fever", difficulty: "Advanced", operation: "Operation Osmium Ordinance" },
+            // Boogge
+            { map: "Boogge", mission: "Freaky Fodder", difficulty: "Intermediate", operation: "Operation Hexadecimal Horrors" },
+            { map: "Boogge", mission: "Boneyard Shift", difficulty: "Advanced", operation: "Operation Ghoulish Gambit" },
+            { map: "Boogge", mission: "Night Of The Living Bread", difficulty: "Advanced", operation: "Operation Ghoulish Gambit" },
+            { map: "Boogge", mission: "Rotten Resurgence", difficulty: "Advanced", operation: "Operation Digital Directive" },
+            { map: "Boogge", mission: "Voidlings", difficulty: "Advanced", operation: "Operation Digital Directive" },
+            // Bronx
+            { map: "Bronx", mission: "Point Of Impact", difficulty: "Advanced", operation: "Operation Galvanized Gauntlet" },
+            // Brugge
+            { map: "Brugge", mission: "Flemish Feud", difficulty: "Intermediate", operation: "Operation Madness vs Machines" },
+            { map: "Brugge", mission: "Frontline Fodder", difficulty: "Intermediate", operation: "Operation Binary Blackout (Moonlight)" },
+            { map: "Brugge", mission: "Sparkbag Subroutine", difficulty: "Intermediate", operation: "Operation Madness vs Machines" },
+            { map: "Brugge", mission: "Funeral Toll", difficulty: "Advanced", operation: "Operation Madness vs Machines" },
+            { map: "Brugge", mission: "Netherite Navy", difficulty: "Expert", operation: "Operation Osmium Ordinance" },
+            // Butcher
+            { map: "Butcher", mission: "Malpractice", difficulty: "Intermediate", operation: "Operation Ghoulish Gambit" },
+            { map: "Butcher", mission: "Meat Grinder", difficulty: "Advanced", operation: "Operation Ghoulish Gambit" },
+            { map: "Butcher", mission: "Lucid Nightmare", difficulty: "Expert", operation: "Operation Hexadecimal Horrors" },
+            // Calico
+            { map: "Calico", mission: "Scabby Subordination", difficulty: "Advanced", operation: "Operation Canteen Crasher" },
+            { map: "Calico", mission: "Emerging Errors", difficulty: "Expert", operation: "Operation Galvanized Gauntlet" },
+            // Casino City
+            { map: "Casino City", mission: "Jackpot", difficulty: "Intermediate", operation: "Operation Binary Blackout (Moonlight)" },
+            { map: "Casino City", mission: "Midnight Gambling", difficulty: "Intermediate", operation: "Operation Madness vs Machines" },
+            { map: "Casino City", mission: "Poker Pummel", difficulty: "Intermediate", operation: "Operation Canteen Crasher" },
+            { map: "Casino City", mission: "Gamblers Gambit", difficulty: "Advanced", operation: "Operation Madness vs Machines" },
+            { map: "Casino City", mission: "Gamblers Paradise Tycoon", difficulty: "Advanced", operation: "Operation Galvanized Gauntlet" },
+            { map: "Casino City", mission: "Gangsters Pair Of Dice", difficulty: "Advanced", operation: "Operation Bolted Barbecue" },
+            { map: "Casino City", mission: "Platinum Parade", difficulty: "Advanced", operation: "Operation Madness vs Machines" },
+            { map: "Casino City", mission: "Sketchy Swing", difficulty: "Advanced", operation: "Operation Madness vs Machines" },
+            { map: "Casino City", mission: "Vindicated Vices", difficulty: "Advanced", operation: "Operation Madness vs Machines" },
+            { map: "Casino City", mission: "Cashgrab Chaos", difficulty: "Advanced", operation: "Operation Canteen Crasher" },
+            { map: "Casino City", mission: "Cash Out Crash Out", difficulty: "Advanced", operation: "Operation Madness vs Machines" },
+            // Charon
+            { map: "Charon", mission: "Crash Landing", difficulty: "Intermediate", operation: "Operation Bolted Barbecue" },
+            { map: "Charon", mission: "Orbital Breach", difficulty: "Intermediate", operation: "Operation Bolted Barbecue" },
+            { map: "Charon", mission: "Atmos Quake", difficulty: "Advanced", operation: "Operation Bolted Barbecue" },
+            { map: "Charon", mission: "Oz Terror", difficulty: "Advanced", operation: "Operation Bolted Barbecue" },
+            // Chateau
+            { map: "Chateau", mission: "Remedic", difficulty: "Advanced", operation: "Operation Hexadecimal Horrors" },
+            // Cliffside
+            { map: "Cliffside", mission: "Ashes To Ashes", difficulty: "Advanced", operation: "Operation Digital Directive" },
+            { map: "Cliffside", mission: "Bionic Bits", difficulty: "Advanced", operation: "Operation Digital Directive" },
+            { map: "Cliffside", mission: "Nemesis", difficulty: "Advanced", operation: "Operation Firmware Frenzy (Moonlight)" },
+            { map: "Cliffside", mission: "Scrapyard Slaughter", difficulty: "Reverse Advanced", operation: "Operation Rewired Rampage" },
+            { map: "Cliffside", mission: "Resolution", difficulty: "Reverse Expert", operation: "Operation Rewired Rampage" },
+            // Coaltown
+            { map: "Coaltown", mission: "Trouble In Mann Town", difficulty: "Intermediate", operation: "Operation Magnetic Mayhem (Moonlight)" },
+            { map: "Coaltown", mission: "Computer Crash", difficulty: "Reverse Advanced", operation: "Operation Rewired Rampage" },
+            { map: "Coaltown", mission: "Catastrophic Course", difficulty: "Expert", operation: "Operation Firmware Frenzy (Moonlight)" },
+            // Coastrock
+            { map: "Coastrock", mission: "Coral Crusher", difficulty: "Intermediate", operation: "Operation Canteen Crasher" },
+            { map: "Coastrock", mission: "Offcoast Invasion", difficulty: "Intermediate", operation: "Operation Canteen Crasher" },
+            { map: "Coastrock", mission: "Sandtraps", difficulty: "Intermediate", operation: "Operation Binary Blackout (Moonlight)" },
+            { map: "Coastrock", mission: "Coastal Calamity", difficulty: "Advanced", operation: "Operation Canteen Crasher" },
+            { map: "Coastrock", mission: "Cobalt Cruise", difficulty: "Advanced", operation: "Operation Bolted Barbecue" },
+            { map: "Coastrock", mission: "Cycled Overdrive", difficulty: "Advanced", operation: "Operation Binary Blackout (Moonlight)" },
+            { map: "Coastrock", mission: "Inclusion Exclusion", difficulty: "Advanced", operation: "Operation Galvanized Gauntlet" },
+            { map: "Coastrock", mission: "Pirate Domination", difficulty: "Advanced", operation: "Operation Madness vs Machines" },
+            { map: "Coastrock", mission: "Plunder Panic", difficulty: "Advanced", operation: "Operation Magnetic Mayhem (Moonlight)" },
+            { map: "Coastrock", mission: "Seaside Sacrifice", difficulty: "Advanced", operation: "Operation Madness vs Machines" },
+            { map: "Coastrock", mission: "Coastal Cashout", difficulty: "Master", operation: "Operation Firmware Frenzy (Moonlight)" },
+            // Coldtown
+            { map: "Coldtown", mission: "Chilling Clique", difficulty: "Intermediate", operation: "Operation Bolted Barbecue" },
+            { map: "Coldtown", mission: "6 Scottish Pentathlon", difficulty: "Advanced", operation: "Operation Bolted Barbecue" },
+            { map: "Coldtown", mission: "Brimstone", difficulty: "Advanced", operation: "Operation Anniversary Annihilation (Moonlight)" },
+            { map: "Coldtown", mission: "Night Before Smissmas", difficulty: "Expert", operation: "Operation Anniversary Annihilation (Moonlight)" },
+            // Condemned
+            { map: "Condemned", mission: "Thriller Terror", difficulty: "Intermediate", operation: "Operation Canteen Crasher" },
+            { map: "Condemned", mission: "Unholy Undead", difficulty: "Advanced", operation: "Operation Canteen Crasher" },
+            { map: "Condemned", mission: "Trespasser", difficulty: "Nightmare", operation: "Operation Hexadecimal Horrors" },
+            { map: "Condemned", mission: "Trespasser Remaster", difficulty: "Nightmare", operation: "Operation Ghoulish Gambit" },
+            // Creepside
+            { map: "Creepside", mission: "Midnight Massacre", difficulty: "Intermediate", operation: "Operation Ghoulish Gambit" },
+            { map: "Creepside", mission: "Abyssal Atrocities", difficulty: "Advanced", operation: "Operation Hexadecimal Horrors" },
+            { map: "Creepside", mission: "Catastrophic Conjuring", difficulty: "Advanced", operation: "Operation Ghoulish Gambit" },
+            { map: "Creepside", mission: "Dismal Devilry", difficulty: "Advanced", operation: "Operation Hexadecimal Horrors" },
+            { map: "Creepside", mission: "Dust To Dust", difficulty: "Advanced", operation: "Operation Ghoulish Gambit" },
+            { map: "Creepside", mission: "Celestial Broken Tomb", difficulty: "Expert", operation: "Operation Holographic Harvest" },
+            // Cyberia
+            { map: "Cyberia", mission: "Frozen Freaks", difficulty: "Advanced", operation: "Operation Madness vs Machines" },
+            { map: "Cyberia", mission: "Launch Sequence", difficulty: "Advanced", operation: "Operation Madness vs Machines" },
+            { map: "Cyberia", mission: "Rusty Rapture", difficulty: "Advanced", operation: "Operation Magnetic Mayhem (Moonlight)" },
+            { map: "Cyberia", mission: "Silver Snow", difficulty: "Advanced", operation: "Operation Binary Blackout (Moonlight)" },
+            { map: "Cyberia", mission: "Snowblitz", difficulty: "Advanced", operation: "Operation Anniversary Annihilation (Moonlight)" },
+            { map: "Cyberia", mission: "Arctic Arrangement", difficulty: "Reverse Advanced", operation: "Operation Rewired Rampage" },
+            { map: "Cyberia", mission: "Cascading Steel Swarm", difficulty: "Expert", operation: "Operation Galvanized Gauntlet" },
+            { map: "Cyberia", mission: "Northern Lights", difficulty: "Expert", operation: "Operation Madness vs Machines" },
+            // Deathpour
+            { map: "Deathpour", mission: "Bloodpour", difficulty: "Intermediate", operation: "Operation Hexadecimal Horrors" },
+            { map: "Deathpour", mission: "Technical Terror", difficulty: "Intermediate", operation: "Operation Hexadecimal Horrors" },
+            { map: "Deathpour", mission: "Blackout", difficulty: "Expert", operation: "Operation Hexadecimal Horrors" },
+            // Decay
+            { map: "Decay", mission: "Diptera Dash", difficulty: "Intermediate", operation: "Operation Holographic Harvest" },
+            { map: "Decay", mission: "Night Errors", difficulty: "Intermediate", operation: "Operation Ghoulish Gambit" },
+            { map: "Decay", mission: "Skull Scamper", difficulty: "Intermediate", operation: "Operation Hexadecimal Horrors" },
+            { map: "Decay", mission: "Horrific Hex", difficulty: "Advanced", operation: "Operation Hexadecimal Horrors" },
+            { map: "Decay", mission: "Deathwish", difficulty: "Expert", operation: "Operation Holographic Harvest" },
+            // Decompose
+            { map: "Decompose", mission: "Ghoulish Genesis", difficulty: "Advanced", operation: "Operation Holographic Harvest" },
+            { map: "Decompose", mission: "Deprecated Designs", difficulty: "Advanced", operation: "Operation Ghoulish Gambit" },
+            // Decoy
+            { map: "Decoy", mission: "Decimal Destruction", difficulty: "Intermediate", operation: "Operation Anniversary Annihilation (Moonlight)" },
+            { map: "Decoy", mission: "Grutesque Getaway", difficulty: "Advanced", operation: "Operation Magnetic Mayhem (Moonlight)" },
+            { map: "Decoy", mission: "Dissolution", difficulty: "Expert", operation: "Operation Anniversary Annihilation (Moonlight)" },
+            // Derelict
+            { map: "Derelict", mission: "Defragmentation", difficulty: "Intermediate", operation: "Operation Madness vs Machines" },
+            { map: "Derelict", mission: "Metallic Breakthrough", difficulty: "Intermediate", operation: "Operation Madness vs Machines" },
+            { map: "Derelict", mission: "Spade Segregation", difficulty: "Intermediate", operation: "Operation Madness vs Machines" },
+            { map: "Derelict", mission: "Blast Bevy", difficulty: "Advanced", operation: "Operation Madness vs Machines" },
+            { map: "Derelict", mission: "Shadow Wave", difficulty: "Advanced", operation: "Operation Binary Blackout (Moonlight)" },
+            { map: "Derelict", mission: "Waterway Wringout", difficulty: "Advanced", operation: "Operation Madness vs Machines" },
+            { map: "Derelict", mission: "Deaths Door", difficulty: "Expert", operation: "Operation Osmium Ordinance" },
+            // Dockyard
+            { map: "Dockyard", mission: "Technophobia", difficulty: "Intermediate", operation: "Operation Madness vs Machines" },
+            { map: "Dockyard", mission: "Android Annihilation", difficulty: "Advanced", operation: "Operation Voltaic Violence (Moonlight)" },
+            { map: "Dockyard", mission: "Cargo Carnage", difficulty: "Advanced", operation: "Operation Binary Blackout (Moonlight)" },
+            { map: "Dockyard", mission: "Jammer Jeopardy", difficulty: "Advanced", operation: "Operation Bolted Barbecue" },
+            { map: "Dockyard", mission: "Malicious Malware", difficulty: "Advanced", operation: "Operation Anniversary Annihilation (Moonlight)" },
+            { map: "Dockyard", mission: "Spyware Shipping", difficulty: "Advanced", operation: "Operation Titanium Tank" },
+            { map: "Dockyard", mission: "Systematic Swarm", difficulty: "Advanced", operation: "Operation Canteen Crasher" },
+            { map: "Dockyard", mission: "Overkill", difficulty: "Expert", operation: "Operation Anniversary Annihilation (Moonlight)" },
+            { map: "Dockyard", mission: "Pier Pressure", difficulty: "Expert", operation: "Operation Madness vs Machines" },
+            // Doppler
+            { map: "Doppler", mission: "Rusty Sound Wave", difficulty: "Intermediate", operation: "Operation Madness vs Machines" },
+            { map: "Doppler", mission: "Shortwave", difficulty: "Intermediate", operation: "Operation Canteen Crasher" },
+            { map: "Doppler", mission: "Delta Drop", difficulty: "Advanced", operation: "Operation Binary Blackout (Moonlight)" },
+            { map: "Doppler", mission: "Endothermic Espionage", difficulty: "Advanced", operation: "Operation Madness vs Machines" },
+            { map: "Doppler", mission: "Force Restart", difficulty: "Advanced", operation: "Operation Canteen Crasher" },
+            { map: "Doppler", mission: "Metallic Madness", difficulty: "Advanced", operation: "Operation Magnetic Mayhem (Moonlight)" },
+            { map: "Doppler", mission: "Spiral Slaughter", difficulty: "Advanced", operation: "Operation Madness vs Machines" },
+            { map: "Doppler", mission: "Vendetta", difficulty: "Advanced", operation: "Operation Voltaic Violence (Moonlight)" },
+            { map: "Doppler", mission: "Drop Database Devastation", difficulty: "Expert", operation: "Operation Bolted Barbecue" },
+            { map: "Doppler", mission: "Nuclear Winter", difficulty: "Expert", operation: "Operation Madness vs Machines" },
+            { map: "Doppler", mission: "Object Oriented Obliteration", difficulty: "Expert", operation: "Operation Galvanized Gauntlet" },
+            // Downpour
+            { map: "Downpour", mission: "Flash Flood Flurry", difficulty: "Intermediate", operation: "Operation Madness vs Machines" },
+            { map: "Downpour", mission: "Storm Surge", difficulty: "Advanced", operation: "Operation Madness vs Machines" },
+            { map: "Downpour", mission: "Wet Wreckage", difficulty: "Advanced", operation: "Operation Osmium Ordinance" },
+            { map: "Downpour", mission: "Last Stand Of Dead Men", difficulty: "Nightmare", operation: "Operation Binary Blackout (Moonlight)" },
+            { map: "Downpour", mission: "Alluvion", difficulty: "Expert", operation: "Operation Madness vs Machines" },
+            // Downtown
+            { map: "Downtown", mission: "One Down", difficulty: "Nightmare", operation: "Operation Canteen Crasher" },
+            { map: "Downtown", mission: "Downgrading System", difficulty: "Advanced", operation: "Operation Canteen Crasher" },
+            { map: "Downtown", mission: "Entertainers Entourage", difficulty: "Advanced", operation: "Operation Titanium Tank" },
+            { map: "Downtown", mission: "Robocentralization", difficulty: "Advanced", operation: "Operation Canteen Crasher" },
+            { map: "Downtown", mission: "Gang Wars", difficulty: "Reverse Advanced", operation: "Operation Rewired Rampage" },
+            // Dusk
+            { map: "Dusk", mission: "Clanker Conflict", difficulty: "Intermediate", operation: "Operation Bolted Barbecue" },
+            { map: "Dusk", mission: "Chasing Daybreak", difficulty: "Advanced", operation: "Operation Digital Directive" },
+            { map: "Dusk", mission: "Til Dawn", difficulty: "Advanced", operation: "Operation Bolted Barbecue" },
+            // Electricavenue
+            { map: "Electricavenue", mission: "Rolling Raccoons", difficulty: "Intermediate", operation: "Operation Bolted Barbecue" },
+            { map: "Electricavenue", mission: "Obsolescence", difficulty: "Expert", operation: "Operation Bolted Barbecue" },
+            // Encounter
+            { map: "Encounter", mission: "Backup Security Protocol", difficulty: "Reverse Advanced", operation: "Operation Rewired Rampage" },
+            // Estate
+            { map: "Estate", mission: "Carbureted Clash", difficulty: "Advanced", operation: "Operation Digital Directive" },
+            { map: "Estate", mission: "Eviction Notice", difficulty: "Advanced", operation: "Operation Anniversary Annihilation (Moonlight)" },
+            { map: "Estate", mission: "Marina Mayhem", difficulty: "Advanced", operation: "Operation Digital Directive" },
+            // Flowerfield
+            { map: "Flowerfield", mission: "The Blooming Bulb", difficulty: "Intermediate", operation: "Operation Bolted Barbecue" },
+            { map: "Flowerfield", mission: "Flamingo Flame", difficulty: "Advanced", operation: "Operation Osmium Ordinance" },
+            { map: "Flowerfield", mission: "Flower Power", difficulty: "Advanced", operation: "Operation Magnetic Mayhem (Moonlight)" },
+            // Frostwynd
+            { map: "Frostwynd", mission: "Wicked Wizardry", difficulty: "Intermediate", operation: "Operation Madness vs Machines" },
+            { map: "Frostwynd", mission: "Fiefdom Fiasco", difficulty: "Advanced", operation: "Operation Madness vs Machines" },
+            { map: "Frostwynd", mission: "Medieval Madness", difficulty: "Advanced", operation: "Operation Galvanized Gauntlet" },
+            // Ghost Town
+            { map: "Ghost Town", mission: "Cpu Spookies", difficulty: "Intermediate", operation: "Operation Hexadecimal Horrors" },
+            { map: "Ghost Town", mission: "Phantasm", difficulty: "Intermediate", operation: "Operation Holographic Harvest" },
+            { map: "Ghost Town", mission: "Horrorsome Happenings", difficulty: "Advanced", operation: "Operation Hexadecimal Horrors" },
+            { map: "Ghost Town", mission: "Misfortunes", difficulty: "Advanced", operation: "Operation Holographic Harvest" },
+            { map: "Ghost Town", mission: "Deadweight", difficulty: "Expert", operation: "Operation Hexadecimal Horrors" },
+            // Giza
+            { map: "Giza", mission: "Wrath Of The Pharaoh", difficulty: "Nightmare", operation: "Operation Canteen Crasher" },
+            { map: "Giza", mission: "Pyramid Peril", difficulty: "Advanced", operation: "Operation Canteen Crasher" },
+            { map: "Giza", mission: "Tomb Adventure", difficulty: "Advanced", operation: "Operation Digital Directive" },
+            // Goldpit
+            { map: "Goldpit", mission: "Exciting Excavation", difficulty: "Intermediate", operation: "Operation Madness vs Machines" },
+            { map: "Goldpit", mission: "Equal Opposites", difficulty: "Advanced", operation: "Operation Digital Directive" },
+            { map: "Goldpit", mission: "Gilded Mainframe", difficulty: "Advanced", operation: "Operation Digital Directive" },
+            { map: "Goldpit", mission: "Goldrush", difficulty: "Advanced", operation: "Operation Madness vs Machines" },
+            { map: "Goldpit", mission: "Race Condition", difficulty: "Advanced", operation: "Operation Galvanized Gauntlet" },
+            // Greekrock
+            { map: "Greekrock", mission: "Broken Bones", difficulty: "Advanced", operation: "Operation Firmware Frenzy (Moonlight)" },
+            { map: "Greekrock", mission: "Primeval Upheaval", difficulty: "Expert", operation: "Operation Firmware Frenzy (Moonlight)" },
+            // Hanami
+            { map: "Hanami", mission: "Blossom Beginnings", difficulty: "Reverse Intermediate", operation: "Operation Rewired Rampage" },
+            { map: "Hanami", mission: "Drop Zone", difficulty: "Intermediate", operation: "Operation Madness vs Machines" },
+            { map: "Hanami", mission: "Blastaway", difficulty: "Advanced", operation: "Operation Madness vs Machines" },
+            { map: "Hanami", mission: "Typhoon Tycoon", difficulty: "Advanced", operation: "Operation Digital Directive" },
+            // Havana
+            { map: "Havana", mission: "Rogue Gallery", difficulty: "Intermediate", operation: "Operation Anniversary Annihilation (Moonlight)" },
+            { map: "Havana", mission: "Fishermans Fury", difficulty: "Advanced", operation: "Operation Anniversary Annihilation (Moonlight)" },
+            { map: "Havana", mission: "Night Feast", difficulty: "Expert", operation: "Operation Bolted Barbecue" },
+            // Heatrock
+            { map: "Heatrock", mission: "Brain Taker", difficulty: "Advanced", operation: "Operation Hexadecimal Horrors" },
+            { map: "Heatrock", mission: "Heated Argument", difficulty: "Advanced", operation: "Operation Ghoulish Gambit" },
+            { map: "Heatrock", mission: "Impending Apocalypse", difficulty: "Expert", operation: "Operation Hexadecimal Horrors" },
+            { map: "Heatrock", mission: "Slaughterhouse", difficulty: "Expert", operation: "Operation Holographic Harvest" },
+            // Hideout
+            { map: "Hideout", mission: "Covert Compromise", difficulty: "Intermediate", operation: "Operation Madness vs Machines" },
+            { map: "Hideout", mission: "Intermediate", difficulty: "Intermediate", operation: "Operation Canteen Crasher" },
+            { map: "Hideout", mission: "Advanced", difficulty: "Advanced", operation: "Operation Canteen Crasher" },
+            { map: "Hideout", mission: "Korpoelec Invasion", difficulty: "Advanced", operation: "Operation Osmium Ordinance" },
+            { map: "Hideout", mission: "Perilous Paradise", difficulty: "Advanced", operation: "Operation Binary Blackout (Moonlight)" },
+            { map: "Hideout", mission: "Wet Warfare", difficulty: "Advanced", operation: "Operation Digital Directive" },
+            { map: "Hideout", mission: "Galois", difficulty: "Reverse Advanced", operation: "Operation Rewired Rampage" },
+            { map: "Hideout", mission: "Autonomous Annihilation", difficulty: "Expert", operation: "Operation Madness vs Machines" },
+            { map: "Hideout", mission: "Interloper", difficulty: "Expert", operation: "Operation Anniversary Annihilation (Moonlight)" },
+            // Hillside
+            { map: "Hillside", mission: "Outdated Processing", difficulty: "Advanced", operation: "Operation Madness vs Machines" },
+            // Hoovydam
+            { map: "Hoovydam", mission: "Damn Breach", difficulty: "Intermediate", operation: "Operation Bolted Barbecue" },
+            { map: "Hoovydam", mission: "Dizzying Drill", difficulty: "Intermediate", operation: "Operation Magnetic Mayhem (Moonlight)" },
+            { map: "Hoovydam", mission: "Blast Perfect", difficulty: "Advanced", operation: "Operation Digital Directive" },
+            { map: "Hoovydam", mission: "Hydro Horsepower", difficulty: "Advanced", operation: "Operation Galvanized Gauntlet" },
+            { map: "Hoovydam", mission: "Kinetic Energy", difficulty: "Advanced", operation: "Operation Madness vs Machines" },
+            // Humbridge
+            { map: "Humbridge", mission: "Hampton Helix", difficulty: "Advanced", operation: "Operation Galvanized Gauntlet" },
+            { map: "Humbridge", mission: "Runtime Optimization", difficulty: "Advanced", operation: "Operation Bolted Barbecue" },
+            { map: "Humbridge", mission: "Misanthrope", difficulty: "Expert", operation: "Operation Galvanized Gauntlet" },
+            // Hurricane
+            { map: "Hurricane", mission: "Purple Rain", difficulty: "Advanced", operation: "Operation Firmware Frenzy (Moonlight)" },
+            { map: "Hurricane", mission: "The Thunderous Fury Of A Robotic Typhoon", difficulty: "Expert", operation: "Operation Magnetic Mayhem (Moonlight)" },
+            // Isolation
+            { map: "Isolation", mission: "Frostbite", difficulty: "Intermediate", operation: "Operation Binary Blackout (Moonlight)" },
+            { map: "Isolation", mission: "Haphazard Routine", difficulty: "Intermediate", operation: "Operation Madness vs Machines" },
+            { map: "Isolation", mission: "Turbulence Tumult", difficulty: "Intermediate", operation: "Operation Canteen Crasher" },
+            { map: "Isolation", mission: "Glistening Glacier", difficulty: "Reverse Advanced", operation: "Operation Rewired Rampage" },
+            { map: "Isolation", mission: "Icecold Insurgency", difficulty: "Advanced", operation: "Operation Canteen Crasher" },
+            { map: "Isolation", mission: "Mannstorm", difficulty: "Advanced", operation: "Operation Canteen Crasher" },
+            { map: "Isolation", mission: "Snow Blindness", difficulty: "Advanced", operation: "Operation Madness vs Machines" },
+            { map: "Isolation", mission: "Desolated Death", difficulty: "Reverse Expert", operation: "Operation Rewired Rampage" },
+            { map: "Isolation", mission: "Depression", difficulty: "Expert", operation: "Operation Firmware Frenzy (Moonlight)" },
+            // Jungleworks
+            { map: "Jungleworks", mission: "Jungle Bungle", difficulty: "Intermediate", operation: "Operation Bolted Barbecue" },
+            { map: "Jungleworks", mission: "Euterpeprecatoriaffray", difficulty: "Advanced", operation: "Operation Galvanized Gauntlet" },
+            { map: "Jungleworks", mission: "Manntained Machines", difficulty: "Advanced", operation: "Operation Bolted Barbecue" },
+            { map: "Jungleworks", mission: "Object Overflow", difficulty: "Advanced", operation: "Operation Voltaic Violence (Moonlight)" },
+            { map: "Jungleworks", mission: "Agaglobulinemiagenesis", difficulty: "Expert", operation: "Operation Bolted Barbecue" },
+            { map: "Jungleworks", mission: "Nullified Processor", difficulty: "Expert", operation: "Operation Voltaic Violence (Moonlight)" },
+            // Kelly
+            { map: "Kelly", mission: "Awakening", difficulty: "Advanced", operation: "Operation Hexadecimal Horrors" },
+            { map: "Kelly", mission: "Crop Circles", difficulty: "Advanced", operation: "Operation Hexadecimal Horrors" },
+            { map: "Kelly", mission: "Homestead Happenings", difficulty: "Advanced", operation: "Operation Madness vs Machines" },
+            { map: "Kelly", mission: "Mobocracy", difficulty: "Advanced", operation: "Operation Digital Directive" },
+            { map: "Kelly", mission: "Ominous Outback", difficulty: "Advanced", operation: "Operation Hexadecimal Horrors" },
+            // Legerdemain
+            { map: "Legerdemain", mission: "Legacy Heresy", difficulty: "Intermediate", operation: "Operation Ghoulish Gambit" },
+            { map: "Legerdemain", mission: "Midnight Patrol", difficulty: "Advanced", operation: "Operation Hexadecimal Horrors" },
+            { map: "Legerdemain", mission: "Shrouded Shrieks", difficulty: "Advanced", operation: "Operation Holographic Harvest" },
+            { map: "Legerdemain", mission: "Castle Crush", difficulty: "Reverse Advanced", operation: "Operation Rewired Rampage" },
+            // Lostvalley
+            { map: "Lostvalley", mission: "Haunted Hills", difficulty: "Intermediate", operation: "Operation Hexadecimal Horrors" },
+            { map: "Lostvalley", mission: "Spine Thief", difficulty: "Intermediate", operation: "Operation Holographic Harvest" },
+            { map: "Lostvalley", mission: "Undead Rising", difficulty: "Intermediate", operation: "Operation Hexadecimal Horrors" },
+            { map: "Lostvalley", mission: "Dreadful Discernment", difficulty: "Expert", operation: "Operation Hexadecimal Horrors" },
+            // Lotus
+            { map: "Lotus", mission: "LED-Motif", difficulty: "Advanced", operation: "Operation Galvanized Gauntlet" },
+            { map: "Lotus", mission: "Mechanical Damnation", difficulty: "Advanced", operation: "Operation Bolted Barbecue" },
+            { map: "Lotus", mission: "Mud", difficulty: "Advanced", operation: "Operation Osmium Ordinance" },
+            // Madhattan
+            { map: "Madhattan", mission: "Apoplexy", difficulty: "Intermediate", operation: "Operation Ghoulish Gambit" },
+            { map: "Madhattan", mission: "Night Shift", difficulty: "Intermediate", operation: "Operation Holographic Harvest" },
+            { map: "Madhattan", mission: "Apocalyptic Assault", difficulty: "Advanced", operation: "Operation Holographic Harvest" },
+            { map: "Madhattan", mission: "Diamonds In The Rough", difficulty: "Expert", operation: "Operation Holographic Harvest" },
+            // Mannhattan
+            { map: "Mannhattan", mission: "Scorched Skies", difficulty: "Advanced", operation: "Operation Bolted Barbecue" },
+            { map: "Mannhattan", mission: "Factory Reset", difficulty: "Advanced", operation: "Operation Anniversary Annihilation (Moonlight)" },
+            { map: "Mannhattan", mission: "Ax20", difficulty: "Expert", operation: "Operation Bolted Barbecue" },
+            { map: "Mannhattan", mission: "Discordant", difficulty: "Expert", operation: "Operation Anniversary Annihilation (Moonlight)" },
+            // Mannworks
+            { map: "Mannworks", mission: "Mathematical Miscalculation", difficulty: "Intermediate", operation: "Operation Magnetic Mayhem (Moonlight)" },
+            { map: "Mannworks", mission: "Xlr-8", difficulty: "Intermediate", operation: "Operation Anniversary Annihilation (Moonlight)" },
+            { map: "Mannworks", mission: "Manntenance", difficulty: "Advanced", operation: "Operation Binary Blackout (Moonlight)" },
+            { map: "Mannworks", mission: "Monster Maneuvers", difficulty: "Expert", operation: "Operation Magnetic Mayhem (Moonlight)" },
+            // Mansion
+            { map: "Mansion", mission: "Property Inspection", difficulty: "Advanced", operation: "Operation Osmium Ordinance" },
+            // Maplehill
+            { map: "Maplehill", mission: "Woodchip Wound", difficulty: "Intermediate", operation: "Operation Madness vs Machines" },
+            { map: "Maplehill", mission: "Sawdust Storage", difficulty: "Advanced", operation: "Operation Madness vs Machines" },
+            // Marsbase
+            { map: "Marsbase", mission: "Martian Civilizations", difficulty: "Intermediate", operation: "Operation Bolted Barbecue" },
+            { map: "Marsbase", mission: "Secret Struggle", difficulty: "Advanced", operation: "Operation Holographic Harvest" },
+            // Meltdown
+            { map: "Meltdown", mission: "Collapsing Cores", difficulty: "Intermediate", operation: "Operation Madness vs Machines" },
+            { map: "Meltdown", mission: "Fusion And Intrusion", difficulty: "Advanced", operation: "Operation Madness vs Machines" },
+            { map: "Meltdown", mission: "Encode Error", difficulty: "Expert", operation: "Operation Magnetic Mayhem (Moonlight)" },
+            { map: "Meltdown", mission: "Lights Out", difficulty: "Expert", operation: "Operation Ghoulish Gambit" },
+            // Memorial
+            { map: "Memorial", mission: "Necropolis", difficulty: "Expert", operation: "Operation Ghoulish Gambit" },
+            // Metro
+            { map: "Metro", mission: "Metropolis", difficulty: "Intermediate", operation: "Operation Bolted Barbecue" },
+            { map: "Metro", mission: "Steel Skyline", difficulty: "Intermediate", operation: "Operation Canteen Crasher" },
+            { map: "Metro", mission: "Baleful Bonanza", difficulty: "Advanced", operation: "Operation Ghoulish Gambit" },
+            { map: "Metro", mission: "Choir Of Robots", difficulty: "Advanced", operation: "Operation Madness vs Machines" },
+            { map: "Metro", mission: "Evil Eye", difficulty: "Advanced", operation: "Operation Titanium Tank" },
+            { map: "Metro", mission: "Synthetic Synthwave", difficulty: "Advanced", operation: "Operation Voltaic Violence (Moonlight)" },
+            // Monsoon
+            { map: "Monsoon", mission: "Weathered Wrecks", difficulty: "Intermediate", operation: "Operation Bolted Barbecue" },
+            { map: "Monsoon", mission: "Rolling Thunder", difficulty: "Advanced", operation: "Operation Bolted Barbecue" },
+            // Nightsky
+            { map: "Nightsky", mission: "Mountain Of Fear", difficulty: "Intermediate", operation: "Operation Hexadecimal Horrors" },
+            { map: "Nightsky", mission: "Night Of Fire", difficulty: "Intermediate", operation: "Operation Ghoulish Gambit" },
+            { map: "Nightsky", mission: "Nightsky Nightmare", difficulty: "Advanced", operation: "Operation Hexadecimal Horrors" },
+            { map: "Nightsky", mission: "Condemned Conflict", difficulty: "Expert", operation: "Operation Holographic Harvest" },
+            { map: "Nightsky", mission: "Death Con One", difficulty: "Expert", operation: "Operation Hexadecimal Horrors" },
+            // Nox
+            { map: "Nox", mission: "Enraged Emerald", difficulty: "Intermediate", operation: "Operation Galvanized Gauntlet" },
+            { map: "Nox", mission: "Programmed Plains", difficulty: "Advanced", operation: "Operation Voltaic Violence (Moonlight)" },
+            { map: "Nox", mission: "Radiant Dawn", difficulty: "Advanced", operation: "Operation Binary Blackout (Moonlight)" },
+            { map: "Nox", mission: "Robotic Ravage", difficulty: "Advanced", operation: "Operation Anniversary Annihilation (Moonlight)" },
+            { map: "Nox", mission: "Rusted Remnants", difficulty: "Advanced", operation: "Operation Anniversary Annihilation (Moonlight)" },
+            { map: "Nox", mission: "Sapphire Tin Can", difficulty: "Advanced", operation: "Operation Galvanized Gauntlet" },
+            { map: "Nox", mission: "Detritus", difficulty: "Advanced", operation: "Operation Voltaic Violence (Moonlight)" },
+            { map: "Nox", mission: "Noxibility", difficulty: "Advanced", operation: "Operation Magnetic Mayhem (Moonlight)" },
+            { map: "Nox", mission: "Gruesome Garrison", difficulty: "Expert", operation: "Operation Anniversary Annihilation (Moonlight)" },
+            { map: "Nox", mission: "Rubious Rubys Rampage", difficulty: "Expert", operation: "Operation Galvanized Gauntlet" },
+            // Null
+            { map: "Null", mission: "Baneful Harvest", difficulty: "Advanced", operation: "Operation Hexadecimal Horrors" },
+            { map: "Null", mission: "Distorted Reality", difficulty: "Advanced", operation: "Operation Hexadecimal Horrors" },
+            { map: "Null", mission: "Syntax Error", difficulty: "Advanced", operation: "Operation Hexadecimal Horrors" },
+            { map: "Null", mission: "Void Voyage", difficulty: "Advanced", operation: "Operation Hexadecimal Horrors" },
+            { map: "Null", mission: "0", difficulty: "Expert", operation: "Operation Ghoulish Gambit" },
+            { map: "Null", mission: "Call Of The Void", difficulty: "Expert", operation: "Operation Holographic Harvest" },
+            // Oilrig
+            { map: "Oilrig", mission: "Offshore Onslaught", difficulty: "Intermediate", operation: "Operation Osmium Ordinance" },
+            { map: "Oilrig", mission: "Orson Oligarchy", difficulty: "Intermediate", operation: "Operation Bolted Barbecue" },
+            { map: "Oilrig", mission: "Terrorist Simulation", difficulty: "Intermediate", operation: "Operation Madness vs Machines" },
+            { map: "Oilrig", mission: "Oilpocalypse", difficulty: "Nightmare", operation: "Operation Firmware Frenzy (Moonlight)" },
+            { map: "Oilrig", mission: "Rescindment", difficulty: "Advanced", operation: "Operation Madness vs Machines" },
+            { map: "Oilrig", mission: "Waters Of Wrath", difficulty: "Advanced", operation: "Operation Galvanized Gauntlet" },
+            { map: "Oilrig", mission: "Oil Overflow", difficulty: "Expert", operation: "Operation Magnetic Mayhem (Moonlight)" },
+            // Outlands
+            { map: "Outlands", mission: "Backwoods Blockade", difficulty: "Intermediate", operation: "Operation Canteen Crasher" },
+            { map: "Outlands", mission: "Rural Roadblock", difficulty: "Intermediate", operation: "Operation Madness vs Machines" },
+            { map: "Outlands", mission: "Antecedent Sapience", difficulty: "Advanced", operation: "Operation Madness vs Machines" },
+            { map: "Outlands", mission: "Dead Of Night", difficulty: "Advanced", operation: "Operation Madness vs Machines" },
+            { map: "Outlands", mission: "Hectic Haywire", difficulty: "Advanced", operation: "Operation Ghoulish Gambit" },
+            { map: "Outlands", mission: "Midnight Mutiny", difficulty: "Advanced", operation: "Operation Canteen Crasher" },
+            { map: "Outlands", mission: "Out Of Options", difficulty: "Expert", operation: "Operation Madness vs Machines" },
+            // Oxidize
+            { map: "Oxidize", mission: "Snowy Slaughter", difficulty: "Intermediate", operation: "Operation Canteen Crasher" },
+            { map: "Oxidize", mission: "Corroding Cadavers", difficulty: "Nightmare", operation: "Operation Canteen Crasher" },
+            { map: "Oxidize", mission: "Frosted Furnace", difficulty: "Advanced", operation: "Operation Canteen Crasher" },
+            { map: "Oxidize", mission: "Inverted Incursion", difficulty: "Advanced", operation: "Operation Holographic Harvest" },
+            { map: "Oxidize", mission: "Recollection Repression", difficulty: "Advanced", operation: "Operation Hexadecimal Horrors" },
+            // Oxidize Green
+            { map: "Oxidize Green", mission: "Greenhouse Roughhousing", difficulty: "Intermediate", operation: "Operation Madness vs Machines" },
+            { map: "Oxidize Green", mission: "Pollution Dilution", difficulty: "Intermediate", operation: "Operation Voltaic Violence (Moonlight)" },
+            { map: "Oxidize Green", mission: "Grass Run", difficulty: "Advanced", operation: "Operation Magnetic Mayhem (Moonlight)" },
+            { map: "Oxidize Green", mission: "Mannure", difficulty: "Advanced", operation: "Operation Madness vs Machines" },
+            { map: "Oxidize Green", mission: "Overclock", difficulty: "Advanced", operation: "Operation Madness vs Machines" },
+            // Powerplant
+            { map: "Powerplant", mission: "Energy Entropy", difficulty: "Intermediate", operation: "Operation Madness vs Machines" },
+            { map: "Powerplant", mission: "Generator Gambit", difficulty: "Intermediate", operation: "Operation Canteen Crasher" },
+            { map: "Powerplant", mission: "Voltaic Outrage", difficulty: "Advanced", operation: "Operation Madness vs Machines" },
+            { map: "Powerplant", mission: "Industrial Incline", difficulty: "Advanced", operation: "Operation Magnetic Mayhem (Moonlight)" },
+            { map: "Powerplant", mission: "Particle Protocol", difficulty: "Advanced", operation: "Operation Madness vs Machines" },
+            { map: "Powerplant", mission: "Power Palliative", difficulty: "Advanced", operation: "Operation Titanium Tank" },
+            { map: "Powerplant", mission: "Power Program", difficulty: "Advanced", operation: "Operation Madness vs Machines" },
+            { map: "Powerplant", mission: "Power Struggle", difficulty: "Advanced", operation: "Operation Voltaic Violence (Moonlight)" },
+            { map: "Powerplant", mission: "Three Leaf Takeover", difficulty: "Advanced", operation: "Operation Galvanized Gauntlet" },
+            { map: "Powerplant", mission: "Virtual Vortex", difficulty: "Advanced", operation: "Operation Hexadecimal Horrors" },
+            { map: "Powerplant", mission: "Current Surge", difficulty: "Expert", operation: "Operation Anniversary Annihilation (Moonlight)" },
+            { map: "Powerplant", mission: "Depredation", difficulty: "Expert", operation: "Operation Voltaic Violence (Moonlight)" },
+            { map: "Powerplant", mission: "Unoptimized Output", difficulty: "Expert", operation: "Operation Madness vs Machines" },
+            // Production
+            { map: "Production", mission: "Low Carbon Steal", difficulty: "Intermediate", operation: "Operation Voltaic Violence (Moonlight)" },
+            { map: "Production", mission: "Distillery Destruction", difficulty: "Advanced", operation: "Operation Madness vs Machines" },
+            { map: "Production", mission: "Frightful Freight", difficulty: "Advanced", operation: "Operation Madness vs Machines" },
+            { map: "Production", mission: "Indeathrialization", difficulty: "Advanced", operation: "Operation Digital Directive" },
+            { map: "Production", mission: "Molybdenum", difficulty: "Advanced", operation: "Operation Voltaic Violence (Moonlight)" },
+            { map: "Production", mission: "Paramagnetism", difficulty: "Expert", operation: "Operation Magnetic Mayhem (Moonlight)" },
+            // Quetzal
+            { map: "Quetzal", mission: "Dazed Disassembly", difficulty: "Intermediate", operation: "Operation Madness vs Machines" },
+            { map: "Quetzal", mission: "Oaxaca Offense", difficulty: "Intermediate", operation: "Operation Canteen Crasher" },
+            { map: "Quetzal", mission: "Sunset Sacrilege", difficulty: "Intermediate", operation: "Operation Canteen Crasher" },
+            { map: "Quetzal", mission: "Aztec Aeriality", difficulty: "Advanced", operation: "Operation Galvanized Gauntlet" },
+            { map: "Quetzal", mission: "Jungle Judgment", difficulty: "Advanced", operation: "Operation Binary Blackout (Moonlight)" },
+            { map: "Quetzal", mission: "Neotropic Nightmare", difficulty: "Advanced", operation: "Operation Bolted Barbecue" },
+            { map: "Quetzal", mission: "Tlacopan Tenacity", difficulty: "Advanced", operation: "Operation Canteen Crasher" },
+            { map: "Quetzal", mission: "Wilderness Warfare", difficulty: "Advanced", operation: "Operation Anniversary Annihilation (Moonlight)" },
+            { map: "Quetzal", mission: "Banana Barricade", difficulty: "Expert", operation: "Operation Galvanized Gauntlet" },
+            // Radar
+            { map: "Radar", mission: "Recruits Recognition", difficulty: "Intermediate", operation: "Operation Canteen Crasher" },
+            { map: "Radar", mission: "Recursive Reinforcements", difficulty: "Intermediate", operation: "Operation Madness vs Machines" },
+            { map: "Radar", mission: "Rocky Ravage", difficulty: "Advanced", operation: "Operation Canteen Crasher" },
+            // Rancher
+            { map: "Rancher", mission: "Contact", difficulty: "Advanced", operation: "Operation Ghoulish Gambit" },
+            { map: "Rancher", mission: "Impasse", difficulty: "Expert", operation: "Operation Bolted Barbecue" },
+            // Redridge
+            { map: "Redridge", mission: "Red Ridge", difficulty: "Nightmare", operation: "Operation Ghoulish Gambit" },
+            // Redstone Ridge
+            { map: "Redstone Ridge", mission: "Reddish Rebellion", difficulty: "Intermediate", operation: "Operation Binary Blackout (Moonlight)" },
+            { map: "Redstone Ridge", mission: "Armored Apparatus", difficulty: "Advanced", operation: "Operation Madness vs Machines" },
+            // Robotfactory
+            { map: "Robotfactory", mission: "Industrial Injection", difficulty: "Intermediate", operation: "Operation Osmium Ordinance" },
+            { map: "Robotfactory", mission: "Frantic Flood", difficulty: "Advanced", operation: "Operation Osmium Ordinance" },
+            { map: "Robotfactory", mission: "Short Circuit Execution", difficulty: "Reverse Advanced", operation: "Operation Osmium Ordinance" },
+            { map: "Robotfactory", mission: "Enduring Exceptions", difficulty: "Expert", operation: "Operation Osmium Ordinance" },
+            // Rottenburg
+            { map: "Rottenburg", mission: "Calendartillery", difficulty: "Intermediate", operation: "Operation Osmium Ordinance" },
+            { map: "Rottenburg", mission: "German Gears", difficulty: "Intermediate", operation: "Operation Anniversary Annihilation (Moonlight)" },
+            { map: "Rottenburg", mission: "Breaking Walls", difficulty: "Reverse Intermediate", operation: "Operation Rewired Rampage" },
+            { map: "Rottenburg", mission: "Spanner Switchup", difficulty: "Reverse Intermediate", operation: "Operation Rewired Rampage" },
+            { map: "Rottenburg", mission: "Assault And Battery", difficulty: "Advanced", operation: "Operation Bolted Barbecue" },
+            { map: "Rottenburg", mission: "Cybernetic Carnage", difficulty: "Advanced", operation: "Operation Voltaic Violence (Moonlight)" },
+            { map: "Rottenburg", mission: "Marathon", difficulty: "Advanced", operation: "Operation Galvanized Gauntlet" },
+            { map: "Rottenburg", mission: "Munich Mugging", difficulty: "Advanced", operation: "Operation Galvanized Gauntlet" },
+            { map: "Rottenburg", mission: "Township Tussle", difficulty: "Advanced", operation: "Operation Binary Blackout (Moonlight)" },
+            { map: "Rottenburg", mission: "Windy Windup", difficulty: "Advanced", operation: "Operation Magnetic Mayhem (Moonlight)" },
+            { map: "Rottenburg", mission: "Bx20", difficulty: "Expert", operation: "Operation Bolted Barbecue" },
+            { map: "Rottenburg", mission: "Germanium Gearbox", difficulty: "Expert", operation: "Operation Osmium Ordinance" },
+            // Rustvalley
+            { map: "Rustvalley", mission: "Restless Robotics", difficulty: "Intermediate", operation: "Operation Madness vs Machines" },
+            { map: "Rustvalley", mission: "Dust And Dirt", difficulty: "Advanced", operation: "Operation Digital Directive" },
+            { map: "Rustvalley", mission: "Roadblock Retaliation", difficulty: "Advanced", operation: "Operation Madness vs Machines" },
+            { map: "Rustvalley", mission: "Rodeotron", difficulty: "Advanced", operation: "Operation Madness vs Machines" },
+            { map: "Rustvalley", mission: "Reclamation", difficulty: "Reverse Expert", operation: "Operation Rewired Rampage" },
+            // Sand
+            { map: "Sand", mission: "Solar Solder", difficulty: "Intermediate", operation: "Operation Bolted Barbecue" },
+            // Saxford
+            { map: "Saxford", mission: "Grim Memorial", difficulty: "Advanced", operation: "Operation Osmium Ordinance" },
+            { map: "Saxford", mission: "Streetway Sections", difficulty: "Advanced", operation: "Operation Galvanized Gauntlet" },
+            // Scallops
+            { map: "Scallops", mission: "Scaling Somersault", difficulty: "Intermediate", operation: "Operation Osmium Ordinance" },
+            { map: "Scallops", mission: "Crustacean Cremation", difficulty: "Advanced", operation: "Operation Bolted Barbecue" },
+            { map: "Scallops", mission: "Scallywag", difficulty: "Advanced", operation: "Operation Osmium Ordinance" },
+            { map: "Scallops", mission: "Seafood Slaughter", difficulty: "Expert", operation: "Operation Osmium Ordinance" },
+            { map: "Scallops", mission: "What The Scallop", difficulty: "Expert", operation: "Operation Osmium Ordinance" },
+            // Scrapyard
+            { map: "Scrapyard", mission: "Midnight Recycled", difficulty: "Intermediate", operation: "Operation Osmium Ordinance" },
+            { map: "Scrapyard", mission: "Trashyard Throwdown", difficulty: "Advanced", operation: "Operation Bolted Barbecue" },
+            { map: "Scrapyard", mission: "Illegal Industry 1010", difficulty: "Advanced", operation: "Operation Bolted Barbecue" },
+            { map: "Scrapyard", mission: "Quantum Processing", difficulty: "Advanced", operation: "Operation Bolted Barbecue" },
+            { map: "Scrapyard", mission: "Rust Bucket", difficulty: "Advanced", operation: "Operation Bolted Barbecue" },
+            // Seabed
+            { map: "Seabed", mission: "Ocean Commotion", difficulty: "Advanced", operation: "Operation Digital Directive" },
+            // Sequoia
+            { map: "Sequoia", mission: "Arboreal Assault", difficulty: "Advanced", operation: "Operation Canteen Crasher" },
+            { map: "Sequoia", mission: "Doubletrouble", difficulty: "Advanced", operation: "Operation Canteen Crasher" },
+            { map: "Sequoia", mission: "Fiber-ops", difficulty: "Advanced", operation: "Operation Canteen Crasher" },
+            { map: "Sequoia", mission: "Forest Fight", difficulty: "Advanced", operation: "Operation Madness vs Machines" },
+            { map: "Sequoia", mission: "Uproot Upgrade", difficulty: "Advanced", operation: "Operation Canteen Crasher" },
+            { map: "Sequoia", mission: "Woody Weedouts", difficulty: "Advanced", operation: "Operation Madness vs Machines" },
+            { map: "Sequoia", mission: "Deforestation", difficulty: "Reverse Advanced", operation: "Operation Rewired Rampage" },
+            { map: "Sequoia", mission: "Forest Catastrophe", difficulty: "Expert", operation: "Operation Madness vs Machines" },
+            { map: "Sequoia", mission: "Woodland Pollution", difficulty: "Reverse Expert", operation: "Operation Rewired Rampage" },
+            // Shadows
+            { map: "Shadows", mission: "Bauernhof", difficulty: "Nightmare", operation: "Operation Holographic Harvest" },
+            // Shank
+            { map: "Shank", mission: "Pumpkin Panic", difficulty: "Intermediate", operation: "Operation Holographic Harvest" },
+            { map: "Shank", mission: "Scorched Earth", difficulty: "Intermediate", operation: "Operation Hexadecimal Horrors" },
+            { map: "Shank", mission: "Seasons Greetings", difficulty: "Intermediate", operation: "Operation Holographic Harvest" },
+            { map: "Shank", mission: "Bloodlust", difficulty: "Advanced", operation: "Operation Hexadecimal Horrors" },
+            { map: "Shank", mission: "Darksky Descendants", difficulty: "Advanced", operation: "Operation Holographic Harvest" },
+            { map: "Shank", mission: "Decaying Decryption", difficulty: "Advanced", operation: "Operation Hexadecimal Horrors" },
+            { map: "Shank", mission: "Moonlight Menace", difficulty: "Advanced", operation: "Operation Hexadecimal Horrors" },
+            { map: "Shank", mission: "Spookee", difficulty: "Advanced", operation: "Operation Hexadecimal Horrors" },
+            { map: "Shank", mission: "Mourning Star", difficulty: "Expert", operation: "Operation Holographic Harvest" },
+            // Sharp
+            { map: "Sharp", mission: "Sudden Equinox", difficulty: "Advanced", operation: "Operation Digital Directive" },
+            { map: "Sharp", mission: "Gilead Gehenom", difficulty: "Expert", operation: "Operation Galvanized Gauntlet" },
+            // Shiverpeak
+            { map: "Shiverpeak", mission: "Coldfront Coalition", difficulty: "Intermediate", operation: "Operation Canteen Crasher" },
+            { map: "Shiverpeak", mission: "Perfect Freeze", difficulty: "Intermediate", operation: "Operation Galvanized Gauntlet" },
+            { map: "Shiverpeak", mission: "Snowy Sunshine", difficulty: "Intermediate", operation: "Operation Binary Blackout (Moonlight)" },
+            { map: "Shiverpeak", mission: "Bytes And Blizzards", difficulty: "Advanced", operation: "Operation Galvanized Gauntlet" },
+            { map: "Shiverpeak", mission: "Ice Breaker", difficulty: "Advanced", operation: "Operation Canteen Crasher" },
+            { map: "Shiverpeak", mission: "Smissmas Slay", difficulty: "Advanced", operation: "Operation Canteen Crasher" },
+            { map: "Shiverpeak", mission: "Shattered Star", difficulty: "Expert", operation: "Operation Firmware Frenzy (Moonlight)" },
+            { map: "Shiverpeak", mission: "Shudder", difficulty: "Expert", operation: "Operation Madness vs Machines" },
+            // Silentsky
+            { map: "Silentsky", mission: "Fresh Dose Of Nausea", difficulty: "Intermediate", operation: "Operation Magnetic Mayhem (Moonlight)" },
+            { map: "Silentsky", mission: "Aerial Stupidity", difficulty: "Advanced", operation: "Operation Madness vs Machines" },
+            { map: "Silentsky", mission: "Ground Zero", difficulty: "Advanced", operation: "Operation Digital Directive" },
+            { map: "Silentsky", mission: "Subchronic Sufferance", difficulty: "Expert", operation: "Operation Magnetic Mayhem (Moonlight)" },
+            // Skangus
+            { map: "Skangus", mission: "Operation Paiks", difficulty: "Intermediate", operation: "Operation Galvanized Gauntlet" },
+            { map: "Skangus", mission: "Metal Scorn", difficulty: "Advanced", operation: "Operation Galvanized Gauntlet" },
+            { map: "Skangus", mission: "Sporulation", difficulty: "Expert", operation: "Operation Voltaic Violence (Moonlight)" },
+            // Skeleclipse
+            { map: "Skeleclipse", mission: "Crescent Calamity", difficulty: "Intermediate", operation: "Operation Holographic Harvest" },
+            { map: "Skeleclipse", mission: "Sunburn", difficulty: "Intermediate", operation: "Operation Holographic Harvest" },
+            { map: "Skeleclipse", mission: "Twilight Of Terror", difficulty: "Intermediate", operation: "Operation Ghoulish Gambit" },
+            { map: "Skeleclipse", mission: "Vicious Delicious", difficulty: "Advanced", operation: "Operation Ghoulish Gambit" },
+            { map: "Skeleclipse", mission: "Spooky Sprockets", difficulty: "Expert", operation: "Operation Holographic Harvest" },
+            { map: "Skeleclipse", mission: "When The Sun Shines Red", difficulty: "Expert", operation: "Operation Holographic Harvest" },
+            // Skullcove
+            { map: "Skullcove", mission: "Hell Overdrive", difficulty: "Nightmare", operation: "Operation Canteen Crasher" },
+            { map: "Skullcove", mission: "Call Of Cthulhu", difficulty: "Advanced", operation: "Operation Hexadecimal Horrors" },
+            { map: "Skullcove", mission: "Slaughter Screamhouse", difficulty: "Advanced", operation: "Operation Madness vs Machines" },
+            // Sludge
+            { map: "Sludge", mission: "Logging Dreadwood", difficulty: "Intermediate", operation: "Operation Ghoulish Gambit" },
+            { map: "Sludge", mission: "Claire De Lune", difficulty: "Advanced", operation: "Operation Bolted Barbecue" },
+            // Smog
+            { map: "Smog", mission: "Hazardous Haze", difficulty: "Intermediate", operation: "Operation Bolted Barbecue" },
+            { map: "Smog", mission: "Respiration Restriction", difficulty: "Advanced", operation: "Operation Bolted Barbecue" },
+            // Snowpine
+            { map: "Snowpine", mission: "Alpine Assault", difficulty: "Intermediate", operation: "Operation Canteen Crasher" },
+            { map: "Snowpine", mission: "Permafrost Panic", difficulty: "Advanced", operation: "Operation Canteen Crasher" },
+            { map: "Snowpine", mission: "Shattered Iceshard", difficulty: "Advanced", operation: "Operation Madness vs Machines" },
+            { map: "Snowpine", mission: "Shivering Slumber", difficulty: "Advanced", operation: "Operation Bolted Barbecue" },
+            { map: "Snowpine", mission: "Raid Resort", difficulty: "Expert", operation: "Operation Madness vs Machines" },
+            // Spacepost
+            { map: "Spacepost", mission: "Astronautical Nausea", difficulty: "Intermediate", operation: "Operation Madness vs Machines" },
+            { map: "Spacepost", mission: "Dead Space", difficulty: "Nightmare", operation: "Operation Canteen Crasher" },
+            { map: "Spacepost", mission: "Lunar Madness", difficulty: "Advanced", operation: "Operation Holographic Harvest" },
+            { map: "Spacepost", mission: "Regolith Rampage", difficulty: "Advanced", operation: "Operation Canteen Crasher" },
+            { map: "Spacepost", mission: "Symphony Of Space Machines", difficulty: "Advanced", operation: "Operation Canteen Crasher" },
+            { map: "Spacepost", mission: "Spatial Impasse", difficulty: "Reverse Advanced", operation: "Operation Osmium Ordinance" },
+            { map: "Spacepost", mission: "Astral Annihilation", difficulty: "Expert", operation: "Operation Bolted Barbecue" },
+            // Spybase
+            { map: "Spybase", mission: "Waters Of A Robot Regime", difficulty: "Expert", operation: "Operation Galvanized Gauntlet" },
+            // Steep
+            { map: "Steep", mission: "Cliffside Clashing", difficulty: "Intermediate", operation: "Operation Canteen Crasher" },
+            { map: "Steep", mission: "Mnemonic Mechanics", difficulty: "Intermediate", operation: "Operation Bolted Barbecue" },
+            { map: "Steep", mission: "Seismic Shakeout", difficulty: "Reverse Intermediate", operation: "Operation Rewired Rampage" },
+            { map: "Steep", mission: "Bandwidth Beatdown", difficulty: "Advanced", operation: "Operation Madness vs Machines" },
+            { map: "Steep", mission: "Claire De Laube", difficulty: "Advanced", operation: "Operation Galvanized Gauntlet" },
+            { map: "Steep", mission: "Drill Down Disaster", difficulty: "Advanced", operation: "Operation Galvanized Gauntlet" },
+            { map: "Steep", mission: "Fatal Error", difficulty: "Advanced", operation: "Operation Anniversary Annihilation (Moonlight)" },
+            { map: "Steep", mission: "Malefic Mining", difficulty: "Advanced", operation: "Operation Madness vs Machines" },
+            { map: "Steep", mission: "Mountainous Malware", difficulty: "Advanced", operation: "Operation Canteen Crasher" },
+            { map: "Steep", mission: "Peak Performance", difficulty: "Advanced", operation: "Operation Titanium Tank" },
+            { map: "Steep", mission: "Sentinel Searing", difficulty: "Reverse Advanced", operation: "Operation Rewired Rampage" },
+            { map: "Steep", mission: "Scrap Metal", difficulty: "Expert", operation: "Operation Madness vs Machines" },
+            // Swirl
+            { map: "Swirl", mission: "Twirled Trap", difficulty: "Intermediate", operation: "Operation Anniversary Annihilation (Moonlight)" },
+            { map: "Swirl", mission: "Scorching Snow", difficulty: "Reverse Intermediate", operation: "Operation Rewired Rampage" },
+            { map: "Swirl", mission: "Alpine Skylines", difficulty: "Advanced", operation: "Operation Digital Directive" },
+            { map: "Swirl", mission: "Robotic Avalanche", difficulty: "Reverse Advanced", operation: "Operation Rewired Rampage" },
+            { map: "Swirl", mission: "Virtual Insanity", difficulty: "Expert", operation: "Operation Anniversary Annihilation (Moonlight)" },
+            // Swirl Event
+            { map: "Swirl Event", mission: "Carnival Carnage", difficulty: "Advanced", operation: "Operation Holographic Harvest" },
+            { map: "Swirl Event", mission: "Revolving World", difficulty: "Advanced", operation: "Operation Holographic Harvest" },
+            { map: "Swirl Event", mission: "Sordid Scene", difficulty: "Advanced", operation: "Operation Ghoulish Gambit" },
+            { map: "Swirl Event", mission: "Trickster Terror", difficulty: "Advanced", operation: "Operation Holographic Harvest" },
+            // Teien
+            { map: "Teien", mission: "Onsen Onslaught", difficulty: "Advanced", operation: "Operation Canteen Crasher" },
+            { map: "Teien", mission: "Program Seppuku", difficulty: "Advanced", operation: "Operation Titanium Tank" },
+            { map: "Teien", mission: "Shogun Slaughter", difficulty: "Reverse Advanced", operation: "Operation Rewired Rampage" },
+            { map: "Teien", mission: "Disruption", difficulty: "Expert", operation: "Operation Madness vs Machines" },
+            // Tensai
+            { map: "Tensai", mission: "Sushi Sunrise", difficulty: "Intermediate", operation: "Operation Magnetic Mayhem (Moonlight)" },
+            { map: "Tensai", mission: "Drastic Dismantling", difficulty: "Advanced", operation: "Operation Galvanized Gauntlet" },
+            { map: "Tensai", mission: "Scarlet Embodiment", difficulty: "Advanced", operation: "Operation Digital Directive" },
+            { map: "Tensai", mission: "Surface Tension", difficulty: "Advanced", operation: "Operation Digital Directive" },
+            { map: "Tensai", mission: "Wasabi Warzone", difficulty: "Advanced", operation: "Operation Anniversary Annihilation (Moonlight)" },
+            { map: "Tensai", mission: "Dishonored Dynasty", difficulty: "Expert", operation: "Operation Voltaic Violence (Moonlight)" },
+            // Terrorlict
+            { map: "Terrorlict", mission: "Accursed Aggrievocation", difficulty: "Advanced", operation: "Operation Ghoulish Gambit" },
+            { map: "Terrorlict", mission: "Echoes Of A Warzone", difficulty: "Expert", operation: "Operation Ghoulish Gambit" },
+            // Trainyard
+            { map: "Trainyard", mission: "Driving Training", difficulty: "Intermediate", operation: "Operation Canteen Crasher" },
+            { map: "Trainyard", mission: "Ticket To Die", difficulty: "Intermediate", operation: "Operation Madness vs Machines" },
+            { map: "Trainyard", mission: "Railroad Ravage", difficulty: "Advanced", operation: "Operation Canteen Crasher" },
+            // Transmission
+            { map: "Transmission", mission: "Binary Broadcast", difficulty: "Intermediate", operation: "Operation Madness vs Machines" },
+            { map: "Transmission", mission: "Signal Shutdown", difficulty: "Advanced", operation: "Operation Madness vs Machines" },
+            { map: "Transmission", mission: "White Noise", difficulty: "Advanced", operation: "Operation Digital Directive" },
+            // Traumatic
+            { map: "Traumatic", mission: "Bloodwater", difficulty: "Intermediate", operation: "Operation Hexadecimal Horrors" },
+            { map: "Traumatic", mission: "River Of Despair", difficulty: "Intermediate", operation: "Operation Hexadecimal Horrors" },
+            { map: "Traumatic", mission: "Terrorstorm", difficulty: "Advanced", operation: "Operation Hexadecimal Horrors" },
+            // Underground
+            { map: "Underground", mission: "Mining Machines", difficulty: "Intermediate", operation: "Operation Canteen Crasher" },
+            { map: "Underground", mission: "Unorthodox Tech", difficulty: "Intermediate", operation: "Operation Voltaic Violence (Moonlight)" },
+            { map: "Underground", mission: "Mineral Mania", difficulty: "Advanced", operation: "Operation Madness vs Machines" },
+            { map: "Underground", mission: "Mineral Masher", difficulty: "Advanced", operation: "Operation Canteen Crasher" },
+            { map: "Underground", mission: "Mining Operation", difficulty: "Advanced", operation: "Operation Bolted Barbecue" },
+            { map: "Underground", mission: "Quartz Quadrant", difficulty: "Advanced", operation: "Operation Bolted Barbecue" },
+            { map: "Underground", mission: "Rustbelt", difficulty: "Advanced", operation: "Operation Madness vs Machines" },
+            { map: "Underground", mission: "Subterranean Skirmish", difficulty: "Advanced", operation: "Operation Canteen Crasher" },
+            { map: "Underground", mission: "Ultra Uplink", difficulty: "Advanced", operation: "Operation Canteen Crasher" },
+            { map: "Underground", mission: "Absentia", difficulty: "Advanced", operation: "Operation Binary Blackout (Moonlight)" },
+            { map: "Underground", mission: "Empire Excavation", difficulty: "Advanced", operation: "Operation Madness vs Machines" },
+            { map: "Underground", mission: "Path Of Radiance", difficulty: "Expert", operation: "Operation Voltaic Violence (Moonlight)" },
+            // Underworld
+            { map: "Underworld", mission: "Astral Projection", difficulty: "Intermediate", operation: "Operation Ghoulish Gambit" },
+            { map: "Underworld", mission: "Insidious Infiltration", difficulty: "Intermediate", operation: "Operation Hexadecimal Horrors" },
+            { map: "Underworld", mission: "Demonic Dominance", difficulty: "Advanced", operation: "Operation Hexadecimal Horrors" },
+            { map: "Underworld", mission: "Subterranean Animism", difficulty: "Advanced", operation: "Operation Hexadecimal Horrors" },
+            { map: "Underworld", mission: "Undead Dread", difficulty: "Advanced", operation: "Operation Ghoulish Gambit" },
+            { map: "Underworld", mission: "Unholy Assault", difficulty: "Advanced", operation: "Operation Hexadecimal Horrors" },
+            { map: "Underworld", mission: "Bones And Blood", difficulty: "Reverse Advanced", operation: "Operation Rewired Rampage" },
+            // Ventus
+            { map: "Ventus", mission: "Vacationvasion", difficulty: "Intermediate", operation: "Operation Bolted Barbecue" },
+            // Villa
+            { map: "Villa", mission: "Forgotten", difficulty: "Advanced", operation: "Operation Ghoulish Gambit" },
+            { map: "Villa", mission: "Recalled To Life", difficulty: "Advanced", operation: "Operation Holographic Harvest" },
+            // Waterfront
+            { map: "Waterfront", mission: "H2 Oh No", difficulty: "Intermediate", operation: "Operation Osmium Ordinance" },
+            { map: "Waterfront", mission: "Short Circuit", difficulty: "Intermediate", operation: "Operation Canteen Crasher" },
+            { map: "Waterfront", mission: "Corrosion Of Dignity", difficulty: "Intermediate", operation: "Operation Bolted Barbecue" },
+            { map: "Waterfront", mission: "Diode Charge", difficulty: "Intermediate", operation: "Operation Magnetic Mayhem (Moonlight)" },
+            { map: "Waterfront", mission: "Splash Zone", difficulty: "Advanced", operation: "Operation Bolted Barbecue" },
+            { map: "Waterfront", mission: "Unescapable Undine", difficulty: "Advanced", operation: "Operation Osmium Ordinance" },
+            { map: "Waterfront", mission: "Watershed Waylay", difficulty: "Advanced", operation: "Operation Titanium Tank" },
+            { map: "Waterfront", mission: "Whirly Wallop", difficulty: "Advanced", operation: "Operation Canteen Crasher" },
+            { map: "Waterfront", mission: "Eradication", difficulty: "Expert", operation: "Operation Bolted Barbecue" },
+            { map: "Waterfront", mission: "Treacherous Waters", difficulty: "Expert", operation: "Operation Madness vs Machines" },
+            { map: "Waterfront", mission: "Wild Wires", difficulty: "Expert", operation: "Operation Voltaic Violence (Moonlight)" },
+            // Waterlogged
+            { map: "Waterlogged", mission: "Flu Fight", difficulty: "Intermediate", operation: "Operation Canteen Crasher" },
+            { map: "Waterlogged", mission: "Cold Shoulder", difficulty: "Advanced", operation: "Operation Canteen Crasher" },
+            { map: "Waterlogged", mission: "Cryodoom", difficulty: "Advanced", operation: "Operation Galvanized Gauntlet" },
+            { map: "Waterlogged", mission: "Winters Bite", difficulty: "Expert", operation: "Operation Madness vs Machines" },
+            // Watermine
+            { map: "Watermine", mission: "Hydrophobia", difficulty: "Intermediate", operation: "Operation Osmium Ordinance" },
+            { map: "Watermine", mission: "Dig Of Wreckoning", difficulty: "Advanced", operation: "Operation Bolted Barbecue" },
+            { map: "Watermine", mission: "Electrolysis", difficulty: "Expert", operation: "Operation Osmium Ordinance" },
+            // Whitecliff
+            { map: "Whitecliff", mission: "Dover 2", difficulty: "Advanced", operation: "Operation Galvanized Gauntlet" },
+            // Whitecliff Event
+            { map: "Whitecliff Event", mission: "Coastal Cadaver", difficulty: "Advanced", operation: "Operation Hexadecimal Horrors" },
+            { map: "Whitecliff Event", mission: "Dirge Disunion", difficulty: "Advanced", operation: "Operation Holographic Harvest" },
+            { map: "Whitecliff Event", mission: "Dover", difficulty: "Advanced", operation: "Operation Holographic Harvest" },
+            { map: "Whitecliff Event", mission: "Descent", difficulty: "Expert", operation: "Operation Hexadecimal Horrors" },
+            { map: "Whitecliff Event", mission: "Light Up The Night", difficulty: "Expert", operation: "Operation Ghoulish Gambit" },
+            // Winterbridge
+            { map: "Winterbridge", mission: "Frozen Fortitude", difficulty: "Intermediate", operation: "Operation Madness vs Machines" },
+            { map: "Winterbridge", mission: "Corrupted Catharsis", difficulty: "Advanced", operation: "Operation Digital Directive" },
+            { map: "Winterbridge", mission: "Necromantic Nonsense", difficulty: "Advanced", operation: "Operation Digital Directive" },
+            { map: "Winterbridge", mission: "Rusted Retribution", difficulty: "Advanced", operation: "Operation Madness vs Machines" },
+            // Wizardry
+            { map: "Wizardry", mission: "Mechanical Magic", difficulty: "Advanced", operation: "Operation Madness vs Machines" },
+            // Yiresa
+            { map: "Yiresa", mission: "Black East", difficulty: "Intermediate", operation: "Operation Voltaic Violence (Moonlight)" },
+            { map: "Yiresa", mission: "Mesa Malware", difficulty: "Advanced", operation: "Operation Digital Directive" },
+            { map: "Yiresa", mission: "Omega Machine", difficulty: "Advanced", operation: "Operation Galvanized Gauntlet" },
+            // Yucatan
+            { map: "Yucatan", mission: "Fallout Frenzy", difficulty: "Advanced", operation: "Operation Canteen Crasher" },
+            { map: "Yucatan", mission: "Ruins Rumble", difficulty: "Advanced", operation: "Operation Canteen Crasher" }
+        ];
+
+
+        // ============================================================
+        // LÓGICA DA TABELA COM localStorage
+        // ============================================================
+        const STORAGE_KEY = 'mvm_progress';
+
+        function loadProgress() {
+            try {
+                const saved = localStorage.getItem(STORAGE_KEY);
+                if (saved) {
+                    const parsed = JSON.parse(saved);
+                    if (Array.isArray(parsed) && parsed.length === missions.length) {
+                        return parsed;
+                    }
+                }
+            } catch (e) {
+                console.warn('Erro ao carregar progresso:', e);
+            }
+            return new Array(missions.length).fill(false);
+        }
+
+        function saveProgress() {
+            try {
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(checkedStates));
+                showToast('✅ Progresso salvo automaticamente!');
+            } catch (e) {
+                console.warn('Erro ao salvar progresso:', e);
+            }
+        }
+
+        let checkedStates = loadProgress();
+
+        const tbody = document.getElementById('tableBody');
+        const searchInput = document.getElementById('searchInput');
+        const filterDifficulty = document.getElementById('filterDifficulty');
+        const filterStatus = document.getElementById('filterStatus');
+
+        function getDifficultyClass(difficulty) {
+            const lower = difficulty.toLowerCase();
+            if (lower.includes('intermediate')) return 'difficulty-intermediate';
+            if (lower.includes('advanced')) return 'difficulty-advanced';
+            if (lower.includes('expert')) return 'difficulty-expert';
+            if (lower.includes('nightmare')) return 'difficulty-nightmare';
+            if (lower.includes('master')) return 'difficulty-master';
+            return 'difficulty-reverse';
+        }
+
+        function getRowClass(difficulty) {
+            const lower = difficulty.toLowerCase();
+            if (lower.includes('nightmare')) return 'row-nightmare';
+            if (lower.includes('master')) return 'row-master';
+            if (lower.includes('reverse')) return 'row-reverse';
+            return '';
+        }
+
+        function renderTable() {
+            const searchTerm = searchInput.value.toLowerCase();
+            const diffFilter = filterDifficulty.value;
+            const statusFilter = filterStatus.value;
+
+            let filtered = missions.map((m, i) => ({ ...m, index: i, checked: checkedStates[i] }));
+
+            if (searchTerm) {
+                filtered = filtered.filter(m =>
+                    m.map.toLowerCase().includes(searchTerm) ||
+                    m.mission.toLowerCase().includes(searchTerm) ||
+                    m.operation.toLowerCase().includes(searchTerm)
+                );
+            }
+
+            if (diffFilter) {
+                filtered = filtered.filter(m => {
+                    const lowerDiff = m.difficulty.toLowerCase();
+                    const filterLower = diffFilter.toLowerCase();
+                    if (filterLower === 'reverse') {
+                        return lowerDiff.includes('reverse');
+                    }
+                    return lowerDiff.includes(filterLower);
+                });
+            }
+
+            if (statusFilter === 'done') {
+                filtered = filtered.filter(m => m.checked);
+            } else if (statusFilter === 'pending') {
+                filtered = filtered.filter(m => !m.checked);
+            }
+
+            const total = missions.length;
+            const done = checkedStates.filter(c => c).length;
+            const pending = total - done;
+            const percent = total > 0 ? Math.round((done / total) * 100) : 0;
+
+            document.getElementById('totalCount').textContent = total;
+            document.getElementById('doneCount').textContent = done;
+            document.getElementById('pendingCount').textContent = pending;
+            document.getElementById('progressPercent').textContent = percent + '%';
+
+            tbody.innerHTML = '';
+            filtered.forEach((m) => {
+                const row = document.createElement('tr');
+                const rowClass = getRowClass(m.difficulty);
+                if (rowClass) row.className = rowClass;
+
+                const diffClass = getDifficultyClass(m.difficulty);
+
+                row.innerHTML = `
+                    <td class="map-name">${m.map}</td>
+                    <td class="mission-name">${m.mission}</td>
+                    <td class="feito-cell">
+                        <label class="checkbox-container">
+                            <input type="checkbox" ${m.checked ? 'checked' : ''} data-index="${m.index}">
+                            <span class="checkmark"></span>
+                        </label>
+                    </td>
+                    <td><span class="${diffClass}">${m.difficulty}</span></td>
+                    <td class="operation-name">${m.operation}</td>
+                `;
+
+                tbody.appendChild(row);
+            });
+
+            document.querySelectorAll('.checkbox-container input[type="checkbox"]').forEach(cb => {
+                cb.addEventListener('change', function() {
+                    const index = parseInt(this.dataset.index);
+                    checkedStates[index] = this.checked;
+                    saveProgress();
+                    renderTable();
+                });
+            });
+        }
+
+        // ============================================================
+        // FUNÇÕES DE BOTÕES
+        // ============================================================
+
+        function showToast(message, isError = false) {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.className = 'toast' + (isError ? ' error' : '');
+            toast.classList.add('show');
+            clearTimeout(toast._timeout);
+            toast._timeout = setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        function resetProgress() {
+            if (confirm('⚠️ Tem certeza que deseja resetar todo o progresso?')) {
+                checkedStates = new Array(missions.length).fill(false);
+                saveProgress();
+                renderTable();
+                showToast('🔄 Progresso resetado!');
+            }
+        }
+
+        function exportProgress() {
+            const data = {
+                version: '1.0',
+                exportedAt: new Date().toISOString(),
+                totalMissions: missions.length,
+                progress: checkedStates
+            };
+            const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `mvm_progress_${new Date().toISOString().slice(0,10)}.json`;
+            a.click();
+            URL.revokeObjectURL(url);
+            showToast('📤 Progresso exportado!');
+        }
+
+        function importProgress(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const data = JSON.parse(e.target.result);
+                    if (data.progress && Array.isArray(data.progress) && data.progress.length === missions.length) {
+                        checkedStates = data.progress;
+                        saveProgress();
+                        renderTable();
+                        showToast('📥 Progresso importado com sucesso!');
+                    } else {
+                        showToast('❌ Arquivo inválido!', true);
+                    }
+                } catch (err) {
+                    showToast('❌ Erro ao ler o arquivo!', true);
+                }
+            };
+            reader.readAsText(file);
+            event.target.value = '';
+        }
+
+        // ============================================================
+        // EVENTOS E INICIALIZAÇÃO
+        // ============================================================
+
+        searchInput.addEventListener('input', renderTable);
+        filterDifficulty.addEventListener('change', renderTable);
+        filterStatus.addEventListener('change', renderTable);
+
+        renderTable();
+
+        // Salvar automaticamente ao fechar a página
+        window.addEventListener('beforeunload', saveProgress);
+
+        console.log('✅ MvM Tracker carregado!');
+        console.log(`📊 ${missions.length} missões carregadas.`);
+        console.log(`✅ ${checkedStates.filter(c => c).length} concluídas.`);
+    </script>
+</body>
+</html>
