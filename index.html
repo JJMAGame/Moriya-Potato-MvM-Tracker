@@ -837,6 +837,45 @@
         }
     }
 
+// ============================================================
+// EXPORTAR PROGRESSO (DOWNLOAD)
+// ============================================================
+function exportarProgresso() {
+    // Pega o progresso atual
+    const progress = checkedStates; // Seu array de booleanos
+    
+    // Monta o JSON com os dados
+    const dados = {
+        exportedAt: new Date().toISOString(),
+        totalMissions: missions.length,
+        progress: progress
+    };
+    
+    // Converte para JSON formatado
+    const json = JSON.stringify(dados, null, 2);
+    
+    // Cria o arquivo para download
+    const blob = new Blob([json], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    
+    // Cria link para download
+    const a = document.createElement('a');
+    a.href = url;
+    const dataAtual = new Date().toISOString().slice(0, 10);
+    a.download = `progresso_${dataAtual}.json`;
+    
+    // Dispara o download
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    
+    // Libera a URL
+    URL.revokeObjectURL(url);
+    
+    // Mostra notificação
+    showToast(`📤 Progresso exportado! (${dados.totalMissions} missões)`, 'info');
+}
+
     // ============================================================
     // TOAST (NOTIFICAÇÕES)
     // ============================================================
