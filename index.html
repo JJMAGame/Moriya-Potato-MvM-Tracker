@@ -792,50 +792,61 @@
         }
     }
 
-    // ============================================================
-    // IMPORTAR ARQUIVO
-    // ============================================================
-    async function importarArquivo(url, fileName) {
-        try {
-            showToast(`⏳ Baixando ${fileName}...`, 'info');
+// ============================================================
+// IMPORTAR ARQUIVO DO GITHUB E APLICAR
+// ============================================================
+async function importarArquivo(url, fileName) {
+    try {
+        const nomeExibicao = getNomePersonalizado(fileName);
+        showToast(`⏳ Baixando ${nomeExibicao}...`, 'info');
 
-            const response = await fetch(url);
-            if (!response.ok) {
-                throw new Error(`Erro ${response.status}`);
-            }
-
-            const data = await response.json();
-
-            // Verifica se o JSON tem o campo "progress"
-            if (data.progress && Array.isArray(data.progress)) {
-                // Salva no localStorage
-                localStorage.setItem('mvm_progress', JSON.stringify(data.progress));
-                
-                // Fecha o modal
-                fecharModalGitHub();
-                
-                // Mostra notificação
-                const total = data.progress.length;
-                const concluidas = data.progress.filter(c => c).length;
-                showToast(`✅ "${fileName}" importado! (${concluidas}/${total})`);
-                
-                // Recarrega a página para aplicar as mudanças
-                setTimeout(() => {
-                    location.reload();
-                }, 1000);
-                
-                console.log('📥 Arquivo importado:', fileName);
-                console.log(`📊 ${concluidas} de ${total} missões concluídas`);
-                
-            } else {
-                showToast('❌ Arquivo JSON inválido (campo "progress" não encontrado)', 'error');
-            }
-
-        } catch (error) {
-            console.error('Erro ao importar:', error);
-            showToast(`❌ Erro ao importar: ${error.message}`, 'error');
+        // 1️⃣ BAIXA O ARQUIVO
+        const response = await fetch(url);
+        if (!response.ok) {
+            throw new Error(`Erro ${response.status}`);
         }
+
+        const data = await response.json();
+
+        // 2️⃣ VERIFICA SE TEM O CAMPO "progress"
+        if (data.progress && Array.isArray(data.progress)) {
+            
+            // 3️⃣ VERIFICA SE O TAMANHO É IGUAL AO NÚMERO DE MISSÕES
+            if (data.progress.length !== missions.length) {
+                showToast(`❌ Tamanho do progresso não coincide! (${data.progress.length} vs ${missions.length})`, 'error');
+                return;
+            }
+            
+            // 4️⃣ APLICA O PROGRESSO
+            checkedStates = data.progress;  // ← ATUALIZA O ARRAY
+            
+            // 5️⃣ SALVA NO LOCALSTORAGE
+            localStorage.setItem('mvm_progress', JSON.stringify(checkedStates));
+            
+            // 6️⃣ FECHA O MODAL
+            fecharModalGitHub();
+            
+            // 7️⃣ ATUALIZA A TABELA
+            renderTable();  // ← ESSA É A LINHA QUE FALTAVA!
+            
+            // 8️⃣ MOSTRA NOTIFICAÇÃO
+            const total = data.progress.length;
+            const concluidas = data.progress.filter(c => c).length;
+            showToast(`✅ "${nomeExibicao}" importado! (${concluidas}/${total})`);
+            
+            console.log('📥 Arquivo importado:', fileName);
+            console.log(`📊 ${concluidas} de ${total} missões concluídas`);
+            console.log('📋 Progresso:', checkedStates);
+            
+        } else {
+            showToast('❌ Arquivo JSON inválido (campo "progress" não encontrado)', 'error');
+        }
+
+    } catch (error) {
+        console.error('Erro ao importar:', error);
+        showToast(`❌ Erro ao importar: ${error.message}`, 'error');
     }
+}
 
 // ============================================================
 // EXPORTAR PROGRESSO (DOWNLOAD)
