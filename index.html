@@ -729,7 +729,7 @@
 
         try {
             // URL da API do GitHub para listar a pasta
-            const url = `https://api.github.com/repos/${GITHUB_REPO}/contents/${SAVE_FOLDER}?ref=${GITHUB_BRANCH}`;
+            const url = `https://api.github.com/repos/JJMAGame/Moriya-Potato-MvM-Tracker/contents/Save-progress?ref=${GITHUB_BRANCH}`;
             const response = await fetch(url);
 
             if (!response.ok) {
