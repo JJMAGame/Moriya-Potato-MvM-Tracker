@@ -668,9 +668,12 @@
 /* Botões do lado esquerdo (empilhados) */
 .left-buttons {
     display: flex;
-    flex-direction: column;
+    flex-direction: column;  
     gap: 8px;
-    min-width: 180px;
+    position: absolute;      
+    top: 20px;
+    left: 20px;
+    z-index: 100;
 }
 
 .left-buttons button {
@@ -681,8 +684,8 @@
     font-weight: 600;
     font-size: 13px;
     transition: all 0.3s ease;
-    text-align: left;
-    width: 100%;
+    text-align: center;
+    min-width: 160px;
 }
 
 .actions {
@@ -707,13 +710,11 @@
 <!-- HTML DO BOTÃO E MODAL                                          -->
 <!-- ============================================================ -->
 
-<!-- Botão para abrir o modal -->
-<div class="top-bar">
-    <!-- Botões no canto superior esquerdo -->
-    <div class="left-buttons">
-        <button class="btn-github" onclick="abrirModalGitHub()">📂 Arquivos Moriya</button>
-        <button class="btn-event" onclick="window.open('event.html?v=' + Date.now(), 'Eventos', 'width=900,height=700')">📅 Eventos</button>
-    </div>
+<!-- Botões empilhados um embaixo do outro -->
+<div class="left-buttons">
+    <button class="btn-github" onclick="abrirModalGitHub()">📂 Arquivos Moriya</button>
+    <button class="btn-event" onclick="window.open('event.html?v=' + Date.now(), 'Eventos', 'width=900,height=700')">📅 Eventos</button>
+</div>
 
 <!-- Modal -->
 <div class="modal-overlay" id="githubModal">
