@@ -660,13 +660,41 @@
     }
 </style>
 
+/* ============================================================
+   BOTÕES EMPILHADOS
+   ============================================================ */
+   
+<style>
+.bottom-actions {
+    display: flex;
+    flex-direction: column;  /* ← EMPILHA VERTICALMENTE */
+    align-items: center;
+    gap: 10px;
+    margin-top: 15px;
+    margin-bottom: 20px;
+}
+
+.bottom-actions button {
+    padding: 10px 24px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    width: 200px; /* Largura fixa para ficarem iguais */
+}
+</style>
+
 <!-- ============================================================ -->
 <!-- HTML DO BOTÃO E MODAL                                          -->
 <!-- ============================================================ -->
 
 <!-- Botão para abrir o modal -->
-<button class="btn-github" onclick="abrirModalGitHub()">📂 Arquivos Moriya </button>
-<button class="btn-event" onclick="window.open('event.html?v=' + Date.now(), 'Eventos', 'width=900,height=700')">📅 Eventos</button>
+<div class="bottom-actions">
+    <button class="btn-github" onclick="abrirModalGitHub()">📂 Arquivos Moriya</button>
+    <button class="btn-event" onclick="window.open('event.html?v=' + Date.now(), 'Eventos', 'width=900,height=700')">📅 Eventos</button>
+</div>
 
 <!-- Modal -->
 <div class="modal-overlay" id="githubModal">
