@@ -69,6 +69,30 @@
         }
 
         /* ============================================================
+        EFEITO ARCO-ÍRIS COM GLOW - CORES EM MOVIMENTO
+        ============================================================ */
+        .rainbow-glow {
+            animation: arcoirisGlow 3s linear infinite !important;
+            background: linear-gradient(
+                to right,
+                #ff0000, #ff7700, #ffff00, #00ff00, 
+                #0000ff, #8b00ff, #ff00ff, #ff0000
+            ) !important;
+            background-size: 300% 100% !important;
+            -webkit-background-clip: text !important;
+            -webkit-text-fill-color: transparent !important;
+            background-clip: text !important;
+            font-weight: 700 !important;
+            display: inline-block !important;
+            filter: drop-shadow(0 0 20px rgba(255, 0, 255, 0.6)) !important;
+        }
+
+        @keyframes arcoirisGlow {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 300% 50%; }
+        }
+
+        /* ============================================================
            LISTA DE EVENTOS
         ============================================================ */
         .evento-card {
@@ -86,9 +110,6 @@
             border-color: #e94560;
         }
 
-        /* ============================================================
-           BADGE "AO VIVO" COM GLOW
-        ============================================================ */
         .evento-card .evento-titulo {
             display: flex;
             justify-content: space-between;
@@ -104,10 +125,9 @@
             color: #e0e0e0;
             font-size: 18px;
             font-weight: 600;
-        }
-
-        .evento-card .evento-titulo h2 .icon {
-            margin-right: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
         .evento-card .evento-titulo .evento-badge {
@@ -327,17 +347,24 @@
         // ============================================================
         const eventos = [
             {
+                // ============================================================
+                // EVENTO 1 - COM ARCO-ÍRIS (rainbow: true)
+                // ============================================================
                 nome: "Moriya Vs Potato Arquive ( interlúdio )",
-                dataInicio: "2026-07-31", // Formato: YYYY-MM-DD
+                dataInicio: "2026-07-31",
                 dataFim: "2026-08-01",
                 mapas: [
                     { nome: "Yiresa - Black East", wave: "7 Wave" },
                     { nome: "Sequoia - Forest Fight", wave: "7 Wave" },
                     { nome: "Condemned - Trespasser", wave: "" }
                 ],
-                videoId: ""
+                videoId: "",
+                rainbow: true // ← ATIVADO!
             },
             {
+                // ============================================================
+                // EVENTO 2 - SEM ARCO-ÍRIS (rainbow: false)
+                // ============================================================
                 nome: "Moriya Vs Potato Arquive ( Low Tier 1# )",
                 dataInicio: "2026-08-07",
                 dataFim: "2026-08-08",
@@ -347,9 +374,13 @@
                     { nome: "Deathpour - Bloodpour", wave: "6 Wave" },
                     { nome: "Legerdemain - Legacy Heresy", wave: "5 Wave" }
                 ],
-                videoId: ""
+                videoId: "",
+                rainbow: false // ← DESATIVADO!
             },
             {
+                // ============================================================
+                // EVENTO 3 - COM ARCO-ÍRIS (rainbow: true)
+                // ============================================================
                 nome: "Moriya Vs Potato Arquive ( Padrão Tier 1# )",
                 dataInicio: "2026-08-14",
                 dataFim: "2026-08-15",
@@ -358,9 +389,13 @@
                     { nome: "Condemned - Unholy Undead", wave: "5 Wave" },
                     { nome: "Derelict - Shadow Wave", wave: "6 Wave" }
                 ],
-                videoId: ""
+                videoId: "",
+                rainbow: false // ← ATIVADO!
             },
             {
+                // ============================================================
+                // EVENTO 4 - SEM ARCO-ÍRIS (rainbow: false)
+                // ============================================================
                 nome: "Moriya Vs Potato Arquive ( DELICIA Tier 1# )",
                 dataInicio: "2026-08-21",
                 dataFim: "2026-08-22",
@@ -368,14 +403,19 @@
                     { nome: "Hurricane - The Thunderous Fury Of A Robotic Typhoon", wave: "5 Wave" },
                     { nome: "Isolation - Depression", wave: "5 Wave" }
                 ],
-                videoId: ""
+                videoId: "",
+                rainbow: false // ← DESATIVADO!
             },
             {
+                // ============================================================
+                // EVENTO 5 - SEM ARCO-ÍRIS (omitido = false)
+                // ============================================================
                 nome: "Moriya Vs Potato Arquive ( interlúdio )",
                 dataInicio: "2026-08-28",
                 dataFim: "2026-07-31",
                 mapas: [],
-                videoId: ""
+                videoId: "",
+                rainbow: true
             },
 
             // ============================================================
@@ -383,13 +423,14 @@
             // ============================================================
             // {
             //     nome: "Nome do Evento",
-            //     dataInicio: "2025-01-01", // YYYY-MM-DD
+            //     dataInicio: "2025-01-01",
             //     dataFim: "2025-01-07",
             //     mapas: [
             //         { nome: "Mapa 1", wave: "7 Wave" },
             //         { nome: "Mapa 2", wave: "6 Wave" },
             //     ],
-            //     videoId: "" // ID do YouTube (ex: "dQw4w9WgXcQ")
+            //     videoId: "",
+            //     rainbow: true // ← true = ativa, false/omitido = desativa
             // },
         ];
 
@@ -440,7 +481,7 @@
             }
 
             let html = '';
-            eventos.forEach((evento, index) => {
+            eventos.forEach((evento) => {
                 const status = getStatusEvento(evento.dataInicio, evento.dataFim);
 
                 let badgeClass = '';
@@ -453,13 +494,19 @@
                     badgeIcon = '<span class="pulse-dot"></span>';
                 } else if (status === 'em-breve') {
                     badgeClass = 'badge-em-breve';
-                    badgeText = '📅 Em breve';
+                    badgeText = '📅 EM BREVE';
                     badgeIcon = '';
                 } else {
                     badgeClass = 'badge-encerrado';
-                    badgeText = '✅ Encerrado';
+                    badgeText = '✅ ENCERRADO';
                     badgeIcon = '';
                 }
+
+                // ============================================================
+                // 🔥 CONTROLE BOOLEANO: SÓ APLICA ARCO-ÍRIS SE rainbow === true
+                // ============================================================
+                const tituloClass = evento.rainbow === true ? 'rainbow-glow' : '';
+                const tituloIcon = evento.rainbow === true ? '🌈 ' : '📌 ';
 
                 // Monta a lista de mapas
                 let mapasHtml = '';
@@ -499,7 +546,10 @@
                 html += `
                     <div class="evento-card">
                         <div class="evento-titulo">
-                            <h2><span class="icon">📌</span> ${evento.nome}</h2>
+                            <h2>
+                                <span class="icon">${tituloIcon}</span>
+                                <span class="${tituloClass}">${evento.nome}</span>
+                            </h2>
                             <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
                                 <span style="color: #85c1e9; font-size: 12px;">
                                     📅 ${dataInicioFormatada} - ${dataFimFormatada}
@@ -527,7 +577,8 @@
         console.log(`📅 ${eventos.length} eventos`);
         eventos.forEach(e => {
             const status = getStatusEvento(e.dataInicio, e.dataFim);
-            console.log(`  📌 ${e.nome} → ${status} (${e.mapas.length} mapas)`);
+            const rainbow = e.rainbow === true ? '🌈' : '⬜';
+            console.log(`  ${rainbow} ${e.nome} → ${status} (${e.mapas.length} mapas)`);
         });
     </script>
 
