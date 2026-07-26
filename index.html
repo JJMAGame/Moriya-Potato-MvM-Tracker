@@ -20,6 +20,7 @@
         /* ============================================================
            LIGHTBAR - TOPO DA PÁGINA
         ============================================================ */
+
         .lightbar {
             width: 100%;
             background: #0f3460;
@@ -39,12 +40,12 @@
             background-size: 100% 100%, 300% 100%;
             animation: lightbarBorder 4s linear infinite;
         }
-
+        
         @keyframes lightbarBorder {
             0% { background-position: 0% 0%, 0% 50%; }
             100% { background-position: 0% 0%, 300% 50%; }
         }
-
+        
         /* Efeito de brilho na lightbar */
         .lightbar::after {
             content: '';
@@ -60,80 +61,65 @@
             pointer-events: none;
             animation: lightbarGlow 3s ease-in-out infinite;
         }
-
+        
         @keyframes lightbarGlow {
             0%, 100% { opacity: 0.3; transform: scale(1); }
             50% { opacity: 0.8; transform: scale(1.05); }
         }
-
+        
         .lightbar-content {
             display: flex;
-            justify-content: space-between;
+            justify-content: center;  /* ← CENTRALIZA OS BOTÕES */
             align-items: center;
             flex-wrap: wrap;
             gap: 15px;
             position: relative;
             z-index: 1;
         }
-
+        
         /* Botões dentro da lightbar */
         .lightbar-buttons {
             display: flex;
-            gap: 10px;
+            gap: 15px;
             flex-wrap: wrap;
+            justify-content: center;
         }
-
+        
         .lightbar-buttons button {
-            padding: 8px 18px;
+            padding: 8px 24px;
             border: none;
             border-radius: 8px;
             cursor: pointer;
             font-weight: 600;
-            font-size: 13px;
+            font-size: 14px;
             transition: all 0.3s ease;
             box-shadow: 0 2px 10px rgba(0,0,0,0.3);
         }
-
+        
         /* Botão GitHub */
         .lightbar-buttons .btn-github {
             background: #6e5494;
             color: white;
         }
-
+        
         .lightbar-buttons .btn-github:hover {
             background: #8b6cb0;
             transform: scale(1.05);
             box-shadow: 0 4px 20px rgba(110, 84, 148, 0.5);
         }
-
+        
         /* Botão Eventos */
         .lightbar-buttons .btn-event {
             background: #27ae60;
             color: white;
         }
-
+        
         .lightbar-buttons .btn-event:hover {
             background: #2ecc71;
             transform: scale(1.05);
             box-shadow: 0 4px 20px rgba(39, 174, 96, 0.5);
         }
-
-        /* Título na lightbar */
-        .lightbar-title {
-            color: #e0e0e0;
-            font-size: 16px;
-            font-weight: 700;
-            letter-spacing: 1px;
-            text-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
-        }
-
-        .lightbar-title span {
-            background: linear-gradient(to right, #e94560, #85c1e9);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
+        
         /* ============================================================
            CONTAINER PRINCIPAL
         ============================================================ */
@@ -763,9 +749,6 @@
                 <button class="btn-github" onclick="abrirModalGitHub()">📂 Arquivos Moriya</button>
                 <button class="btn-event" onclick="window.open('event.html?v=' + Date.now(), 'Eventos', 'width=900,height=700')">📅 Eventos</button>
             </div>
-            <div class="lightbar-title">
-                <span>⚙️ Moriya vs Potato Archive</span>
-            </div>
         </div>
     </div>
 
@@ -773,7 +756,7 @@
          CONTAINER PRINCIPAL
     ============================================================ -->
     <div class="container">
-
+       <h1>⚙️ Moriya vs Potato Archive Missions Tracker</h1>
         <div class="top-bar">
             <div class="stats">
                 <div class="stat-box">📊 Total: <span id="totalCount">0</span></div>
