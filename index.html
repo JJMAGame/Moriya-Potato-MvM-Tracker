@@ -22,54 +22,48 @@
         ============================================================ */
 
         .lightbar {
-            width: 100%;
-            background: #0f3460;
-            padding: 10px 20px;
-            border-radius: 12px 12px 0 0;
-            margin-bottom: 0px;
-            position: relative;
-            overflow: hidden;
-            border-bottom: 3px solid transparent;
-            background-image: linear-gradient(#0f3460, #0f3460), 
-                              linear-gradient(to right, 
-                                  #ff0000, #ff7700, #ffff00, #00ff00, 
-                                  #0000ff, #8b00ff, #ff00ff, #ff0000
-                              );
-            background-origin: padding-box, border-box;
-            background-clip: padding-box, border-box;
-            background-size: 100% 100%, 300% 100%;
-            animation: lightbarBorder 4s linear infinite;
+           width: 100%;
+           background: #0f3460;
+           padding: 12px 24px;
+           border-radius: 16px;  /* ← CANTOS ARREDONDADOS */
+           margin-bottom:25px;
+           position: relative;
+           overflow: hidden;
+           /* ===== BORDA ARCO-ÍRIS ANIMADA ===== */
+           border: 3px solid transparent;
+           background-image: linear-gradient(#0f3460, #0f3460), 
+                             linear-gradient(to right, 
+                                 #ff0000, #ff7700, #ffff00, #00ff00, 
+                                 #0000ff, #8b00ff, #ff00ff, #ff0000
+                             );
+           background-origin: padding-box, border-box;
+           background-clip: padding-box, border-box;
+           background-size: 100% 100%, 300% 100%;
+           animation: lightbarBorder 4s linear infinite;
+           box-shadow: 0 4px 20px rgba(0,0,0,0.4);
         }
-        
+
         @keyframes lightbarBorder {
             0% { background-position: 0% 0%, 0% 50%; }
             100% { background-position: 0% 0%, 300% 50%; }
         }
-        
-        /* Efeito de brilho na lightbar */
-        .lightbar::after {
+
+        /* Efeito de brilho interno */
+        .lightbar::before {
             content: '';
             position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(ellipse at center, 
-                rgba(255, 255, 255, 0.05) 0%, 
-                transparent 70%
-            );
-            pointer-events: none;
-            animation: lightbarGlow 3s ease-in-out infinite;
-        }
-        
-        @keyframes lightbarGlow {
-            0%, 100% { opacity: 0.3; transform: scale(1); }
-            50% { opacity: 0.8; transform: scale(1.05); }
+            top: 3px;
+            left: 3px;
+            right: 3px;
+            bottom: 3px;
+            background: #0f3460;
+            border-radius: 13px;  /* Um pouco menor que o border-radius do pai */
+            z-index: 0;
         }
         
         .lightbar-content {
             display: flex;
-            justify-content: center;  /* ← CENTRALIZA OS BOTÕES */
+            justify-content: center;
             align-items: center;
             flex-wrap: wrap;
             gap: 15px;
@@ -94,6 +88,8 @@
             font-size: 14px;
             transition: all 0.3s ease;
             box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            position: relative;
+            z-index: 2;
         }
         
         /* Botão GitHub */
