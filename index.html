@@ -132,6 +132,15 @@
             box-shadow: 0 8px 32px rgba(0,0,0,0.5);
         }
 
+        .titulo-icon {
+            width: 40px;           /* Ajuste o tamanho */
+            height: 40px;
+            vertical-align: middle; /* Alinha com o texto */
+            margin-right: 12px;     /* Espaço entre ícone e texto */
+            border-radius: 8px;     /* Opcional: deixa as bordas arredondadas */
+            object-fit: contain;    /* Mantém a proporção da imagem */
+        }
+
         h1 {
             color: #e0e0e0;
             text-align: center;
@@ -756,7 +765,10 @@
          CONTAINER PRINCIPAL
     ============================================================ -->
     <div class="container">
-       <h1>⚙️ Moriya vs Potato Archive Missions Tracker</h1>
+       <h1>
+         <img src="images/Moriya.png" alt="Moriya PvE" class="titulo-icon">  
+         ⚙️ Moriya vs Potato Archive Missions Tracker
+       </h1>
         <div class="top-bar">
             <div class="stats">
                 <div class="stat-box">📊 Total: <span id="totalCount">0</span></div>
