@@ -667,6 +667,139 @@
         }
 
         /* ============================================================
+        MODAL DE LOGIN
+        ============================================================ */
+        .modal-login {
+            max-width: 420px !important;
+        }
+        
+        .login-content {
+            padding: 10px 0;
+        }
+        
+        .login-avatar {
+            text-align: center;
+            font-size: 64px;
+            margin-bottom: 20px;
+        }
+        
+        .login-field {
+            margin-bottom: 15px;
+        }
+        
+        .login-field label {
+            display: block;
+            color: #85c1e9;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .login-input {
+            width: 100%;
+            padding: 10px 14px;
+            border: 2px solid #0f3460;
+            border-radius: 8px;
+            background: #1a1a2e;
+            color: #e0e0e0;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+        
+        .login-input:focus {
+            outline: none;
+            border-color: #e94560;
+        }
+        
+        .login-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .btn-login {
+            background: #27ae60;
+            color: white;
+            padding: 10px 30px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            flex: 1;
+        }
+        
+        .btn-login:hover {
+            background: #2ecc71;
+            transform: scale(1.02);
+        }
+        
+        .btn-register {
+            background: #2980b9;
+            color: white;
+            padding: 10px 30px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            flex: 1;
+        }
+        
+        .btn-register:hover {
+            background: #3498db;
+            transform: scale(1.02);
+        }
+        
+        .btn-register-full {
+            background: #27ae60;
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+        
+        .btn-register-full:hover {
+            background: #2ecc71;
+            transform: scale(1.02);
+        }
+        
+        .login-mensagem {
+            margin-top: 10px;
+            font-size: 13px;
+            min-height: 20px;
+        }
+        
+        .login-mensagem.erro { color: #e74c3c; }
+        .login-mensagem.sucesso { color: #27ae60; }
+        .login-mensagem.carregando { color: #f39c12; }
+        
+        .login-footer {
+            text-align: center;
+            margin-top: 15px;
+            color: #7f8c8d;
+            font-size: 13px;
+        }
+        
+        .login-footer a {
+            color: #85c1e9;
+            cursor: pointer;
+            text-decoration: underline;
+        }
+        
+        .login-footer a:hover {
+            color: #e94560;
+        }
+
+        /* ============================================================
            RESPONSIVO
         ============================================================ */
         @media (max-width: 768px) {
@@ -789,19 +922,28 @@
             }
         }
     </style>
+
+    <!-- ============================================================
+     SISTEMA DE LOGIN - FUNÇÕES
+     ============================================================ -->
+
     <script>
-    
     const ACCOUNTS_FOLDER = 'accounts';
     const SESSION_KEY = 'user_sessao';
     let usuarioLogado = null;
     
     // ============================================================
-    // FUNÇÕES PRINCIPAIS
+    // ABRIR/FECHAR LOGIN
     // ============================================================
     
     function abrirLogin() {
         const modal = document.getElementById('loginModal');
         if (modal) modal.classList.add('active');
+        const msg = document.getElementById('loginMensagem');
+        if (msg) msg.textContent = '';
+        document.getElementById('loginNome').value = '';
+        document.getElementById('loginSenha').value = '';
+        setTimeout(() => document.getElementById('loginNome').focus(), 100);
     }
     
     function fecharLogin() {
@@ -809,10 +951,19 @@
         if (modal) modal.classList.remove('active');
     }
     
+    // ============================================================
+    // ABRIR/FECHAR REGISTRO
+    // ============================================================
     function abrirRegistro() {
         fecharLogin();
         const modal = document.getElementById('registroModal');
         if (modal) modal.classList.add('active');
+        const msg = document.getElementById('regMensagem');
+        if (msg) msg.textContent = '';
+        document.getElementById('regNome').value = '';
+        document.getElementById('regSenha').value = '';
+        document.getElementById('regSenha2').value = '';
+        setTimeout(() => document.getElementById('regNome').focus(), 100);
     }
     
     function fecharRegistro() {
@@ -821,31 +972,49 @@
     }
     
     // ============================================================
-    // LOGIN
+    // FECHAR MODAIS CLICANDO FORA
+    // ============================================================
+    document.addEventListener('DOMContentLoaded', function() {
+        const loginModal = document.getElementById('loginModal');
+        if (loginModal) {
+            loginModal.addEventListener('click', function(e) {
+                if (e.target === this) fecharLogin();
+            });
+        }
+        const registroModal = document.getElementById('registroModal');
+        if (registroModal) {
+            registroModal.addEventListener('click', function(e) {
+                if (e.target === this) fecharRegistro();
+            });
+        }
+    });
+    
+    // ============================================================
+    // FAZER LOGIN
     // ============================================================
     async function fazerLogin() {
         const nomeEl = document.getElementById('loginNome');
         const senhaEl = document.getElementById('loginSenha');
         const msg = document.getElementById('loginMensagem');
         
-        if (!nomeEl || !senhaEl) {
-            alert('Erro: elementos de login não encontrados');
-            return;
-        }
+        if (!nomeEl || !senhaEl) return;
         
         const nome = nomeEl.value.trim();
         const senha = senhaEl.value;
         
         if (!nome) {
             msg.textContent = '❌ Digite seu nome';
+            msg.className = 'login-mensagem erro';
             return;
         }
         if (!senha) {
             msg.textContent = '❌ Digite sua senha';
+            msg.className = 'login-mensagem erro';
             return;
         }
         
         msg.textContent = '⏳ Verificando...';
+        msg.className = 'login-mensagem carregando';
         
         try {
             const url = `https://api.github.com/repos/${GITHUB_REPO}/contents/${ACCOUNTS_FOLDER}/${nome}.json?ref=${GITHUB_BRANCH}`;
@@ -853,6 +1022,7 @@
             
             if (!response.ok) {
                 msg.textContent = '❌ Usuário não encontrado';
+                msg.className = 'login-mensagem erro';
                 return;
             }
             
@@ -862,34 +1032,36 @@
             
             if (perfil.senha !== senha) {
                 msg.textContent = '❌ Senha incorreta';
+                msg.className = 'login-mensagem erro';
                 return;
             }
             
-            // Login bem-sucedido
             usuarioLogado = {
                 nome: perfil.nome,
                 avatar: perfil.avatar || '👤'
             };
-            
             localStorage.setItem(SESSION_KEY, JSON.stringify(usuarioLogado));
             atualizarInterface();
             
-            if (perfil.progress && perfil.progress.length === missions.length) {
-                checkedStates = perfil.progress;
-                localStorage.setItem(STORAGE_KEY, JSON.stringify(checkedStates));
-                renderTable();
+            if (perfil.progress && Array.isArray(perfil.progress)) {
+                if (perfil.progress.length === missions.length) {
+                    checkedStates = perfil.progress;
+                    localStorage.setItem(STORAGE_KEY, JSON.stringify(checkedStates));
+                    renderTable();
+                }
             }
             
             fecharLogin();
-            alert(`✅ Bem-vindo, ${perfil.nome}!`);
+            showToast(`✅ Bem-vindo, ${perfil.nome}!`);
             
         } catch (error) {
             msg.textContent = '❌ Erro: ' + error.message;
+            msg.className = 'login-mensagem erro';
         }
     }
     
     // ============================================================
-    // REGISTRO
+    // FAZER REGISTRO
     // ============================================================
     function fazerRegistro() {
         const nome = document.getElementById('regNome').value.trim();
@@ -900,14 +1072,17 @@
         
         if (!nome || nome.length < 3) {
             msg.textContent = '❌ Nome deve ter pelo menos 3 caracteres';
+            msg.className = 'login-mensagem erro';
             return;
         }
         if (!senha || senha.length < 4) {
             msg.textContent = '❌ Senha deve ter pelo menos 4 caracteres';
+            msg.className = 'login-mensagem erro';
             return;
         }
         if (senha !== senha2) {
             msg.textContent = '❌ Senhas não coincidem';
+            msg.className = 'login-mensagem erro';
             return;
         }
         
@@ -929,7 +1104,7 @@
         URL.revokeObjectURL(url);
         
         msg.textContent = '✅ Conta criada! Salve o arquivo na pasta accounts/';
-        msg.style.color = '#27ae60';
+        msg.className = 'login-mensagem sucesso';
         
         setTimeout(() => {
             fecharRegistro();
@@ -942,10 +1117,11 @@
     // LOGOUT
     // ============================================================
     function fazerLogout() {
-        if (confirm('Deseja sair?')) {
+        if (confirm('⚠️ Deseja realmente sair?')) {
             usuarioLogado = null;
             localStorage.removeItem(SESSION_KEY);
             atualizarInterface();
+            showToast('👋 Você saiu da conta');
         }
     }
     
@@ -953,21 +1129,21 @@
     // ATUALIZAR INTERFACE
     // ============================================================
     function atualizarInterface() {
-        const avatar = document.getElementById('userAvatar');
-        const nome = document.getElementById('userName');
+        const avatarEl = document.getElementById('userAvatar');
+        const nomeEl = document.getElementById('userName');
         const loginBtn = document.getElementById('loginBtn');
         const logoutBtn = document.getElementById('logoutBtn');
         
         if (usuarioLogado) {
-            avatar.textContent = usuarioLogado.avatar || '👤';
-            nome.textContent = usuarioLogado.nome;
-            loginBtn.style.display = 'none';
-            logoutBtn.style.display = 'inline-block';
+            if (avatarEl) avatarEl.textContent = usuarioLogado.avatar || '👤';
+            if (nomeEl) nomeEl.textContent = usuarioLogado.nome || 'Usuário';
+            if (loginBtn) loginBtn.style.display = 'none';
+            if (logoutBtn) logoutBtn.style.display = 'inline-block';
         } else {
-            avatar.textContent = '👤';
-            nome.textContent = 'Desconectado';
-            loginBtn.style.display = 'inline-block';
-            logoutBtn.style.display = 'none';
+            if (avatarEl) avatarEl.textContent = '👤';
+            if (nomeEl) nomeEl.textContent = 'Desconectado';
+            if (loginBtn) loginBtn.style.display = 'inline-block';
+            if (logoutBtn) logoutBtn.style.display = 'none';
         }
     }
     
@@ -1000,24 +1176,110 @@
          LIGHTBAR COM BOTÕES
     ============================================================ -->
      <div class="lightbar">
-         <div class="lightbar-content">
-             <div class="lightbar-left">
-                 <div class="user-info">
-                     <button class="user-btn" onclick="usuarioLogado ? fazerLogout() : abrirLogin()">
-                         <span id="userAvatar">👤</span>
-                         <span id="userName">Desconectado</span>
-                         <span class="user-status" id="loginBtn">🔓</span>
-                         <span class="user-status" id="logoutBtn" style="display:none;">🔒</span>
-                     </button>
-                 </div>
-             </div>
-             
-             <div class="lightbar-buttons">
-                 <button class="btn-github" onclick="abrirModalGitHub()">📂 Arquivos Moriya</button>
-                 <button class="btn-event" onclick="window.open('event.html?v=' + Date.now(), 'Eventos', 'width=900,height=700')">📅 Eventos</button>
-             </div>
-         </div>
-     </div>
+        <div class="lightbar-content">
+            <div class="lightbar-left">
+                <div class="user-info">
+                    <button class="user-btn" onclick="usuarioLogado ? fazerLogout() : abrirLogin()">
+                        <span id="userAvatar">👤</span>
+                        <span id="userName">Desconectado</span>
+                        <span class="user-status" id="loginBtn">🔓</span>
+                        <span class="user-status" id="logoutBtn" style="display:none;">🔒</span>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="lightbar-buttons">
+                <button class="btn-github" onclick="abrirModalGitHub()">📂 Arquivos Moriya</button>
+                <button class="btn-event" onclick="window.open('event.html?v=' + Date.now(), 'Eventos', 'width=900,height=700')">📅 Eventos</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================
+         MODAL DE LOGIN (DIRETO NO INDEX)
+    ============================================================ -->
+    <div class="modal-overlay" id="loginModal">
+        <div class="modal modal-login">
+            <div class="modal-header">
+                <h2>🔐 Login</h2>
+                <button class="close-btn" onclick="fecharLogin()">✕ Fechar</button>
+            </div>
+            
+            <div class="login-content">
+                <div class="login-avatar">👤</div>
+                
+                <div class="login-field">
+                    <label>👤 Nome de usuário</label>
+                    <input type="text" id="loginNome" placeholder="Digite seu nome" class="login-input">
+                </div>
+                
+                <div class="login-field">
+                    <label>🔑 Senha</label>
+                    <input type="password" id="loginSenha" placeholder="Digite sua senha" class="login-input" onkeydown="if(event.key==='Enter') fazerLogin()">
+                </div>
+                
+                <div class="login-buttons">
+                    <button class="btn-login" onclick="fazerLogin()">🔓 Entrar</button>
+                    <button class="btn-register" onclick="abrirRegistro()">📝 Criar Conta</button>
+                </div>
+                
+                <div class="login-mensagem" id="loginMensagem"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================
+         MODAL DE REGISTRO (DIRETO NO INDEX)
+    ============================================================ -->
+    <div class="modal-overlay" id="registroModal">
+        <div class="modal modal-login">
+            <div class="modal-header">
+                <h2>📝 Criar Conta</h2>
+                <button class="close-btn" onclick="fecharRegistro()">✕ Fechar</button>
+            </div>
+            
+            <div class="login-content">
+                <div class="login-field">
+                    <label>👤 Nome de usuário</label>
+                    <input type="text" id="regNome" placeholder="Escolha um nome" class="login-input">
+                </div>
+                
+                <div class="login-field">
+                    <label>🔑 Senha</label>
+                    <input type="password" id="regSenha" placeholder="Crie uma senha" class="login-input">
+                </div>
+                
+                <div class="login-field">
+                    <label>🔑 Confirmar senha</label>
+                    <input type="password" id="regSenha2" placeholder="Confirme sua senha" class="login-input">
+                </div>
+                
+                <div class="login-field">
+                    <label>😊 Avatar</label>
+                    <select id="regAvatar" class="login-input">
+                        <option value="👤">👤 Padrão</option>
+                        <option value="😊">😊</option>
+                        <option value="😎">😎</option>
+                        <option value="🤩">🤩</option>
+                        <option value="🧑‍💻">🧑‍💻</option>
+                        <option value="👨‍🚀">👨‍🚀</option>
+                        <option value="🧙‍♂️">🧙‍♂️</option>
+                        <option value="🦊">🦊</option>
+                        <option value="🐱">🐱</option>
+                        <option value="🐶">🐶</option>
+                    </select>
+                </div>
+                
+                <button class="btn-register-full" onclick="fazerRegistro()">✅ Criar Conta</button>
+                
+                <div class="login-mensagem" id="regMensagem"></div>
+                
+                <div class="login-footer">
+                    Já tem conta? <a onclick="fecharRegistro(); abrirLogin();">Faça login</a>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- ============================================================
          CONTAINER PRINCIPAL
