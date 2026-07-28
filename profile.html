@@ -1,7 +1,10 @@
 <!-- ============================================================
-     SISTEMA DE LOGIN (MODAIS E FUNÇÕES)
+     profile.html - SISTEMA DE LOGIN (SEM MODAIS DUPLICADOS)
      ============================================================ -->
 
+<!-- ============================================================
+     CSS DOS MODAIS (ESTILOS)
+     ============================================================ -->
 <style>
 /* ============================================================
    MODAL DE LOGIN
@@ -193,93 +196,7 @@
 </style>
 
 <!-- ============================================================
-     MODAL DE LOGIN
-     ============================================================ -->
-<div class="login-modal-overlay" id="loginModal">
-    <div class="login-modal">
-        <div class="login-modal-header">
-            <h2>🔐 Login</h2>
-            <button class="close-btn" onclick="fecharLogin()">✕ Fechar</button>
-        </div>
-        
-        <div class="login-content">
-            <div class="login-avatar">👤</div>
-            
-            <div class="login-field">
-                <label>👤 Nome de usuário</label>
-                <input type="text" id="loginNome" placeholder="Digite seu nome" class="login-input">
-            </div>
-            
-            <div class="login-field">
-                <label>🔑 Senha</label>
-                <input type="password" id="loginSenha" placeholder="Digite sua senha" class="login-input" onkeydown="if(event.key==='Enter') fazerLogin()">
-            </div>
-            
-            <div class="login-buttons">
-                <button class="btn-login" onclick="fazerLogin()">🔓 Entrar</button>
-                <button class="btn-register" onclick="abrirRegistro()">📝 Criar Conta</button>
-            </div>
-            
-            <div class="login-mensagem" id="loginMensagem"></div>
-        </div>
-    </div>
-</div>
-
-<!-- ============================================================
-     MODAL DE REGISTRO
-     ============================================================ -->
-<div class="login-modal-overlay" id="registroModal">
-    <div class="login-modal">
-        <div class="login-modal-header">
-            <h2>📝 Criar Conta</h2>
-            <button class="close-btn" onclick="fecharRegistro()">✕ Fechar</button>
-        </div>
-        
-        <div class="login-content">
-            <div class="login-field">
-                <label>👤 Nome de usuário</label>
-                <input type="text" id="regNome" placeholder="Escolha um nome" class="login-input">
-            </div>
-            
-            <div class="login-field">
-                <label>🔑 Senha</label>
-                <input type="password" id="regSenha" placeholder="Crie uma senha" class="login-input">
-            </div>
-            
-            <div class="login-field">
-                <label>🔑 Confirmar senha</label>
-                <input type="password" id="regSenha2" placeholder="Confirme sua senha" class="login-input">
-            </div>
-            
-            <div class="login-field">
-                <label>😊 Avatar</label>
-                <select id="regAvatar" class="login-input">
-                    <option value="👤">👤 Padrão</option>
-                    <option value="😊">😊</option>
-                    <option value="😎">😎</option>
-                    <option value="🤩">🤩</option>
-                    <option value="🧑‍💻">🧑‍💻</option>
-                    <option value="👨‍🚀">👨‍🚀</option>
-                    <option value="🧙‍♂️">🧙‍♂️</option>
-                    <option value="🦊">🦊</option>
-                    <option value="🐱">🐱</option>
-                    <option value="🐶">🐶</option>
-                </select>
-            </div>
-            
-            <button class="btn-register-full" onclick="fazerRegistro()">✅ Criar Conta</button>
-            
-            <div class="login-mensagem" id="regMensagem"></div>
-            
-            <div class="login-footer">
-                Já tem conta? <a onclick="fecharRegistro(); abrirLogin();">Faça login</a>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- ============================================================
-     JAVASCRIPT DO SISTEMA DE LOGIN
+     JAVASCRIPT DO SISTEMA DE LOGIN (SEM HTML)
      ============================================================ -->
 <script>
 // ============================================================
@@ -296,10 +213,21 @@ let usuarioLogado = null;
 function abrirLogin() {
     const modal = document.getElementById('loginModal');
     if (modal) modal.classList.add('active');
-    document.getElementById('loginMensagem').textContent = '';
-    document.getElementById('loginNome').value = '';
-    document.getElementById('loginSenha').value = '';
-    setTimeout(() => document.getElementById('loginNome').focus(), 100);
+    
+    const msg = document.getElementById('loginMensagem');
+    if (msg) {
+        msg.textContent = '';
+        msg.className = 'login-mensagem';
+    }
+    
+    const nome = document.getElementById('loginNome');
+    const senha = document.getElementById('loginSenha');
+    if (nome) nome.value = '';
+    if (senha) senha.value = '';
+    
+    setTimeout(() => {
+        if (nome) nome.focus();
+    }, 100);
 }
 
 function fecharLogin() {
@@ -314,11 +242,23 @@ function abrirRegistro() {
     fecharLogin();
     const modal = document.getElementById('registroModal');
     if (modal) modal.classList.add('active');
-    document.getElementById('regMensagem').textContent = '';
-    document.getElementById('regNome').value = '';
-    document.getElementById('regSenha').value = '';
-    document.getElementById('regSenha2').value = '';
-    setTimeout(() => document.getElementById('regNome').focus(), 100);
+    
+    const msg = document.getElementById('regMensagem');
+    if (msg) {
+        msg.textContent = '';
+        msg.className = 'login-mensagem';
+    }
+    
+    const nome = document.getElementById('regNome');
+    const senha = document.getElementById('regSenha');
+    const senha2 = document.getElementById('regSenha2');
+    if (nome) nome.value = '';
+    if (senha) senha.value = '';
+    if (senha2) senha2.value = '';
+    
+    setTimeout(() => {
+        if (nome) nome.focus();
+    }, 100);
 }
 
 function fecharRegistro() {
@@ -353,7 +293,10 @@ async function fazerLogin() {
     const msg = document.getElementById('loginMensagem');
     
     if (!nomeEl || !senhaEl) {
-        if (msg) msg.textContent = '❌ Erro no formulário';
+        if (msg) {
+            msg.textContent = '❌ Erro no formulário';
+            msg.className = 'login-mensagem erro';
+        }
         return;
     }
     
@@ -361,23 +304,32 @@ async function fazerLogin() {
     const senha = senhaEl.value;
     
     if (!nome) {
-        msg.textContent = '❌ Digite seu nome';
-        msg.className = 'login-mensagem erro';
+        if (msg) {
+            msg.textContent = '❌ Digite seu nome';
+            msg.className = 'login-mensagem erro';
+        }
         return;
     }
     if (!senha) {
-        msg.textContent = '❌ Digite sua senha';
-        msg.className = 'login-mensagem erro';
+        if (msg) {
+            msg.textContent = '❌ Digite sua senha';
+            msg.className = 'login-mensagem erro';
+        }
         return;
     }
     
-    msg.textContent = '⏳ Verificando...';
-    msg.className = 'login-mensagem carregando';
+    if (msg) {
+        msg.textContent = '⏳ Verificando...';
+        msg.className = 'login-mensagem carregando';
+    }
     
     try {
+        // Verifica se GITHUB_REPO existe
         if (typeof GITHUB_REPO === 'undefined') {
-            msg.textContent = '❌ Configuração do GitHub não encontrada';
-            msg.className = 'login-mensagem erro';
+            if (msg) {
+                msg.textContent = '❌ Configuração do GitHub não encontrada';
+                msg.className = 'login-mensagem erro';
+            }
             return;
         }
         
@@ -385,8 +337,10 @@ async function fazerLogin() {
         const response = await fetch(url);
         
         if (!response.ok) {
-            msg.textContent = '❌ Usuário não encontrado';
-            msg.className = 'login-mensagem erro';
+            if (msg) {
+                msg.textContent = '❌ Usuário não encontrado';
+                msg.className = 'login-mensagem erro';
+            }
             return;
         }
         
@@ -395,8 +349,10 @@ async function fazerLogin() {
         const perfil = JSON.parse(conteudo);
         
         if (perfil.senha !== senha) {
-            msg.textContent = '❌ Senha incorreta';
-            msg.className = 'login-mensagem erro';
+            if (msg) {
+                msg.textContent = '❌ Senha incorreta';
+                msg.className = 'login-mensagem erro';
+            }
             return;
         }
         
@@ -408,6 +364,7 @@ async function fazerLogin() {
         localStorage.setItem(SESSION_KEY, JSON.stringify(usuarioLogado));
         atualizarInterface();
         
+        // Carrega o progresso
         if (perfil.progress && Array.isArray(perfil.progress)) {
             if (typeof missions !== 'undefined' && perfil.progress.length === missions.length) {
                 if (typeof checkedStates !== 'undefined') {
@@ -426,15 +383,17 @@ async function fazerLogin() {
         }
         
     } catch (error) {
-        msg.textContent = '❌ Erro: ' + error.message;
-        msg.className = 'login-mensagem erro';
+        if (msg) {
+            msg.textContent = '❌ Erro: ' + error.message;
+            msg.className = 'login-mensagem erro';
+        }
     }
 }
 
 // ============================================================
-// FAZER REGISTRO
+// FAZER REGISTRO (ENVIA DIRETO PARA O GITHUB)
 // ============================================================
-function fazerRegistro() {
+async function fazerRegistro() {
     const nomeEl = document.getElementById('regNome');
     const senhaEl = document.getElementById('regSenha');
     const senha2El = document.getElementById('regSenha2');
@@ -453,6 +412,7 @@ function fazerRegistro() {
     
     msg.className = 'login-mensagem';
     
+    // ===== VALIDAÇÕES =====
     if (!nome || nome.length < 3) {
         msg.textContent = '❌ O nome deve ter pelo menos 3 caracteres';
         msg.className = 'login-mensagem erro';
@@ -469,41 +429,133 @@ function fazerRegistro() {
         return;
     }
     
-    let progress = [];
-    if (typeof checkedStates !== 'undefined') {
-        progress = checkedStates;
+    // ===== PEDIR TOKEN =====
+    if (typeof GITHUB_TOKEN !== 'undefined' && !GITHUB_TOKEN) {
+        const token = obterToken();
+        if (!token) {
+            msg.textContent = '❌ Token necessário para criar conta';
+            msg.className = 'login-mensagem erro';
+            return;
+        }
+        GITHUB_TOKEN = token;
     }
     
-    const dados = {
-        nome: nome,
-        senha: senha,
-        avatar: avatar,
-        progress: progress,
-        criadoEm: new Date().toISOString(),
-        ultimoAcesso: new Date().toISOString(),
-        totalMissions: typeof missions !== 'undefined' ? missions.length : 0
-    };
+    msg.textContent = '⏳ Criando conta no GitHub...';
+    msg.className = 'login-mensagem carregando';
     
-    const json = JSON.stringify(dados, null, 2);
-    const blob = new Blob([json], { type: 'application/json' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `${nome}.json`;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
-    
-    msg.textContent = '✅ Conta criada! Salve o arquivo e faça upload para a pasta accounts/';
-    msg.className = 'login-mensagem sucesso';
-    
-    setTimeout(() => {
-        fecharRegistro();
-        abrirLogin();
-        const loginNome = document.getElementById('loginNome');
-        if (loginNome) loginNome.value = nome;
-    }, 1500);
+    try {
+        // 1. VERIFICA SE O USUÁRIO JÁ EXISTE
+        const checkUrl = `https://api.github.com/repos/${GITHUB_REPO}/contents/${ACCOUNTS_FOLDER}/${nome}.json?ref=${GITHUB_BRANCH}`;
+        const checkResponse = await fetch(checkUrl, {
+            headers: {
+                'Authorization': `token ${GITHUB_TOKEN}`
+            }
+        });
+        
+        if (checkResponse.ok) {
+            msg.textContent = '❌ Este nome de usuário já existe!';
+            msg.className = 'login-mensagem erro';
+            return;
+        }
+        
+        // 2. CRIA O PERFIL
+        let progress = [];
+        if (typeof checkedStates !== 'undefined') {
+            progress = checkedStates;
+        }
+        
+        const dados = {
+            nome: nome,
+            senha: senha,
+            avatar: avatar,
+            progress: progress,
+            criadoEm: new Date().toISOString(),
+            ultimoAcesso: new Date().toISOString(),
+            totalMissions: typeof missions !== 'undefined' ? missions.length : 0
+        };
+        
+        // Converte para Base64
+        const json = JSON.stringify(dados, null, 2);
+        const base64 = btoa(unescape(encodeURIComponent(json)));
+        
+        // 3. ENVIA PARA O GITHUB
+        const url = `https://api.github.com/repos/${GITHUB_REPO}/contents/${ACCOUNTS_FOLDER}/${nome}.json`;
+        const body = {
+            message: `📝 Criando conta: ${nome}`,
+            content: base64,
+            branch: GITHUB_BRANCH
+        };
+        
+        const response = await fetch(url, {
+            method: 'PUT',
+            headers: {
+                'Authorization': `token ${GITHUB_TOKEN}`,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(body)
+        });
+        
+        if (!response.ok) {
+            const erro = await response.json();
+            throw new Error(erro.message || 'Erro ao enviar');
+        }
+        
+        // 4. SUCESSO
+        msg.textContent = `✅ Conta "${nome}" criada com sucesso!`;
+        msg.className = 'login-mensagem sucesso';
+        
+        // Faz login automático
+        usuarioLogado = {
+            nome: nome,
+            avatar: avatar || '👤'
+        };
+        localStorage.setItem(SESSION_KEY, JSON.stringify(usuarioLogado));
+        atualizarInterface();
+        
+        setTimeout(() => {
+            fecharRegistro();
+            if (typeof showToast === 'function') {
+                showToast(`✅ Bem-vindo, ${nome}!`);
+            } else {
+                alert(`✅ Bem-vindo, ${nome}!`);
+            }
+        }, 1500);
+        
+    } catch (error) {
+        console.error('Erro ao criar conta:', error);
+        msg.textContent = '❌ Erro: ' + error.message;
+        msg.className = 'login-mensagem erro';
+        
+        // Se o token for inválido, limpa ele da sessão
+        if (error.message.includes('401') || error.message.includes('403')) {
+            sessionStorage.removeItem('github_token');
+            if (typeof GITHUB_TOKEN !== 'undefined') GITHUB_TOKEN = '';
+            msg.textContent = '❌ Token inválido! Clique em "Criar Conta" novamente.';
+        }
+    }
+}
+
+// ============================================================
+// OBTER TOKEN (PEDE NA HORA)
+// ============================================================
+function obterToken() {
+    let token = sessionStorage.getItem('github_token');
+    if (!token) {
+        token = prompt(
+            '🔑 Digite seu token do GitHub:\n\n' +
+            'Como criar:\n' +
+            '1. Settings → Developer settings\n' +
+            '2. Personal access tokens → Tokens (classic)\n' +
+            '3. Generate new token\n' +
+            '4. Marque a opção "repo"\n' +
+            '5. Copie o token gerado'
+        );
+        if (token && token.trim() !== '') {
+            token = token.trim();
+            sessionStorage.setItem('github_token', token);
+        }
+    }
+    return token;
 }
 
 // ============================================================
@@ -553,14 +605,35 @@ function carregarSessao() {
             atualizarInterface();
             return true;
         }
-    } catch (e) {}
+    } catch (e) {
+        console.warn('Erro ao carregar sessão:', e);
+    }
     return false;
+}
+
+// ============================================================
+// LIMPAR TOKEN SALVO
+// ============================================================
+function limparToken() {
+    if (confirm('⚠️ Tem certeza que deseja limpar o token salvo?')) {
+        sessionStorage.removeItem('github_token');
+        if (typeof GITHUB_TOKEN !== 'undefined') GITHUB_TOKEN = '';
+        console.log('🔑 Token limpo com sucesso!');
+        if (typeof showToast === 'function') {
+            showToast('🔑 Token limpo!', 'info');
+        } else {
+            alert('🔑 Token limpo!');
+        }
+    }
 }
 
 // ============================================================
 // INICIALIZAR
 // ============================================================
-carregarSessao();
-
-console.log('✅ Sistema de login carregado!');
+// Só executa se não estiver sendo carregado pelo index.html
+if (typeof window !== 'undefined' && !window._profileLoaded) {
+    window._profileLoaded = true;
+    carregarSessao();
+    console.log('✅ Sistema de login carregado (profile.html)');
+}
 </script>
