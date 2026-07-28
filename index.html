@@ -1141,96 +1141,46 @@
     let usuarioLogado = null;
     
     // ============================================================
-    // ABRIR/FECHAR LOGIN
+    // FUNÇÕES DO LOGIN
     // ============================================================
     
     function abrirLogin() {
-        const modal = document.getElementById('loginModal');
-        if (modal) modal.classList.add('active');
-        const msg = document.getElementById('loginMensagem');
-        if (msg) msg.textContent = '';
+        document.getElementById('loginModal').classList.add('active');
+        document.getElementById('loginMensagem').textContent = '';
         document.getElementById('loginNome').value = '';
         document.getElementById('loginSenha').value = '';
-        setTimeout(() => document.getElementById('loginNome').focus(), 100);
     }
     
     function fecharLogin() {
-        const modal = document.getElementById('loginModal');
-        if (modal) modal.classList.remove('active');
+        document.getElementById('loginModal').classList.remove('active');
     }
-    
-    // ============================================================
-    // ABRIR/FECHAR REGISTRO
-    // ============================================================
-    function abrirRegistro() {
-        fecharLogin();
-        const modal = document.getElementById('registroModal');
-        if (modal) modal.classList.add('active');
-        const msg = document.getElementById('regMensagem');
-        if (msg) msg.textContent = '';
-        document.getElementById('regNome').value = '';
-        document.getElementById('regSenha').value = '';
-        document.getElementById('regSenha2').value = '';
-        setTimeout(() => document.getElementById('regNome').focus(), 100);
-    }
-    
-    function fecharRegistro() {
-        const modal = document.getElementById('registroModal');
-        if (modal) modal.classList.remove('active');
-    }
-    
-    // ============================================================
-    // FECHAR MODAIS CLICANDO FORA
-    // ============================================================
-    document.addEventListener('DOMContentLoaded', function() {
-        const loginModal = document.getElementById('loginModal');
-        if (loginModal) {
-            loginModal.addEventListener('click', function(e) {
-                if (e.target === this) fecharLogin();
-            });
-        }
-        const registroModal = document.getElementById('registroModal');
-        if (registroModal) {
-            registroModal.addEventListener('click', function(e) {
-                if (e.target === this) fecharRegistro();
-            });
-        }
-    });
     
     // ============================================================
     // FAZER LOGIN
     // ============================================================
     async function fazerLogin() {
-        const nomeEl = document.getElementById('loginNome');
-        const senhaEl = document.getElementById('loginSenha');
+        const nome = document.getElementById('loginNome').value.trim();
+        const senha = document.getElementById('loginSenha').value;
         const msg = document.getElementById('loginMensagem');
-        
-        if (!nomeEl || !senhaEl) return;
-        
-        const nome = nomeEl.value.trim();
-        const senha = senhaEl.value;
         
         if (!nome) {
             msg.textContent = '❌ Digite seu nome';
-            msg.className = 'login-mensagem erro';
             return;
         }
         if (!senha) {
             msg.textContent = '❌ Digite sua senha';
-            msg.className = 'login-mensagem erro';
             return;
         }
         
         msg.textContent = '⏳ Verificando...';
-        msg.className = 'login-mensagem carregando';
         
         try {
+            // Busca o arquivo do usuário no GitHub
             const url = `https://api.github.com/repos/${GITHUB_REPO}/contents/${ACCOUNTS_FOLDER}/${nome}.json?ref=${GITHUB_BRANCH}`;
             const response = await fetch(url);
             
             if (!response.ok) {
                 msg.textContent = '❌ Usuário não encontrado';
-                msg.className = 'login-mensagem erro';
                 return;
             }
             
@@ -1238,12 +1188,13 @@
             const conteudo = atob(data.content);
             const perfil = JSON.parse(conteudo);
             
+            // Verifica a senha
             if (perfil.senha !== senha) {
                 msg.textContent = '❌ Senha incorreta';
-                msg.className = 'login-mensagem erro';
                 return;
             }
             
+            // Login bem-sucedido
             usuarioLogado = {
                 nome: perfil.nome,
                 avatar: perfil.avatar || '👤'
@@ -1251,12 +1202,11 @@
             localStorage.setItem(SESSION_KEY, JSON.stringify(usuarioLogado));
             atualizarInterface();
             
-            if (perfil.progress && Array.isArray(perfil.progress)) {
-                if (perfil.progress.length === missions.length) {
-                    checkedStates = perfil.progress;
-                    localStorage.setItem(STORAGE_KEY, JSON.stringify(checkedStates));
-                    renderTable();
-                }
+            // Carrega o progresso
+            if (perfil.progress && perfil.progress.length === missions.length) {
+                checkedStates = perfil.progress;
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(checkedStates));
+                renderTable();
             }
             
             fecharLogin();
@@ -1264,155 +1214,63 @@
             
         } catch (error) {
             msg.textContent = '❌ Erro: ' + error.message;
-            msg.className = 'login-mensagem erro';
         }
     }
     
     // ============================================================
-    // FAZER REGISTRO (ENVIA DIRETO PARA O GITHUB)
+    // LOGOUT
     // ============================================================
-    async function fazerRegistro() {
-        const nomeEl = document.getElementById('regNome');
-        const senhaEl = document.getElementById('regSenha');
-        const senha2El = document.getElementById('regSenha2');
-        const avatarEl = document.getElementById('regAvatar');
-        const msg = document.getElementById('regMensagem');
-        
-        if (!nomeEl || !senhaEl || !senha2El || !msg) {
-            console.error('Elementos de registro não encontrados');
-            return;
-        }
-        
-        const nome = nomeEl.value.trim();
-        const senha = senhaEl.value;
-        const senha2 = senha2El.value;
-        const avatar = avatarEl ? avatarEl.value : '👤';
-        
-        msg.className = 'login-mensagem';
-        
-        // ===== VALIDAÇÕES =====
-        if (!nome || nome.length < 3) {
-            msg.textContent = '❌ O nome deve ter pelo menos 3 caracteres';
-            msg.className = 'login-mensagem erro';
-            return;
-        }
-        if (!senha || senha.length < 4) {
-            msg.textContent = '❌ A senha deve ter pelo menos 4 caracteres';
-            msg.className = 'login-mensagem erro';
-            return;
-        }
-        if (senha !== senha2) {
-            msg.textContent = '❌ As senhas não coincidem';
-            msg.className = 'login-mensagem erro';
-            return;
-        }
-        
-        // ===== PEDIR TOKEN =====
-        // Se não tiver token, pede
-        if (!GITHUB_TOKEN) {
-            const token = obterToken();
-            if (!token) {
-                msg.textContent = '❌ Token necessário para criar conta';
-                msg.className = 'login-mensagem erro';
-                return;
-            }
-            GITHUB_TOKEN = token;
-        }
-        
-        msg.textContent = '⏳ Criando conta no GitHub...';
-        msg.className = 'login-mensagem carregando';
-        
-        try {
-            // 1. VERIFICA SE O USUÁRIO JÁ EXISTE
-            const checkUrl = `https://api.github.com/repos/${GITHUB_REPO}/contents/${ACCOUNTS_FOLDER}/${nome}.json?ref=${GITHUB_BRANCH}`;
-            const checkResponse = await fetch(checkUrl, {
-                headers: {
-                    'Authorization': `token ${GITHUB_TOKEN}`
-                }
-            });
-            
-            if (checkResponse.ok) {
-                msg.textContent = '❌ Este nome de usuário já existe!';
-                msg.className = 'login-mensagem erro';
-                return;
-            }
-            
-            // 2. CRIA O PERFIL
-            let progress = [];
-            if (typeof checkedStates !== 'undefined') {
-                progress = checkedStates;
-            }
-            
-            const dados = {
-                nome: nome,
-                senha: senha,
-                avatar: avatar,
-                progress: progress,
-                criadoEm: new Date().toISOString(),
-                ultimoAcesso: new Date().toISOString(),
-                totalMissions: typeof missions !== 'undefined' ? missions.length : 0
-            };
-            
-            // Converte para Base64
-            const json = JSON.stringify(dados, null, 2);
-            const base64 = btoa(unescape(encodeURIComponent(json)));
-            
-            // 3. ENVIA PARA O GITHUB
-            const url = `https://api.github.com/repos/${GITHUB_REPO}/contents/${ACCOUNTS_FOLDER}/${nome}.json`;
-            const body = {
-                message: `📝 Criando conta: ${nome}`,
-                content: base64,
-                branch: GITHUB_BRANCH
-            };
-            
-            const response = await fetch(url, {
-                method: 'PUT',
-                headers: {
-                    'Authorization': `token ${GITHUB_TOKEN}`,
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(body)
-            });
-            
-            if (!response.ok) {
-                const erro = await response.json();
-                throw new Error(erro.message || 'Erro ao enviar');
-            }
-            
-            // 4. SUCESSO
-            msg.textContent = `✅ Conta "${nome}" criada com sucesso!`;
-            msg.className = 'login-mensagem sucesso';
-            
-            // Faz login automático
-            usuarioLogado = {
-                nome: nome,
-                avatar: avatar || '👤'
-            };
-            localStorage.setItem(SESSION_KEY, JSON.stringify(usuarioLogado));
+    function fazerLogout() {
+        if (confirm('⚠️ Deseja sair?')) {
+            usuarioLogado = null;
+            localStorage.removeItem(SESSION_KEY);
             atualizarInterface();
-            
-            setTimeout(() => {
-                fecharRegistro();
-                if (typeof showToast === 'function') {
-                    showToast(`✅ Bem-vindo, ${nome}!`);
-                } else {
-                    alert(`✅ Bem-vindo, ${nome}!`);
-                }
-            }, 1500);
-            
-        } catch (error) {
-            console.error('Erro ao criar conta:', error);
-            msg.textContent = '❌ Erro: ' + error.message;
-            msg.className = 'login-mensagem erro';
-            
-            // Se o token for inválido, limpa ele da sessão
-            if (error.message.includes('401') || error.message.includes('403')) {
-                sessionStorage.removeItem('github_token');
-                GITHUB_TOKEN = '';
-                msg.textContent = '❌ Token inválido! Clique em "Criar Conta" novamente.';
-            }
+            showToast('👋 Você saiu da conta');
         }
-      }    
+    }
+    
+    // ============================================================
+    // ATUALIZAR INTERFACE
+    // ============================================================
+    function atualizarInterface() {
+        const avatarEl = document.getElementById('userAvatar');
+        const nomeEl = document.getElementById('userName');
+        const loginBtn = document.getElementById('loginBtn');
+        const logoutBtn = document.getElementById('logoutBtn');
+        
+        if (usuarioLogado) {
+            avatarEl.textContent = usuarioLogado.avatar || '👤';
+            nomeEl.textContent = usuarioLogado.nome;
+            loginBtn.style.display = 'none';
+            logoutBtn.style.display = 'inline-block';
+        } else {
+            avatarEl.textContent = '👤';
+            nomeEl.textContent = 'Desconectado';
+            loginBtn.style.display = 'inline-block';
+            logoutBtn.style.display = 'none';
+        }
+    }
+    
+    // ============================================================
+    // CARREGAR SESSÃO SALVA
+    // ============================================================
+    function carregarSessao() {
+        try {
+            const salvo = localStorage.getItem(SESSION_KEY);
+            if (salvo) {
+                usuarioLogado = JSON.parse(salvo);
+                atualizarInterface();
+                return true;
+            }
+        } catch (e) {}
+        return false;
+    }
+    
+    // ============================================================
+    // INICIALIZAR
+    // ============================================================
+    carregarSessao();
+    console.log('✅ Sistema de login carregado!');    
         
         // ============================================================
         // FALLBACK: BAIXAR ARQUIVO (caso o token não funcione)
