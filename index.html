@@ -25,11 +25,10 @@
            width: 100%;
            background: #0f3460;
            padding: 12px 24px;
-           border-radius: 16px;  /* ← CANTOS ARREDONDADOS */
+           border-radius: 16px;
            margin-bottom:25px;
            position: relative;
            overflow: hidden;
-           /* ===== BORDA ARCO-ÍRIS ANIMADA ===== */
            border: 3px solid transparent;
            background-image: linear-gradient(#0f3460, #0f3460), 
                              linear-gradient(to right, 
@@ -48,7 +47,6 @@
             100% { background-position: 0% 0%, 300% 50%; }
         }
 
-        /* Efeito de brilho interno */
         .lightbar::before {
             content: '';
             position: absolute;
@@ -57,7 +55,7 @@
             right: 3px;
             bottom: 3px;
             background: #0f3460;
-            border-radius: 13px;  /* Um pouco menor que o border-radius do pai */
+            border-radius: 13px;
             z-index: 0;
         }
         
@@ -71,7 +69,6 @@
             z-index: 1;
         }
         
-        /* Botões dentro da lightbar */
         .lightbar-buttons {
             display: flex;
             gap: 15px;
@@ -92,7 +89,6 @@
             z-index: 2;
         }
         
-        /* Botão GitHub */
         .lightbar-buttons .btn-github {
             background: #6e5494;
             color: white;
@@ -104,7 +100,6 @@
             box-shadow: 0 4px 20px rgba(110, 84, 148, 0.5);
         }
         
-        /* Botão Eventos */
         .lightbar-buttons .btn-event {
             background: #27ae60;
             color: white;
@@ -116,44 +111,6 @@
             box-shadow: 0 4px 20px rgba(39, 174, 96, 0.5);
         }
 
-        /* ============================================================
-           SISTEMA DE SENHA DE LOGIN
-        ============================================================ */
-
-        .user-info {
-            display: flex;
-            align-items: center;
-        }
-        
-        .user-btn {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            background: rgba(255,255,255,0.1);
-            color: #e0e0e0;
-            padding: 6px 14px;
-            border: 1px solid rgba(255,255,255,0.2);
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 13px;
-            font-weight: 600;
-            transition: all 0.3s ease;
-        }
-        
-        .user-btn:hover {
-            background: rgba(255,255,255,0.2);
-            transform: scale(1.02);
-        }
-        
-        .user-btn #userAvatar {
-            font-size: 20px;
-        }
-        
-        .user-status {
-            font-size: 14px;
-            opacity: 0.8;
-        }
-        
         /* ============================================================
            CONTAINER PRINCIPAL
         ============================================================ */
@@ -167,21 +124,21 @@
         }
 
         .titulo-icon1 {
-            width: 40px;           /* Ajuste o tamanho */
+            width: 40px;
             height: 40px;
-            vertical-align: middle; /* Alinha com o texto */
-            margin-right: 12px;     /* Espaço entre ícone e texto */
-            border-radius: 8px;     /* Opcional: deixa as bordas arredondadas */
-            object-fit: contain;    /* Mantém a proporção da imagem */
+            vertical-align: middle;
+            margin-right: 12px;
+            border-radius: 8px;
+            object-fit: contain;
         }
 
         .titulo-icon2 {
-            width: 100px;           /* Ajuste o tamanho */
+            width: 100px;
             height: 100px;
-            vertical-align: middle; /* Alinha com o texto */
-            margin-right: 12px;     /* Espaço entre ícone e texto */
-            border-radius: 0px;     /* Opcional: deixa as bordas arredondadas */
-            object-fit: contain;    /* Mantém a proporção da imagem */
+            vertical-align: middle;
+            margin-right: 12px;
+            border-radius: 0px;
+            object-fit: contain;
         }
 
         h1 {
@@ -667,139 +624,6 @@
         }
 
         /* ============================================================
-        MODAL DE LOGIN
-        ============================================================ */
-        .modal-login {
-            max-width: 420px !important;
-        }
-        
-        .login-content {
-            padding: 10px 0;
-        }
-        
-        .login-avatar {
-            text-align: center;
-            font-size: 64px;
-            margin-bottom: 20px;
-        }
-        
-        .login-field {
-            margin-bottom: 15px;
-        }
-        
-        .login-field label {
-            display: block;
-            color: #85c1e9;
-            font-size: 13px;
-            font-weight: 600;
-            margin-bottom: 5px;
-        }
-        
-        .login-input {
-            width: 100%;
-            padding: 10px 14px;
-            border: 2px solid #0f3460;
-            border-radius: 8px;
-            background: #1a1a2e;
-            color: #e0e0e0;
-            font-size: 14px;
-            transition: all 0.3s ease;
-        }
-        
-        .login-input:focus {
-            outline: none;
-            border-color: #e94560;
-        }
-        
-        .login-buttons {
-            display: flex;
-            gap: 10px;
-            margin-top: 15px;
-            flex-wrap: wrap;
-        }
-        
-        .btn-login {
-            background: #27ae60;
-            color: white;
-            padding: 10px 30px;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 600;
-            font-size: 14px;
-            transition: all 0.3s ease;
-            flex: 1;
-        }
-        
-        .btn-login:hover {
-            background: #2ecc71;
-            transform: scale(1.02);
-        }
-        
-        .btn-register {
-            background: #2980b9;
-            color: white;
-            padding: 10px 30px;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 600;
-            font-size: 14px;
-            transition: all 0.3s ease;
-            flex: 1;
-        }
-        
-        .btn-register:hover {
-            background: #3498db;
-            transform: scale(1.02);
-        }
-        
-        .btn-register-full {
-            background: #27ae60;
-            color: white;
-            padding: 12px 30px;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 600;
-            font-size: 14px;
-            transition: all 0.3s ease;
-            width: 100%;
-        }
-        
-        .btn-register-full:hover {
-            background: #2ecc71;
-            transform: scale(1.02);
-        }
-        
-        .login-mensagem {
-            margin-top: 10px;
-            font-size: 13px;
-            min-height: 20px;
-        }
-        
-        .login-mensagem.erro { color: #e74c3c; }
-        .login-mensagem.sucesso { color: #27ae60; }
-        .login-mensagem.carregando { color: #f39c12; }
-        
-        .login-footer {
-            text-align: center;
-            margin-top: 15px;
-            color: #7f8c8d;
-            font-size: 13px;
-        }
-        
-        .login-footer a {
-            color: #85c1e9;
-            cursor: pointer;
-            text-decoration: underline;
-        }
-        
-        .login-footer a:hover {
-            color: #e94560;
-        }
-
-        /* ============================================================
            RESPONSIVO
         ============================================================ */
         @media (max-width: 768px) {
@@ -825,11 +649,6 @@
                 text-align: center;
                 font-size: 12px;
                 padding: 8px 12px;
-            }
-
-            .lightbar-title {
-                font-size: 14px;
-                text-align: center;
             }
 
             .container {
@@ -921,676 +740,18 @@
                 min-width: 120px;
             }
         }
-        /* ============================================================
-           FEEDBACK DE CRIAÇÃO DE CONTA
-           ============================================================ */
-        
-        /* Container do progresso */
-        .progress-container {
-            display: none;
-            margin-top: 20px;
-            padding: 20px;
-            background: #1a1a2e;
-            border-radius: 12px;
-            border: 1px solid #2a2a4a;
-        }
-        
-        .progress-container.ativo {
-            display: block;
-            animation: fadeInProgress 0.5s ease;
-        }
-        
-        @keyframes fadeInProgress {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        /* Título do progresso */
-        .progress-titulo {
-            color: #e0e0e0;
-            font-size: 16px;
-            font-weight: 600;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .progress-titulo .spinner {
-            display: inline-block;
-            width: 20px;
-            height: 20px;
-            border: 3px solid #2a2a4a;
-            border-top: 3px solid #e94560;
-            border-radius: 50%;
-            animation: spin 0.8s linear infinite;
-        }
-        
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        
-        /* Lista de etapas */
-        .etapas-lista {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-        
-        .etapa-item {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 10px 14px;
-            margin: 4px 0;
-            border-radius: 8px;
-            background: #0f1a2e;
-            transition: all 0.3s ease;
-            opacity: 0.4;
-        }
-        
-        .etapa-item.ativo {
-            opacity: 1;
-            background: #0f3460;
-            border-left: 3px solid #f39c12;
-        }
-        
-        .etapa-item.concluido {
-            opacity: 1;
-            background: #0f1a2e;
-            border-left: 3px solid #27ae60;
-        }
-        
-        .etapa-item.erro {
-            opacity: 1;
-            background: #1a0a0a;
-            border-left: 3px solid #e74c3c;
-        }
-        
-        /* Ícones das etapas */
-        .etapa-icon {
-            font-size: 20px;
-            width: 32px;
-            text-align: center;
-            flex-shrink: 0;
-        }
-        
-        .etapa-texto {
-            flex: 1;
-            color: #c0c0c0;
-            font-size: 14px;
-        }
-        
-        .etapa-texto strong {
-            color: #e0e0e0;
-        }
-        
-        .etapa-status {
-            font-size: 12px;
-            color: #7f8c8d;
-            font-weight: 600;
-        }
-        
-        .etapa-item.ativo .etapa-status {
-            color: #f39c12;
-        }
-        
-        .etapa-item.concluido .etapa-status {
-            color: #27ae60;
-        }
-        
-        .etapa-item.erro .etapa-status {
-            color: #e74c3c;
-        }
-        
-        /* Barra de progresso */
-        .barra-progresso {
-            width: 100%;
-            height: 4px;
-            background: #2a2a4a;
-            border-radius: 4px;
-            margin-top: 15px;
-            overflow: hidden;
-        }
-        
-        .barra-progresso .barra-preenchida {
-            height: 100%;
-            width: 0%;
-            border-radius: 4px;
-            background: linear-gradient(to right, #e94560, #f39c12, #27ae60);
-            transition: width 0.5s ease;
-        }
-        
-        /* Commit info */
-        .commit-info {
-            margin-top: 15px;
-            padding: 12px 16px;
-            background: #0f1a2e;
-            border-radius: 8px;
-            border: 1px solid #2a2a4a;
-            display: none;
-        }
-        
-        .commit-info.visivel {
-            display: block;
-            animation: fadeInProgress 0.5s ease;
-        }
-        
-        .commit-info .commit-titulo {
-            color: #85c1e9;
-            font-size: 13px;
-            font-weight: 600;
-            margin-bottom: 5px;
-        }
-        
-        .commit-info .commit-detalhes {
-            color: #7f8c8d;
-            font-size: 12px;
-            font-family: monospace;
-            word-break: break-all;
-        }
-        
-        .commit-info .commit-detalhes .destaque {
-            color: #27ae60;
-        }
-        
-        /* Botão de fechar feedback */
-        .btn-fechar-feedback {
-            background: #c0392b;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            padding: 6px 16px;
-            cursor: pointer;
-            font-weight: 600;
-            font-size: 12px;
-            transition: all 0.3s ease;
-            margin-top: 10px;
-        }
-        
-        .btn-fechar-feedback:hover {
-            background: #e74c3c;
-            transform: scale(1.02);
-        }
-        
-        /* Responsivo */
-        @media (max-width: 600px) {
-            .etapa-item {
-                flex-wrap: wrap;
-                gap: 6px;
-            }
-            
-            .etapa-texto {
-                font-size: 13px;
-            }
-            
-            .etapa-status {
-                font-size: 10px;
-            }
-        }
     </style>
-
-    <!-- ============================================================
-     SISTEMA DE LOGIN - FUNÇÕES
-     ============================================================ -->
-
-    <script>
-    const ACCOUNTS_FOLDER = 'accounts';
-    const SESSION_KEY = 'user_sessao';
-    let usuarioLogado = null;
-    
-    // ============================================================
-    // FUNÇÕES DO LOGIN
-    // ============================================================
-    
-    function abrirLogin() {
-        document.getElementById('loginModal').classList.add('active');
-        document.getElementById('loginMensagem').textContent = '';
-        document.getElementById('loginNome').value = '';
-        document.getElementById('loginSenha').value = '';
-    }
-    
-    function fecharLogin() {
-        document.getElementById('loginModal').classList.remove('active');
-    }
-    
-    // ============================================================
-    // FAZER LOGIN
-    // ============================================================
-    async function fazerLogin() {
-        const nome = document.getElementById('loginNome').value.trim();
-        const senha = document.getElementById('loginSenha').value;
-        const msg = document.getElementById('loginMensagem');
-        
-        if (!nome) {
-            msg.textContent = '❌ Digite seu nome';
-            return;
-        }
-        if (!senha) {
-            msg.textContent = '❌ Digite sua senha';
-            return;
-        }
-        
-        msg.textContent = '⏳ Verificando...';
-        
-        try {
-            // Busca o arquivo do usuário no GitHub
-            const url = `https://api.github.com/repos/${GITHUB_REPO}/contents/${ACCOUNTS_FOLDER}/${nome}.json?ref=${GITHUB_BRANCH}`;
-            const response = await fetch(url);
-            
-            if (!response.ok) {
-                msg.textContent = '❌ Usuário não encontrado';
-                return;
-            }
-            
-            const data = await response.json();
-            const conteudo = atob(data.content);
-            const perfil = JSON.parse(conteudo);
-            
-            // Verifica a senha
-            if (perfil.senha !== senha) {
-                msg.textContent = '❌ Senha incorreta';
-                return;
-            }
-            
-            // Login bem-sucedido
-            usuarioLogado = {
-                nome: perfil.nome,
-                avatar: perfil.avatar || '👤'
-            };
-            localStorage.setItem(SESSION_KEY, JSON.stringify(usuarioLogado));
-            atualizarInterface();
-            
-            // Carrega o progresso
-            if (perfil.progress && perfil.progress.length === missions.length) {
-                checkedStates = perfil.progress;
-                localStorage.setItem(STORAGE_KEY, JSON.stringify(checkedStates));
-                renderTable();
-            }
-            
-            fecharLogin();
-            showToast(`✅ Bem-vindo, ${perfil.nome}!`);
-            
-        } catch (error) {
-            msg.textContent = '❌ Erro: ' + error.message;
-        }
-    }
-    
-    // ============================================================
-    // LOGOUT
-    // ============================================================
-    function fazerLogout() {
-        if (confirm('⚠️ Deseja sair?')) {
-            usuarioLogado = null;
-            localStorage.removeItem(SESSION_KEY);
-            atualizarInterface();
-            showToast('👋 Você saiu da conta');
-        }
-    }
-    
-    // ============================================================
-    // ATUALIZAR INTERFACE
-    // ============================================================
-    function atualizarInterface() {
-        const avatarEl = document.getElementById('userAvatar');
-        const nomeEl = document.getElementById('userName');
-        const loginBtn = document.getElementById('loginBtn');
-        const logoutBtn = document.getElementById('logoutBtn');
-        
-        if (usuarioLogado) {
-            avatarEl.textContent = usuarioLogado.avatar || '👤';
-            nomeEl.textContent = usuarioLogado.nome;
-            loginBtn.style.display = 'none';
-            logoutBtn.style.display = 'inline-block';
-        } else {
-            avatarEl.textContent = '👤';
-            nomeEl.textContent = 'Desconectado';
-            loginBtn.style.display = 'inline-block';
-            logoutBtn.style.display = 'none';
-        }
-    }
-    
-    // ============================================================
-    // CARREGAR SESSÃO SALVA
-    // ============================================================
-    function carregarSessao() {
-        try {
-            const salvo = localStorage.getItem(SESSION_KEY);
-            if (salvo) {
-                usuarioLogado = JSON.parse(salvo);
-                atualizarInterface();
-                return true;
-            }
-        } catch (e) {}
-        return false;
-    }
-    
-    // ============================================================
-    // INICIALIZAR
-    // ============================================================
-    carregarSessao();
-    console.log('✅ Sistema de login carregado!');    
-        
-        // ============================================================
-        // FALLBACK: BAIXAR ARQUIVO (caso o token não funcione)
-        // ============================================================
-        function baixarArquivoRegistro(nome, senha, avatar) {
-            const dados = {
-                nome: nome,
-                senha: senha,
-                avatar: avatar || '👤',
-                progress: checkedStates || [],
-                criadoEm: new Date().toISOString(),
-                ultimoAcesso: new Date().toISOString(),
-                totalMissions: typeof missions !== 'undefined' ? missions.length : 0
-            };
-            
-            const json = JSON.stringify(dados, null, 2);
-            const blob = new Blob([json], { type: 'application/json' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = `${nome}.json`;
-            a.click();
-            URL.revokeObjectURL(url);
-            
-            const msg = document.getElementById('regMensagem');
-            msg.textContent = '📥 Arquivo baixado! Faça upload manual para a pasta accounts/';
-            msg.className = 'login-mensagem sucesso';
-        }
-        
-        // ============================================================
-        // LOGOUT
-        // ============================================================
-        function fazerLogout() {
-            if (confirm('⚠️ Deseja realmente sair?')) {
-                usuarioLogado = null;
-                localStorage.removeItem(SESSION_KEY);
-                atualizarInterface();
-                showToast('👋 Você saiu da conta');
-            }
-        }
-        
-        // ============================================================
-        // ATUALIZAR INTERFACE
-        // ============================================================
-        function atualizarInterface() {
-            const avatarEl = document.getElementById('userAvatar');
-            const nomeEl = document.getElementById('userName');
-            const loginBtn = document.getElementById('loginBtn');
-            const logoutBtn = document.getElementById('logoutBtn');
-            
-            if (usuarioLogado) {
-                if (avatarEl) avatarEl.textContent = usuarioLogado.avatar || '👤';
-                if (nomeEl) nomeEl.textContent = usuarioLogado.nome || 'Usuário';
-                if (loginBtn) loginBtn.style.display = 'none';
-                if (logoutBtn) logoutBtn.style.display = 'inline-block';
-            } else {
-                if (avatarEl) avatarEl.textContent = '👤';
-                if (nomeEl) nomeEl.textContent = 'Desconectado';
-                if (loginBtn) loginBtn.style.display = 'inline-block';
-                if (logoutBtn) logoutBtn.style.display = 'none';
-            }
-        }
-        
-        // ============================================================
-        // CARREGAR SESSÃO SALVA
-        // ============================================================
-        function carregarSessao() {
-            try {
-                const salvo = localStorage.getItem(SESSION_KEY);
-                if (salvo) {
-                    usuarioLogado = JSON.parse(salvo);
-                    atualizarInterface();
-                    return true;
-                }
-            } catch (e) {}
-            return false;
-        }
-    
-        // ============================================================
-        // INICIALIZAR
-        // ============================================================
-        carregarSessao();
-        
-        console.log('✅ Sistema de login carregado!');
-
-        // ============================================================
-        // LIMPAR TOKEN SALVO
-        // ============================================================
-        function limparToken() {
-            if (confirm('⚠️ Tem certeza que deseja limpar o token salvo?')) {
-                sessionStorage.removeItem('github_token');
-                GITHUB_TOKEN = '';
-                console.log('🔑 Token limpo com sucesso!');
-                
-                // Se tiver função showToast, usa ela
-                if (typeof showToast === 'function') {
-                    showToast('🔑 Token limpo!', 'info');
-                } else {
-                    alert('🔑 Token limpo!');
-                }
-                
-                // Atualiza a interface se necessário
-                if (typeof atualizarInterface === 'function') {
-                    atualizarInterface();
-                }
-            }
-        }
-        // ============================================================
-        // FUNÇÃO PARA OBTER TOKEN (DIRETO NO INDEX)
-        // ============================================================
-        function obterToken() {
-            console.log('🔑 Solicitando token...');
-            
-            // Tenta pegar da sessão
-            let token = sessionStorage.getItem('github_token');
-            if (token) {
-                console.log('🔑 Token encontrado na sessão');
-                return token;
-            }
-            
-            // Se não tiver, pede via prompt
-            token = prompt(
-                '🔑 Digite seu token do GitHub:\n\n' +
-                'Como criar:\n' +
-                '1. Settings → Developer settings\n' +
-                '2. Personal access tokens → Tokens (classic)\n' +
-                '3. Generate new token\n' +
-                '4. Marque a opção "repo"\n' +
-                '5. Copie o token gerado'
-            );
-            
-            if (token && token.trim() !== '') {
-                token = token.trim();
-                sessionStorage.setItem('github_token', token);
-                console.log('🔑 Token salvo na sessão');
-                return token;
-            }
-            
-            console.log('❌ Token não fornecido');
-            return null;
-        }
-</script>
 </head>
 <body>
 
     <!-- ============================================================
          LIGHTBAR COM BOTÕES
     ============================================================ -->
-     <div class="lightbar">
+    <div class="lightbar">
         <div class="lightbar-content">
-            <div class="lightbar-left">
-                <div class="user-info">
-                    <button class="user-btn" onclick="usuarioLogado ? fazerLogout() : abrirLogin()">
-                        <span id="userAvatar">👤</span>
-                        <span id="userName">Desconectado</span>
-                        <span class="user-status" id="loginBtn">🔓</span>
-                        <span class="user-status" id="logoutBtn" style="display:none;">🔒</span>
-                    </button>
-                </div>
-            </div>
-            
             <div class="lightbar-buttons">
                 <button class="btn-github" onclick="abrirModalGitHub()">📂 Arquivos Moriya</button>
                 <button class="btn-event" onclick="window.open('event.html?v=' + Date.now(), 'Eventos', 'width=900,height=700')">📅 Eventos</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- ============================================================
-         MODAL DE LOGIN (DIRETO NO INDEX)
-    ============================================================ -->
-    <div class="modal-overlay" id="loginModal">
-        <div class="modal modal-login">
-            <div class="modal-header">
-                <h2>🔐 Login</h2>
-                <button class="close-btn" onclick="fecharLogin()">✕ Fechar</button>
-            </div>
-            
-            <div class="login-content">
-                <div class="login-avatar">👤</div>
-                
-                <div class="login-field">
-                    <label>👤 Nome de usuário</label>
-                    <input type="text" id="loginNome" placeholder="Digite seu nome" class="login-input">
-                </div>
-                
-                <div class="login-field">
-                    <label>🔑 Senha</label>
-                    <input type="password" id="loginSenha" placeholder="Digite sua senha" class="login-input" onkeydown="if(event.key==='Enter') fazerLogin()">
-                </div>
-                
-                <div class="login-buttons">
-                    <button class="btn-login" onclick="fazerLogin()">🔓 Entrar</button>
-                    <button class="btn-register" onclick="abrirRegistro()">📝 Criar Conta</button>
-                </div>
-
-                <div style="text-align: center; margin-top: 10px;">
-                <button onclick="limparToken()" style="
-                    background: #c0392b; 
-                    color: white; 
-                    border: none; 
-                    border-radius: 4px; 
-                    padding: 4px 12px; 
-                    cursor: pointer; 
-                    font-size: 11px;
-                    opacity: 0.7;
-                    transition: all 0.3s ease;
-                " onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.7'">
-                    🔑 Limpar Token Salvo
-                </button>
-            </div>
-            
-            <div class="login-mensagem" id="loginMensagem"></div>
-        </div>
-    </div>
-</div>
-
-    <!-- ============================================================
-         MODAL DE REGISTRO (DIRETO NO INDEX)
-    ============================================================ -->
-    <div class="modal-overlay" id="registroModal">
-        <div class="modal modal-login">
-            <div class="modal-header">
-                <h2>📝 Criar Conta</h2>
-                <button class="close-btn" onclick="fecharRegistro()">✕ Fechar</button>
-            </div>
-            
-            <div class="login-content">
-                <div class="login-field">
-                    <label>👤 Nome de usuário</label>
-                    <input type="text" id="regNome" placeholder="Escolha um nome" class="login-input">
-                </div>
-                
-                <div class="login-field">
-                    <label>🔑 Senha</label>
-                    <input type="password" id="regSenha" placeholder="Crie uma senha" class="login-input">
-                </div>
-                
-                <div class="login-field">
-                    <label>🔑 Confirmar senha</label>
-                    <input type="password" id="regSenha2" placeholder="Confirme sua senha" class="login-input">
-                </div>
-                
-                <div class="login-field">
-                    <label>😊 Avatar</label>
-                    <select id="regAvatar" class="login-input">
-                        <option value="👤">👤 Padrão</option>
-                        <option value="😊">😊</option>
-                        <option value="😎">😎</option>
-                        <option value="🤩">🤩</option>
-                        <option value="🧑‍💻">🧑‍💻</option>
-                        <option value="👨‍🚀">👨‍🚀</option>
-                        <option value="🧙‍♂️">🧙‍♂️</option>
-                        <option value="🦊">🦊</option>
-                        <option value="🐱">🐱</option>
-                        <option value="🐶">🐶</option>
-                    </select>
-                </div>
-                
-                <button class="btn-register-full" onclick="fazerRegistro()">✅ Criar Conta</button>
-                
-                <div class="login-mensagem" id="regMensagem"></div>
-                
-                <div class="login-footer">
-                    Já tem conta? <a onclick="fecharRegistro(); abrirLogin();">Faça login</a>
-                </div>
-                <!-- ============================================================
-                    FEEDBACK DE CRIAÇÃO DE CONTA
-                    ============================================================ -->
-               <div class="progress-container" id="progressContainer">
-                   <div class="progress-titulo">
-                       <span class="spinner"></span>
-                       Criando sua conta...
-                   </div>
-                   
-                   <ul class="etapas-lista" id="etapasLista">
-                       <li class="etapa-item" id="etapa1">
-                           <span class="etapa-icon">🔑</span>
-                           <span class="etapa-texto">Verificando token...</span>
-                           <span class="etapa-status">⏳ Aguardando</span>
-                       </li>
-                       <li class="etapa-item" id="etapa2">
-                           <span class="etapa-icon">🔍</span>
-                           <span class="etapa-texto">Verificando usuário...</span>
-                           <span class="etapa-status">⏳ Aguardando</span>
-                       </li>
-                       <li class="etapa-item" id="etapa3">
-                           <span class="etapa-icon">📝</span>
-                           <span class="etapa-texto">Criando perfil...</span>
-                           <span class="etapa-status">⏳ Aguardando</span>
-                       </li>
-                       <li class="etapa-item" id="etapa4">
-                           <span class="etapa-icon">📤</span>
-                           <span class="etapa-texto">Enviando para o GitHub...</span>
-                           <span class="etapa-status">⏳ Aguardando</span>
-                       </li>
-                       <li class="etapa-item" id="etapa5">
-                           <span class="etapa-icon">✅</span>
-                           <span class="etapa-texto">Finalizando...</span>
-                           <span class="etapa-status">⏳ Aguardando</span>
-                       </li>
-                   </ul>
-                   
-                   <div class="barra-progresso">
-                       <div class="barra-preenchida" id="barraProgresso"></div>
-                   </div>
-                   
-                   <div class="commit-info" id="commitInfo">
-                       <div class="commit-titulo">📦 Commit no GitHub</div>
-                       <div class="commit-detalhes" id="commitDetalhes">
-                           Arquivo: <span class="destaque" id="commitArquivo">-</span><br>
-                           Mensagem: <span class="destaque" id="commitMensagem">-</span><br>
-                           SHA: <span class="destaque" id="commitSHA">-</span>
-                       </div>
-                   </div>
-                   
-                   <button class="btn-fechar-feedback" onclick="fecharFeedback()" style="display:none;" id="btnFecharFeedback">
-                       ✕ Fechar
-                   </button>
-               </div>
             </div>
         </div>
     </div>
@@ -1690,13 +851,10 @@
         const GITHUB_REPO = 'JJMAGame/Moriya-Potato-MvM-Tracker';  
         const GITHUB_BRANCH = 'main';
         const SAVE_FOLDER = 'Save-progress';
-        const GITHUB_TOKEN = '';
 
         console.log('📂 Repositório:', GITHUB_REPO);
-        console.log('📁 Pasta Save:', SAVE_FOLDER);
-        console.log('📁 Pasta Accounts:', ACCOUNTS_FOLDER);
+        console.log('📁 Pasta:', SAVE_FOLDER);
         console.log('🌿 Branch:', GITHUB_BRANCH);
-        console.log('🔑 Token:', GITHUB_TOKEN ? '✅ Configurado' : '❌ Não configurado');
 
         // ============================================================
         // DADOS DAS MISSÕES
@@ -2591,104 +1749,6 @@
         console.log('✅ MvM Tracker carregado!');
         console.log(`📊 ${missions.length} missões carregadas.`);
         console.log(`✅ ${checkedStates.filter(c => c).length} concluídas.`);
-
-        // ============================================================
-        // FUNÇÕES DE FEEDBACK (UX)
-        // ============================================================
-        
-        let etapaAtual = 0;
-        const totalEtapas = 5;
-        
-        function mostrarFeedback() {
-            const container = document.getElementById('progressContainer');
-            container.classList.add('ativo');
-            container.style.display = 'block';
-            
-            // Reseta as etapas
-            for (let i = 1; i <= totalEtapas; i++) {
-                const etapa = document.getElementById(`etapa${i}`);
-                etapa.className = 'etapa-item';
-                const status = etapa.querySelector('.etapa-status');
-                status.textContent = '⏳ Aguardando';
-            }
-            
-            document.getElementById('barraProgresso').style.width = '0%';
-            document.getElementById('commitInfo').classList.remove('visivel');
-            document.getElementById('btnFecharFeedback').style.display = 'none';
-            etapaAtual = 0;
-        }
-        
-        function atualizarEtapa(numero, status, texto, icon) {
-            const etapa = document.getElementById(`etapa${numero}`);
-            const statusEl = etapa.querySelector('.etapa-status');
-            const iconEl = etapa.querySelector('.etapa-icon');
-            
-            etapa.className = 'etapa-item';
-            
-            if (status === 'ativo') {
-                etapa.classList.add('ativo');
-                statusEl.textContent = '⏳ Processando...';
-            } else if (status === 'concluido') {
-                etapa.classList.add('concluido');
-                statusEl.textContent = '✅ Concluído';
-            } else if (status === 'erro') {
-                etapa.classList.add('erro');
-                statusEl.textContent = '❌ Erro';
-            }
-            
-            if (icon) {
-                iconEl.textContent = icon;
-            }
-            if (texto) {
-                const textoEl = etapa.querySelector('.etapa-texto');
-                textoEl.innerHTML = texto;
-            }
-            
-            // Atualiza a barra de progresso
-            if (status === 'concluido' || status === 'erro') {
-                const progresso = (numero / totalEtapas) * 100;
-                document.getElementById('barraProgresso').style.width = progresso + '%';
-            }
-        }
-        
-        function mostrarCommitInfo(arquivo, mensagem, sha) {
-            const commitInfo = document.getElementById('commitInfo');
-            commitInfo.classList.add('visivel');
-            document.getElementById('commitArquivo').textContent = arquivo;
-            document.getElementById('commitMensagem').textContent = mensagem;
-            document.getElementById('commitSHA').textContent = sha || '✔️ Commit realizado';
-        }
-        
-        function mostrarErro(mensagem) {
-            const container = document.getElementById('progressContainer');
-            const titulo = container.querySelector('.progress-titulo');
-            titulo.innerHTML = '❌ Erro ao criar conta';
-            
-            const spinner = titulo.querySelector('.spinner');
-            if (spinner) spinner.remove();
-            
-            document.getElementById('btnFecharFeedback').style.display = 'inline-block';
-        }
-        
-        function concluirFeedback() {
-            const container = document.getElementById('progressContainer');
-            const titulo = container.querySelector('.progress-titulo');
-            titulo.innerHTML = '✅ Conta criada com sucesso!';
-            
-            const spinner = titulo.querySelector('.spinner');
-            if (spinner) spinner.remove();
-            
-            document.getElementById('btnFecharFeedback').style.display = 'inline-block';
-            document.getElementById('barraProgresso').style.width = '100%';
-        }
-        
-        function fecharFeedback() {
-            const container = document.getElementById('progressContainer');
-            container.classList.remove('ativo');
-            container.style.display = 'none';
-        }
-        
-                
     </script>
 
 </body>
