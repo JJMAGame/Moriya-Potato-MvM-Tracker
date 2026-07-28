@@ -193,6 +193,10 @@
 .login-footer a:hover {
     color: #e94560;
 }
+
+.login-mensagem.info { 
+    color: #3498db; 
+}
 </style>
 
 <!-- ============================================================
@@ -391,26 +395,14 @@ async function fazerLogin() {
 }
 
 // ============================================================
-// FAZER REGISTRO (ENVIA DIRETO PARA O GITHUB)
+// FAZER REGISTRO - BAIXA O JSON (SEM TOKEN)
 // ============================================================
-async function fazerRegistro() {
-    const nomeEl = document.getElementById('regNome');
-    const senhaEl = document.getElementById('regSenha');
-    const senha2El = document.getElementById('regSenha2');
-    const avatarEl = document.getElementById('regAvatar');
+function fazerRegistro() {
+    const nome = document.getElementById('regNome').value.trim();
+    const senha = document.getElementById('regSenha').value;
+    const senha2 = document.getElementById('regSenha2').value;
+    const avatar = document.getElementById('regAvatar').value;
     const msg = document.getElementById('regMensagem');
-    
-    if (!nomeEl || !senhaEl || !senha2El || !msg) {
-        console.error('Elementos de registro não encontrados');
-        return;
-    }
-    
-    const nome = nomeEl.value.trim();
-    const senha = senhaEl.value;
-    const senha2 = senha2El.value;
-    const avatar = avatarEl ? avatarEl.value : '👤';
-    
-    msg.className = 'login-mensagem';
     
     // ===== VALIDAÇÕES =====
     if (!nome || nome.length < 3) {
@@ -429,110 +421,47 @@ async function fazerRegistro() {
         return;
     }
     
-    // ===== PEDIR TOKEN =====
-    if (typeof GITHUB_TOKEN !== 'undefined' && !GITHUB_TOKEN) {
-        const token = obterToken();
-        if (!token) {
-            msg.textContent = '❌ Token necessário para criar conta';
-            msg.className = 'login-mensagem erro';
-            return;
-        }
-        GITHUB_TOKEN = token;
+    // ===== CRIA O PERFIL =====
+    let progress = [];
+    if (typeof checkedStates !== 'undefined') {
+        progress = checkedStates;
     }
     
-    msg.textContent = '⏳ Criando conta no GitHub...';
-    msg.className = 'login-mensagem carregando';
+    const dados = {
+        nome: nome,
+        senha: senha,
+        avatar: avatar || '👤',
+        progress: progress,
+        criadoEm: new Date().toISOString(),
+        ultimoAcesso: new Date().toISOString(),
+        totalMissions: typeof missions !== 'undefined' ? missions.length : 0
+    };
     
-    try {
-        // 1. VERIFICA SE O USUÁRIO JÁ EXISTE
-        const checkUrl = `https://api.github.com/repos/${GITHUB_REPO}/contents/${ACCOUNTS_FOLDER}/${nome}.json?ref=${GITHUB_BRANCH}`;
-        const checkResponse = await fetch(checkUrl, {
-            headers: {
-                'Authorization': `token ${GITHUB_TOKEN}`
-            }
-        });
-        
-        if (checkResponse.ok) {
-            msg.textContent = '❌ Este nome de usuário já existe!';
-            msg.className = 'login-mensagem erro';
-            return;
-        }
-        
-        // 2. CRIA O PERFIL
-        let progress = [];
-        if (typeof checkedStates !== 'undefined') {
-            progress = checkedStates;
-        }
-        
-        const dados = {
-            nome: nome,
-            senha: senha,
-            avatar: avatar,
-            progress: progress,
-            criadoEm: new Date().toISOString(),
-            ultimoAcesso: new Date().toISOString(),
-            totalMissions: typeof missions !== 'undefined' ? missions.length : 0
-        };
-        
-        // Converte para Base64
-        const json = JSON.stringify(dados, null, 2);
-        const base64 = btoa(unescape(encodeURIComponent(json)));
-        
-        // 3. ENVIA PARA O GITHUB
-        const url = `https://api.github.com/repos/${GITHUB_REPO}/contents/${ACCOUNTS_FOLDER}/${nome}.json`;
-        const body = {
-            message: `📝 Criando conta: ${nome}`,
-            content: base64,
-            branch: GITHUB_BRANCH
-        };
-        
-        const response = await fetch(url, {
-            method: 'PUT',
-            headers: {
-                'Authorization': `token ${GITHUB_TOKEN}`,
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(body)
-        });
-        
-        if (!response.ok) {
-            const erro = await response.json();
-            throw new Error(erro.message || 'Erro ao enviar');
-        }
-        
-        // 4. SUCESSO
-        msg.textContent = `✅ Conta "${nome}" criada com sucesso!`;
-        msg.className = 'login-mensagem sucesso';
-        
-        // Faz login automático
-        usuarioLogado = {
-            nome: nome,
-            avatar: avatar || '👤'
-        };
-        localStorage.setItem(SESSION_KEY, JSON.stringify(usuarioLogado));
-        atualizarInterface();
-        
-        setTimeout(() => {
-            fecharRegistro();
-            if (typeof showToast === 'function') {
-                showToast(`✅ Bem-vindo, ${nome}!`);
-            } else {
-                alert(`✅ Bem-vindo, ${nome}!`);
-            }
-        }, 1500);
-        
-    } catch (error) {
-        console.error('Erro ao criar conta:', error);
-        msg.textContent = '❌ Erro: ' + error.message;
-        msg.className = 'login-mensagem erro';
-        
-        // Se o token for inválido, limpa ele da sessão
-        if (error.message.includes('401') || error.message.includes('403')) {
-            sessionStorage.removeItem('github_token');
-            if (typeof GITHUB_TOKEN !== 'undefined') GITHUB_TOKEN = '';
-            msg.textContent = '❌ Token inválido! Clique em "Criar Conta" novamente.';
-        }
-    }
+    // ===== BAIXA O ARQUIVO =====
+    const json = JSON.stringify(dados, null, 2);
+    const blob = new Blob([json], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `${nome}.json`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    
+    // ===== MENSAGEM DE SUCESSO =====
+    msg.textContent = `📥 Arquivo "${nome}.json" baixado! Faça upload para a pasta accounts/ no GitHub.`;
+    msg.className = 'login-mensagem sucesso';
+    
+    // ===== ABRE O LOGIN AUTOMATICAMENTE =====
+    setTimeout(() => {
+        fecharRegistro();
+        abrirLogin();
+        document.getElementById('loginNome').value = nome;
+        document.getElementById('loginSenha').value = '';
+        document.getElementById('loginMensagem').textContent = '📤 Faça upload do arquivo para a pasta accounts/ e depois faça login.';
+        document.getElementById('loginMensagem').className = 'login-mensagem info';
+    }, 2000);
 }
 
 // ============================================================
