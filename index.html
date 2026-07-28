@@ -1312,6 +1312,40 @@
                 }
             }
         }
+        // ============================================================
+        // FUNÇÃO PARA OBTER TOKEN (DIRETO NO INDEX)
+        // ============================================================
+        function obterToken() {
+            console.log('🔑 Solicitando token...');
+            
+            // Tenta pegar da sessão
+            let token = sessionStorage.getItem('github_token');
+            if (token) {
+                console.log('🔑 Token encontrado na sessão');
+                return token;
+            }
+            
+            // Se não tiver, pede via prompt
+            token = prompt(
+                '🔑 Digite seu token do GitHub:\n\n' +
+                'Como criar:\n' +
+                '1. Settings → Developer settings\n' +
+                '2. Personal access tokens → Tokens (classic)\n' +
+                '3. Generate new token\n' +
+                '4. Marque a opção "repo"\n' +
+                '5. Copie o token gerado'
+            );
+            
+            if (token && token.trim() !== '') {
+                token = token.trim();
+                sessionStorage.setItem('github_token', token);
+                console.log('🔑 Token salvo na sessão');
+                return token;
+            }
+            
+            console.log('❌ Token não fornecido');
+            return null;
+        }
 </script>
 </head>
 <body>
@@ -2437,6 +2471,8 @@
         console.log('✅ MvM Tracker carregado!');
         console.log(`📊 ${missions.length} missões carregadas.`);
         console.log(`✅ ${checkedStates.filter(c => c).length} concluídas.`);
+
+        
     </script>
 
 </body>
