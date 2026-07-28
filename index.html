@@ -1061,15 +1061,16 @@
     }
     
     // ============================================================
-    // FAZER REGISTRO
+    // FAZER REGISTRO (COM ENVIO DIRETO AO GITHUB)
     // ============================================================
-    function fazerRegistro() {
+    async function fazerRegistro() {
         const nome = document.getElementById('regNome').value.trim();
         const senha = document.getElementById('regSenha').value;
         const senha2 = document.getElementById('regSenha2').value;
         const avatar = document.getElementById('regAvatar').value;
         const msg = document.getElementById('regMensagem');
         
+        // Validações
         if (!nome || nome.length < 3) {
             msg.textContent = '❌ Nome deve ter pelo menos 3 caracteres';
             msg.className = 'login-mensagem erro';
@@ -1086,12 +1087,105 @@
             return;
         }
         
+        // Verifica se o token está configurado
+        if (typeof GITHUB_TOKEN === 'undefined' || !GITHUB_TOKEN) {
+            msg.textContent = '❌ Token do GitHub não configurado! Use o método de download.';
+            msg.className = 'login-mensagem erro';
+            // Fallback: baixa o arquivo
+            baixarArquivoRegistro(nome, senha, avatar);
+            return;
+        }
+        
+        msg.textContent = '⏳ Criando conta no GitHub...';
+        msg.className = 'login-mensagem carregando';
+        
+        try {
+            // Verifica se o usuário já existe
+            const checkUrl = `https://api.github.com/repos/${GITHUB_REPO}/contents/${ACCOUNTS_FOLDER}/${nome}.json?ref=${GITHUB_BRANCH}`;
+            const checkResponse = await fetch(checkUrl, {
+                headers: {
+                    'Authorization': `token ${GITHUB_TOKEN}`
+                }
+            });
+            
+            if (checkResponse.ok) {
+                msg.textContent = '❌ Este nome de usuário já existe!';
+                msg.className = 'login-mensagem erro';
+                return;
+            }
+            
+            // Cria o perfil
+            const dados = {
+                nome: nome,
+                senha: senha,
+                avatar: avatar,
+                progress: checkedStates || [],
+                criadoEm: new Date().toISOString(),
+                ultimoAcesso: new Date().toISOString(),
+                totalMissions: missions.length
+            };
+            
+            const json = JSON.stringify(dados, null, 2);
+            const base64 = btoa(unescape(encodeURIComponent(json)));
+            
+            // Envia para o GitHub
+            const url = `https://api.github.com/repos/${GITHUB_REPO}/contents/${ACCOUNTS_FOLDER}/${nome}.json`;
+            const body = {
+                message: `📝 Criando conta: ${nome}`,
+                content: base64,
+                branch: GITHUB_BRANCH
+            };
+            
+            const response = await fetch(url, {
+                method: 'PUT',
+                headers: {
+                    'Authorization': `token ${GITHUB_TOKEN}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(body)
+            });
+            
+            if (!response.ok) {
+                const erro = await response.json();
+                throw new Error(erro.message || 'Erro ao enviar');
+            }
+            
+            msg.textContent = `✅ Conta "${nome}" criada com sucesso no GitHub!`;
+            msg.className = 'login-mensagem sucesso';
+            
+            // Faz login automático
+            usuarioLogado = {
+                nome: nome,
+                avatar: avatar || '👤'
+            };
+            localStorage.setItem(SESSION_KEY, JSON.stringify(usuarioLogado));
+            atualizarInterface();
+            
+            setTimeout(() => {
+                fecharRegistro();
+                showToast(`✅ Bem-vindo, ${nome}!`);
+            }, 1500);
+            
+        } catch (error) {
+            msg.textContent = '❌ Erro: ' + error.message;
+            msg.className = 'login-mensagem erro';
+            // Fallback: baixa o arquivo
+            baixarArquivoRegistro(nome, senha, avatar);
+        }
+    }
+    
+    // ============================================================
+    // FALLBACK: BAIXAR ARQUIVO (caso o token não funcione)
+    // ============================================================
+    function baixarArquivoRegistro(nome, senha, avatar) {
         const dados = {
             nome: nome,
             senha: senha,
-            avatar: avatar,
+            avatar: avatar || '👤',
             progress: checkedStates || [],
-            criadoEm: new Date().toISOString()
+            criadoEm: new Date().toISOString(),
+            ultimoAcesso: new Date().toISOString(),
+            totalMissions: typeof missions !== 'undefined' ? missions.length : 0
         };
         
         const json = JSON.stringify(dados, null, 2);
@@ -1099,18 +1193,13 @@
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = url;
-        a.download = nome + '.json';
+        a.download = `${nome}.json`;
         a.click();
         URL.revokeObjectURL(url);
         
-        msg.textContent = '✅ Conta criada! Salve o arquivo na pasta accounts/';
+        const msg = document.getElementById('regMensagem');
+        msg.textContent = '📥 Arquivo baixado! Faça upload manual para a pasta accounts/';
         msg.className = 'login-mensagem sucesso';
-        
-        setTimeout(() => {
-            fecharRegistro();
-            abrirLogin();
-            document.getElementById('loginNome').value = nome;
-        }, 1500);
     }
     
     // ============================================================
