@@ -792,64 +792,210 @@
     <!-- Carrega o login.html -->
     <script>
     // ============================================================
-// CARREGAR SISTEMA DE LOGIN
-// ============================================================
-async function carregarLogin() {
-    try {
-        const response = await fetch('login.html');
-        if (!response.ok) {
-            console.warn('login.html não encontrado, sistema de login desativado');
+    // SISTEMA DE LOGIN - VERSÃO SIMPLES
+    // ============================================================
+    
+    const ACCOUNTS_FOLDER = 'accounts';
+    const SESSION_KEY = 'user_sessao';
+    let usuarioLogado = null;
+    
+    // ============================================================
+    // FUNÇÕES PRINCIPAIS
+    // ============================================================
+    
+    function abrirLogin() {
+        const modal = document.getElementById('loginModal');
+        if (modal) modal.classList.add('active');
+    }
+    
+    function fecharLogin() {
+        const modal = document.getElementById('loginModal');
+        if (modal) modal.classList.remove('active');
+    }
+    
+    function abrirRegistro() {
+        fecharLogin();
+        const modal = document.getElementById('registroModal');
+        if (modal) modal.classList.add('active');
+    }
+    
+    function fecharRegistro() {
+        const modal = document.getElementById('registroModal');
+        if (modal) modal.classList.remove('active');
+    }
+    
+    // ============================================================
+    // LOGIN
+    // ============================================================
+    async function fazerLogin() {
+        const nomeEl = document.getElementById('loginNome');
+        const senhaEl = document.getElementById('loginSenha');
+        const msg = document.getElementById('loginMensagem');
+        
+        if (!nomeEl || !senhaEl) {
+            alert('Erro: elementos de login não encontrados');
             return;
         }
         
-        const html = await response.text();
+        const nome = nomeEl.value.trim();
+        const senha = senhaEl.value;
         
-        // 1. CSS
-        const cssMatch = html.match(/<style>([\s\S]*?)<\/style>/);
-        if (cssMatch) {
-            const style = document.createElement('style');
-            style.textContent = cssMatch[1];
-            document.head.appendChild(style);
+        if (!nome) {
+            msg.textContent = '❌ Digite seu nome';
+            return;
+        }
+        if (!senha) {
+            msg.textContent = '❌ Digite sua senha';
+            return;
         }
         
-        // 2. HTML - pega os modais
-        const modalDivs = html.match(/<div class="login-modal-overlay" id="(?:loginModal|registroModal)"[\s\S]*?<\/div>\s*<\/div>/g);
-        if (modalDivs) {
-            modalDivs.forEach(modalHtml => {
-                const div = document.createElement('div');
-                div.innerHTML = modalHtml;
-                document.body.appendChild(div.firstElementChild);
-            });
+        msg.textContent = '⏳ Verificando...';
+        
+        try {
+            const url = `https://api.github.com/repos/${GITHUB_REPO}/contents/${ACCOUNTS_FOLDER}/${nome}.json?ref=${GITHUB_BRANCH}`;
+            const response = await fetch(url);
+            
+            if (!response.ok) {
+                msg.textContent = '❌ Usuário não encontrado';
+                return;
+            }
+            
+            const data = await response.json();
+            const conteudo = atob(data.content);
+            const perfil = JSON.parse(conteudo);
+            
+            if (perfil.senha !== senha) {
+                msg.textContent = '❌ Senha incorreta';
+                return;
+            }
+            
+            // Login bem-sucedido
+            usuarioLogado = {
+                nome: perfil.nome,
+                avatar: perfil.avatar || '👤'
+            };
+            
+            localStorage.setItem(SESSION_KEY, JSON.stringify(usuarioLogado));
+            atualizarInterface();
+            
+            if (perfil.progress && perfil.progress.length === missions.length) {
+                checkedStates = perfil.progress;
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(checkedStates));
+                renderTable();
+            }
+            
+            fecharLogin();
+            alert(`✅ Bem-vindo, ${perfil.nome}!`);
+            
+        } catch (error) {
+            msg.textContent = '❌ Erro: ' + error.message;
         }
-        
-        // 3. JavaScript
-        const scriptMatch = html.match(/<script>([\s\S]*?)<\/script>/);
-        if (scriptMatch) {
-            // Remove a parte que chama iniciarSessao automaticamente
-            let scriptContent = scriptMatch[1];
-            scriptContent = scriptContent.replace(/iniciarSessao\s*\(\s*\)\s*;?/g, '');
-            scriptContent = scriptContent.replace(/if\s*\(\s*typeof\s+window\s*!==\s*'undefined'\s*\)\s*{[\s\S]*?}/g, '');
-            eval(scriptContent);
-        }
-        
-        // 4. Iniciar sessão manualmente
-        if (typeof iniciarSessao === 'function') {
-            iniciarSessao();
-        }
-        
-        console.log('✅ Sistema de login carregado!');
-        
-    } catch (error) {
-        console.warn('Erro ao carregar login:', error);
     }
-}
-
-// Carrega depois que a página estiver pronta
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', carregarLogin);
-} else {
-    carregarLogin();
-}
+    
+    // ============================================================
+    // REGISTRO
+    // ============================================================
+    function fazerRegistro() {
+        const nome = document.getElementById('regNome').value.trim();
+        const senha = document.getElementById('regSenha').value;
+        const senha2 = document.getElementById('regSenha2').value;
+        const avatar = document.getElementById('regAvatar').value;
+        const msg = document.getElementById('regMensagem');
+        
+        if (!nome || nome.length < 3) {
+            msg.textContent = '❌ Nome deve ter pelo menos 3 caracteres';
+            return;
+        }
+        if (!senha || senha.length < 4) {
+            msg.textContent = '❌ Senha deve ter pelo menos 4 caracteres';
+            return;
+        }
+        if (senha !== senha2) {
+            msg.textContent = '❌ Senhas não coincidem';
+            return;
+        }
+        
+        const dados = {
+            nome: nome,
+            senha: senha,
+            avatar: avatar,
+            progress: checkedStates || [],
+            criadoEm: new Date().toISOString()
+        };
+        
+        const json = JSON.stringify(dados, null, 2);
+        const blob = new Blob([json], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = nome + '.json';
+        a.click();
+        URL.revokeObjectURL(url);
+        
+        msg.textContent = '✅ Conta criada! Salve o arquivo na pasta accounts/';
+        msg.style.color = '#27ae60';
+        
+        setTimeout(() => {
+            fecharRegistro();
+            abrirLogin();
+            document.getElementById('loginNome').value = nome;
+        }, 1500);
+    }
+    
+    // ============================================================
+    // LOGOUT
+    // ============================================================
+    function fazerLogout() {
+        if (confirm('Deseja sair?')) {
+            usuarioLogado = null;
+            localStorage.removeItem(SESSION_KEY);
+            atualizarInterface();
+        }
+    }
+    
+    // ============================================================
+    // ATUALIZAR INTERFACE
+    // ============================================================
+    function atualizarInterface() {
+        const avatar = document.getElementById('userAvatar');
+        const nome = document.getElementById('userName');
+        const loginBtn = document.getElementById('loginBtn');
+        const logoutBtn = document.getElementById('logoutBtn');
+        
+        if (usuarioLogado) {
+            avatar.textContent = usuarioLogado.avatar || '👤';
+            nome.textContent = usuarioLogado.nome;
+            loginBtn.style.display = 'none';
+            logoutBtn.style.display = 'inline-block';
+        } else {
+            avatar.textContent = '👤';
+            nome.textContent = 'Desconectado';
+            loginBtn.style.display = 'inline-block';
+            logoutBtn.style.display = 'none';
+        }
+    }
+    
+    // ============================================================
+    // CARREGAR SESSÃO SALVA
+    // ============================================================
+    function carregarSessao() {
+        try {
+            const salvo = localStorage.getItem(SESSION_KEY);
+            if (salvo) {
+                usuarioLogado = JSON.parse(salvo);
+                atualizarInterface();
+                return true;
+            }
+        } catch (e) {}
+        return false;
+    }
+    
+    // ============================================================
+    // INICIALIZAR
+    // ============================================================
+    carregarSessao();
+    
+    console.log('✅ Sistema de login carregado!');
 </script>
 </head>
 <body>
@@ -857,25 +1003,26 @@ if (document.readyState === 'loading') {
     <!-- ============================================================
          LIGHTBAR COM BOTÕES
     ============================================================ -->
-    <div class="lightbar">
-        <div class="lightbar-content">
-            <div class="lightbar-left">
-                <div class="user-info">
-                    <button class="user-btn" onclick="usuarioLogado ? fazerLogout() : abrirLogin()">
-                        <span id="userAvatar">👤</span>
-                        <span id="userName">Desconectado</span>
-                        <span class="user-status" id="loginBtn">🔓</span>
-                        <span class="user-status" id="logoutBtn" style="display:none;">🔒</span>
-                    </button>
-                </div>
-            </div>
-            
-            <div class="lightbar-buttons">
-                <button class="btn-github" onclick="abrirModalGitHub()">📂 Arquivos Moriya</button>
-                <button class="btn-event" onclick="window.open('event.html?v=' + Date.now(), 'Eventos', 'width=900,height=700')">📅 Eventos</button>
-            </div>
-        </div>
-    </div>
+     <div class="lightbar">
+         <div class="lightbar-content">
+             <div class="lightbar-left">
+                 <div class="user-info">
+                     <button class="user-btn" onclick="usuarioLogado ? fazerLogout() : abrirLogin()">
+                         <span id="userAvatar">👤</span>
+                         <span id="userName">Desconectado</span>
+                         <span class="user-status" id="loginBtn">🔓</span>
+                         <span class="user-status" id="logoutBtn" style="display:none;">🔒</span>
+                     </button>
+                 </div>
+             </div>
+             
+             <div class="lightbar-buttons">
+                 <button class="btn-github" onclick="abrirModalGitHub()">📂 Arquivos Moriya</button>
+                 <button class="btn-event" onclick="window.open('event.html?v=' + Date.now(), 'Eventos', 'width=900,height=700')">📅 Eventos</button>
+             </div>
+         </div>
+     </div>
+
     <!-- ============================================================
          CONTAINER PRINCIPAL
     ============================================================ -->
