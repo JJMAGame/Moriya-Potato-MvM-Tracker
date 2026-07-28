@@ -1,66 +1,566 @@
 <!-- ============================================================
-     CARREGAR SISTEMA DE LOGIN (profile.html)
+     SISTEMA DE LOGIN (MODAIS E FUNÇÕES)
+     ============================================================ -->
+
+<style>
+/* ============================================================
+   MODAL DE LOGIN
+   ============================================================ */
+.login-modal-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.85);
+    z-index: 2000;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-modal-overlay.active {
+    display: flex;
+}
+
+.login-modal {
+    background: #16213e;
+    border-radius: 16px;
+    padding: 30px;
+    max-width: 420px;
+    width: 90%;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.9);
+    border: 1px solid #2a2a4a;
+    animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp {
+    from { transform: translateY(50px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+.login-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #2a2a4a;
+    padding-bottom: 15px;
+}
+
+.login-modal-header h2 {
+    color: #e0e0e0;
+    margin: 0;
+    font-size: 22px;
+}
+
+.login-modal-header .close-btn {
+    background: #c0392b;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 8px 16px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.login-modal-header .close-btn:hover {
+    background: #e74c3c;
+}
+
+.login-avatar {
+    text-align: center;
+    font-size: 64px;
+    margin-bottom: 20px;
+}
+
+.login-field {
+    margin-bottom: 15px;
+}
+
+.login-field label {
+    display: block;
+    color: #85c1e9;
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.login-input {
+    width: 100%;
+    padding: 10px 14px;
+    border: 2px solid #0f3460;
+    border-radius: 8px;
+    background: #1a1a2e;
+    color: #e0e0e0;
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+.login-input:focus {
+    outline: none;
+    border-color: #e94560;
+}
+
+.login-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+    flex-wrap: wrap;
+}
+
+.btn-login {
+    background: #27ae60;
+    color: white;
+    padding: 10px 30px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    flex: 1;
+}
+
+.btn-login:hover {
+    background: #2ecc71;
+    transform: scale(1.02);
+}
+
+.btn-register {
+    background: #2980b9;
+    color: white;
+    padding: 10px 30px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    flex: 1;
+}
+
+.btn-register:hover {
+    background: #3498db;
+    transform: scale(1.02);
+}
+
+.btn-register-full {
+    background: #27ae60;
+    color: white;
+    padding: 12px 30px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    width: 100%;
+}
+
+.btn-register-full:hover {
+    background: #2ecc71;
+    transform: scale(1.02);
+}
+
+.login-mensagem {
+    margin-top: 10px;
+    font-size: 13px;
+    min-height: 20px;
+}
+
+.login-mensagem.erro { color: #e74c3c; }
+.login-mensagem.sucesso { color: #27ae60; }
+.login-mensagem.carregando { color: #f39c12; }
+
+.login-footer {
+    text-align: center;
+    margin-top: 15px;
+    color: #7f8c8d;
+    font-size: 13px;
+}
+
+.login-footer a {
+    color: #85c1e9;
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.login-footer a:hover {
+    color: #e94560;
+}
+</style>
+
+<!-- ============================================================
+     MODAL DE LOGIN
+     ============================================================ -->
+<div class="login-modal-overlay" id="loginModal">
+    <div class="login-modal">
+        <div class="login-modal-header">
+            <h2>🔐 Login</h2>
+            <button class="close-btn" onclick="fecharLogin()">✕ Fechar</button>
+        </div>
+        
+        <div class="login-content">
+            <div class="login-avatar">👤</div>
+            
+            <div class="login-field">
+                <label>👤 Nome de usuário</label>
+                <input type="text" id="loginNome" placeholder="Digite seu nome" class="login-input">
+            </div>
+            
+            <div class="login-field">
+                <label>🔑 Senha</label>
+                <input type="password" id="loginSenha" placeholder="Digite sua senha" class="login-input" onkeydown="if(event.key==='Enter') fazerLogin()">
+            </div>
+            
+            <div class="login-buttons">
+                <button class="btn-login" onclick="fazerLogin()">🔓 Entrar</button>
+                <button class="btn-register" onclick="abrirRegistro()">📝 Criar Conta</button>
+            </div>
+            
+            <div class="login-mensagem" id="loginMensagem"></div>
+        </div>
+    </div>
+</div>
+
+<!-- ============================================================
+     MODAL DE REGISTRO
+     ============================================================ -->
+<div class="login-modal-overlay" id="registroModal">
+    <div class="login-modal">
+        <div class="login-modal-header">
+            <h2>📝 Criar Conta</h2>
+            <button class="close-btn" onclick="fecharRegistro()">✕ Fechar</button>
+        </div>
+        
+        <div class="login-content">
+            <div class="login-field">
+                <label>👤 Nome de usuário</label>
+                <input type="text" id="regNome" placeholder="Escolha um nome" class="login-input">
+            </div>
+            
+            <div class="login-field">
+                <label>🔑 Senha</label>
+                <input type="password" id="regSenha" placeholder="Crie uma senha" class="login-input">
+            </div>
+            
+            <div class="login-field">
+                <label>🔑 Confirmar senha</label>
+                <input type="password" id="regSenha2" placeholder="Confirme sua senha" class="login-input">
+            </div>
+            
+            <div class="login-field">
+                <label>😊 Avatar</label>
+                <select id="regAvatar" class="login-input">
+                    <option value="👤">👤 Padrão</option>
+                    <option value="😊">😊</option>
+                    <option value="😎">😎</option>
+                    <option value="🤩">🤩</option>
+                    <option value="🧑‍💻">🧑‍💻</option>
+                    <option value="👨‍🚀">👨‍🚀</option>
+                    <option value="🧙‍♂️">🧙‍♂️</option>
+                    <option value="🦊">🦊</option>
+                    <option value="🐱">🐱</option>
+                    <option value="🐶">🐶</option>
+                </select>
+            </div>
+            
+            <button class="btn-register-full" onclick="fazerRegistro()">✅ Criar Conta</button>
+            
+            <div class="login-mensagem" id="regMensagem"></div>
+            
+            <div class="login-footer">
+                Já tem conta? <a onclick="fecharRegistro(); abrirLogin();">Faça login</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ============================================================
+     JAVASCRIPT DO SISTEMA DE LOGIN
      ============================================================ -->
 <script>
-async function carregarProfile() {
+// ============================================================
+// SISTEMA DE LOGIN - FUNÇÕES
+// ============================================================
+
+const ACCOUNTS_FOLDER = 'accounts';
+const SESSION_KEY = 'user_sessao';
+let usuarioLogado = null;
+
+// ============================================================
+// ABRIR/FECHAR LOGIN
+// ============================================================
+function abrirLogin() {
+    const modal = document.getElementById('loginModal');
+    if (modal) modal.classList.add('active');
+    document.getElementById('loginMensagem').textContent = '';
+    document.getElementById('loginNome').value = '';
+    document.getElementById('loginSenha').value = '';
+    setTimeout(() => document.getElementById('loginNome').focus(), 100);
+}
+
+function fecharLogin() {
+    const modal = document.getElementById('loginModal');
+    if (modal) modal.classList.remove('active');
+}
+
+// ============================================================
+// ABRIR/FECHAR REGISTRO
+// ============================================================
+function abrirRegistro() {
+    fecharLogin();
+    const modal = document.getElementById('registroModal');
+    if (modal) modal.classList.add('active');
+    document.getElementById('regMensagem').textContent = '';
+    document.getElementById('regNome').value = '';
+    document.getElementById('regSenha').value = '';
+    document.getElementById('regSenha2').value = '';
+    setTimeout(() => document.getElementById('regNome').focus(), 100);
+}
+
+function fecharRegistro() {
+    const modal = document.getElementById('registroModal');
+    if (modal) modal.classList.remove('active');
+}
+
+// ============================================================
+// FECHAR MODAIS CLICANDO FORA
+// ============================================================
+document.addEventListener('DOMContentLoaded', function() {
+    const loginModal = document.getElementById('loginModal');
+    if (loginModal) {
+        loginModal.addEventListener('click', function(e) {
+            if (e.target === this) fecharLogin();
+        });
+    }
+    const registroModal = document.getElementById('registroModal');
+    if (registroModal) {
+        registroModal.addEventListener('click', function(e) {
+            if (e.target === this) fecharRegistro();
+        });
+    }
+});
+
+// ============================================================
+// FAZER LOGIN
+// ============================================================
+async function fazerLogin() {
+    const nomeEl = document.getElementById('loginNome');
+    const senhaEl = document.getElementById('loginSenha');
+    const msg = document.getElementById('loginMensagem');
+    
+    if (!nomeEl || !senhaEl) {
+        if (msg) msg.textContent = '❌ Erro no formulário';
+        return;
+    }
+    
+    const nome = nomeEl.value.trim();
+    const senha = senhaEl.value;
+    
+    if (!nome) {
+        msg.textContent = '❌ Digite seu nome';
+        msg.className = 'login-mensagem erro';
+        return;
+    }
+    if (!senha) {
+        msg.textContent = '❌ Digite sua senha';
+        msg.className = 'login-mensagem erro';
+        return;
+    }
+    
+    msg.textContent = '⏳ Verificando...';
+    msg.className = 'login-mensagem carregando';
+    
     try {
-        const response = await fetch('profile.html');
-        if (!response.ok) {
-            console.warn('profile.html não encontrado');
+        if (typeof GITHUB_REPO === 'undefined') {
+            msg.textContent = '❌ Configuração do GitHub não encontrada';
+            msg.className = 'login-mensagem erro';
             return;
         }
         
-        const html = await response.text();
+        const url = `https://api.github.com/repos/${GITHUB_REPO}/contents/${ACCOUNTS_FOLDER}/${nome}.json?ref=${GITHUB_BRANCH || 'main'}`;
+        const response = await fetch(url);
         
-        // 1. Extrai e aplica o CSS (se tiver)
-        const cssMatch = html.match(/<style>([\s\S]*?)<\/style>/);
-        if (cssMatch) {
-            const style = document.createElement('style');
-            style.textContent = cssMatch[1];
-            document.head.appendChild(style);
+        if (!response.ok) {
+            msg.textContent = '❌ Usuário não encontrado';
+            msg.className = 'login-mensagem erro';
+            return;
         }
         
-        // 2. Extrai e insere o HTML dos modais
-        const modalDivs = html.match(/<div class="login-modal-overlay" id="(?:loginModal|registroModal)"[\s\S]*?<\/div>\s*<\/div>/g);
-        if (modalDivs) {
-            modalDivs.forEach(modalHtml => {
-                const div = document.createElement('div');
-                div.innerHTML = modalHtml;
-                const firstChild = div.firstElementChild;
-                if (firstChild) {
-                    document.body.appendChild(firstChild);
+        const data = await response.json();
+        const conteudo = atob(data.content);
+        const perfil = JSON.parse(conteudo);
+        
+        if (perfil.senha !== senha) {
+            msg.textContent = '❌ Senha incorreta';
+            msg.className = 'login-mensagem erro';
+            return;
+        }
+        
+        // Login bem-sucedido
+        usuarioLogado = {
+            nome: perfil.nome,
+            avatar: perfil.avatar || '👤'
+        };
+        localStorage.setItem(SESSION_KEY, JSON.stringify(usuarioLogado));
+        atualizarInterface();
+        
+        if (perfil.progress && Array.isArray(perfil.progress)) {
+            if (typeof missions !== 'undefined' && perfil.progress.length === missions.length) {
+                if (typeof checkedStates !== 'undefined') {
+                    checkedStates = perfil.progress;
+                    localStorage.setItem(STORAGE_KEY || 'mvm_progress', JSON.stringify(checkedStates));
+                    if (typeof renderTable === 'function') renderTable();
                 }
-            });
+            }
         }
         
-        // 3. Extrai e executa o JavaScript
-        const scriptMatch = html.match(/<script>([\s\S]*?)<\/script>/);
-        if (scriptMatch) {
-            // Remove a parte que chama iniciarSessao automaticamente
-            let scriptContent = scriptMatch[1];
-            // Remove a chamada automática
-            scriptContent = scriptContent.replace(/if\s*\(\s*typeof\s+window\s*!==\s*'undefined'\s*\)\s*{[\s\S]*?}/g, '');
-            scriptContent = scriptContent.replace(/iniciarSessao\s*\(\s*\)\s*;?/g, '');
-            // Executa
-            eval(scriptContent);
+        fecharLogin();
+        if (typeof showToast === 'function') {
+            showToast(`✅ Bem-vindo, ${perfil.nome}!`);
+        } else {
+            alert(`✅ Bem-vindo, ${perfil.nome}!`);
         }
-        
-        // 4. Inicia a sessão manualmente
-        if (typeof iniciarSessao === 'function') {
-            iniciarSessao();
-        }
-        
-        console.log('✅ Sistema de login carregado!');
         
     } catch (error) {
-        console.warn('Erro ao carregar profile:', error);
+        msg.textContent = '❌ Erro: ' + error.message;
+        msg.className = 'login-mensagem erro';
     }
 }
 
-// Carrega quando a página estiver pronta
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', carregarProfile);
-} else {
-    carregarProfile();
+// ============================================================
+// FAZER REGISTRO
+// ============================================================
+function fazerRegistro() {
+    const nomeEl = document.getElementById('regNome');
+    const senhaEl = document.getElementById('regSenha');
+    const senha2El = document.getElementById('regSenha2');
+    const avatarEl = document.getElementById('regAvatar');
+    const msg = document.getElementById('regMensagem');
+    
+    if (!nomeEl || !senhaEl || !senha2El || !msg) {
+        console.error('Elementos de registro não encontrados');
+        return;
+    }
+    
+    const nome = nomeEl.value.trim();
+    const senha = senhaEl.value;
+    const senha2 = senha2El.value;
+    const avatar = avatarEl ? avatarEl.value : '👤';
+    
+    msg.className = 'login-mensagem';
+    
+    if (!nome || nome.length < 3) {
+        msg.textContent = '❌ O nome deve ter pelo menos 3 caracteres';
+        msg.className = 'login-mensagem erro';
+        return;
+    }
+    if (!senha || senha.length < 4) {
+        msg.textContent = '❌ A senha deve ter pelo menos 4 caracteres';
+        msg.className = 'login-mensagem erro';
+        return;
+    }
+    if (senha !== senha2) {
+        msg.textContent = '❌ As senhas não coincidem';
+        msg.className = 'login-mensagem erro';
+        return;
+    }
+    
+    let progress = [];
+    if (typeof checkedStates !== 'undefined') {
+        progress = checkedStates;
+    }
+    
+    const dados = {
+        nome: nome,
+        senha: senha,
+        avatar: avatar,
+        progress: progress,
+        criadoEm: new Date().toISOString(),
+        ultimoAcesso: new Date().toISOString(),
+        totalMissions: typeof missions !== 'undefined' ? missions.length : 0
+    };
+    
+    const json = JSON.stringify(dados, null, 2);
+    const blob = new Blob([json], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `${nome}.json`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    
+    msg.textContent = '✅ Conta criada! Salve o arquivo e faça upload para a pasta accounts/';
+    msg.className = 'login-mensagem sucesso';
+    
+    setTimeout(() => {
+        fecharRegistro();
+        abrirLogin();
+        const loginNome = document.getElementById('loginNome');
+        if (loginNome) loginNome.value = nome;
+    }, 1500);
 }
+
+// ============================================================
+// LOGOUT
+// ============================================================
+function fazerLogout() {
+    if (confirm('⚠️ Deseja realmente sair?')) {
+        usuarioLogado = null;
+        localStorage.removeItem(SESSION_KEY);
+        atualizarInterface();
+        if (typeof showToast === 'function') {
+            showToast('👋 Você saiu da conta');
+        }
+    }
+}
+
+// ============================================================
+// ATUALIZAR INTERFACE
+// ============================================================
+function atualizarInterface() {
+    const avatarEl = document.getElementById('userAvatar');
+    const nomeEl = document.getElementById('userName');
+    const loginBtn = document.getElementById('loginBtn');
+    const logoutBtn = document.getElementById('logoutBtn');
+    
+    if (usuarioLogado) {
+        if (avatarEl) avatarEl.textContent = usuarioLogado.avatar || '👤';
+        if (nomeEl) nomeEl.textContent = usuarioLogado.nome || 'Usuário';
+        if (loginBtn) loginBtn.style.display = 'none';
+        if (logoutBtn) logoutBtn.style.display = 'inline-block';
+    } else {
+        if (avatarEl) avatarEl.textContent = '👤';
+        if (nomeEl) nomeEl.textContent = 'Desconectado';
+        if (loginBtn) loginBtn.style.display = 'inline-block';
+        if (logoutBtn) logoutBtn.style.display = 'none';
+    }
+}
+
+// ============================================================
+// CARREGAR SESSÃO SALVA
+// ============================================================
+function carregarSessao() {
+    try {
+        const salvo = localStorage.getItem(SESSION_KEY);
+        if (salvo) {
+            usuarioLogado = JSON.parse(salvo);
+            atualizarInterface();
+            return true;
+        }
+    } catch (e) {}
+    return false;
+}
+
+// ============================================================
+// INICIALIZAR
+// ============================================================
+carregarSessao();
+
+console.log('✅ Sistema de login carregado!');
 </script>
