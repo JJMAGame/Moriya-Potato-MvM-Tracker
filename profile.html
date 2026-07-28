@@ -1,0 +1,66 @@
+<!-- ============================================================
+     CARREGAR SISTEMA DE LOGIN (profile.html)
+     ============================================================ -->
+<script>
+async function carregarProfile() {
+    try {
+        const response = await fetch('profile.html');
+        if (!response.ok) {
+            console.warn('profile.html não encontrado');
+            return;
+        }
+        
+        const html = await response.text();
+        
+        // 1. Extrai e aplica o CSS (se tiver)
+        const cssMatch = html.match(/<style>([\s\S]*?)<\/style>/);
+        if (cssMatch) {
+            const style = document.createElement('style');
+            style.textContent = cssMatch[1];
+            document.head.appendChild(style);
+        }
+        
+        // 2. Extrai e insere o HTML dos modais
+        const modalDivs = html.match(/<div class="login-modal-overlay" id="(?:loginModal|registroModal)"[\s\S]*?<\/div>\s*<\/div>/g);
+        if (modalDivs) {
+            modalDivs.forEach(modalHtml => {
+                const div = document.createElement('div');
+                div.innerHTML = modalHtml;
+                const firstChild = div.firstElementChild;
+                if (firstChild) {
+                    document.body.appendChild(firstChild);
+                }
+            });
+        }
+        
+        // 3. Extrai e executa o JavaScript
+        const scriptMatch = html.match(/<script>([\s\S]*?)<\/script>/);
+        if (scriptMatch) {
+            // Remove a parte que chama iniciarSessao automaticamente
+            let scriptContent = scriptMatch[1];
+            // Remove a chamada automática
+            scriptContent = scriptContent.replace(/if\s*\(\s*typeof\s+window\s*!==\s*'undefined'\s*\)\s*{[\s\S]*?}/g, '');
+            scriptContent = scriptContent.replace(/iniciarSessao\s*\(\s*\)\s*;?/g, '');
+            // Executa
+            eval(scriptContent);
+        }
+        
+        // 4. Inicia a sessão manualmente
+        if (typeof iniciarSessao === 'function') {
+            iniciarSessao();
+        }
+        
+        console.log('✅ Sistema de login carregado!');
+        
+    } catch (error) {
+        console.warn('Erro ao carregar profile:', error);
+    }
+}
+
+// Carrega quando a página estiver pronta
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', carregarProfile);
+} else {
+    carregarProfile();
+}
+</script>

@@ -115,6 +115,44 @@
             transform: scale(1.05);
             box-shadow: 0 4px 20px rgba(39, 174, 96, 0.5);
         }
+
+        /* ============================================================
+           SISTEMA DE SENHA DE LOGIN
+        ============================================================ */
+
+        .user-info {
+            display: flex;
+            align-items: center;
+        }
+        
+        .user-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255,255,255,0.1);
+            color: #e0e0e0;
+            padding: 6px 14px;
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .user-btn:hover {
+            background: rgba(255,255,255,0.2);
+            transform: scale(1.02);
+        }
+        
+        .user-btn #userAvatar {
+            font-size: 20px;
+        }
+        
+        .user-status {
+            font-size: 14px;
+            opacity: 0.8;
+        }
         
         /* ============================================================
            CONTAINER PRINCIPAL
@@ -751,6 +789,68 @@
             }
         }
     </style>
+    <!-- Carrega o login.html -->
+    <script>
+    // ============================================================
+// CARREGAR SISTEMA DE LOGIN
+// ============================================================
+async function carregarLogin() {
+    try {
+        const response = await fetch('login.html');
+        if (!response.ok) {
+            console.warn('login.html não encontrado, sistema de login desativado');
+            return;
+        }
+        
+        const html = await response.text();
+        
+        // 1. CSS
+        const cssMatch = html.match(/<style>([\s\S]*?)<\/style>/);
+        if (cssMatch) {
+            const style = document.createElement('style');
+            style.textContent = cssMatch[1];
+            document.head.appendChild(style);
+        }
+        
+        // 2. HTML - pega os modais
+        const modalDivs = html.match(/<div class="login-modal-overlay" id="(?:loginModal|registroModal)"[\s\S]*?<\/div>\s*<\/div>/g);
+        if (modalDivs) {
+            modalDivs.forEach(modalHtml => {
+                const div = document.createElement('div');
+                div.innerHTML = modalHtml;
+                document.body.appendChild(div.firstElementChild);
+            });
+        }
+        
+        // 3. JavaScript
+        const scriptMatch = html.match(/<script>([\s\S]*?)<\/script>/);
+        if (scriptMatch) {
+            // Remove a parte que chama iniciarSessao automaticamente
+            let scriptContent = scriptMatch[1];
+            scriptContent = scriptContent.replace(/iniciarSessao\s*\(\s*\)\s*;?/g, '');
+            scriptContent = scriptContent.replace(/if\s*\(\s*typeof\s+window\s*!==\s*'undefined'\s*\)\s*{[\s\S]*?}/g, '');
+            eval(scriptContent);
+        }
+        
+        // 4. Iniciar sessão manualmente
+        if (typeof iniciarSessao === 'function') {
+            iniciarSessao();
+        }
+        
+        console.log('✅ Sistema de login carregado!');
+        
+    } catch (error) {
+        console.warn('Erro ao carregar login:', error);
+    }
+}
+
+// Carrega depois que a página estiver pronta
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', carregarLogin);
+} else {
+    carregarLogin();
+}
+</script>
 </head>
 <body>
 
@@ -759,13 +859,23 @@
     ============================================================ -->
     <div class="lightbar">
         <div class="lightbar-content">
+            <div class="lightbar-left">
+                <div class="user-info">
+                    <button class="user-btn" onclick="usuarioLogado ? fazerLogout() : abrirLogin()">
+                        <span id="userAvatar">👤</span>
+                        <span id="userName">Desconectado</span>
+                        <span class="user-status" id="loginBtn">🔓</span>
+                        <span class="user-status" id="logoutBtn" style="display:none;">🔒</span>
+                    </button>
+                </div>
+            </div>
+            
             <div class="lightbar-buttons">
                 <button class="btn-github" onclick="abrirModalGitHub()">📂 Arquivos Moriya</button>
                 <button class="btn-event" onclick="window.open('event.html?v=' + Date.now(), 'Eventos', 'width=900,height=700')">📅 Eventos</button>
             </div>
         </div>
     </div>
-
     <!-- ============================================================
          CONTAINER PRINCIPAL
     ============================================================ -->
