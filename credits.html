@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Créditos - Moriya vs Potato</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #1a2e1a;  /* ← VERDE MÉDIO */
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: #2a4a2a;  /* ← VERDE MAIS CLARO */
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.6);
+            border: 1px solid #3a5a3a;
+        }
+
+        /* ============================================================
+           CABEÇALHO
+        ============================================================ */
+        .header {
+            text-align: center;
+            padding-bottom: 25px;
+            border-bottom: 2px solid #3a5a3a;
+            margin-bottom: 25px;
+        }
+
+        .header .badge {
+            display: inline-block;
+            background: #ff6b81;  /* ← ROSA MAIS CLARO */
+            color: white;
+            padding: 4px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+
+        .header h1 {
+            color: #f0f0f0;  /* ← QUASE BRANCO */
+            font-size: 28px;
+            font-weight: 700;
+        }
+
+        .header h1 .highlight {
+            color: #ff6b81;
+        }
+
+        .header .subtitle {
+            color: #aaddaa;  /* ← VERDE CLARO */
+            font-size: 14px;
+            margin-top: 8px;
+            opacity: 0.9;
+        }
+
+        /* ============================================================
+           SEÇÕES
+        ============================================================ */
+        .section {
+            margin-bottom: 30px;
+        }
+
+        .section-title {
+            color: #f0f0f0;
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 2px solid #3a5a3a;
+            padding-bottom: 10px;
+        }
+
+        .section-title .icon {
+            font-size: 24px;
+        }
+
+        /* ============================================================
+           CARD DE COLABORADOR
+        ============================================================ */
+        .colaborador-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .colaborador-card {
+            background: #1a3a1a;  /* ← VERDE CLARO */
+            border-radius: 12px;
+            padding: 18px;
+            text-align: center;
+            border: 1px solid #3a5a3a;
+            transition: all 0.3s ease;
+        }
+
+        .colaborador-card:hover {
+            border-color: #4caf50;
+            transform: translateY(-3px);
+            box-shadow: 0 4px 20px rgba(76, 175, 80, 0.3);
+        }
+
+        .colaborador-card .avatar {
+            font-size: 48px;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .colaborador-card .nome {
+            color: #f0f0f0;
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .colaborador-card .funcao {
+            color: #aaddaa;
+            font-size: 13px;
+            margin-top: 4px;
+        }
+
+        .colaborador-card .contribuicao {
+            color: #b0d0b0;
+            font-size: 12px;
+            margin-top: 4px;
+        }
+
+        /* ============================================================
+           LISTA DE CONTRIBUIÇÕES
+        ============================================================ */
+        .contribuicao-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 10px 14px;
+            margin: 4px 0;
+            background: #1a3a1a;
+            border-radius: 8px;
+            border-left: 3px solid #4caf50;
+            transition: all 0.3s ease;
+        }
+
+        .contribuicao-item:hover {
+            background: #2a4a2a;
+            transform: translateX(5px);
+        }
+
+        .contribuicao-item .data {
+            color: #88bb88;
+            font-size: 12px;
+            white-space: nowrap;
+            min-width: 100px;
+        }
+
+        .contribuicao-item .texto {
+            color: #d0d0d0;
+            font-size: 14px;
+        }
+
+        .contribuicao-item .texto strong {
+            color: #f0f0f0;
+        }
+
+        /* ============================================================
+           TAGS DE TECNOLOGIAS
+        ============================================================ */
+        .tech-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .tech-tag {
+            background: #1a3a1a;
+            color: #aaddaa;
+            padding: 4px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            border: 1px solid #3a5a3a;
+        }
+
+        .tech-tag:hover {
+            border-color: #4caf50;
+            background: #2a4a2a;
+        }
+
+        /* ============================================================
+           VERSÃO
+        ============================================================ */
+        .versao-info {
+            text-align: center;
+            color: #88bb88;
+            font-size: 13px;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #3a5a3a;
+        }
+
+        .versao-info strong {
+            color: #f0f0f0;
+        }
+
+        /* ============================================================
+           BOTÃO VOLTAR
+        ============================================================ */
+        .btn-voltar {
+            display: inline-block;
+            background: #4caf50;  /* ← VERDE MAIS CLARO */
+            color: white;
+            padding: 10px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+            border: none;
+            text-align: center;
+        }
+
+        .btn-voltar:hover {
+            background: #66bb6a;
+            transform: scale(1.02);
+            box-shadow: 0 4px 20px rgba(76, 175, 80, 0.4);
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        /* ============================================================
+           RESPONSIVO
+        ============================================================ */
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+            }
+
+            .header h1 {
+                font-size: 22px;
+            }
+
+            .colaborador-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+
+            .contribuicao-item {
+                flex-direction: column;
+                gap: 4px;
+            }
+
+            .contribuicao-item .data {
+                min-width: unset;
+                font-size: 11px;
+            }
+
+            .btn-voltar {
+                display: block;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- ============================================================
+             CABEÇALHO
+        ============================================================ -->
+        <div class="header">
+            <span class="badge">🎯 Créditos</span>
+            <h1>Moriya Vs Potato <span class="highlight">Archive</span></h1>
+            <p class="subtitle">📜 Projeto feito por amor à comunidade</p>
+        </div>
+
+        <!-- ============================================================
+             COLABORADORES
+        ============================================================ -->
+        <div class="section">
+            <div class="section-title">
+                <span class="icon">🤝</span>
+                Colaboradores
+            </div>
+            <div class="colaborador-grid" id="colaboradoresGrid">
+                <!-- Os colaboradores serão inseridos via JavaScript -->
+            </div>
+        </div>
+
+        <!-- ============================================================
+             CONTRIBUIÇÕES RECENTES
+        ============================================================ -->
+        <div class="section">
+            <div class="section-title">
+                <span class="icon">📝</span>
+                Últimas Contribuições
+            </div>
+            <div id="contribuicoesList">
+                <!-- As contribuições serão inseridas via JavaScript -->
+            </div>
+        </div>
+
+        <!-- ============================================================
+             TECNOLOGIAS
+        ============================================================ -->
+        <div class="section">
+            <div class="section-title">
+                <span class="icon">⚙️</span>
+                Tecnologias Utilizadas
+            </div>
+            <div class="tech-tags" id="techTags">
+                <!-- As tags serão inseridas via JavaScript -->
+            </div>
+        </div>
+
+        <!-- ============================================================
+             VERSÃO
+        ============================================================ -->
+        <div class="versao-info" id="versaoInfo">
+            <!-- Versão será inserida via JavaScript -->
+        </div>
+
+        <!-- ============================================================
+             BOTÃO VOLTAR
+        ============================================================ -->
+        <div class="footer">
+            <a href="index.html" class="btn-voltar">⬅ Voltar para o Tracker</a>
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- JAVASCRIPT                                                    -->
+    <!-- ============================================================ -->
+
+    <script>
+        // ============================================================
+        // CONFIGURAÇÃO DOS CRÉDITOS - EDITE AQUI!
+        // ============================================================
+
+        const config = {
+            // ===== VERSÃO =====
+            versao: "v1.5.4",
+            dataAtualizacao: "30/07/2026",
+
+            // ===== COLABORADORES =====
+            colaboradores: [
+                {
+                    nome: "JJMAGame / Jorge",
+                    avatar: "<img src='images/jorge.jpg' alt='JJMA Logo' style='width: 150px; height: 150px;'>",
+                    funcao: "Desenvolvedor Principal e Idealizador",
+                    contribuicao: "Criação do projeto, Conceito e direção do projeto"
+                },
+                {
+                    nome: "Rishi_lockeD",
+                    avatar: "<img src='images/Moriya.png' alt='Rishi_lockeD Logo' style='width: 150px; height: 150px;'>",
+                    funcao: "Apoio e Testes",
+                    contribuicao: "Uns dos donos da comunidade Moriya, fornecendo feedback e sugestões"
+                },
+
+                {
+                    nome: "Minerinho da Pesada",
+                    avatar: "<img src='images/minerinho.jpg' alt='Moriya Logo' style='width: 150px; height: 150px;'>",
+                    funcao: "Backgrounds e Thubs",
+                    contribuicao: "Criação de SFM backgrounds e thumbnails para o projeto"
+                },
+
+                {
+                    nome: "Comunidade Moriya",
+                    avatar: "<img src='images/Moriya.png' alt='Moriya Logo' style='width: 150px; height: 150px;'>",
+                    funcao: "Apoio e Testes",
+                    contribuicao: "Feedback, sugestões e testes"
+                },
+
+                {
+                    nome: "Comunidade Potato",
+                    avatar: "<img src='images/Potato.png' alt='Potato Logo' style='width: 150px; height: 50px;'>",
+                    funcao: "Inspiração",
+                    contribuicao: "Uma grande inspiração para o projeto e fornecimento de conteúdo para a comunidade Moriya"
+                },
+
+                // ============================================================
+                // ADICIONE NOVOS COLABORADORES AQUI:
+                // ============================================================
+                // {
+                //     nome: "Nome do Colaborador",
+                //     avatar: "😊",
+                //     funcao: "Função",
+                //     contribuicao: "O que fez"
+                // },
+            ],
+
+            // ===== CONTRIBUIÇÕES RECENTES =====
+            contribuicoes: [
+                { 
+                    data: "30/07/2026",
+                    texto: "Criada página de <strong>Créditos</strong> com agradecimentos e informações do projeto"
+                },
+                {
+                    data: "29/07/2026",
+                    texto: "Adicionado <strong>sistema de fundo personalizado</strong> com controle de opacidade"
+                },
+                {
+                    data: "28/07/2026",
+                    texto: "Removido <strong>sistema de login</strong> e simplificado o projeto"
+                },
+                {
+                    data: "27/07/2026",
+                    texto: "Adicionado <strong>Lightbar</strong> com borda arco-íris animada"
+                },
+                {
+                    data: "26/07/2026",
+                    texto: "Criada página de <strong>Eventos</strong> com status automático"
+                },
+                // ============================================================
+                // ADICIONE NOVAS CONTRIBUIÇÕES AQUI:
+                // ============================================================
+                // {
+                //     data: "DD/MM/AAAA",
+                //     texto: "Descrição da contribuição"
+                // },
+            ],
+
+            // ===== TECNOLOGIAS =====
+            tecnologias: [
+                "HTML5",
+                "CSS3",
+                "JavaScript",
+                "GitHub Pages",
+                "GitHub API",
+                "LocalStorage",
+                "JSON",
+                "DeepSeek AI",
+            ],
+        };
+
+        // ============================================================
+        // RENDERIZAR COLABORADORES
+        // ============================================================
+        function renderizarColaboradores() {
+            const grid = document.getElementById('colaboradoresGrid');
+            
+            if (config.colaboradores.length === 0) {
+                grid.innerHTML = `
+                    <div style="color: #88bb88; text-align: center; padding: 20px; grid-column: 1 / -1;">
+                        📭 Nenhum colaborador cadastrado
+                    </div>
+                `;
+                return;
+            }
+
+            let html = '';
+            config.colaboradores.forEach(colab => {
+                html += `
+                    <div class="colaborador-card">
+                        <span class="avatar">${colab.avatar || '👤'}</span>
+                        <div class="nome">${colab.nome}</div>
+                        <div class="funcao">${colab.funcao}</div>
+                        <div class="contribuicao">${colab.contribuicao}</div>
+                    </div>
+                `;
+            });
+
+            grid.innerHTML = html;
+        }
+
+        // ============================================================
+        // RENDERIZAR CONTRIBUIÇÕES
+        // ============================================================
+        function renderizarContribuicoes() {
+            const list = document.getElementById('contribuicoesList');
+
+            if (config.contribuicoes.length === 0) {
+                list.innerHTML = `
+                    <div style="color: #88bb88; text-align: center; padding: 20px;">
+                        📭 Nenhuma contribuição registrada
+                    </div>
+                `;
+                return;
+            }
+
+            let html = '';
+            config.contribuicoes.forEach(item => {
+                html += `
+                    <div class="contribuicao-item">
+                        <span class="data">📅 ${item.data}</span>
+                        <span class="texto">${item.texto}</span>
+                    </div>
+                `;
+            });
+
+            list.innerHTML = html;
+        }
+
+        // ============================================================
+        // RENDERIZAR TECNOLOGIAS
+        // ============================================================
+        function renderizarTecnologias() {
+            const container = document.getElementById('techTags');
+
+            if (config.tecnologias.length === 0) {
+                container.innerHTML = `
+                    <span style="color: #88bb88; font-size: 13px;">Nenhuma tecnologia listada</span>
+                `;
+                return;
+            }
+
+            let html = '';
+            config.tecnologias.forEach(tech => {
+                html += `<span class="tech-tag">${tech}</span>`;
+            });
+
+            container.innerHTML = html;
+        }
+
+        // ============================================================
+        // RENDERIZAR VERSÃO
+        // ============================================================
+        function renderizarVersao() {
+            const el = document.getElementById('versaoInfo');
+            el.innerHTML = `
+                📦 Versão <strong>${config.versao}</strong> · 
+                📅 Atualizado em <strong>${config.dataAtualizacao}</strong> · 
+                🧡 Feito com amor pela comunidade, e algumas coisa foram feitas por IA
+            `;
+        }
+
+        // ============================================================
+        // INICIALIZAR
+        // ============================================================
+        renderizarColaboradores();
+        renderizarContribuicoes();
+        renderizarTecnologias();
+        renderizarVersao();
+
+        console.log('✅ Página de créditos carregada!');
+        console.log(`📦 ${config.versao}`);
+        console.log(`🤝 ${config.colaboradores.length} colaboradores`);
+        console.log(`📝 ${config.contribuicoes.length} contribuições`);
+    </script>
+
+</body>
+</html>
