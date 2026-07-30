@@ -120,16 +120,47 @@
             margin: 0 auto 8px auto;
         }
 
+        /* ===== AVATAR SOLTO (SEM BORDA) - PADRÃO ===== */
         .colaborador-card .avatar-img {
             width: 80px;
             height: 80px;
-            border-radius: 50%;
             object-fit: cover;
+            display: block;
+            margin: 0 auto 10px auto;
+            /* SEM BORDA, SEM ARREDONDAMENTO */
+        }
+
+        /* ===== AVATAR REDONDO (COM BORDA) ===== */
+        .colaborador-card .avatar-img.redondo {
+            border-radius: 50%;
             border: 2px solid #4caf50;
             transition: all 0.3s ease;
         }
 
-        .colaborador-card:hover .avatar-img {
+        /* ===== AVATAR QUADRADO (COM BORDA) ===== */
+        .colaborador-card .avatar-img.quadrado {
+            border-radius: 10px;
+            border: 2px solid #4caf50;
+            transition: all 0.3s ease;
+        }
+
+        .colaborador-card .avatar-img.grande {
+            width: 100%;
+            height: auto;
+            max-width: 200px;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            margin: 0 auto 10px auto;
+        }
+        
+        .colaborador-card:hover .avatar-img.grande {
+            border-color: #66bb6a;
+            transform: scale(1.03);
+            box-shadow: 0 4px 20px rgba(76, 175, 80, 0.3);
+        }
+
+        .colaborador-card:hover .avatar-img.redondo,
+        .colaborador-card:hover .avatar-img.quadrado {
             border-color: #66bb6a;
             transform: scale(1.05);
             box-shadow: 0 4px 20px rgba(76, 175, 80, 0.3);
@@ -390,49 +421,56 @@
             colaboradores: [
                 {
                     nome: "JJMAGame / Jorge",
-                    avatar: "<img src='images/jorge.jpg' class='avatar-img' alt='JJMA Logo'>",
+                    avatar: "images/jorge.jpg",
                     funcao: "Desenvolvedor Principal e Idealizador",
-                    contribuicao: "Criação do projeto, Conceito e direção do projeto"
+                    contribuicao: "Criação do projeto, Conceito e direção do projeto",
+                    formato: "redondo"
                 },
                 {
                     nome: "Rishi_lockeD",
-                    avatar: "<img src='images/Moriya.png' class='avatar-img' alt='Moriya Logo'>",
+                    avatar: "images/Moriya.png",
                     funcao: "Apoio e Testes",
-                    contribuicao: "Uns dos donos da comunidade Moriya, fornecendo feedback e sugestões"
+                    contribuicao: "Uns dos donos da comunidade Moriya, fornecendo feedback e sugestões",
+                    formato: "redondo"
                 },
                 {
                     nome: "Minerinho da Pesada",
-                    avatar: "<img src='images/minerinho.jpg' class='avatar-img' alt='Minerinho'>",
+                    avatar: "images/minerinho.jpg",
                     funcao: "Backgrounds e Thumbs",
-                    contribuicao: "Criação de SFM backgrounds e thumbnails para o projeto"
+                    contribuicao: "Criação de SFM backgrounds e thumbnails para o projeto",
+                    formato: "redondo"
                 },
                 {
                     nome: "Comunidade Moriya",
-                    avatar: "<img src='images/Moriya.png' class='avatar-img' alt='Moriya Logo'>",
+                    avatar: "images/Moriya.png",
                     funcao: "Apoio e Testes",
-                    contribuicao: "Feedback, sugestões e testes"
+                    contribuicao: "Feedback, sugestões e testes",
+                    formato: "quadrado"
                 },
                 {
                     nome: "Comunidade Potato",
-                    avatar: "<img src='images/Potato.png' class='avatar-img' alt='Potato Logo'>",
+                    avatar: "images/Potato.png",
                     funcao: "Inspiração",
-                    contribuicao: "Uma grande inspiração para o projeto e fornecimento de conteúdo para a comunidade Moriya"
+                    contribuicao: "Uma grande inspiração para o projeto e fornecimento de conteúdo para a comunidade Moriya",
+                    tamanho: "grande"
                 },
 
-                {
-                    nome: "Comunidade Potato",
-                    avatar: "<img src='images/Potato.png' class='avatar-img' alt='Potato Logo'>",
-                    funcao: "Inspiração",
-                    contribuicao: "Uma grande inspiração para o projeto e fornecimento de conteúdo para a comunidade Moriya"
-                },
                 // ============================================================
                 // ADICIONE NOVOS COLABORADORES AQUI:
                 // ============================================================
                 // {
                 //     nome: "Nome do Colaborador",
-                //     avatar: "<img src='images/avatar.jpg' class='avatar-img' alt='Nome'>",
+                //     avatar: "caminho/da/imagem.jpg",
                 //     funcao: "Função do colaborador",
-                //     contribuicao: "O que ele fez no projeto"
+                //     contribuicao: "O que ele fez no projeto",
+                //     formato: "redondo"  // "redondo", "quadrado" ou omitir para solto
+                // },
+                // {
+                //     nome: "Nome com Emoji",
+                //     avatar: "😊",
+                //     funcao: "Função",
+                //     contribuicao: "Contribuição"
+                //     // SEM "formato" = EMOJI SOLTO
                 // },
             ],
 
@@ -512,19 +550,44 @@
                 `;
                 return;
             }
-
+        
             let html = '';
             config.colaboradores.forEach(colab => {
+                let avatarHtml = '';
+                
+                // Verifica se é emoji
+                const isEmoji = colab.avatar && !colab.avatar.includes('/') && !colab.avatar.includes('http') && !colab.avatar.includes('.');
+                
+                if (isEmoji) {
+                    avatarHtml = `<span class="avatar-emoji">${colab.avatar}</span>`;
+                } else {
+                    let classe = 'avatar-img';
+                    
+                    // Adiciona o formato (redondo/quadrado)
+                    if (colab.formato === 'redondo') {
+                        classe += ' redondo';
+                    } else if (colab.formato === 'quadrado') {
+                        classe += ' quadrado';
+                    }
+                    
+                    // ===== ADICIONA O TAMANHO "GRANDE" =====
+                    if (colab.tamanho === 'grande') {
+                        classe += ' grande';
+                    }
+                    
+                    avatarHtml = `<img src="${colab.avatar}" class="${classe}" alt="${colab.nome}">`;
+                }
+                
                 html += `
                     <div class="colaborador-card">
-                        <span class="avatar">${colab.avatar || '👤'}</span>
+                        ${avatarHtml}
                         <div class="nome">${colab.nome}</div>
                         <div class="funcao">${colab.funcao}</div>
                         <div class="contribuicao">${colab.contribuicao}</div>
                     </div>
                 `;
             });
-
+        
             grid.innerHTML = html;
         }
 
