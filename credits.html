@@ -13,7 +13,7 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: #1a2e1a;  /* ← VERDE MÉDIO */
+            background: #1a2e1a;
             padding: 20px;
             min-height: 100vh;
         }
@@ -21,7 +21,7 @@
         .container {
             max-width: 900px;
             margin: 0 auto;
-            background: #2a4a2a;  /* ← VERDE MAIS CLARO */
+            background: #2a4a2a;
             border-radius: 16px;
             padding: 30px;
             box-shadow: 0 8px 32px rgba(0,0,0,0.6);
@@ -40,7 +40,7 @@
 
         .header .badge {
             display: inline-block;
-            background: #ff6b81;  /* ← ROSA MAIS CLARO */
+            background: #ff6b81;
             color: white;
             padding: 4px 16px;
             border-radius: 20px;
@@ -52,7 +52,7 @@
         }
 
         .header h1 {
-            color: #f0f0f0;  /* ← QUASE BRANCO */
+            color: #f0f0f0;
             font-size: 28px;
             font-weight: 700;
         }
@@ -62,7 +62,7 @@
         }
 
         .header .subtitle {
-            color: #aaddaa;  /* ← VERDE CLARO */
+            color: #aaddaa;
             font-size: 14px;
             margin-top: 8px;
             opacity: 0.9;
@@ -101,7 +101,7 @@
         }
 
         .colaborador-card {
-            background: #1a3a1a;  /* ← VERDE CLARO */
+            background: #1a3a1a;
             border-radius: 12px;
             padding: 18px;
             text-align: center;
@@ -116,6 +116,26 @@
         }
 
         .colaborador-card .avatar {
+            display: block;
+            margin: 0 auto 8px auto;
+        }
+
+        .colaborador-card .avatar-img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #4caf50;
+            transition: all 0.3s ease;
+        }
+
+        .colaborador-card:hover .avatar-img {
+            border-color: #66bb6a;
+            transform: scale(1.05);
+            box-shadow: 0 4px 20px rgba(76, 175, 80, 0.3);
+        }
+
+        .colaborador-card .avatar-emoji {
             font-size: 48px;
             display: block;
             margin-bottom: 8px;
@@ -199,7 +219,7 @@
         }
 
         /* ============================================================
-           VERSÃO
+           VERSÃO E TIMESTAMP
         ============================================================ */
         .versao-info {
             text-align: center;
@@ -214,12 +234,19 @@
             color: #f0f0f0;
         }
 
+        .timestamp {
+            display: block;
+            margin-top: 5px;
+            font-size: 12px;
+            color: #66aa66;
+        }
+
         /* ============================================================
            BOTÃO VOLTAR
         ============================================================ */
         .btn-voltar {
             display: inline-block;
-            background: #4caf50;  /* ← VERDE MAIS CLARO */
+            background: #4caf50;
             color: white;
             padding: 10px 24px;
             border-radius: 8px;
@@ -259,6 +286,11 @@
                 grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
             }
 
+            .colaborador-card .avatar-img {
+                width: 60px;
+                height: 60px;
+            }
+
             .contribuicao-item {
                 flex-direction: column;
                 gap: 4px;
@@ -296,7 +328,7 @@
                 Colaboradores
             </div>
             <div class="colaborador-grid" id="colaboradoresGrid">
-                <!-- Os colaboradores serão inseridos via JavaScript -->
+                <!-- Colaboradores serão inseridos via JavaScript -->
             </div>
         </div>
 
@@ -309,7 +341,7 @@
                 Últimas Contribuições
             </div>
             <div id="contribuicoesList">
-                <!-- As contribuições serão inseridas via JavaScript -->
+                <!-- Contribuições serão inseridas via JavaScript -->
             </div>
         </div>
 
@@ -322,12 +354,12 @@
                 Tecnologias Utilizadas
             </div>
             <div class="tech-tags" id="techTags">
-                <!-- As tags serão inseridas via JavaScript -->
+                <!-- Tags serão inseridas via JavaScript -->
             </div>
         </div>
 
         <!-- ============================================================
-             VERSÃO
+             VERSÃO E TIMESTAMP
         ============================================================ -->
         <div class="versao-info" id="versaoInfo">
             <!-- Versão será inserida via JavaScript -->
@@ -353,52 +385,47 @@
         const config = {
             // ===== VERSÃO =====
             versao: "v1.5.4",
-            dataAtualizacao: "30/07/2026",
 
             // ===== COLABORADORES =====
             colaboradores: [
                 {
                     nome: "JJMAGame / Jorge",
-                    avatar: "<img src='images/jorge.jpg' alt='JJMA Logo' style='width: 150px; height: 150px;'>",
+                    avatar: "<img src='images/jorge.jpg' class='avatar-img' alt='JJMA Logo'>",
                     funcao: "Desenvolvedor Principal e Idealizador",
                     contribuicao: "Criação do projeto, Conceito e direção do projeto"
                 },
                 {
                     nome: "Rishi_lockeD",
-                    avatar: "<img src='images/Moriya.png' alt='Rishi_lockeD Logo' style='width: 150px; height: 150px;'>",
+                    avatar: "<img src='images/Moriya.png' class='avatar-img' alt='Moriya Logo'>",
                     funcao: "Apoio e Testes",
                     contribuicao: "Uns dos donos da comunidade Moriya, fornecendo feedback e sugestões"
                 },
-
                 {
                     nome: "Minerinho da Pesada",
-                    avatar: "<img src='images/minerinho.jpg' alt='Moriya Logo' style='width: 150px; height: 150px;'>",
-                    funcao: "Backgrounds e Thubs",
+                    avatar: "<img src='images/minerinho.jpg' class='avatar-img' alt='Minerinho'>",
+                    funcao: "Backgrounds e Thumbs",
                     contribuicao: "Criação de SFM backgrounds e thumbnails para o projeto"
                 },
-
                 {
                     nome: "Comunidade Moriya",
-                    avatar: "<img src='images/Moriya.png' alt='Moriya Logo' style='width: 150px; height: 150px;'>",
+                    avatar: "<img src='images/Moriya.png' class='avatar-img' alt='Moriya Logo'>",
                     funcao: "Apoio e Testes",
                     contribuicao: "Feedback, sugestões e testes"
                 },
-
                 {
                     nome: "Comunidade Potato",
-                    avatar: "<img src='images/Potato.png' alt='Potato Logo' style='width: 150px; height: 50px;'>",
+                    avatar: "<img src='images/Potato.png' class='avatar-img' alt='Potato Logo'>",
                     funcao: "Inspiração",
                     contribuicao: "Uma grande inspiração para o projeto e fornecimento de conteúdo para a comunidade Moriya"
                 },
-
                 // ============================================================
                 // ADICIONE NOVOS COLABORADORES AQUI:
                 // ============================================================
                 // {
                 //     nome: "Nome do Colaborador",
-                //     avatar: "😊",
-                //     funcao: "Função",
-                //     contribuicao: "O que fez"
+                //     avatar: "<img src='images/avatar.jpg' class='avatar-img' alt='Nome'>",
+                //     funcao: "Função do colaborador",
+                //     contribuicao: "O que ele fez no projeto"
                 // },
             ],
 
@@ -445,6 +472,24 @@
                 "DeepSeek AI",
             ],
         };
+
+        // ============================================================
+        // FUNÇÃO PARA FORMATAR DATA/HORA (TIMESTAMP)
+        // ============================================================
+        function formatarTimestamp(data) {
+            const dias = ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'];
+            const meses = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 
+                          'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
+            
+            const diaSemana = dias[data.getDay()];
+            const dia = String(data.getDate()).padStart(2, '0');
+            const mes = meses[data.getMonth()];
+            const ano = data.getFullYear();
+            const horas = String(data.getHours()).padStart(2, '0');
+            const minutos = String(data.getMinutes()).padStart(2, '0');
+            
+            return `${diaSemana}, ${dia} de ${mes} de ${ano} às ${horas}:${minutos}`;
+        }
 
         // ============================================================
         // RENDERIZAR COLABORADORES
@@ -526,14 +571,18 @@
         }
 
         // ============================================================
-        // RENDERIZAR VERSÃO
+        // RENDERIZAR VERSÃO COM TIMESTAMP
         // ============================================================
         function renderizarVersao() {
             const el = document.getElementById('versaoInfo');
+            
+            const agora = new Date();
+            const timestamp = formatarTimestamp(agora);
+            
             el.innerHTML = `
                 📦 Versão <strong>${config.versao}</strong> · 
-                📅 Atualizado em <strong>${config.dataAtualizacao}</strong> · 
-                🧡 Feito com amor pela comunidade, e algumas coisa foram feitas por IA
+                🕐 Atualizado em <strong>${timestamp}</strong>
+                <span class="timestamp">🧡 Feito com amor pela comunidade, e algumas coisas foram feitas por IA</span>
             `;
         }
 
@@ -549,6 +598,7 @@
         console.log(`📦 ${config.versao}`);
         console.log(`🤝 ${config.colaboradores.length} colaboradores`);
         console.log(`📝 ${config.contribuicoes.length} contribuições`);
+        console.log(`🕐 Timestamp: ${formatarTimestamp(new Date())}`);
     </script>
 
 </body>
