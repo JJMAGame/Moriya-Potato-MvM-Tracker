@@ -145,6 +145,28 @@
             box-shadow: 0 4px 20px rgba(39, 174, 96, 0.5);
         }
 
+        .lightbar-buttons .btn-potato {
+          background: #8B4513;  /* ← Marrom (cor de batata) */
+          color: white;
+        }
+
+        .lightbar-buttons .btn-potato:hover {
+            background: #A0522D;
+            transform: scale(1.05);
+            box-shadow: 0 4px 20px rgba(139, 69, 19, 0.5);
+        }
+        
+        .lightbar-buttons .btn-credits {
+            background: #e94560;  /* ← Vermelho/Magenta */
+            color: white;
+        }
+        
+        .lightbar-buttons .btn-credits:hover {
+            background: #ff6b81;
+            transform: scale(1.05);
+            box-shadow: 0 4px 20px rgba(233, 69, 96, 0.5);
+        }
+
         /* ============================================================
            CONTAINER PRINCIPAL
         ============================================================ */
@@ -786,6 +808,8 @@
             <div class="lightbar-buttons">
                 <button class="btn-github" onclick="abrirModalGitHub()">📂 Arquivos Moriya</button>
                 <button class="btn-event" onclick="window.open('event.html?v=' + Date.now(), 'Eventos', 'width=900,height=700')">📅 Eventos</button>
+                <button class="btn-potato" onclick="abrirPotato()">🥔 Conteúdo da Potato</button>
+                <button class="btn-credits" onclick="window.open('credits.html', 'Créditos', 'width=900,height=700')">🎯 Créditos</button>
             </div>
         </div>
     </div>
@@ -1767,6 +1791,13 @@
             };
             reader.readAsText(file);
             event.target.value = '';
+        }
+        
+        // ============================================================
+        // FUNÇÃO PARA ABRIR SITE DA POTATO
+        // ============================================================
+        function abrirPotato() {
+            window.open('https://archive.potato.tf/servers', '_blank');
         }
 
         // ============================================================
