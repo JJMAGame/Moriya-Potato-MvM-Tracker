@@ -13,8 +13,42 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: #1a1a2e;
+            background: #0d1f0d;
             padding: 20px;
+        }
+
+        /* Imagem de fundo com opacidade */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            
+            /* ===== IMAGEM DE FUNDO ===== */
+            background-image: url('images/backgrounds.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            
+            /* ===== OPACIDADE ===== */
+            opacity: 1;  /* ← AJUSTE AQUI: 0.1 = quase transparente, 1 = totalmente visível */
+        }
+        
+        /* Overlay escuro para melhorar a legibilidade */
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: #0d1f0d;  /* ← COR DE FUNDO SÓLIDA (verde escuro) */
+            opacity: 0.55;  /* ← AJUSTE A OPACIDADE DO OVERLAY */
         }
 
         /* ============================================================
@@ -23,15 +57,14 @@
 
         .lightbar {
            width: 100%;
-           background: #0f3460;
+           background: #0f2e0f;
            padding: 12px 24px;
-           border-radius: 16px;  /* ← CANTOS ARREDONDADOS */
+           border-radius: 16px;
            margin-bottom:25px;
            position: relative;
            overflow: hidden;
-           /* ===== BORDA ARCO-ÍRIS ANIMADA ===== */
            border: 3px solid transparent;
-           background-image: linear-gradient(#0f3460, #0f3460), 
+           background-image: linear-gradient(#0f2e0f, #0f2e0f), 
                              linear-gradient(to right, 
                                  #ff0000, #ff7700, #ffff00, #00ff00, 
                                  #0000ff, #8b00ff, #ff00ff, #ff0000
@@ -48,7 +81,6 @@
             100% { background-position: 0% 0%, 300% 50%; }
         }
 
-        /* Efeito de brilho interno */
         .lightbar::before {
             content: '';
             position: absolute;
@@ -56,8 +88,8 @@
             left: 3px;
             right: 3px;
             bottom: 3px;
-            background: #0f3460;
-            border-radius: 13px;  /* Um pouco menor que o border-radius do pai */
+            background: #0f2e0f;
+            border-radius: 13px;
             z-index: 0;
         }
         
@@ -71,7 +103,6 @@
             z-index: 1;
         }
         
-        /* Botões dentro da lightbar */
         .lightbar-buttons {
             display: flex;
             gap: 15px;
@@ -92,7 +123,6 @@
             z-index: 2;
         }
         
-        /* Botão GitHub */
         .lightbar-buttons .btn-github {
             background: #6e5494;
             color: white;
@@ -104,7 +134,6 @@
             box-shadow: 0 4px 20px rgba(110, 84, 148, 0.5);
         }
         
-        /* Botão Eventos */
         .lightbar-buttons .btn-event {
             background: #27ae60;
             color: white;
@@ -117,71 +146,33 @@
         }
 
         /* ============================================================
-           SISTEMA DE SENHA DE LOGIN
-        ============================================================ */
-
-        .user-info {
-            display: flex;
-            align-items: center;
-        }
-        
-        .user-btn {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            background: rgba(255,255,255,0.1);
-            color: #e0e0e0;
-            padding: 6px 14px;
-            border: 1px solid rgba(255,255,255,0.2);
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 13px;
-            font-weight: 600;
-            transition: all 0.3s ease;
-        }
-        
-        .user-btn:hover {
-            background: rgba(255,255,255,0.2);
-            transform: scale(1.02);
-        }
-        
-        .user-btn #userAvatar {
-            font-size: 20px;
-        }
-        
-        .user-status {
-            font-size: 14px;
-            opacity: 0.8;
-        }
-        
-        /* ============================================================
            CONTAINER PRINCIPAL
         ============================================================ */
         .container {
             max-width: 1400px;
             margin: 0 auto;
-            background: #16213e;
+            background: #1d2e1a;
             border-radius: 0 0 12px 12px;
             padding: 20px;
             box-shadow: 0 8px 32px rgba(0,0,0,0.5);
         }
 
         .titulo-icon1 {
-            width: 40px;           /* Ajuste o tamanho */
+            width: 40px;
             height: 40px;
-            vertical-align: middle; /* Alinha com o texto */
-            margin-right: 12px;     /* Espaço entre ícone e texto */
-            border-radius: 8px;     /* Opcional: deixa as bordas arredondadas */
-            object-fit: contain;    /* Mantém a proporção da imagem */
+            vertical-align: middle;
+            margin-right: 12px;
+            border-radius: 8px;
+            object-fit: contain;
         }
 
         .titulo-icon2 {
-            width: 100px;           /* Ajuste o tamanho */
+            width: 100px;
             height: 100px;
-            vertical-align: middle; /* Alinha com o texto */
-            margin-right: 12px;     /* Espaço entre ícone e texto */
-            border-radius: 0px;     /* Opcional: deixa as bordas arredondadas */
-            object-fit: contain;    /* Mantém a proporção da imagem */
+            vertical-align: middle;
+            margin-right: 12px;
+            border-radius: 0px;
+            object-fit: contain;
         }
 
         h1 {
@@ -208,7 +199,7 @@
         }
 
         .stat-box {
-            background: #0f3460;
+            background: #0f2e0f;
             padding: 8px 16px;
             border-radius: 8px;
             color: white;
@@ -275,9 +266,9 @@
 
         .search-box input, .search-box select {
             padding: 10px 15px;
-            border: 2px solid #0f3460;
+            border: 2px solid #256e25;
             border-radius: 8px;
-            background: #1a1a2e;
+            background: #0f2e0f;
             color: #e0e0e0;
             font-size: 14px;
             flex: 1;
@@ -286,7 +277,7 @@
 
         .search-box input:focus, .search-box select:focus {
             outline: none;
-            border-color: #e94560;
+            border-color: #27ae60;
         }
 
         .table-wrapper {
@@ -310,7 +301,7 @@
         }
 
         th {
-            background: #0f3460;
+            background: #0f2e0f;
             color: #e0e0e0;
             padding: 12px 10px;
             text-align: left;
@@ -318,7 +309,7 @@
             text-transform: uppercase;
             letter-spacing: 1px;
             font-size: 11px;
-            border-bottom: 3px solid #e94560;
+            border-bottom: 3px solid #27ae60;
         }
 
         td {
@@ -582,7 +573,7 @@
         }
 
         .modal-header .close-btn {
-            background: #c0392b;
+            background: #27ae60;
             color: white;
             border: none;
             border-radius: 8px;
@@ -627,8 +618,8 @@
         }
 
         .file-list li:hover {
-            background: #0f3460;
-            border-color: #e94560;
+            background: #0f2e0f;
+            border-color: #27ae60; 
             transform: scale(1.01);
         }
 
@@ -650,7 +641,7 @@
         }
 
         .btn-refresh {
-            background: #f39c12;
+            background: #27ae60;
             color: white;
             padding: 6px 12px;
             border: none;
@@ -692,11 +683,6 @@
                 text-align: center;
                 font-size: 12px;
                 padding: 8px 12px;
-            }
-
-            .lightbar-title {
-                font-size: 14px;
-                text-align: center;
             }
 
             .container {
@@ -789,68 +775,6 @@
             }
         }
     </style>
-    <!-- Carrega o login.html -->
-    <script>
-    // ============================================================
-// CARREGAR SISTEMA DE LOGIN
-// ============================================================
-async function carregarLogin() {
-    try {
-        const response = await fetch('login.html');
-        if (!response.ok) {
-            console.warn('login.html não encontrado, sistema de login desativado');
-            return;
-        }
-        
-        const html = await response.text();
-        
-        // 1. CSS
-        const cssMatch = html.match(/<style>([\s\S]*?)<\/style>/);
-        if (cssMatch) {
-            const style = document.createElement('style');
-            style.textContent = cssMatch[1];
-            document.head.appendChild(style);
-        }
-        
-        // 2. HTML - pega os modais
-        const modalDivs = html.match(/<div class="login-modal-overlay" id="(?:loginModal|registroModal)"[\s\S]*?<\/div>\s*<\/div>/g);
-        if (modalDivs) {
-            modalDivs.forEach(modalHtml => {
-                const div = document.createElement('div');
-                div.innerHTML = modalHtml;
-                document.body.appendChild(div.firstElementChild);
-            });
-        }
-        
-        // 3. JavaScript
-        const scriptMatch = html.match(/<script>([\s\S]*?)<\/script>/);
-        if (scriptMatch) {
-            // Remove a parte que chama iniciarSessao automaticamente
-            let scriptContent = scriptMatch[1];
-            scriptContent = scriptContent.replace(/iniciarSessao\s*\(\s*\)\s*;?/g, '');
-            scriptContent = scriptContent.replace(/if\s*\(\s*typeof\s+window\s*!==\s*'undefined'\s*\)\s*{[\s\S]*?}/g, '');
-            eval(scriptContent);
-        }
-        
-        // 4. Iniciar sessão manualmente
-        if (typeof iniciarSessao === 'function') {
-            iniciarSessao();
-        }
-        
-        console.log('✅ Sistema de login carregado!');
-        
-    } catch (error) {
-        console.warn('Erro ao carregar login:', error);
-    }
-}
-
-// Carrega depois que a página estiver pronta
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', carregarLogin);
-} else {
-    carregarLogin();
-}
-</script>
 </head>
 <body>
 
@@ -859,23 +783,13 @@ if (document.readyState === 'loading') {
     ============================================================ -->
     <div class="lightbar">
         <div class="lightbar-content">
-            <div class="lightbar-left">
-                <div class="user-info">
-                    <button class="user-btn" onclick="usuarioLogado ? fazerLogout() : abrirLogin()">
-                        <span id="userAvatar">👤</span>
-                        <span id="userName">Desconectado</span>
-                        <span class="user-status" id="loginBtn">🔓</span>
-                        <span class="user-status" id="logoutBtn" style="display:none;">🔒</span>
-                    </button>
-                </div>
-            </div>
-            
             <div class="lightbar-buttons">
                 <button class="btn-github" onclick="abrirModalGitHub()">📂 Arquivos Moriya</button>
                 <button class="btn-event" onclick="window.open('event.html?v=' + Date.now(), 'Eventos', 'width=900,height=700')">📅 Eventos</button>
             </div>
         </div>
     </div>
+
     <!-- ============================================================
          CONTAINER PRINCIPAL
     ============================================================ -->
@@ -971,7 +885,6 @@ if (document.readyState === 'loading') {
         const GITHUB_REPO = 'JJMAGame/Moriya-Potato-MvM-Tracker';  
         const GITHUB_BRANCH = 'main';
         const SAVE_FOLDER = 'Save-progress';
-        const GITHUB_TOKEN = '';
 
         console.log('📂 Repositório:', GITHUB_REPO);
         console.log('📁 Pasta:', SAVE_FOLDER);
