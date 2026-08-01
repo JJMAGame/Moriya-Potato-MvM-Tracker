@@ -11,6 +11,11 @@
             box-sizing: border-box;
         }
 
+        :root {
+            --fundo-imagem: url('images/backgrounds.png');
+            --fundo-opacidade: 1;
+        }
+
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: #0d1f0d;
@@ -28,7 +33,7 @@
             z-index: -2;
             
             /* ===== IMAGEM DE FUNDO ===== */
-            background-image: url('images/backgrounds.png');
+            background-image: var(--fundo-imagem);
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
@@ -903,6 +908,36 @@
     <!-- ============================================================ -->
 
     <script>
+
+        // ============================================================
+        // ROTAÇÃO DE BACKGROUNDS (CORRIGIDA)
+        // ============================================================
+        const backgrounds = [
+            'images/backgrounds.png',
+            'images/backgrounds2.png',
+            'images/backgrounds3.png',
+            // Adicione mais imagens aqui
+        ];
+        
+        let currentBgIndex = 0;
+        
+        function trocarBackground() {
+            // Avança para a próxima imagem
+            currentBgIndex = (currentBgIndex + 1) % backgrounds.length;
+            document.documentElement.style.setProperty(
+                '--fundo-imagem',
+                `url('${backgrounds[currentBgIndex]}')`
+            );
+            console.log(`🔄 Background: ${backgrounds[currentBgIndex]}`);
+        }
+        
+        // Troca a cada 60 segundos (1 minuto)
+        const tempoDeTroca = 60000; // 60.000 ms = 60 segundos
+        setInterval(trocarBackground, tempoDeTroca);
+        
+        console.log('🔄 Rotação de backgrounds iniciada!');
+        console.log(`📸 ${backgrounds.length} imagens carregadas`);
+
         // ============================================================
         // CONFIGURAÇÃO
         // ============================================================
