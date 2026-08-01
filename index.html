@@ -910,7 +910,7 @@
     <script>
 
         // ============================================================
-        // ROTAÇÃO DE BACKGROUNDS
+        // ROTAÇÃO DE BACKGROUNDS (CORRIGIDA)
         // ============================================================
         const backgrounds = [
             'images/backgrounds.png',
@@ -921,15 +921,17 @@
         let currentBgIndex = 0;
         
         function trocarBackground() {
+            // Avança para a próxima imagem
             currentBgIndex = (currentBgIndex + 1) % backgrounds.length;
             document.documentElement.style.setProperty(
-                '--fundo-imagem', 
+                '--fundo-imagem',
                 `url('${backgrounds[currentBgIndex]}')`
             );
+            console.log(`🔄 Background: ${backgrounds[currentBgIndex]}`);
         }
         
-        // Troca a cada 10 segundos (ajuste o valor)
-        setInterval(trocarBackground, 120000);
+        // Troca a cada 60 segundos (1 minuto)
+        setInterval(trocarBackground, 60000);
         
         console.log('🔄 Rotação de backgrounds iniciada!');
         console.log(`📸 ${backgrounds.length} imagens carregadas`);
