@@ -579,7 +579,7 @@
             {
                 nome: "Moriya Vs Potato Archive ( interlúdio )",
                 dataInicio: "2026-07-31T18:00:00",
-                dataFim: "2026-07-31T22:00:00",
+                dataFim: "2026-08-01T00:00:00",
                 mapas: [
                     { nome: "Yiresa - Black East", wave: "7 Wave", status: "completo" },
                     { nome: "Sequoia - Forest Fight", wave: "7 Wave", status: "completo" },
@@ -641,15 +641,15 @@
         // FUNÇÃO PARA DETERMINAR STATUS DO EVENTO
         // ============================================================
         function getStatusEvento(dataInicio, dataFim) {
-            const hoje = new Date();
-            hoje.setHours(0, 0, 0, 0);
-
+            const agora = new Date(); // Data e hora atual COMPLETA
+        
             const inicio = new Date(dataInicio);
             const fim = new Date(dataFim);
-
-            if (hoje >= inicio && hoje <= fim) {
+        
+            // Comparação com horário completo
+            if (agora >= inicio && agora <= fim) {
                 return 'ao-vivo';
-            } else if (hoje < inicio) {
+            } else if (agora < inicio) {
                 return 'em-breve';
             } else {
                 return 'encerrado';
