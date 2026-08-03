@@ -374,6 +374,45 @@
                 display: block;
             }
         }
+
+        /* ============================================================
+           EFEITO ARCO-ÍRIS ANIMADO (REUTILIZÁVEL)
+           ============================================================ */
+        .rainbow-text {
+            background: linear-gradient(
+                to right,
+                #ff0000, #ff7700, #ffff00, #00ff00,
+                #0000ff, #8b00ff, #ff00ff, #ff0000
+            );
+            background-size: 300% 100%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: rainbow-move 3s linear infinite;
+            display: inline-block;
+            filter: drop-shadow(0 0 20px rgba(255, 0, 255, 0.4));
+        }
+        
+        @keyframes rainbow-move {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 300% 50%; }
+        }
+        
+        /* Versão com brilho mais forte para destaque */
+        .rainbow-glow {
+            background: linear-gradient(
+                to right,
+                #ff0000, #ff7700, #ffff00, #00ff00,
+                #0000ff, #8b00ff, #ff00ff, #ff0000
+            );
+            background-size: 300% 100%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: rainbow-move 2s linear infinite;
+            display: inline-block;
+            filter: drop-shadow(0 0 30px rgba(255, 0, 255, 0.7));
+        }
     </style>
 </head>
 <body>
@@ -463,7 +502,8 @@
                     avatar: "images/jorge.jpg",
                     funcao: "Desenvolvedor Principal e Idealizador",
                     contribuicao: "Criação do projeto, Conceito e direção do projeto",
-                    formato: "redondo"
+                    formato: "redondo",
+                    rainbow: true
                 },
 
                 {
@@ -471,7 +511,8 @@
                     avatar: "images/Rishi.png",
                     funcao: "Apoio e Testes",
                     contribuicao: "Uns dos donos da comunidade Moriya, fornecendo feedback e sugestões",
-                    formato: "redondo"
+                    formato: "redondo",
+                    rainbow: true
                 },
 
                 {
@@ -487,7 +528,8 @@
                     avatar: "images/BG.png",
                     funcao: "Apoio e Testes",
                     contribuicao: "Uns dos donos da comunidade Moriya, fornecendo feedback e sugestões",
-                    formato: "redondo"
+                    formato: "redondo",
+                    rainbow: true
                 },
 
                 {
@@ -495,7 +537,8 @@
                     avatar: "images/minerinho.jpg",
                     funcao: "Backgrounds e Thumbs",
                     contribuicao: "Criação de SFM backgrounds e thumbnails para o projeto",
-                    formato: "redondo"
+                    formato: "redondo",
+                    rainbow: true
                 },
 
                 {
@@ -511,7 +554,8 @@
                     avatar: "images/Layla.jpg",
                     funcao: "Backgrounds",
                     contribuicao: "Criou um dos backgrounds do projeto e forneceu feedback",
-                    formato: "redondo"
+                    formato: "redondo",
+                    rainbow: true
                 },
 
                 {
@@ -519,7 +563,8 @@
                     avatar: "images/Moriya.png",
                     funcao: "Apoio e Testes",
                     contribuicao: "Feedback, sugestões e testes",
-                    formato: "quadrado"
+                    formato: "quadrado",
+                    rainbow: true
                 },
 
                 {
@@ -527,7 +572,8 @@
                     avatar: "images/Potato.png",
                     funcao: "Inspiração",
                     contribuicao: "Uma grande inspiração para o projeto e fornecimento de conteúdo para a comunidade Moriya",
-                    tamanho: "grande"
+                    tamanho: "grande",
+                    rainbow: true
                 },
 
                 // ============================================================
@@ -551,6 +597,10 @@
 
             // ===== CONTRIBUIÇÕES RECENTES =====
             contribuicoes: [
+                {
+                    data: "03/08/2026",
+                    texto: "Rotação de <strong>Backgrounds</strong> e alteração de <strong>cores foi corrigido</strong> para funcionar corretamente e tem um efeito legal de arco-íris nos créditos"
+                },
                 {
                     data: "01/08/2026",
                     texto: "Colocando <strong>Horarios no Eventos</strong> que estava em falta"
@@ -638,7 +688,6 @@
             config.colaboradores.forEach(colab => {
                 let avatarHtml = '';
                 
-                // Verifica se é emoji
                 const isEmoji = colab.avatar && !colab.avatar.includes('/') && !colab.avatar.includes('http') && !colab.avatar.includes('.');
                 
                 if (isEmoji) {
@@ -646,14 +695,12 @@
                 } else {
                     let classe = 'avatar-img';
                     
-                    // Adiciona o formato (redondo/quadrado)
                     if (colab.formato === 'redondo') {
                         classe += ' redondo';
                     } else if (colab.formato === 'quadrado') {
                         classe += ' quadrado';
                     }
                     
-                    // ===== ADICIONA O TAMANHO "GRANDE" =====
                     if (colab.tamanho === 'grande') {
                         classe += ' grande';
                     }
@@ -661,11 +708,15 @@
                     avatarHtml = `<img src="${colab.avatar}" class="${classe}" alt="${colab.nome}">`;
                 }
                 
+                // ===== VERIFICA SE TEM RAINBOW =====
+                const nomeClass = colab.rainbow === true ? 'rainbow-text' : '';
+                const funcaoClass = colab.rainbow === true ? 'rainbow-text' : '';
+                
                 html += `
                     <div class="colaborador-card">
                         ${avatarHtml}
-                        <div class="nome">${colab.nome}</div>
-                        <div class="funcao">${colab.funcao}</div>
+                        <div class="nome ${nomeClass}">${colab.nome}</div>
+                        <div class="funcao ${funcaoClass}">${colab.funcao}</div>
                         <div class="contribuicao">${colab.contribuicao}</div>
                     </div>
                 `;
@@ -679,7 +730,7 @@
         // ============================================================
         function renderizarContribuicoes() {
             const list = document.getElementById('contribuicoesList');
-
+        
             if (config.contribuicoes.length === 0) {
                 list.innerHTML = `
                     <div style="color: #88bb88; text-align: center; padding: 20px;">
@@ -688,20 +739,22 @@
                 `;
                 return;
             }
-
+        
             let html = '';
             config.contribuicoes.forEach(item => {
+                // ===== VERIFICA SE TEM RAINBOW =====
+                const textoClass = item.rainbow === true ? 'rainbow-text' : '';
+                
                 html += `
                     <div class="contribuicao-item">
                         <span class="data">📅 ${item.data}</span>
-                        <span class="texto">${item.texto}</span>
+                        <span class="texto ${textoClass}">${item.texto}</span>
                     </div>
                 `;
             });
-
+        
             list.innerHTML = html;
         }
-
         // ============================================================
         // RENDERIZAR TECNOLOGIAS
         // ============================================================
