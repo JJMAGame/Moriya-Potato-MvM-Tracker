@@ -374,6 +374,98 @@
                 display: block;
             }
         }
+
+        /* ============================================================
+           BORDA ARCO-ÍRIS ANIMADA (VISÍVEL)
+           ============================================================ */
+        
+        /* ===== CARD COM BORDA ARCO-ÍRIS ===== */
+        .colaborador-card.rainbow-border {
+            position: relative;
+            border-radius: 12px;
+            padding: 18px;
+            text-align: center;
+            transition: all 0.3s ease;
+            
+            /* ===== BORDA ARCO-ÍRIS VISÍVEL ===== */
+            border: 2px solid transparent;
+            background: linear-gradient(#1a3a1a, #1a3a1a) padding-box,
+                        linear-gradient(to right,
+                          rgba(255, 0, 0, 0.5),      /* vermelho - 50% opaco */
+                          rgba(255, 165, 0, 0.5),    /* laranja - 50% opaco */
+                          rgba(255, 255, 0, 0.5),    /* amarelo - 50% opaco */
+                          rgba(0, 255, 0, 0.5),      /* verde - 50% opaco */
+                          rgba(0, 0, 255, 0.5),      /* azul - 50% opaco */
+                          rgba(138, 43, 226, 0.5),   /* roxo - 50% opaco */
+                          rgba(255, 0, 255, 0.5),    /* magenta - 50% opaco */
+                          rgba(255, 0, 0, 0.5)       /* vermelho - 50% opaco */
+                        ) border-box;
+            background-size: 100% 100%, 300% 100%;
+            animation: rainbowBorderMove 3s linear infinite;
+            
+        }
+        
+        .colaborador-card.rainbow-border:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 30px rgba(255, 0, 255, 0.3);
+        }
+        
+        /* ============================================================
+           CONTRIBUIÇÃO COM BORDA ARCO-ÍRIS (CORRIGIDA)
+           ============================================================ */
+        .contribuicao-item.rainbow-border {
+            position: relative;
+            background: #1a3a1a;
+            border-radius: 8px;
+            padding: 10px 14px;
+            margin: 4px 0;
+            transition: all 0.3s ease;
+            
+            /* ===== BORDA ARCO-ÍRIS ===== */
+            border-left: 3px solid transparent;
+            background: linear-gradient(#1a3a1a, #1a3a1a) padding-box,
+                        linear-gradient(to bottom,
+                            rgba(255, 0, 0, 0.8),
+                            rgba(255, 165, 0, 0.8),
+                            rgba(255, 255, 0, 0.8),
+                            rgba(0, 255, 0, 0.8),
+                            rgba(0, 0, 255, 0.8),
+                            rgba(138, 43, 226, 0.8),
+                            rgba(255, 0, 255, 0.8),
+                            rgba(255, 0, 0, 0.8)
+                        ) border-box;
+            background-size: 100% 100%, 100% 300%;
+            animation: rainbowBorderVertical 3s linear infinite;
+        }
+        
+        /* ===== HOVER CORRIGIDO - MANTÉM A BORDA ARCO-ÍRIS ===== */
+        .contribuicao-item.rainbow-border:hover {
+            background: linear-gradient(#2a4a2a, #2a4a2a) padding-box,
+                        linear-gradient(to bottom,
+                            rgba(255, 0, 0, 0.8),
+                            rgba(255, 165, 0, 0.8),
+                            rgba(255, 255, 0, 0.8),
+                            rgba(0, 255, 0, 0.8),
+                            rgba(0, 0, 255, 0.8),
+                            rgba(138, 43, 226, 0.8),
+                            rgba(255, 0, 255, 0.8),
+                            rgba(255, 0, 0, 0.8)
+                        ) border-box;
+            transform: translateX(5px);
+            background-size: 100% 100%, 100% 300%;
+            animation: rainbowBorderVertical 3s linear infinite;
+        }
+        
+        /* ===== KEYFRAMES ===== */
+        @keyframes rainbowBorderMove {
+            0% { background-position: 0% 0%, 0% 50%; }
+            100% { background-position: 0% 0%, 300% 50%; }
+        }
+        
+        @keyframes rainbowBorderVertical {
+            0% { background-position: 0% 0%, 50% 0%; }
+            100% { background-position: 0% 0%, 50% 300%; }
+        }
     </style>
 </head>
 <body>
@@ -463,7 +555,8 @@
                     avatar: "images/jorge.jpg",
                     funcao: "Desenvolvedor Principal e Idealizador",
                     contribuicao: "Criação do projeto, Conceito e direção do projeto",
-                    formato: "redondo"
+                    formato: "redondo",
+                    rainbowBorder: true
                 },
 
                 {
@@ -471,7 +564,8 @@
                     avatar: "images/Rishi.png",
                     funcao: "Apoio e Testes",
                     contribuicao: "Uns dos donos da comunidade Moriya, fornecendo feedback e sugestões",
-                    formato: "redondo"
+                    formato: "redondo",
+                    rainbowBorder: true
                 },
 
                 {
@@ -487,7 +581,8 @@
                     avatar: "images/BG.png",
                     funcao: "Apoio e Testes",
                     contribuicao: "Uns dos donos da comunidade Moriya, fornecendo feedback e sugestões",
-                    formato: "redondo"
+                    formato: "redondo",
+                    rainbowBorder: true
                 },
 
                 {
@@ -495,7 +590,8 @@
                     avatar: "images/minerinho.jpg",
                     funcao: "Backgrounds e Thumbs",
                     contribuicao: "Criação de SFM backgrounds e thumbnails para o projeto",
-                    formato: "redondo"
+                    formato: "redondo",
+                    rainbowBorder: true
                 },
 
                 {
@@ -511,7 +607,8 @@
                     avatar: "images/Layla.jpg",
                     funcao: "Backgrounds",
                     contribuicao: "Criou um dos backgrounds do projeto e forneceu feedback",
-                    formato: "redondo"
+                    formato: "redondo",
+                    rainbow: true
                 },
 
                 {
@@ -519,7 +616,8 @@
                     avatar: "images/Moriya.png",
                     funcao: "Apoio e Testes",
                     contribuicao: "Feedback, sugestões e testes",
-                    formato: "quadrado"
+                    formato: "quadrado",
+                    rainbowBorder: true
                 },
 
                 {
@@ -527,7 +625,8 @@
                     avatar: "images/Potato.png",
                     funcao: "Inspiração",
                     contribuicao: "Uma grande inspiração para o projeto e fornecimento de conteúdo para a comunidade Moriya",
-                    tamanho: "grande"
+                    tamanho: "grande",
+                    rainbowBorder: true
                 },
 
                 // ============================================================
@@ -551,6 +650,11 @@
 
             // ===== CONTRIBUIÇÕES RECENTES =====
             contribuicoes: [
+                {
+                    data: "03/08/2026",
+                    texto: "Rotação de <strong>Backgrounds</strong> e alteração de <strong>cores foi corrigido</strong> para funcionar corretamente e tem um efeito legal de arco-íris nos créditos",
+                    rainbowBorder: true
+                },
                 {
                     data: "01/08/2026",
                     texto: "Colocando <strong>Horarios no Eventos</strong> que estava em falta"
@@ -638,7 +742,6 @@
             config.colaboradores.forEach(colab => {
                 let avatarHtml = '';
                 
-                // Verifica se é emoji
                 const isEmoji = colab.avatar && !colab.avatar.includes('/') && !colab.avatar.includes('http') && !colab.avatar.includes('.');
                 
                 if (isEmoji) {
@@ -646,14 +749,12 @@
                 } else {
                     let classe = 'avatar-img';
                     
-                    // Adiciona o formato (redondo/quadrado)
                     if (colab.formato === 'redondo') {
                         classe += ' redondo';
                     } else if (colab.formato === 'quadrado') {
                         classe += ' quadrado';
                     }
                     
-                    // ===== ADICIONA O TAMANHO "GRANDE" =====
                     if (colab.tamanho === 'grande') {
                         classe += ' grande';
                     }
@@ -661,8 +762,11 @@
                     avatarHtml = `<img src="${colab.avatar}" class="${classe}" alt="${colab.nome}">`;
                 }
                 
+                // ===== VERIFICA SE TEM BORDA ARCO-ÍRIS =====
+                const borderClass = colab.rainbowBorder === true ? 'rainbow-border' : '';
+                
                 html += `
-                    <div class="colaborador-card">
+                    <div class="colaborador-card ${borderClass}">
                         ${avatarHtml}
                         <div class="nome">${colab.nome}</div>
                         <div class="funcao">${colab.funcao}</div>
@@ -679,7 +783,7 @@
         // ============================================================
         function renderizarContribuicoes() {
             const list = document.getElementById('contribuicoesList');
-
+        
             if (config.contribuicoes.length === 0) {
                 list.innerHTML = `
                     <div style="color: #88bb88; text-align: center; padding: 20px;">
@@ -688,20 +792,22 @@
                 `;
                 return;
             }
-
+        
             let html = '';
             config.contribuicoes.forEach(item => {
+                // ===== VERIFICA SE TEM BORDA ARCO-ÍRIS =====
+                const borderClass = item.rainbowBorder === true ? 'rainbow-border' : '';
+                
                 html += `
-                    <div class="contribuicao-item">
+                    <div class="contribuicao-item ${borderClass}">
                         <span class="data">📅 ${item.data}</span>
                         <span class="texto">${item.texto}</span>
                     </div>
                 `;
             });
-
+        
             list.innerHTML = html;
         }
-
         // ============================================================
         // RENDERIZAR TECNOLOGIAS
         // ============================================================
