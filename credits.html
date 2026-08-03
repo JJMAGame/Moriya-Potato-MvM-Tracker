@@ -376,42 +376,95 @@
         }
 
         /* ============================================================
-           EFEITO ARCO-ÍRIS ANIMADO (REUTILIZÁVEL)
+           BORDA ARCO-ÍRIS ANIMADA (VISÍVEL)
            ============================================================ */
-        .rainbow-text {
-            background: linear-gradient(
-                to right,
-                #ff0000, #ff7700, #ffff00, #00ff00,
-                #0000ff, #8b00ff, #ff00ff, #ff0000
-            );
-            background-size: 300% 100%;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            animation: rainbow-move 3s linear infinite;
-            display: inline-block;
-            filter: drop-shadow(0 0 20px rgba(255, 0, 255, 0.4));
+        
+        /* ===== CARD COM BORDA ARCO-ÍRIS ===== */
+        .colaborador-card.rainbow-border {
+            position: relative;
+            border-radius: 12px;
+            padding: 18px;
+            text-align: center;
+            transition: all 0.3s ease;
+            
+            /* ===== BORDA ARCO-ÍRIS VISÍVEL ===== */
+            border: 2px solid transparent;
+            background: linear-gradient(#1a3a1a, #1a3a1a) padding-box,
+                        linear-gradient(to right,
+                          rgba(255, 0, 0, 0.5),      /* vermelho - 50% opaco */
+                          rgba(255, 165, 0, 0.5),    /* laranja - 50% opaco */
+                          rgba(255, 255, 0, 0.5),    /* amarelo - 50% opaco */
+                          rgba(0, 255, 0, 0.5),      /* verde - 50% opaco */
+                          rgba(0, 0, 255, 0.5),      /* azul - 50% opaco */
+                          rgba(138, 43, 226, 0.5),   /* roxo - 50% opaco */
+                          rgba(255, 0, 255, 0.5),    /* magenta - 50% opaco */
+                          rgba(255, 0, 0, 0.5)       /* vermelho - 50% opaco */
+                        ) border-box;
+            background-size: 100% 100%, 300% 100%;
+            animation: rainbowBorderMove 3s linear infinite;
+            
         }
         
-        @keyframes rainbow-move {
-            0% { background-position: 0% 50%; }
-            100% { background-position: 300% 50%; }
+        .colaborador-card.rainbow-border:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 30px rgba(255, 0, 255, 0.3);
         }
         
-        /* Versão com brilho mais forte para destaque */
-        .rainbow-glow {
-            background: linear-gradient(
-                to right,
-                #ff0000, #ff7700, #ffff00, #00ff00,
-                #0000ff, #8b00ff, #ff00ff, #ff0000
-            );
-            background-size: 300% 100%;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            animation: rainbow-move 2s linear infinite;
-            display: inline-block;
-            filter: drop-shadow(0 0 30px rgba(255, 0, 255, 0.7));
+        /* ============================================================
+           CONTRIBUIÇÃO COM BORDA ARCO-ÍRIS (CORRIGIDA)
+           ============================================================ */
+        .contribuicao-item.rainbow-border {
+            position: relative;
+            background: #1a3a1a;
+            border-radius: 8px;
+            padding: 10px 14px;
+            margin: 4px 0;
+            transition: all 0.3s ease;
+            
+            /* ===== BORDA ARCO-ÍRIS ===== */
+            border-left: 3px solid transparent;
+            background: linear-gradient(#1a3a1a, #1a3a1a) padding-box,
+                        linear-gradient(to bottom,
+                            rgba(255, 0, 0, 0.8),
+                            rgba(255, 165, 0, 0.8),
+                            rgba(255, 255, 0, 0.8),
+                            rgba(0, 255, 0, 0.8),
+                            rgba(0, 0, 255, 0.8),
+                            rgba(138, 43, 226, 0.8),
+                            rgba(255, 0, 255, 0.8),
+                            rgba(255, 0, 0, 0.8)
+                        ) border-box;
+            background-size: 100% 100%, 100% 300%;
+            animation: rainbowBorderVertical 3s linear infinite;
+        }
+        
+        /* ===== HOVER CORRIGIDO - MANTÉM A BORDA ARCO-ÍRIS ===== */
+        .contribuicao-item.rainbow-border:hover {
+            background: linear-gradient(#2a4a2a, #2a4a2a) padding-box,
+                        linear-gradient(to bottom,
+                            rgba(255, 0, 0, 0.8),
+                            rgba(255, 165, 0, 0.8),
+                            rgba(255, 255, 0, 0.8),
+                            rgba(0, 255, 0, 0.8),
+                            rgba(0, 0, 255, 0.8),
+                            rgba(138, 43, 226, 0.8),
+                            rgba(255, 0, 255, 0.8),
+                            rgba(255, 0, 0, 0.8)
+                        ) border-box;
+            transform: translateX(5px);
+            background-size: 100% 100%, 100% 300%;
+            animation: rainbowBorderVertical 3s linear infinite;
+        }
+        
+        /* ===== KEYFRAMES ===== */
+        @keyframes rainbowBorderMove {
+            0% { background-position: 0% 0%, 0% 50%; }
+            100% { background-position: 0% 0%, 300% 50%; }
+        }
+        
+        @keyframes rainbowBorderVertical {
+            0% { background-position: 0% 0%, 50% 0%; }
+            100% { background-position: 0% 0%, 50% 300%; }
         }
     </style>
 </head>
@@ -503,7 +556,7 @@
                     funcao: "Desenvolvedor Principal e Idealizador",
                     contribuicao: "Criação do projeto, Conceito e direção do projeto",
                     formato: "redondo",
-                    rainbow: true
+                    rainbowBorder: true
                 },
 
                 {
@@ -512,7 +565,7 @@
                     funcao: "Apoio e Testes",
                     contribuicao: "Uns dos donos da comunidade Moriya, fornecendo feedback e sugestões",
                     formato: "redondo",
-                    rainbow: true
+                    rainbowBorder: true
                 },
 
                 {
@@ -529,7 +582,7 @@
                     funcao: "Apoio e Testes",
                     contribuicao: "Uns dos donos da comunidade Moriya, fornecendo feedback e sugestões",
                     formato: "redondo",
-                    rainbow: true
+                    rainbowBorder: true
                 },
 
                 {
@@ -538,7 +591,7 @@
                     funcao: "Backgrounds e Thumbs",
                     contribuicao: "Criação de SFM backgrounds e thumbnails para o projeto",
                     formato: "redondo",
-                    rainbow: true
+                    rainbowBorder: true
                 },
 
                 {
@@ -564,7 +617,7 @@
                     funcao: "Apoio e Testes",
                     contribuicao: "Feedback, sugestões e testes",
                     formato: "quadrado",
-                    rainbow: true
+                    rainbowBorder: true
                 },
 
                 {
@@ -573,7 +626,7 @@
                     funcao: "Inspiração",
                     contribuicao: "Uma grande inspiração para o projeto e fornecimento de conteúdo para a comunidade Moriya",
                     tamanho: "grande",
-                    rainbow: true
+                    rainbowBorder: true
                 },
 
                 // ============================================================
@@ -599,7 +652,8 @@
             contribuicoes: [
                 {
                     data: "03/08/2026",
-                    texto: "Rotação de <strong>Backgrounds</strong> e alteração de <strong>cores foi corrigido</strong> para funcionar corretamente e tem um efeito legal de arco-íris nos créditos"
+                    texto: "Rotação de <strong>Backgrounds</strong> e alteração de <strong>cores foi corrigido</strong> para funcionar corretamente e tem um efeito legal de arco-íris nos créditos",
+                    rainbowBorder: true
                 },
                 {
                     data: "01/08/2026",
@@ -708,15 +762,14 @@
                     avatarHtml = `<img src="${colab.avatar}" class="${classe}" alt="${colab.nome}">`;
                 }
                 
-                // ===== VERIFICA SE TEM RAINBOW =====
-                const nomeClass = colab.rainbow === true ? 'rainbow-text' : '';
-                const funcaoClass = colab.rainbow === true ? 'rainbow-text' : '';
+                // ===== VERIFICA SE TEM BORDA ARCO-ÍRIS =====
+                const borderClass = colab.rainbowBorder === true ? 'rainbow-border' : '';
                 
                 html += `
-                    <div class="colaborador-card">
+                    <div class="colaborador-card ${borderClass}">
                         ${avatarHtml}
-                        <div class="nome ${nomeClass}">${colab.nome}</div>
-                        <div class="funcao ${funcaoClass}">${colab.funcao}</div>
+                        <div class="nome">${colab.nome}</div>
+                        <div class="funcao">${colab.funcao}</div>
                         <div class="contribuicao">${colab.contribuicao}</div>
                     </div>
                 `;
@@ -742,13 +795,13 @@
         
             let html = '';
             config.contribuicoes.forEach(item => {
-                // ===== VERIFICA SE TEM RAINBOW =====
-                const textoClass = item.rainbow === true ? 'rainbow-text' : '';
+                // ===== VERIFICA SE TEM BORDA ARCO-ÍRIS =====
+                const borderClass = item.rainbowBorder === true ? 'rainbow-border' : '';
                 
                 html += `
-                    <div class="contribuicao-item">
+                    <div class="contribuicao-item ${borderClass}">
                         <span class="data">📅 ${item.data}</span>
-                        <span class="texto ${textoClass}">${item.texto}</span>
+                        <span class="texto">${item.texto}</span>
                     </div>
                 `;
             });
