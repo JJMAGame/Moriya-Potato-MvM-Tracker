@@ -18,7 +18,7 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: #0d1f0d;
+            background: #1a2e1a;
             padding: 20px;
         }
 
@@ -52,7 +52,7 @@
             width: 100%;
             height: 100%;
             z-index: -1;
-            background: #0d1f0d;  /* ← COR DE FUNDO SÓLIDA (verde escuro) */
+            background: #1a2e1a;  /* ← MUDOU de #0d1f0d para #1a2e1a */
             opacity: 0.55;  /* ← AJUSTE A OPACIDADE DO OVERLAY */
         }
 
@@ -62,14 +62,14 @@
 
         .lightbar {
            width: 100%;
-           background: #0f2e0f;
+           background: #1a3a1a;  /* ← MUDOU de #0f2e0f para #1a3a1a */
            padding: 12px 24px;
            border-radius: 16px;
            margin-bottom:25px;
            position: relative;
            overflow: hidden;
            border: 3px solid transparent;
-           background-image: linear-gradient(#0f2e0f, #0f2e0f), 
+           background-image: linear-gradient(#1a3a1a, #1a3a1a), /* ← MUDOU */
                              linear-gradient(to right, 
                                  #ff0000, #ff7700, #ffff00, #00ff00, 
                                  #0000ff, #8b00ff, #ff00ff, #ff0000
@@ -93,7 +93,7 @@
             left: 3px;
             right: 3px;
             bottom: 3px;
-            background: #0f2e0f;
+            background: #1a3a1a;
             border-radius: 13px;
             z-index: 0;
         }
@@ -178,7 +178,7 @@
         .container {
             max-width: 1400px;
             margin: 0 auto;
-            background: #1d2e1a;
+            background: #2a4a2a;
             border-radius: 0 0 12px 12px;
             padding: 20px;
             box-shadow: 0 8px 32px rgba(0,0,0,0.5);
@@ -226,7 +226,7 @@
         }
 
         .stat-box {
-            background: #0f2e0f;
+            background: #1a3a1a;  /* ← MUDOU de #0f2e0f para #1a3a1a */
             padding: 8px 16px;
             border-radius: 8px;
             color: white;
@@ -293,9 +293,9 @@
 
         .search-box input, .search-box select {
             padding: 10px 15px;
-            border: 2px solid #256e25;
+            border: 2px solid #3a5a3a;  /* ← MUDAR de #256e25 para #3a5a3a */
             border-radius: 8px;
-            background: #0f2e0f;
+            background: #1a3a1a;
             color: #e0e0e0;
             font-size: 14px;
             flex: 1;
@@ -318,7 +318,7 @@
             width: 100%;
             border-collapse: collapse;
             font-size: 13px;
-            background: #1a1a2e;
+            background: #1a1a2e;  /* ← VOLTAR para azul */
         }
 
         thead {
@@ -328,7 +328,7 @@
         }
 
         th {
-            background: #0f2e0f;
+            background: #1a3a1a;  /* ← MUDOU de #0f2e0f para #1a3a1a */
             color: #e0e0e0;
             padding: 12px 10px;
             text-align: left;
@@ -341,7 +341,7 @@
 
         td {
             padding: 8px 10px;
-            border-bottom: 1px solid #2a2a4a;
+            border-bottom: 1px solid #2a2a4a;  /* ← VOLTAR para azul */
             color: #c0c0c0;
             vertical-align: middle;
         }
@@ -572,7 +572,7 @@
         }
 
         .modal {
-            background: #16213e;
+            background: #16213e;  /* ← MANTENHA AZUL */
             border-radius: 12px;
             padding: 30px;
             max-width: 600px;
@@ -631,7 +631,7 @@
         }
 
         .file-list li {
-            background: #1a1a2e;
+            background: #1a1a2e;  /* ← VOLTAR para azul */ 
             margin: 5px 0;
             padding: 12px 16px;
             border-radius: 8px;
@@ -645,7 +645,7 @@
         }
 
         .file-list li:hover {
-            background: #0f2e0f;
+            background: #16213e;  /* ← VOLTAR para azul escuro */
             border-color: #27ae60; 
             transform: scale(1.01);
         }
