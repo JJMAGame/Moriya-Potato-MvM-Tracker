@@ -12,7 +12,7 @@
         }
 
         :root {
-            --fundo-imagem: url('images/backgrounds.png');
+            --fundo-imagem: url('');
             --fundo-opacidade: 1;
         }
 
@@ -910,33 +910,69 @@
     <script>
 
         // ============================================================
-        // ROTAÇÃO DE BACKGROUNDS (CORRIGIDA)
+        // ROTAÇÃO DE BACKGROUNDS (ALEATÓRIA SEM FLASH)
         // ============================================================
         const backgrounds = [
             'images/backgrounds.png',
             'images/backgrounds2.png',
             'images/backgrounds3.png',
-            // Adicione mais imagens aqui
         ];
         
         let currentBgIndex = 0;
+        let isTransitioning = false;
         
-        function trocarBackground() {
-            // Avança para a próxima imagem
-            currentBgIndex = (currentBgIndex + 1) % backgrounds.length;
+        // Função para aplicar a imagem
+        function aplicarBackground(index) {
             document.documentElement.style.setProperty(
                 '--fundo-imagem',
-                `url('${backgrounds[currentBgIndex]}')`
+                `url('${backgrounds[index]}')`
             );
-            console.log(`🔄 Background: ${backgrounds[currentBgIndex]}`);
         }
         
-        // Troca a cada 60 segundos (1 minuto)
-        const tempoDeTroca = 60000; // 60.000 ms = 60 segundos
-        setInterval(trocarBackground, tempoDeTroca);
+        // Escolhe uma imagem aleatória diferente da atual
+        function trocarBackgroundAleatorio() {
+            if (isTransitioning) return;
+            isTransitioning = true;
         
-        console.log('🔄 Rotação de backgrounds iniciada!');
+            let novoIndex;
+            do {
+                novoIndex = Math.floor(Math.random() * backgrounds.length);
+            } while (novoIndex === currentBgIndex && backgrounds.length > 1);
+            
+            currentBgIndex = novoIndex;
+        
+            // Esconde
+            document.documentElement.style.setProperty('--fundo-opacidade', '0');
+        
+            setTimeout(() => {
+                // Troca a imagem
+                aplicarBackground(currentBgIndex);
+        
+                // Mostra com fade
+                setTimeout(() => {
+                    document.documentElement.style.setProperty('--fundo-opacidade', '1');
+                    setTimeout(() => {
+                        isTransitioning = false;
+                    }, 300);
+                }, 150);
+            }, 400);
+        
+            console.log(`🔄 Background aleatório: ${backgrounds[currentBgIndex]}`);
+        }
+        
+        // ===== EXECUÇÃO =====
+        
+        // 1. Aplica uma imagem aleatória IMEDIATAMENTE (sem flash)
+        currentBgIndex = Math.floor(Math.random() * backgrounds.length);
+        aplicarBackground(currentBgIndex);
+        document.documentElement.style.setProperty('--fundo-opacidade', '1');
+        console.log(`🖼️ Background inicial: ${backgrounds[currentBgIndex]}`);
+        
+        // 2. Depois troca aleatoriamente a cada 2 minutos
+        setInterval(trocarBackgroundAleatorio, 120000);
+        
         console.log(`📸 ${backgrounds.length} imagens carregadas`);
+        console.log('🔄 Rotação totalmente aleatória!');
 
         // ============================================================
         // CONFIGURAÇÃO
