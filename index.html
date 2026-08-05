@@ -32,15 +32,31 @@
             height: 100%;
             z-index: -2;
             
-            /* ===== IMAGEM DE FUNDO ===== */
             background-image: var(--fundo-imagem);
-            background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
             background-attachment: fixed;
+            background-color: #1a2e1a;
+            background-size: cover;  /* PADRÃO PARA TELAS GRANDES */
             
             /* ===== OPACIDADE ===== */
             opacity: 1;  /* ← AJUSTE AQUI: 0.1 = quase transparente, 1 = totalmente visível */
+        }
+
+        /* ===== PARA TELAS MENORES QUE 1366px ===== */
+        @media (max-width: 1366px) {
+            body::before {
+                background-size: contain;  /* ← MOSTRA A IMAGEM INTEIRA */
+                background-position: center;
+            }
+        }
+        
+        /* ===== PARA TELAS MUITO PEQUENAS ===== */
+        @media (max-width: 768px) {
+            body::before {
+                background-size: contain;
+                background-position: top center;
+            }
         }
         
         /* Overlay escuro para melhorar a legibilidade */
@@ -179,9 +195,10 @@
             max-width: 1400px;
             margin: 0 auto;
             background: #2a4a2a;
-            border-radius: 0 0 12px 12px;
+            border-radius: 12px 12px 12px 12px;
             padding: 20px;
             box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+            width: 100%;
         }
 
         .titulo-icon1 {
@@ -306,7 +323,7 @@
             outline: none;
             border-color: #27ae60;
         }
-
+        /* ===== TABELA ===== */
         .table-wrapper {
             overflow-x: auto;
             border-radius: 8px;
@@ -318,7 +335,8 @@
             width: 100%;
             border-collapse: collapse;
             font-size: 13px;
-            background: #1a1a2e;  /* ← VOLTAR para azul */
+            background: #1a1a2e;
+            min-width: 600px;  /* ← LARGURA MÍNIMA PARA NÃO QUEBRAR */
         }
 
         thead {
@@ -344,6 +362,11 @@
             border-bottom: 1px solid #2a2a4a;  /* ← VOLTAR para azul */
             color: #c0c0c0;
             vertical-align: middle;
+        }
+
+        th, td {
+            padding: 8px 10px;
+            white-space: nowrap;  /* ← EVITA QUEBRA DE LINHA */
         }
 
         tr:hover td {
@@ -520,6 +543,9 @@
         .operation-name {
             color: #85c1e9;
             font-size: 12px;
+            white-space: normal;
+            word-break: break-word;
+            max-width: 150px;
         }
 
         .feito-cell {
@@ -800,6 +826,49 @@
                 padding: 6px 10px;
                 min-width: 120px;
             }
+        }
+
+        /* ============================================================
+           RESPONSIVO PARA DIFERENTES RESOLUÇÕES
+           ============================================================ */
+        
+        /* ===== TELAS GRANDES (1920x1080) ===== */
+        @media (min-width: 1367px) {
+            .container { padding: 20px 30px; }
+            table { font-size: 13px; }
+            th, td { padding: 10px 14px; }
+            body::before { background-size: cover; }
+        }
+        
+        /* ===== TELAS MÉDIAS (1366x768) ===== */
+        @media (max-width: 1366px) {
+            .container { padding: 15px; }
+            table { font-size: 12px; min-width: 500px; }
+            th, td { padding: 6px 8px; }
+            .table-wrapper { max-height: 65vh; }
+            .operation-name { font-size: 11px; max-width: 120px; }
+            body::before { background-size: contain; }
+        }
+        
+        /* ===== TELAS PEQUENAS (1024x768) ===== */
+        @media (max-width: 1024px) {
+            .container { padding: 12px; }
+            table { font-size: 11px; min-width: 400px; }
+            th, td { padding: 5px 6px; }
+            .table-wrapper { max-height: 60vh; }
+            .operation-name { font-size: 10px; max-width: 100px; }
+            body::before { background-size: contain; }
+        }
+        
+        /* ===== TELAS MUITO PEQUENAS (768px) ===== */
+        @media (max-width: 768px) {
+            .container { padding: 10px; }
+            table { font-size: 10px; min-width: 350px; }
+            th, td { padding: 4px 5px; }
+            .table-wrapper { max-height: 55vh; }
+            .operation-name { font-size: 9px; max-width: 80px; }
+            .checkmark { width: 16px; height: 16px; }
+            body::before { background-size: contain; background-position: top center; }
         }
     </style>
 </head>
