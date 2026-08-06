@@ -701,7 +701,27 @@
         .file-list .empty {
             color: #7f8c8d;
             text-align: center;
-            padding: 20px;
+            padding: 30px;
+            line-height: 1.8;
+            cursor: default;
+            background: transparent !important;
+            border: none !important;
+        }
+
+        .file-list .empty button {
+            background: #27ae60 !important;
+            color: white !important;
+            border: none !important;
+            padding: 8px 20px !important;
+            border-radius: 6px !important;
+            cursor: pointer !important;
+            font-weight: 600 !important;
+            transition: all 0.3s ease !important;
+        }
+        
+        .file-list .empty button:hover {
+            background: #2ecc71 !important;
+            transform: scale(1.02) !important;
         }
 
         .btn-refresh {
