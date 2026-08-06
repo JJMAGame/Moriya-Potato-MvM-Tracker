@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galeria - Moriya vs Potato</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --fundo-imagem: url('images/backgrounds.png');
+            --fundo-opacidade: 1;
+        }
+
+        body {
+            padding: 20px;
+            min-height: 100vh;
+            position: relative;
+            background: #1a2e1a;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            background-image: var(--fundo-imagem);
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            opacity: var(--fundo-opacidade);
+        }
+
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: #1a2e1a;
+            opacity: 0.55;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: #2a4a2a;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.6);
+            border: 1px solid #3a5a3a;
+        }
+
+        /* ============================================================
+           CABEÇALHO
+           ============================================================ */
+        .header {
+            text-align: center;
+            padding-bottom: 25px;
+            border-bottom: 2px solid #3a5a3a;
+            margin-bottom: 25px;
+        }
+
+        .header .badge {
+            display: inline-block;
+            background: #ff6b81;
+            color: white;
+            padding: 4px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+
+        .header h1 {
+            color: #f0f0f0;
+            font-size: 28px;
+            font-weight: 700;
+        }
+
+        .header h1 .highlight {
+            color: #ff6b81;
+        }
+
+        .header .subtitle {
+            color: #aaddaa;
+            font-size: 14px;
+            margin-top: 8px;
+            opacity: 0.9;
+        }
+
+        /* ============================================================
+           SEÇÕES
+           ============================================================ */
+        .section {
+            margin-bottom: 35px;
+        }
+
+        .section-title {
+            color: #f0f0f0;
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 2px solid #3a5a3a;
+            padding-bottom: 10px;
+        }
+
+        .section-title .icon {
+            font-size: 24px;
+        }
+
+        .section-title .count {
+            font-size: 13px;
+            color: #88bb88;
+            font-weight: 400;
+            margin-left: 5px;
+        }
+
+        /* ============================================================
+           GRADE DE BACKGROUNDS
+           ============================================================ */
+        .bg-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .bg-card {
+            background: #1a3a1a;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid #3a5a3a;
+            transition: all 0.3s ease;
+        }
+
+        .bg-card:hover {
+            transform: translateY(-5px);
+            border-color: #4caf50;
+            box-shadow: 0 4px 25px rgba(76, 175, 80, 0.3);
+        }
+
+        .bg-card .bg-preview {
+            width: 100%;
+            height: 150px;
+            background-size: cover;
+            background-position: center;
+            background-color: #1a2e1a;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .bg-card .bg-preview:hover {
+            transform: scale(1.02);
+        }
+
+        .bg-card .bg-preview .overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0,0,0,0.7));
+            padding: 20px 12px 10px;
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .bg-card .bg-preview:hover .overlay {
+            opacity: 1;
+        }
+
+        .bg-card .bg-preview .overlay span {
+            color: white;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .bg-card .bg-info {
+            padding: 12px 15px;
+        }
+
+        .bg-card .bg-info .bg-name {
+            color: #f0f0f0;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .bg-card .bg-info .bg-file {
+            color: #88bb88;
+            font-size: 11px;
+            margin-top: 3px;
+            word-break: break-all;
+        }
+
+        /* ============================================================
+           LISTA DE MÚSICAS
+           ============================================================ */
+        .music-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .music-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            background: #1a3a1a;
+            border-radius: 8px;
+            padding: 12px 18px;
+            border-left: 3px solid #4caf50;
+            transition: all 0.3s ease;
+            flex-wrap: wrap;
+        }
+
+        .music-item:hover {
+            background: #2a4a2a;
+            transform: translateX(5px);
+        }
+
+        .music-item .music-icon {
+            font-size: 24px;
+            color: #ff6b81;
+            flex-shrink: 0;
+        }
+
+        .music-item .music-info {
+            flex: 1;
+            min-width: 150px;
+        }
+
+        .music-item .music-info .music-name {
+            color: #f0f0f0;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .music-item .music-info .music-source {
+            color: #88bb88;
+            font-size: 12px;
+        }
+
+        .music-item .music-player {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-shrink: 0;
+        }
+
+        .music-item .music-player audio {
+            max-width: 200px;
+            height: 32px;
+            border-radius: 4px;
+            background: #1a2e1a;
+        }
+
+        .music-item .music-player audio::-webkit-media-controls-panel {
+            background: #1a2e1a;
+        }
+
+        .music-item .music-player .btn-play {
+            background: #27ae60;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .music-item .music-player .btn-play:hover {
+            background: #2ecc71;
+            transform: scale(1.1);
+        }
+
+        /* ============================================================
+           BOTÃO VOLTAR
+           ============================================================ */
+        .btn-voltar {
+            display: inline-block;
+            background: #4caf50;
+            color: white;
+            padding: 10px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+            border: none;
+            text-align: center;
+        }
+
+        .btn-voltar:hover {
+            background: #66bb6a;
+            transform: scale(1.02);
+            box-shadow: 0 4px 20px rgba(76, 175, 80, 0.4);
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        /* ============================================================
+           RESPONSIVO
+           ============================================================ */
+        @media (max-width: 768px) {
+            .container { padding: 20px; }
+
+            .header h1 { font-size: 22px; }
+
+            .bg-grid {
+                grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            }
+
+            .bg-card .bg-preview { height: 120px; }
+
+            .music-item {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 10px;
+            }
+
+            .music-item .music-player {
+                justify-content: center;
+            }
+
+            .music-item .music-player audio {
+                max-width: 100%;
+                width: 100%;
+            }
+
+            .btn-voltar { display: block; }
+        }
+
+        @media (max-width: 480px) {
+            .container { padding: 15px; }
+
+            .bg-grid {
+                grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            }
+
+            .bg-card .bg-preview { height: 100px; }
+
+            .header h1 { font-size: 18px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- ============================================================
+             CABEÇALHO
+             ============================================================ -->
+        <div class="header">
+            <span class="badge">🎨 Galeria</span>
+            <h1>Moriya Vs Potato <span class="highlight">Archive</span></h1>
+            <p class="subtitle">📸 Todos os backgrounds e músicas utilizadas no projeto</p>
+        </div>
+
+        <!-- ============================================================
+             BACKGROUNDS
+             ============================================================ -->
+        <div class="section">
+            <div class="section-title">
+                <span class="icon">🖼️</span>
+                Backgrounds
+                <span class="count" id="bgCount"></span>
+            </div>
+            <div class="bg-grid" id="bgGrid">
+                <!-- Inserido via JavaScript -->
+            </div>
+        </div>
+
+        <!-- ============================================================
+             MÚSICAS
+             ============================================================ -->
+        <div class="section">
+            <div class="section-title">
+                <span class="icon">🎵</span>
+                Músicas
+                <span class="count" id="musicCount"></span>
+            </div>
+            <div class="music-list" id="musicList">
+                <!-- Inserido via JavaScript -->
+            </div>
+        </div>
+
+        <!-- ============================================================
+             BOTÃO VOLTAR
+             ============================================================ -->
+        <div class="footer">
+            <a href="index.html" class="btn-voltar">⬅ Voltar para o Tracker</a>
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- JAVASCRIPT                                                    -->
+    <!-- ============================================================ -->
+
+    <script>
+        // ============================================================
+        // CONFIGURAÇÃO DA GALERIA - EDITE AQUI!
+        // ============================================================
+
+        const galleryConfig = {
+            // ===== BACKGROUNDS =====
+            backgrounds: [
+                {
+                    name: "Background Principal",
+                    file: "backgrounds.png",
+                    path: "images/backgrounds.png"
+                },
+                {
+                    name: "Background Secundário",
+                    file: "backgrounds2.png",
+                    path: "images/backgrounds2.png"
+                },
+                {
+                    name: "Background Terciário",
+                    file: "backgrounds3.png",
+                    path: "images/backgrounds3.png"
+                },
+                {
+                    name: "Background Eventos",
+                    file: "backgroundsE.png",
+                    path: "images/backgroundsE.png"
+                },
+                // ===== ADICIONE NOVOS BACKGROUNDS AQUI =====
+                // {
+                //     name: "Nome do Background",
+                //     file: "nome_do_arquivo.png",
+                //     path: "images/nome_do_arquivo.png"
+                // },
+            ],
+
+            // ===== MÚSICAS =====
+            musics: [
+                {
+                    name: "Música Tema - Moriya",
+                    source: "YouTube / Archive",
+                    file: "moriya_theme.mp3",
+                    path: "audio/moriya_theme.mp3"
+                },
+                {
+                    name: "Música Tema - Potato",
+                    source: "YouTube / Archive",
+                    file: "potato_theme.mp3",
+                    path: "audio/potato_theme.mp3"
+                },
+                // ===== ADICIONE NOVAS MÚSICAS AQUI =====
+                // {
+                //     name: "Nome da Música",
+                //     source: "Fonte (ex: YouTube, SoundCloud)",
+                //     file: "nome_do_arquivo.mp3",
+                //     path: "audio/nome_do_arquivo.mp3"
+                // },
+            ]
+        };
+
+        // ============================================================
+        // RENDERIZAR BACKGROUNDS
+        // ============================================================
+        function renderizarBackgrounds() {
+            const grid = document.getElementById('bgGrid');
+            const count = document.getElementById('bgCount');
+
+            if (galleryConfig.backgrounds.length === 0) {
+                grid.innerHTML = `
+                    <div style="color: #88bb88; text-align: center; padding: 30px; grid-column: 1 / -1;">
+                        📭 Nenhum background cadastrado
+                    </div>
+                `;
+                count.textContent = '(0)';
+                return;
+            }
+
+            count.textContent = `(${galleryConfig.backgrounds.length})`;
+
+            let html = '';
+            galleryConfig.backgrounds.forEach(bg => {
+                html += `
+                    <div class="bg-card">
+                        <div class="bg-preview" style="background-image: url('${bg.path}');">
+                            <div class="overlay">
+                                <span>📸 Clique para ampliar</span>
+                            </div>
+                        </div>
+                        <div class="bg-info">
+                            <div class="bg-name">${bg.name}</div>
+                            <div class="bg-file">📁 ${bg.file}</div>
+                        </div>
+                    </div>
+                `;
+            });
+
+            grid.innerHTML = html;
+
+            // ===== FUNÇÃO PARA ABRIR IMAGEM EM TELA CHEIA =====
+            document.querySelectorAll('.bg-preview').forEach(el => {
+                el.addEventListener('click', function() {
+                    const bgImage = this.style.backgroundImage;
+                    const url = bgImage.replace(/url\(['"]?(.*?)['"]?\)/, '$1');
+                    window.open(url, '_blank');
+                });
+            });
+        }
+
+        // ============================================================
+        // RENDERIZAR MÚSICAS
+        // ============================================================
+        function renderizarMusics() {
+            const list = document.getElementById('musicList');
+            const count = document.getElementById('musicCount');
+
+            if (galleryConfig.musics.length === 0) {
+                list.innerHTML = `
+                    <div style="color: #88bb88; text-align: center; padding: 20px;">
+                        📭 Nenhuma música cadastrada
+                    </div>
+                `;
+                count.textContent = '(0)';
+                return;
+            }
+
+            count.textContent = `(${galleryConfig.musics.length})`;
+
+            let html = '';
+            galleryConfig.musics.forEach((music, index) => {
+                html += `
+                    <div class="music-item">
+                        <span class="music-icon">🎵</span>
+                        <div class="music-info">
+                            <div class="music-name">${music.name}</div>
+                            <div class="music-source">📌 ${music.source}</div>
+                        </div>
+                        <div class="music-player">
+                            <audio controls preload="none">
+                                <source src="${music.path}" type="audio/mpeg">
+                                Seu navegador não suporta áudio.
+                            </audio>
+                        </div>
+                    </div>
+                `;
+            });
+
+            list.innerHTML = html;
+        }
+
+        // ============================================================
+        // INICIALIZAR
+        // ============================================================
+        renderizarBackgrounds();
+        renderizarMusics();
+
+        console.log('✅ Galeria carregada!');
+        console.log(`🖼️ ${galleryConfig.backgrounds.length} backgrounds`);
+        console.log(`🎵 ${galleryConfig.musics.length} músicas`);
+    </script>
+
+</body>
+</html>
