@@ -1,0 +1,1062 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galeria - Moriya vs Potato</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --fundo-imagem: url('images/backgrounds.png');
+            --fundo-opacidade: 1;
+        }
+
+        body {
+            padding: 20px;
+            min-height: 100vh;
+            position: relative;
+            background: #1a2e1a;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            background-image: var(--fundo-imagem);
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            opacity: var(--fundo-opacidade);
+        }
+
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: #1a2e1a;
+            opacity: 0.55;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: #2a4a2a;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.6);
+            border: 1px solid #3a5a3a;
+        }
+
+        /* ============================================================
+           CABEÇALHO
+           ============================================================ */
+        .header {
+            text-align: center;
+            padding-bottom: 25px;
+            border-bottom: 2px solid #3a5a3a;
+            margin-bottom: 25px;
+        }
+
+        .header .badge {
+            display: inline-block;
+            background: #ff6b81;
+            color: white;
+            padding: 4px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+
+        .header h1 {
+            color: #f0f0f0;
+            font-size: 28px;
+            font-weight: 700;
+        }
+
+        .header h1 .highlight {
+            color: #ff6b81;
+        }
+
+        .header .subtitle {
+            color: #aaddaa;
+            font-size: 14px;
+            margin-top: 8px;
+            opacity: 0.9;
+        }
+
+        /* ============================================================
+           SEÇÕES
+           ============================================================ */
+        .section {
+            margin-bottom: 35px;
+        }
+
+        .section-title {
+            color: #f0f0f0;
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 2px solid #3a5a3a;
+            padding-bottom: 10px;
+        }
+
+        .section-title .icon {
+            font-size: 24px;
+        }
+
+        .section-title .count {
+            font-size: 13px;
+            color: #88bb88;
+            font-weight: 400;
+            margin-left: 5px;
+        }
+
+        /* ============================================================
+           GRADE DE BACKGROUNDS
+           ============================================================ */
+        .bg-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .bg-card {
+            background: #1a3a1a;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid #3a5a3a;
+            transition: all 0.3s ease;
+        }
+
+        .bg-card:hover {
+            transform: translateY(-5px);
+            border-color: #4caf50;
+            box-shadow: 0 4px 25px rgba(76, 175, 80, 0.3);
+        }
+
+        .bg-card .bg-preview {
+            width: 100%;
+            height: 150px;
+            background-size: cover;
+            background-position: center;
+            background-color: #1a2e1a;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .bg-card .bg-preview:hover {
+            transform: scale(1.02);
+        }
+
+        .bg-card .bg-preview .overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0,0,0,0.7));
+            padding: 20px 12px 10px;
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .bg-card .bg-preview:hover .overlay {
+            opacity: 1;
+        }
+
+        .bg-card .bg-preview .overlay span {
+            color: white;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .bg-card .bg-info {
+            padding: 12px 15px;
+        }
+
+        .bg-card .bg-info .bg-name {
+            color: #f0f0f0;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .bg-card .bg-info .bg-credit {
+            color: #88bb88;
+            font-size: 11px;
+            margin-top: 3px;
+        }
+
+        .bg-card .bg-info .bg-credit strong {
+            color: #aaddaa;
+        }
+
+        /* ============================================================
+           GRADE DE VÍDEOS
+           ============================================================ */
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .video-card {
+            background: #1a3a1a;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid #3a5a3a;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .video-card:hover {
+            transform: translateY(-5px);
+            border-color: #e94560;
+            box-shadow: 0 4px 25px rgba(233, 69, 96, 0.3);
+        }
+
+        .video-card .video-thumb {
+            width: 100%;
+            height: 160px;
+            background-size: cover;
+            background-position: center;
+            background-color: #1a2e1a;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .video-card .video-thumb .play-icon {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 48px;
+            color: white;
+            text-shadow: 0 0 30px rgba(0,0,0,0.8);
+            opacity: 0.8;
+            transition: all 0.3s ease;
+        }
+
+        .video-card:hover .video-thumb .play-icon {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1.1);
+        }
+
+        .video-card .video-info {
+            padding: 12px 15px;
+        }
+
+        .video-card .video-info .video-title {
+            color: #f0f0f0;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .video-card .video-info .video-source {
+            color: #88bb88;
+            font-size: 12px;
+            margin-top: 3px;
+        }
+
+        /* ============================================================
+           MODAL
+           ============================================================ */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            backdrop-filter: blur(8px);
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal {
+            background: #2a4a2a;
+            border-radius: 16px;
+            max-width: 700px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            padding: 25px;
+            border: 1px solid #3a5a3a;
+            box-shadow: 0 8px 50px rgba(0, 0, 0, 0.8);
+            animation: modalFadeIn 0.3s ease;
+        }
+
+        @keyframes modalFadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9) translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .modal-header h2 {
+            color: #f0f0f0;
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .modal-header .close-btn {
+            background: #e94560;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 8px 18px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .modal-header .close-btn:hover {
+            background: #ff6b81;
+            transform: scale(1.05);
+        }
+
+        /* ===== VÍDEO EMBED ===== */
+        .modal-video-wrapper {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            border-radius: 8px;
+            overflow: hidden;
+            background: #1a2e1a;
+            margin-bottom: 15px;
+        }
+
+        .modal-video-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        /* ===== THUMBNAILS ADICIONAIS ===== */
+        .modal-thumbs {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 15px;
+        }
+
+        .modal-thumbs .thumb-item {
+            width: 80px;
+            height: 60px;
+            border-radius: 6px;
+            background-size: cover;
+            background-position: center;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .modal-thumbs .thumb-item:hover {
+            border-color: #4caf50;
+            transform: scale(1.05);
+        }
+
+        .modal-thumbs .thumb-item.active {
+            border-color: #e94560;
+        }
+
+        .modal-description {
+            color: #b0b0b0;
+            font-size: 13px;
+            line-height: 1.5;
+            margin-top: 5px;
+            margin-bottom: 10px;
+        }
+
+        /* ============================================================
+           MÚSICAS NO MODAL
+           ============================================================ */
+        .modal-music-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 10px;
+            padding-top: 12px;
+            border-top: 1px solid #3a5a3a;
+        }
+
+        .modal-music-list .music-label {
+            color: #88bb88;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .modal-music-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: #1a3a1a;
+            border-radius: 10px;
+            padding: 10px 14px;
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
+        }
+
+        .modal-music-item:hover {
+            border-color: #3a5a3a;
+            background: #2a4a2a;
+        }
+
+        .modal-music-item .music-cover {
+            width: 60px;
+            height: 60px;
+            border-radius: 6px;
+            background-size: cover;
+            background-position: center;
+            flex-shrink: 0;
+            background-color: #1a2e1a;
+        }
+
+        .modal-music-item .music-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .modal-music-item .music-info .music-name {
+            color: #f0f0f0;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .modal-music-item .music-info .music-artist {
+            color: #88bb88;
+            font-size: 12px;
+        }
+
+        .modal-music-item .music-info .music-duration {
+            color: #66aa66;
+            font-size: 11px;
+            margin-left: 8px;
+        }
+
+        .modal-music-item .music-links {
+            display: flex;
+            gap: 6px;
+            flex-shrink: 0;
+            flex-wrap: wrap;
+        }
+
+        .modal-music-item .music-links .music-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 3px 10px;
+            border-radius: 14px;
+            text-decoration: none;
+            font-size: 10px;
+            font-weight: 600;
+            color: white;
+            transition: all 0.3s ease;
+        }
+
+        .modal-music-item .music-links .music-link:hover {
+            transform: scale(1.05);
+            filter: brightness(1.2);
+        }
+
+        .modal-music-item .music-links .music-link.youtube { background: #ff0000; }
+        .modal-music-item .music-links .music-link.spotify { background: #1db954; }
+        .modal-music-item .music-links .music-link.soundcloud { background: #ff5500; }
+        .modal-music-item .music-links .music-link.apple { background: #a2aaad; color: #1a1a1a; }
+        .modal-music-item .music-links .music-link.deezer { background: #1e2b3a; }
+        .modal-music-item .music-links .music-link.other { background: #6e5494; }
+
+        /* ============================================================
+           BOTÃO VOLTAR
+           ============================================================ */
+        .btn-voltar {
+            display: inline-block;
+            background: #4caf50;
+            color: white;
+            padding: 10px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+            border: none;
+            text-align: center;
+        }
+
+        .btn-voltar:hover {
+            background: #66bb6a;
+            transform: scale(1.02);
+            box-shadow: 0 4px 20px rgba(76, 175, 80, 0.4);
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        /* ============================================================
+           RESPONSIVO
+           ============================================================ */
+        .modal::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .modal::-webkit-scrollbar-track {
+            background: #1a2e1a;
+            border-radius: 3px;
+        }
+
+        .modal::-webkit-scrollbar-thumb {
+            background: #3a5a3a;
+            border-radius: 3px;
+        }
+
+        @media (max-width: 768px) {
+            .container { padding: 20px; }
+            .header h1 { font-size: 22px; }
+            .bg-grid { grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); }
+            .video-grid { grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); }
+            .bg-card .bg-preview { height: 120px; }
+            .video-card .video-thumb { height: 130px; }
+            .modal { padding: 18px; margin: 10px; }
+            .modal-thumbs .thumb-item { width: 60px; height: 45px; }
+            .btn-voltar { display: block; }
+        }
+
+        @media (max-width: 480px) {
+            .container { padding: 15px; }
+            .bg-grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); }
+            .video-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); }
+            .bg-card .bg-preview { height: 100px; }
+            .video-card .video-thumb { height: 110px; }
+            .header h1 { font-size: 18px; }
+            .modal-thumbs .thumb-item { width: 50px; height: 38px; }
+            .modal-music-item .music-cover { width: 40px; height: 40px; }
+            .modal-music-item .music-links .music-link { font-size: 9px; padding: 2px 8px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- ============================================================
+             CABEÇALHO
+             ============================================================ -->
+        <div class="header">
+            <span class="badge">🎨 Galeria</span>
+            <h1>Moriya Vs Potato <span class="highlight">Archive</span></h1>
+            <p class="subtitle">📸 Backgrounds e conteúdos utilizados no projeto</p>
+        </div>
+
+        <!-- ============================================================
+             BACKGROUNDS
+             ============================================================ -->
+        <div class="section">
+            <div class="section-title">
+                <span class="icon">🖼️</span>
+                Backgrounds
+                <span class="count" id="bgCount"></span>
+            </div>
+            <div class="bg-grid" id="bgGrid">
+                <!-- Inserido via JavaScript -->
+            </div>
+        </div>
+
+        <!-- ============================================================
+             VÍDEOS / DIVULGAÇÃO
+             ============================================================ -->
+        <div class="section">
+            <div class="section-title">
+                <span class="icon">📹</span>
+                Vídeos / Divulgação
+                <span class="count" id="videoCount"></span>
+            </div>
+            <div class="video-grid" id="videoGrid">
+                <!-- Inserido via JavaScript -->
+            </div>
+        </div>
+
+        <!-- ============================================================
+             BOTÃO VOLTAR
+             ============================================================ -->
+        <div class="footer">
+            <a href="index.html" class="btn-voltar">⬅ Voltar para o Tracker</a>
+        </div>
+    </div>
+
+    <!-- ============================================================
+         MODAL
+         ============================================================ -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal">
+            <div class="modal-header">
+                <h2 id="modalTitle">Título do Vídeo</h2>
+                <button class="close-btn" onclick="fecharModal()">✕ Fechar</button>
+            </div>
+
+            <!-- Vídeo Embed -->
+            <div class="modal-video-wrapper" id="modalVideoWrapper">
+                <iframe id="modalVideo" src="" allowfullscreen></iframe>
+            </div>
+
+            <!-- Thumbnails Adicionais -->
+            <div class="modal-thumbs" id="modalThumbs">
+                <!-- Inserido via JavaScript -->
+            </div>
+
+            <!-- Descrição -->
+            <div class="modal-description" id="modalDescription">
+                Descrição do vídeo
+            </div>
+
+            <!-- ===== MÚSICAS DO VÍDEO ===== -->
+            <div class="modal-music-list" id="modalMusicList">
+                <!-- Inserido via JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- JAVASCRIPT                                                    -->
+    <!-- ============================================================ -->
+
+    <script>
+        // ============================================================
+        // CONFIGURAÇÃO DA GALERIA - EDITE AQUI!
+        // ============================================================
+
+        const galleryConfig = {
+            // ===== BACKGROUNDS =====
+            backgrounds: [
+                {
+                    name: "Background Principal",
+                    file: "backgrounds.png",
+                    path: "images/backgrounds.png",
+                    credit: "Minerinho da Pesada"
+                },
+                {
+                    name: "Background Secundário",
+                    file: "backgrounds2.png",
+                    path: "images/backgrounds2.png",
+                    credit: "Minerinho da Pesada"
+                },
+                {
+                    name: "Background Terciário",
+                    file: "backgrounds3.png",
+                    path: "images/backgrounds3.png",
+                    credit: "Minerinho da Pesada"
+                },
+                {
+                    name: "Background Eventos",
+                    file: "backgroundsE.png",
+                    path: "images/backgroundsE.png",
+                    credit: "Layla Eugene"
+                },
+                // ===== ADICIONE NOVOS BACKGROUNDS AQUI =====
+                // {
+                //     name: "Nome do Background",
+                //     file: "nome_do_arquivo.png",
+                //     path: "images/nome_do_arquivo.png",
+                //     credit: "Nome do Criador(a)"
+                // },
+            ],
+
+            // ===== VÍDEOS / DIVULGAÇÃO =====
+            videos: [
+                {
+                    id: "video1",
+                    title: "Em Breve...",
+                    videoId: "C4cfo0f88Ug",
+                    thumbnails: [
+                        "images/thumb1.jpg",
+                        "images/thumb2.jpg",
+                        "images/thumb3.jpg"
+                    ],
+                    description: "Primeira missão do evento inteiro, foi onde tudo começou de verdade.",
+                    musics: [
+                        {
+                            name: "The Calm",
+                            artist: "Valve Studio Orchestra - Team Fortress 2",
+                            duration: "2:32",
+                            cover: "images/Music Cape/TF2.jpg",
+                            links: {
+                                youtube: "https://youtu.be/8l5HUNZ7hhs?si=cWFxpvij5FEnIEZx",
+                                spotify: "https://open.spotify.com/intl-pt/track/0s1Y2MFgpqH3j6vdBMelZt?autoplay_ok=1",
+                            }
+                        },
+                        {
+                            name: "RUN!",
+                            artist: "Sohus Alf, Troels Rohde Jørgensen - Deep Rock Galactic",
+                            duration: "2:28",
+                            cover: "images/Music Cape/DRG.jpg",
+                            links: {
+                                youtube: "https://youtu.be/RmRRfd2-VeM?si=olYjejp2rLPimu42",
+                                spotify: "https://open.spotify.com/intl-pt/album/1WZWsf39bn1bNMxysFgSL1"
+                            }
+                        },
+                        {
+                            name: "Hydrophobia",
+                            artist: "Chris Christodoulou - Risk of Rain 2",
+                            duration: "2:51",
+                            cover: "images/Music Cape/ROR.jpg",
+                            links: {
+                                youtube: "https://youtu.be/DDcRbrZWFno?si=kNDK5dPfY4Of0e5B",
+                                spotify: "https://open.spotify.com/intl-pt/track/1XMfSk9yWjZdUNo1WuEIWF"
+                            }
+                        },
+                        {
+                            name: "Divinity of the Office",
+                            artist: "Consumer Softproducts - Cruelty Squad ",
+                            duration: "2:45",
+                            cover: "images/Music Cape/CSQUAD.jpg",
+                            links: {
+                                youtube: "https://youtu.be/JsUQT9uwJlQ?si=t5W39YId3FwYrisK",
+                                spotify: "https://open.spotify.com/intl-pt/track/5ckZg1YXkJ5Ef6fC7FrTfp"
+                            }
+                        },
+                     {
+                            name: "Wartrauma",
+                            artist: "Sound Of Syndrome, Tommi J.Vieno - Barotrauma",
+                            duration: "8:46",
+                            cover: "images/Music Cape/BARO.jpg",
+                            links: {
+                                spotify: "https://open.spotify.com/intl-pt/track/7dGqvtteYgnorMoYr5juXT"
+                            }
+                        },
+                        {
+                            name: "Marching Upstream Part II",
+                            artist: "Sound Of Syndrome - Barotrauma",
+                            duration: "6:07",
+                            cover: "images/Music Cape/BARO.jpg",
+                            links: {
+                                spotify: "https://open.spotify.com/intl-pt/track/5PVWCHgcnHHPAATzdjDZld"
+                            }
+                        },
+                        {
+                            name: "Hoods",
+                            artist: "Brandon McKagan - Trepang²",
+                            duration: "2:16",
+                            cover: "images/Music Cape/TRE2.jpg",
+                            links: {
+                                youtube: "https://youtu.be/NMIZcHnGUQE?si=o2I1J2knO0NNvO1a",
+                                spotify: "https://open.spotify.com/intl-pt/track/6O9TxWMNWBtuA0hnhjaquK"
+                            }
+                        },
+                        {
+                            name: "The Creation of V1",
+                            artist: "MEGACHEB - PRIME: I WANT TO EAT YOUR HEART",
+                            duration: "1:20",
+                            cover: "images/Music Cape/MEGACHEB.jpg",
+                            links: {
+                                youtube: "https://youtu.be/V-c5fbQhh-c?si=KELq3zeY2TiYYmFy&t=1346",
+                            }
+                        },
+                        {
+                            name: "I WILL YOU TO DIE",
+                            artist: "MEGACHEB - PRIME: I WANT TO EAT YOUR HEART",
+                            duration: "10:55",
+                            cover: "images/Music Cape/MEGACHEB.jpg",
+                            links: {
+                                youtube: "https://youtu.be/V-c5fbQhh-c?si=8EEXFfPAaT74u-oD&t=182",
+                            }
+                        },
+                    ]
+                }
+                // ===== ADICIONE NOVOS VÍDEOS AQUI =====
+                // {
+                //     id: "video2",
+                //     title: "Título do Vídeo",
+                //     videoId: "ID_DO_YOUTUBE",
+                //     thumbnails: ["images/thumb1.jpg", "images/thumb2.jpg"],
+                //     description: "Descrição do vídeo",
+                //     musics: [
+                //         {
+                //             name: "Nome da Música",
+                //             artist: "Nome do Artista",
+                //             duration: "3:45",
+                //             cover: "images/capa.jpg",
+                //             links: {
+                //                 youtube: "URL",
+                //                 spotify: "URL"
+                //             }
+                //         }
+                //     ]
+                // },
+            ]
+        };
+
+        // ============================================================
+        // RENDERIZAR BACKGROUNDS
+        // ============================================================
+        function renderizarBackgrounds() {
+            const grid = document.getElementById('bgGrid');
+            const count = document.getElementById('bgCount');
+
+            if (galleryConfig.backgrounds.length === 0) {
+                grid.innerHTML = `
+                    <div style="color: #88bb88; text-align: center; padding: 30px; grid-column: 1 / -1;">
+                        📭 Nenhum background cadastrado
+                    </div>
+                `;
+                count.textContent = '(0)';
+                return;
+            }
+
+            count.textContent = `(${galleryConfig.backgrounds.length})`;
+
+            let html = '';
+            galleryConfig.backgrounds.forEach(bg => {
+                html += `
+                    <div class="bg-card">
+                        <div class="bg-preview" style="background-image: url('${bg.path}');">
+                            <div class="overlay">
+                                <span>📸 Clique para ampliar</span>
+                            </div>
+                        </div>
+                        <div class="bg-info">
+                            <div class="bg-name">${bg.name}</div>
+                            <div class="bg-credit">🎨 <strong>Criador(a):</strong> ${bg.credit || 'Desconhecido'}</div>
+                        </div>
+                    </div>
+                `;
+            });
+
+            grid.innerHTML = html;
+
+            document.querySelectorAll('.bg-preview').forEach(el => {
+                el.addEventListener('click', function() {
+                    const bgImage = this.style.backgroundImage;
+                    const url = bgImage.replace(/url\(['"]?(.*?)['"]?\)/, '$1');
+                    window.open(url, '_blank');
+                });
+            });
+        }
+
+        // ============================================================
+        // RENDERIZAR VÍDEOS
+        // ============================================================
+        function renderizarVideos() {
+            const grid = document.getElementById('videoGrid');
+            const count = document.getElementById('videoCount');
+
+            if (galleryConfig.videos.length === 0) {
+                grid.innerHTML = `
+                    <div style="color: #88bb88; text-align: center; padding: 30px; grid-column: 1 / -1;">
+                        📭 Nenhum vídeo cadastrado
+                    </div>
+                `;
+                count.textContent = '(0)';
+                return;
+            }
+
+            count.textContent = `(${galleryConfig.videos.length})`;
+
+            let html = '';
+            galleryConfig.videos.forEach((video, index) => {
+                const thumb = video.thumbnails && video.thumbnails.length > 0 
+                    ? video.thumbnails[0] 
+                    : 'images/default_thumb.jpg';
+                
+                html += `
+                    <div class="video-card" onclick="abrirModal(${index})">
+                        <div class="video-thumb" style="background-image: url('${thumb}');">
+                            <div class="play-icon">▶️</div>
+                        </div>
+                        <div class="video-info">
+                            <div class="video-title">${video.title}</div>
+                            <div class="video-source">📌 YouTube</div>
+                        </div>
+                    </div>
+                `;
+            });
+
+            grid.innerHTML = html;
+        }
+
+        // ============================================================
+        // FUNÇÃO PARA ABRIR O MODAL
+        // ============================================================
+        function abrirModal(index) {
+            const video = galleryConfig.videos[index];
+            if (!video) return;
+
+            const overlay = document.getElementById('modalOverlay');
+            document.getElementById('modalTitle').textContent = video.title;
+            document.getElementById('modalVideo').src = `https://www.youtube.com/embed/${video.videoId}`;
+            document.getElementById('modalDescription').textContent = video.description || '';
+
+            // ===== THUMBNAILS ADICIONAIS =====
+            const thumbsContainer = document.getElementById('modalThumbs');
+            thumbsContainer.innerHTML = '';
+
+            if (video.thumbnails && video.thumbnails.length > 0) {
+                video.thumbnails.forEach((thumb, i) => {
+                    const div = document.createElement('div');
+                    div.className = 'thumb-item' + (i === 0 ? ' active' : '');
+                    div.style.backgroundImage = `url('${thumb}')`;
+                    div.title = `Thumbnail ${i + 1}`;
+                    div.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        document.querySelectorAll('.thumb-item').forEach(t => t.classList.remove('active'));
+                        this.classList.add('active');
+                    });
+                    thumbsContainer.appendChild(div);
+                });
+            } else {
+                thumbsContainer.innerHTML = '<span style="color: #88bb88; font-size: 12px;">Nenhuma thumbnail adicional</span>';
+            }
+
+            // ===== MÚSICAS =====
+            const musicContainer = document.getElementById('modalMusicList');
+            musicContainer.innerHTML = '';
+
+            if (video.musics && video.musics.length > 0) {
+                // Adiciona o título "Músicas utilizadas:"
+                const label = document.createElement('div');
+                label.className = 'music-label';
+                label.textContent = '🎵 Músicas utilizadas:';
+                musicContainer.appendChild(label);
+
+                const platformIcons = {
+                    youtube: '▶️',
+                    spotify: '🎵',
+                    soundcloud: '☁️',
+                    apple: '🍎',
+                    deezer: '🎧',
+                    other: '🔗'
+                };
+
+                video.musics.forEach(music => {
+                    const item = document.createElement('div');
+                    item.className = 'modal-music-item';
+
+                    // Capa
+                    const coverDiv = document.createElement('div');
+                    coverDiv.className = 'music-cover';
+                    coverDiv.style.backgroundImage = `url('${music.cover || 'images/default_cover.jpg'}')`;
+
+                    // Informações
+                    const infoDiv = document.createElement('div');
+                    infoDiv.className = 'music-info';
+                    infoDiv.innerHTML = `
+                        <div class="music-name">${music.name}</div>
+                        <div class="music-artist">${music.artist || 'Artista desconhecido'} <span class="music-duration">⏱ ${music.duration || '--:--'}</span></div>
+                    `;
+
+                    // Links
+                    const linksDiv = document.createElement('div');
+                    linksDiv.className = 'music-links';
+
+                    if (music.links) {
+                        let hasLinks = false;
+                        for (const [platform, url] of Object.entries(music.links)) {
+                            if (url && url.trim() !== '') {
+                                hasLinks = true;
+                                const icon = platformIcons[platform] || '🔗';
+                                const labelText = platform.charAt(0).toUpperCase() + platform.slice(1);
+                                const a = document.createElement('a');
+                                a.className = `music-link ${platform}`;
+                                a.href = url;
+                                a.target = '_blank';
+                                a.innerHTML = `${icon} ${labelText}`;
+                                linksDiv.appendChild(a);
+                            }
+                        }
+                        if (!hasLinks) {
+                            linksDiv.innerHTML = '<span style="color: #666; font-size: 10px;">Sem links</span>';
+                        }
+                    } else {
+                        linksDiv.innerHTML = '<span style="color: #666; font-size: 10px;">Sem links</span>';
+                    }
+
+                    item.appendChild(coverDiv);
+                    item.appendChild(infoDiv);
+                    item.appendChild(linksDiv);
+                    musicContainer.appendChild(item);
+                });
+            } else {
+                musicContainer.innerHTML = '<span style="color: #88bb88; font-size: 13px; padding: 10px 0;">🎵 Nenhuma música listada para este vídeo</span>';
+            }
+
+            overlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // ============================================================
+        // FUNÇÃO PARA FECHAR O MODAL
+        // ============================================================
+        function fecharModal() {
+            document.getElementById('modalOverlay').classList.remove('active');
+            document.body.style.overflow = '';
+            document.getElementById('modalVideo').src = '';
+        }
+
+        // ===== FECHAR MODAL CLICANDO FORA =====
+        document.getElementById('modalOverlay').addEventListener('click', function(e) {
+            if (e.target === this) fecharModal();
+        });
+
+        // ===== FECHAR MODAL COM ESC =====
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') fecharModal();
+        });
+
+        // ============================================================
+        // INICIALIZAR
+        // ============================================================
+        renderizarBackgrounds();
+        renderizarVideos();
+
+        console.log('✅ Galeria carregada!');
+        console.log(`🖼️ ${galleryConfig.backgrounds.length} backgrounds`);
+        console.log(`📹 ${galleryConfig.videos.length} vídeos`);
+    </script>
+
+</body>
+</html>

@@ -229,113 +229,60 @@
         }
 
         /* ============================================================
-           BOTÕES SOCIAIS NOS CARDS (CORRIGIDO)
+           BOTÕES SOCIAIS COM TEXTO COMPLETO
            ============================================================ */
-        .social-buttons {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 6px;
-            margin-top: 10px;
-            flex-wrap: wrap;
-        }
-        
-        .social-btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 4px;
-            padding: 3px 10px;
-            border-radius: 5px;
-            text-decoration: none;
-            font-size: 10px;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            color: white;
-            border: none;
-            cursor: pointer;
-            white-space: nowrap;  /* ← IMPEDE QUEBRA DE TEXTO */
-        }
-        
-        .social-btn:hover {
-            transform: scale(1.05);
-            filter: brightness(1.2);
-        }
-        
-        /* ===== TAMANHO MENOR PARA OS BOTÕES ===== */
-        .social-btn {
-            padding: 2px 8px;
-            font-size: 9px;
-            border-radius: 4px;
-        }
-        
-        .social-btn .icon {
-            font-size: 11px;
-        }
-        
-        /* ===== CORES DOS BOTÕES ===== */
-        .social-btn.github {
-            background: #333;
-        }
-        
-        .social-btn.github:hover {
-            background: #444;
-            box-shadow: 0 0 20px rgba(51, 51, 51, 0.4);
-        }
-        
-        .social-btn.youtube {
-            background: #ff0000;
-        }
-        
-        .social-btn.youtube:hover {
-            background: #cc0000;
-            box-shadow: 0 0 20px rgba(255, 0, 0, 0.4);
-        }
-        
-        .social-btn.twitter {
-            background: #1da1f2;
-        }
-        
-        .social-btn.twitter:hover {
-            background: #1a8cd8;
-            box-shadow: 0 0 20px rgba(29, 161, 242, 0.4);
-        }
-        
-        .social-btn.discord {
-            background: #5865f2;
-        }
-        
-        .social-btn.discord:hover {
-            background: #4752c4;
-            box-shadow: 0 0 20px rgba(88, 101, 242, 0.4);
-        }
-        
-        .social-btn.steam {
-            background: #171a21;
-        }
-        
-        .social-btn.steam:hover {
-            background: #2a2f3a;
-            box-shadow: 0 0 20px rgba(23, 26, 33, 0.4);
-        }
-        
-        .social-btn.twitch {
-            background: #9146ff;
-        }
-        
-        .social-btn.twitch:hover {
-            background: #7a3bcc;
-            box-shadow: 0 0 20px rgba(145, 70, 255, 0.4);
-        }
-        
-        .social-btn.website {
-            background: #2a7de1;
-        }
-        
-        .social-btn.website:hover {
-            background: #1f6bc4;
-            box-shadow: 0 0 20px rgba(42, 125, 225, 0.4);
-        }
+         .social-buttons {
+             display: flex;
+             justify-content: center;
+             align-items: center;
+             gap: 6px;
+             margin-top: 10px;
+             flex-wrap: wrap;
+         }
+         
+         .social-btn {
+             display: inline-flex;
+             align-items: center;
+             justify-content: center;
+             gap: 5px;
+             padding: 4px 14px;
+             border-radius: 6px;
+             text-decoration: none;
+             font-size: 11px;
+             font-weight: 600;
+             transition: all 0.3s ease;
+             color: white;
+             border: none;
+             cursor: pointer;
+             white-space: nowrap;
+         }
+         
+         .social-btn:hover {
+             transform: scale(1.05);
+             filter: brightness(1.2);
+         }
+         
+         /* ===== CORES DOS BOTÕES ===== */
+         .social-btn.github { background: #333; }
+         .social-btn.github:hover { background: #444; box-shadow: 0 0 20px rgba(51, 51, 51, 0.4); }
+         
+         .social-btn.youtube { background: #ff0000; }
+         .social-btn.youtube:hover { background: #cc0000; box-shadow: 0 0 20px rgba(255, 0, 0, 0.4); }
+         
+         .social-btn.twitter { background: #1da1f2; }
+         .social-btn.twitter:hover { background: #1a8cd8; box-shadow: 0 0 20px rgba(29, 161, 242, 0.4); }
+         
+         .social-btn.discord { background: #5865f2; }
+         .social-btn.discord:hover { background: #4752c4; box-shadow: 0 0 20px rgba(88, 101, 242, 0.4); }
+         
+         .social-btn.steam { background: #171a21; }
+         .social-btn.steam:hover { background: #2a2f3a; box-shadow: 0 0 20px rgba(23, 26, 33, 0.4); }
+         
+         .social-btn.twitch { background: #9146ff; }
+         .social-btn.twitch:hover { background: #7a3bcc; box-shadow: 0 0 20px rgba(145, 70, 255, 0.4); }
+         
+         .social-btn.website { background: #2a7de1; }
+         .social-btn.website:hover { background: #1f6bc4; box-shadow: 0 0 20px rgba(42, 125, 225, 0.4); }
 
         /* ============================================================
            LISTA DE CONTRIBUIÇÕES
@@ -848,92 +795,91 @@
             return `${diaSemana}, ${dia} de ${mes} de ${ano} às ${horas}:${minutos}`;
         }
 
-        // ============================================================
-        // RENDERIZAR COLABORADORES
-        // ============================================================
-        function renderizarColaboradores() {
-            const grid = document.getElementById('colaboradoresGrid');
-            
-            if (config.colaboradores.length === 0) {
-                grid.innerHTML = `
-                    <div style="color: #88bb88; text-align: center; padding: 20px; grid-column: 1 / -1;">
-                        📭 Nenhum colaborador cadastrado
-                    </div>
-                `;
-                return;
-            }
-        
-            let html = '';
-            config.colaboradores.forEach(colab => {
-                let avatarHtml = '';
-                
-                const isEmoji = colab.avatar && !colab.avatar.includes('/') && !colab.avatar.includes('http') && !colab.avatar.includes('.');
-                
-                if (isEmoji) {
-                    avatarHtml = `<span class="avatar-emoji">${colab.avatar}</span>`;
-                } else {
-                    let classe = 'avatar-img';
-                    
-                    if (colab.formato === 'redondo') {
-                        classe += ' redondo';
-                    } else if (colab.formato === 'quadrado') {
-                        classe += ' quadrado';
-                    }
-                    
-                    if (colab.tamanho === 'grande') {
-                        classe += ' grande';
-                    }
-                    
-                    avatarHtml = `<img src="${colab.avatar}" class="${classe}" alt="${colab.nome}">`;
-                }
-                
-                // ===== VERIFICA SE TEM BORDA ARCO-ÍRIS =====
-                const borderClass = colab.rainbowBorder === true ? 'rainbow-border' : '';
-                
-                // ===== BOTÕES SOCIAIS =====
-                let socialHtml = '';
-                if (colab.social) {
-                    const socialIcons = {
-                        github: { icon: '🐙', label: 'GitHub' },
-                        youtube: { icon: '▶️', label: 'YouTube' },
-                        twitter: { icon: '🐦', label: 'Twitter' },
-                        discord: { icon: '💬', label: 'Discord' },
-                        steam: { icon: '🎮', label: 'Steam' },
-                        twitch: { icon: '📺', label: 'Twitch' },
-                        website: { icon: '🌐', label: 'Site' }
-                    };
-                    
-                    let buttonsHtml = '';
-                    for (const [key, url] of Object.entries(colab.social)) {
-                        if (url && url.trim() !== '') {
-                            const info = socialIcons[key] || { icon: '🔗', label: key };
-                            buttonsHtml += `
-                                <a href="${url}" target="_blank" class="social-btn ${key}" title="${info.label}">
-                                    ${info.icon}
-                                </a>
-                            `;
-                        }
-                    }
-                    
-                    if (buttonsHtml) {
-                        socialHtml = `<div class="social-buttons">${buttonsHtml}</div>`;
-                    }
-                }
-                
-                html += `
-                    <div class="colaborador-card ${borderClass}">
-                        ${avatarHtml}
-                        <div class="nome">${colab.nome}</div>
-                        <div class="funcao">${colab.funcao}</div>
-                        <div class="contribuicao">${colab.contribuicao}</div>
-                        ${socialHtml}
-                    </div>
-                `;
-            });
-        
-            grid.innerHTML = html;
-        }
-
+       // ============================================================
+       // RENDERIZAR COLABORADORES (COM BOTÕES DE TEXTO COMPLETO)
+       // ============================================================
+       function renderizarColaboradores() {
+           const grid = document.getElementById('colaboradoresGrid');
+           
+           if (config.colaboradores.length === 0) {
+               grid.innerHTML = `
+                   <div style="color: #88bb88; text-align: center; padding: 20px; grid-column: 1 / -1;">
+                       📭 Nenhum colaborador cadastrado
+                   </div>
+               `;
+               return;
+           }
+       
+           let html = '';
+           config.colaboradores.forEach(colab => {
+               let avatarHtml = '';
+               
+               const isEmoji = colab.avatar && !colab.avatar.includes('/') && !colab.avatar.includes('http') && !colab.avatar.includes('.');
+               
+               if (isEmoji) {
+                   avatarHtml = `<span class="avatar-emoji">${colab.avatar}</span>`;
+               } else {
+                   let classe = 'avatar-img';
+                   
+                   if (colab.formato === 'redondo') {
+                       classe += ' redondo';
+                   } else if (colab.formato === 'quadrado') {
+                       classe += ' quadrado';
+                   }
+                   
+                   if (colab.tamanho === 'grande') {
+                       classe += ' grande';
+                   }
+                   
+                   avatarHtml = `<img src="${colab.avatar}" class="${classe}" alt="${colab.nome}">`;
+               }
+               
+               // ===== VERIFICA SE TEM BORDA ARCO-ÍRIS =====
+               const borderClass = colab.rainbowBorder === true ? 'rainbow-border' : '';
+               
+               // ===== BOTÕES SOCIAIS COM TEXTO COMPLETO =====
+               let socialHtml = '';
+               if (colab.social) {
+                   const socialIcons = {
+                       github: { icon: '🐙', label: 'GitHub' },
+                       youtube: { icon: '▶️', label: 'YouTube' },
+                       twitter: { icon: '🐦', label: 'Twitter' },
+                       discord: { icon: '💬', label: 'Discord' },
+                       steam: { icon: '🎮', label: 'Steam' },
+                       twitch: { icon: '📺', label: 'Twitch' },
+                       website: { icon: '🌐', label: 'Site' }
+                   };
+                   
+                   let buttonsHtml = '';
+                   for (const [key, url] of Object.entries(colab.social)) {
+                       if (url && url.trim() !== '') {
+                           const info = socialIcons[key] || { icon: '🔗', label: key };
+                           buttonsHtml += `
+                               <a href="${url}" target="_blank" class="social-btn ${key}">
+                                   ${info.icon} ${info.label}
+                               </a>
+                           `;
+                       }
+                   }
+                   
+                   if (buttonsHtml) {
+                       socialHtml = `<div class="social-buttons">${buttonsHtml}</div>`;
+                   }
+               }
+               
+               html += `
+                   <div class="colaborador-card ${borderClass}">
+                       ${avatarHtml}
+                       <div class="nome">${colab.nome}</div>
+                       <div class="funcao">${colab.funcao}</div>
+                       <div class="contribuicao">${colab.contribuicao}</div>
+                       ${socialHtml}
+                   </div>
+               `;
+           });
+       
+           grid.innerHTML = html;
+        }   
         // ============================================================
         // RENDERIZAR CONTRIBUIÇÕES
         // ============================================================
