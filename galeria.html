@@ -103,6 +103,22 @@
         }
 
         /* ============================================================
+           TIMESTAMP
+           ============================================================ */
+        .timestamp-info {
+            text-align: center;
+            color: #88bb88;
+            font-size: 12px;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #3a5a3a;
+        }
+
+        .timestamp-info strong {
+            color: #f0f0f0;
+        }
+
+        /* ============================================================
            SEÇÕES
            ============================================================ */
         .section {
@@ -623,6 +639,13 @@
         </div>
 
         <!-- ============================================================
+             TIMESTAMP
+             ============================================================ -->
+        <div class="timestamp-info">
+            🕐 Última atualização: <strong id="timestampGaleria"></strong>
+        </div>
+
+        <!-- ============================================================
              BOTÃO VOLTAR
              ============================================================ -->
         <div class="footer">
@@ -714,9 +737,7 @@
                     title: "Em Breve...",
                     videoId: "C4cfo0f88Ug",
                     thumbnails: [
-                        "images/thumb1.jpg",
-                        "images/thumb2.jpg",
-                        "images/thumb3.jpg"
+                        "images/backgrounds.png",
                     ],
                     description: "Primeira missão do evento inteiro, foi onde tudo começou de verdade.",
                     musics: [
@@ -1048,14 +1069,43 @@
         });
 
         // ============================================================
+        // TIMESTAMP DA GALERIA
+        // ============================================================
+        function formatarTimestampGaleria(data) {
+            const dias = ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'];
+            const meses = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 
+                          'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
+            
+            const diaSemana = dias[data.getDay()];
+            const dia = String(data.getDate()).padStart(2, '0');
+            const mes = meses[data.getMonth()];
+            const ano = data.getFullYear();
+            const horas = String(data.getHours()).padStart(2, '0');
+            const minutos = String(data.getMinutes()).padStart(2, '0');
+            
+            return `${diaSemana}, ${dia} de ${mes} de ${ano} às ${horas}:${minutos}`;
+        }
+
+        function exibirTimestampGaleria() {
+            const agora = new Date();
+            const timestamp = formatarTimestampGaleria(agora);
+            const el = document.getElementById('timestampGaleria');
+            if (el) {
+                el.textContent = timestamp;
+            }
+        }
+
+        // ============================================================
         // INICIALIZAR
         // ============================================================
         renderizarBackgrounds();
         renderizarVideos();
+        exibirTimestampGaleria();
 
         console.log('✅ Galeria carregada!');
         console.log(`🖼️ ${galleryConfig.backgrounds.length} backgrounds`);
         console.log(`📹 ${galleryConfig.videos.length} vídeos`);
+        console.log(`🕐 ${formatarTimestampGaleria(new Date())}`);
     </script>
 
 </body>
