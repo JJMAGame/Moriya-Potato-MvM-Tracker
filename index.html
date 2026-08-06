@@ -1786,29 +1786,60 @@
         async function listarArquivosGitHub() {
             const fileList = document.getElementById('fileList');
             fileList.innerHTML = '<li class="loading">⏳ Carregando arquivos...</li>';
-
+        
             try {
                 const url = `https://api.github.com/repos/${GITHUB_REPO}/contents/${SAVE_FOLDER}?ref=${GITHUB_BRANCH}`;
                 const response = await fetch(url);
-
-                if (!response.ok) {
-                    if (response.status === 404) {
-                        fileList.innerHTML = `<li class="empty">📂 Pasta "${SAVE_FOLDER}" não encontrada</li>`;
-                        return;
+        
+                // ===== TRATAMENTO DO ERRO 403 (RATE LIMIT) =====
+                if (response.status === 403) {
+                    // Verifica se é rate limit
+                    const remaining = response.headers.get('X-RateLimit-Remaining');
+                    const reset = response.headers.get('X-RateLimit-Reset');
+                    
+                    let mensagem = '⚠️ Limite de requisições excedido!';
+                    if (reset) {
+                        const resetDate = new Date(parseInt(reset) * 1000);
+                        const agora = new Date();
+                        const diffMs = resetDate - agora;
+                        const diffMin = Math.ceil(diffMs / 60000);
+                        mensagem += `\n⏳ Aguarde aproximadamente ${diffMin} minutos.`;
                     }
+                    
+                    fileList.innerHTML = `
+                        <li class="empty" style="color: #f39c12; text-align: center; padding: 30px;">
+                            <span style="font-size: 48px; display: block;">⏳</span>
+                            <strong style="font-size: 16px;">${mensagem}</strong><br>
+                            <span style="font-size: 12px; color: #7f8c8d;">O GitHub limita 60 requisições por hora para IPs não autenticados.</span>
+                            <br><br>
+                            <button onclick="listarArquivosGitHub()" style="background: #27ae60; color: white; border: none; padding: 8px 20px; border-radius: 6px; cursor: pointer; font-weight: 600;">
+                                🔄 Tentar novamente
+                            </button>
+                        </li>
+                    `;
+                    showToast('⚠️ Limite de requisições excedido. Aguarde alguns minutos.', 'error');
+                    return;
+                }
+        
+                if (response.status === 404) {
+                    fileList.innerHTML = `<li class="empty">📂 Pasta "${SAVE_FOLDER}" não encontrada</li>`;
+                    return;
+                }
+        
+                if (!response.ok) {
                     throw new Error(`Erro ${response.status}`);
                 }
-
+        
                 const data = await response.json();
                 const jsonFiles = data.filter(item => item.type === 'file' && item.name.endsWith('.json'));
-
+        
                 if (jsonFiles.length === 0) {
                     fileList.innerHTML = '<li class="empty">📭 Nenhum arquivo .json encontrado</li>';
                     return;
                 }
-
+        
                 jsonFiles.sort((a, b) => new Date(b.sha) - new Date(a.sha));
-
+        
                 fileList.innerHTML = '';
                 jsonFiles.forEach(file => {
                     const li = document.createElement('li');
@@ -1821,25 +1852,33 @@
                         const dataCommit = new Date(file.sha);
                         dataExibicao = dataCommit.toLocaleDateString('pt-BR');
                     }
-
+        
                     li.innerHTML = `
                         <span>📄 ${file.name}</span>
                         <span class="file-date">${dataExibicao}</span>
                     `;
-
+        
                     li.addEventListener('click', () => {
                         importarArquivo(file.download_url, file.name);
                     });
-
+        
                     fileList.appendChild(li);
                 });
-
+        
             } catch (error) {
                 console.error('Erro ao listar arquivos:', error);
-                fileList.innerHTML = `<li class="empty">❌ Erro: ${error.message}</li>`;
+                fileList.innerHTML = `
+                    <li class="empty">
+                        ❌ Erro: ${error.message}<br>
+                        <button onclick="listarArquivosGitHub()" style="background: #27ae60; color: white; border: none; padding: 6px 16px; border-radius: 6px; cursor: pointer; margin-top: 10px; font-weight: 600;">
+                            🔄 Tentar novamente
+                        </button>
+                    </li>
+                `;
                 showToast('❌ Erro ao ler a pasta', 'error');
             }
         }
+
 
         async function importarArquivo(url, fileName) {
             try {
