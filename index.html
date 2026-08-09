@@ -73,6 +73,40 @@
         }
 
         /* ============================================================
+           BARRA DE ROLAGEM PRINCIPAL (COM OVERLAY)
+           ============================================================ */
+        
+        /* ===== CHROME/EDGE/SAFARI ===== */
+        body::-webkit-scrollbar {
+            width: 6px;
+        }
+        
+        body::-webkit-scrollbar-track {
+            background: rgba(26, 26, 46, 0.2);  /* Levemente visível */
+            border-radius: 3px;
+        }
+        
+        body::-webkit-scrollbar-thumb {
+            background: rgba(42, 42, 74, 0.4);
+            border-radius: 3px;
+            transition: all 0.3s ease;
+        }
+        
+        body::-webkit-scrollbar-thumb:hover {
+            background: rgba(42, 42, 74, 0.7);
+        }
+        
+        body::-webkit-scrollbar-corner {
+            background: transparent;
+        }
+        
+        /* ===== FIREFOX ===== */
+        body {
+            scrollbar-width: thin;
+            scrollbar-color: rgba(42, 42, 74, 0.4) rgba(26, 26, 46, 0.2);
+        }
+
+        /* ============================================================
            LIGHTBAR - TOPO DA PÁGINA
         ============================================================ */
 
