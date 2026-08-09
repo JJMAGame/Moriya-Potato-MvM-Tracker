@@ -600,6 +600,39 @@
         }
 
         /* ============================================================
+           BARRA DE ROLAGEM - TEMA AZUL
+           ============================================================ */
+        .table-wrapper::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        
+        .table-wrapper::-webkit-scrollbar-track {
+            background: #0f1a2e;
+            border-radius: 3px;
+        }
+        
+        .table-wrapper::-webkit-scrollbar-thumb {
+            background: #1a3a6a;
+            border-radius: 3px;
+            transition: all 0.3s ease;
+        }
+        
+        .table-wrapper::-webkit-scrollbar-thumb:hover {
+            background: #2a5a8a;
+        }
+        
+        .table-wrapper::-webkit-scrollbar-corner {
+            background: #0f1a2e;
+        }
+        
+        /* ===== FIREFOX ===== */
+        .table-wrapper {
+            scrollbar-width: thin;
+            scrollbar-color: #1a3a6a #0f1a2e;
+        }
+
+        /* ============================================================
            MODAL GITHUB
         ============================================================ */
         .modal-overlay {
