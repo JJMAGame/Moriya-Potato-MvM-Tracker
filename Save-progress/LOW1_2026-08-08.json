@@ -1,8 +1,9 @@
 {
-  "nome": "JJMAGame",
-  "senha": "admin",
-  "avatar": "😊",
+  "version": "1.0",
+  "exportedAt": "2026-08-08T00:18:13.828Z",
+  "totalMissions": 564,
   "progress": [
+    true,
     false,
     false,
     false,
@@ -11,6 +12,7 @@
     false,
     false,
     false,
+    true,
     false,
     false,
     false,
@@ -117,6 +119,7 @@
     false,
     false,
     false,
+    true,
     false,
     false,
     false,
@@ -247,6 +250,7 @@
     false,
     false,
     false,
+    true,
     false,
     false,
     false,
@@ -406,6 +410,7 @@
     false,
     false,
     false,
+    true,
     false,
     false,
     false,
@@ -557,16 +562,10 @@
     false,
     false,
     false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
+    true,
     false,
     false,
     false,
     false
-  ],
-  "criadoEm": "2026-07-28T17:04:15.957Z"
+  ]
 }

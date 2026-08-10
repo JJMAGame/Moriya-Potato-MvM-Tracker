@@ -73,6 +73,40 @@
         }
 
         /* ============================================================
+           BARRA DE ROLAGEM PRINCIPAL (COM OVERLAY)
+           ============================================================ */
+        
+        /* ===== CHROME/EDGE/SAFARI ===== */
+        body::-webkit-scrollbar {
+            width: 6px;
+        }
+        
+        body::-webkit-scrollbar-track {
+            background: rgba(26, 26, 46, 0.2);  /* Levemente visível */
+            border-radius: 3px;
+        }
+        
+        body::-webkit-scrollbar-thumb {
+            background: rgba(42, 42, 74, 0.4);
+            border-radius: 3px;
+            transition: all 0.3s ease;
+        }
+        
+        body::-webkit-scrollbar-thumb:hover {
+            background: rgba(42, 42, 74, 0.7);
+        }
+        
+        body::-webkit-scrollbar-corner {
+            background: transparent;
+        }
+        
+        /* ===== FIREFOX ===== */
+        body {
+            scrollbar-width: thin;
+            scrollbar-color: rgba(42, 42, 74, 0.4) rgba(26, 26, 46, 0.2);
+        }
+
+        /* ============================================================
            LIGHTBAR - TOPO DA PÁGINA
         ============================================================ */
 
@@ -197,6 +231,17 @@
             background: #a569bd;
             transform: scale(1.05);
             box-shadow: 0 4px 20px rgba(142, 68, 173, 0.5);
+        }
+
+        .lightbar-buttons .btn-moriya {
+            background: #e94560;  /* Vermelho/Magenta igual ao créditos */
+            color: white;
+        }
+        
+        .lightbar-buttons .btn-moriya:hover {
+            background: #ff6b81;
+            transform: scale(1.05);
+            box-shadow: 0 4px 20px rgba(233, 69, 96, 0.5);
         }
 
         /* ============================================================
@@ -589,6 +634,39 @@
         }
 
         /* ============================================================
+           BARRA DE ROLAGEM - TEMA AZUL
+           ============================================================ */
+        .table-wrapper::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        
+        .table-wrapper::-webkit-scrollbar-track {
+            background: #0f1a2e;
+            border-radius: 3px;
+        }
+        
+        .table-wrapper::-webkit-scrollbar-thumb {
+            background: #1a3a6a;
+            border-radius: 3px;
+            transition: all 0.3s ease;
+        }
+        
+        .table-wrapper::-webkit-scrollbar-thumb:hover {
+            background: #2a5a8a;
+        }
+        
+        .table-wrapper::-webkit-scrollbar-corner {
+            background: #0f1a2e;
+        }
+        
+        /* ===== FIREFOX ===== */
+        .table-wrapper {
+            scrollbar-width: thin;
+            scrollbar-color: #1a3a6a #0f1a2e;
+        }
+
+        /* ============================================================
            MODAL GITHUB
         ============================================================ */
         .modal-overlay {
@@ -916,6 +994,7 @@
                 <button class="btn-potato" onclick="abrirPotato()">🥔 Conteúdo da Potato</button>
                 <button class="btn-credits" onclick="window.open('credits.html', 'Créditos', 'width=900,height=700')">🎯 Créditos</button>
                 <button class="btn-gallery" onclick="window.location.href='galeria.html'">🎨 Galeria</button>
+                <button class="btn-moriya" onclick="window.open('https://moriyamvm.base44.app/', '_blank')">🌐 Moriya Site</button>
             </div>
         </div>
     </div>
