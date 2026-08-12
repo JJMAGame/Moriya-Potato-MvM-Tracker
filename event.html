@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Moriya Vs Potato - Arquive</title>
+    <title>Events - Moriya Ultimate Tracker</title>
     <style>
         * {
             margin: 0;
@@ -86,7 +86,7 @@
         }
 
         /* ============================================================
-           TÍTULO ARCO-ÍRIS ANIMADO (GARANTIDO)
+           TÍTULO ARCO-ÍRIS ANIMADO
         ============================================================ */
         .rainbow-title {
             font-size: 28px;
@@ -115,6 +115,96 @@
             font-size: 14px;
             margin-top: 8px;
             opacity: 0.8;
+        }
+
+        /* ============================================================
+           FILTROS DE REGRAS
+        ============================================================ */
+        .regras-filtros {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+            padding: 12px 16px;
+            background: rgba(26, 26, 46, 0.5);
+            border-radius: 10px;
+            border: 1px solid #2a2a4a;
+            justify-content: center;
+        }
+
+        .regras-filtros .filtro-label {
+            color: #85c1e9;
+            font-size: 13px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-right: 4px;
+        }
+
+        .regras-filtros .filtro-btn {
+            padding: 6px 16px;
+            border: 2px solid transparent;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            background: transparent;
+            color: #c0c0c0;
+        }
+
+        .regras-filtros .filtro-btn:hover {
+            transform: scale(1.05);
+        }
+
+        /* ===== CORES DOS BOTÕES ===== */
+        .regras-filtros .filtro-btn.todas {
+            border-color: #7f8c8d;
+            color: #7f8c8d;
+        }
+
+        .regras-filtros .filtro-btn.todas:hover,
+        .regras-filtros .filtro-btn.todas.active {
+            background: #7f8c8d;
+            color: white;
+            border-color: #7f8c8d;
+        }
+
+        .regras-filtros .filtro-btn.mvm-oficial {
+            border-color: #2980b9;
+            color: #2980b9;
+        }
+
+        .regras-filtros .filtro-btn.mvm-oficial:hover,
+        .regras-filtros .filtro-btn.mvm-oficial.active {
+            background: #2980b9;
+            color: white;
+            border-color: #2980b9;
+        }
+
+        .regras-filtros .filtro-btn.potato-oficial {
+            border-color: #8B4513;
+            color: #8B4513;
+        }
+
+        .regras-filtros .filtro-btn.potato-oficial:hover,
+        .regras-filtros .filtro-btn.potato-oficial.active {
+            background: #8B4513;
+            color: white;
+            border-color: #8B4513;
+        }
+
+        .regras-filtros .filtro-btn.regras-moriya {
+            border-color: #27ae60;
+            color: #27ae60;
+        }
+
+        .regras-filtros .filtro-btn.regras-moriya:hover,
+        .regras-filtros .filtro-btn.regras-moriya.active {
+            background: #27ae60;
+            color: white;
+            border-color: #27ae60;
         }
 
         /* ============================================================
@@ -187,6 +277,33 @@
             gap: 6px;
         }
 
+        /* ===== BADGE DE REGRAS ===== */
+        .evento-card .regra-badge {
+            font-size: 10px;
+            padding: 3px 12px;
+            border-radius: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            display: inline-block;
+        }
+
+        .regra-badge.mvm-oficial {
+            background: #2980b9;
+            color: white;
+        }
+
+        .regra-badge.potato-oficial {
+            background: #8B4513;
+            color: white;
+        }
+
+        .regra-badge.regras-moriya {
+            background: #27ae60;
+            color: white;
+        }
+
+        /* ===== STATUS ===== */
         .badge-ao-vivo {
             background: #e74c3c;
             color: white;
@@ -309,7 +426,6 @@
             color: #e74c3c !important;
         }
 
-        /* Hover mantém a cor */
         .mapa-item.status-completo:hover {
             background: rgba(39, 174, 96, 0.25) !important;
         }
@@ -490,6 +606,22 @@
                 gap: 8px;
             }
 
+            .regras-filtros {
+                gap: 6px;
+                padding: 10px 12px;
+            }
+
+            .regras-filtros .filtro-btn {
+                font-size: 10px;
+                padding: 4px 10px;
+            }
+
+            .regras-filtros .filtro-label {
+                font-size: 11px;
+                width: 100%;
+                justify-content: center;
+            }
+
             .btn-voltar {
                 display: block;
             }
@@ -525,9 +657,20 @@
         <div class="header">
             <span class="event-badge">🎯 Eventos</span>
             <h1>
-                <span class="rainbow-title">Moriya Vs Potato Archive</span>
+                <span class="rainbow-title">Moriya Ultimate Tracker</span>
             </h1>
             <p class="subtitle">📜 Lista de todos os eventos e suas missões</p>
+        </div>
+
+        <!-- ============================================================
+             FILTROS DE REGRAS
+        ============================================================ -->
+        <div class="regras-filtros" id="regrasFiltros">
+            <span class="filtro-label">🎮 Regras:</span>
+            <button class="filtro-btn todas active" data-regra="todas">📋 Todas</button>
+            <button class="filtro-btn mvm-oficial" data-regra="mvm-oficial">🔵 MvM Oficiais</button>
+            <button class="filtro-btn potato-oficial" data-regra="potato-oficial">🟤 Potato Oficiais</button>
+            <button class="filtro-btn regras-moriya" data-regra="regras-moriya">🟢 Regras Moriya</button>
         </div>
 
         <!-- ============================================================
@@ -586,7 +729,8 @@
                     { nome: "Condemned - Trespasser", wave: "Unica Wave", status: "incompleto" }
                 ],
                 videoId: "iLmPcQMI_PE",
-                rainbow: true
+                rainbow: true,
+                regra: "potato-oficial"
             },
             {
                 nome: "Moriya Vs Potato Arquive ( Low Tier 1# )",
@@ -599,7 +743,8 @@
                     { nome: "Legerdemain - Legacy Heresy", wave: "5 Wave", status: "completo" }
                 ],
                 videoId: "Vec9hzWkiag",
-                rainbow: false
+                rainbow: false,
+                regra: "potato-oficial"
             },
             {
                 nome: "Moriya Vs Potato Arquive ( Padrão Tier 1# )",
@@ -611,7 +756,8 @@
                     { nome: "Derelict - Shadow Wave", wave: "6 Wave", status: " " }
                 ],
                 videoId: "vKEkuZnHsws",
-                rainbow: false
+                rainbow: false,
+                regra: "potato-oficial"
             },
             {
                 nome: "Moriya Vs Potato Arquive ( DELICIA Tier 1# )",
@@ -622,7 +768,8 @@
                     { nome: "Isolation - Depression", wave: "5 Wave", status: " " }
                 ],
                 videoId: "7jvfrtmugxk",
-                rainbow: false
+                rainbow: false,
+                regra: "potato-oficial"
             },
             {
                 nome: "Moriya Vs Potato Arquive ( interlúdio )",
@@ -633,29 +780,32 @@
                     { nome: "Rancher - Impasse", wave: "5 Wave + encore", status: " " },
                 ],
                 videoId: "",
-                rainbow: true
+                rainbow: true,
+                regra: "potato-oficial"
             },
             {
                 nome: "Moriya Vs Potato Arquive ( Low Tier 2# )",
                 dataInicio: "2026-09-04T18:00:00",
-                dataFim: "2026-09-04T21:30:00",
+                dataFim: "2026-09-05T00:00:00",
                 mapas: [
                     { nome: "Condemned - Thriller Terror", wave: "5 Wave", status: " " },
                     { nome: "Decay - Night Errors", wave: "7 Wave", status: " " },
                     { nome: "Oxidize - Snowy Slaughter", wave: "6 Wave", status: " " },
                 ],
                 videoId: "",
-                rainbow: false
+                rainbow: false,
+                regra: "potato-oficial"
             },
             {
                 nome: "Moriya Vs Potato Arquive ( Padrão Tier 2# )",
                 dataInicio: "2026-09-11T18:00:00",
                 dataFim: "2026-09-12T00:00:00",
                 mapas: [
-
+                    
                 ],
                 videoId: "",
-                rainbow: false
+                rainbow: false,
+                regra: "potato-oficial"
             },
             {
                 nome: "Moriya Vs Potato Arquive ( DELICIA Tier 2# )",
@@ -665,7 +815,8 @@
 
                 ],
                 videoId: "",
-                rainbow: false
+                rainbow: false,
+                regra: "potato-oficial"
             },
             {
                 nome: "Moriya Vs Potato Arquive ( interlúdio - trespasser )",
@@ -676,9 +827,9 @@
                     { nome: "Condemned - Trespasser", wave: "Unica Wave", status: " " },
                 ],
                 videoId: "",
-                rainbow: true
+                rainbow: true,
+                regra: "potato-oficial"
             },
-
         ];
 
         // ============================================================
@@ -721,22 +872,30 @@
         }
 
         // ============================================================
-        // RENDERIZAR EVENTOS
+        // RENDERIZAR EVENTOS COM FILTRO
         // ============================================================
+        let regraAtual = 'todas';
+
         function renderizarEventos() {
             const container = document.getElementById('eventosContainer');
 
-            if (eventos.length === 0) {
+            // ===== FILTRA OS EVENTOS =====
+            let eventosFiltrados = eventos;
+            if (regraAtual !== 'todas') {
+                eventosFiltrados = eventos.filter(e => e.regra === regraAtual);
+            }
+
+            if (eventosFiltrados.length === 0) {
                 container.innerHTML = `
                     <div style="color: #7f8c8d; text-align: center; padding: 30px;">
-                        📭 Nenhum evento cadastrado
+                        📭 Nenhum evento encontrado com este filtro
                     </div>
                 `;
                 return;
             }
 
             let html = '';
-            eventos.forEach((evento) => {
+            eventosFiltrados.forEach((evento) => {
                 const status = getStatusEvento(evento.dataInicio, evento.dataFim);
 
                 let badgeClass = '';
@@ -759,6 +918,15 @@
 
                 const tituloClass = evento.rainbow === true ? 'rainbow-glow' : '';
                 const tituloIcon = '📌 ';
+
+                // ===== REGRA BADGE =====
+                const regraLabels = {
+                    'mvm-oficial': '🔵 MvM Oficiais',
+                    'potato-oficial': '🟤 Potato Oficiais',
+                    'regras-moriya': '🟢 Regras Moriya'
+                };
+                const regraLabel = regraLabels[evento.regra] || '📋 Sem regra';
+                const regraClass = evento.regra || '';
 
                 // ============================================================
                 // RENDERIZAR MAPAS COM STATUS
@@ -830,6 +998,7 @@
                                 <span class="${tituloClass}">${evento.nome}</span>
                             </h2>
                             <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+                                <span class="regra-badge ${regraClass}">${regraLabel}</span>
                                 <span style="color: #85c1e9; font-size: 12px;">
                                     📅 ${dataInicioFormatada} ${horaInicio} - ${dataFimFormatada} ${horaFim}
                                 </span>
@@ -848,6 +1017,28 @@
         }
 
         // ============================================================
+        // FILTRO DE REGRAS
+        // ============================================================
+        document.getElementById('regrasFiltros').addEventListener('click', function(e) {
+            const btn = e.target.closest('.filtro-btn');
+            if (!btn) return;
+
+            // Remove active de todos
+            document.querySelectorAll('.filtro-btn').forEach(b => b.classList.remove('active'));
+
+            // Adiciona active no clicado
+            btn.classList.add('active');
+
+            // Atualiza o filtro
+            regraAtual = btn.dataset.regra;
+
+            // Re-renderiza os eventos
+            renderizarEventos();
+
+            console.log(`🎮 Filtro: ${regraAtual}`);
+        });
+
+        // ============================================================
         // INICIALIZAR
         // ============================================================
         renderizarEventos();
@@ -857,7 +1048,7 @@
         eventos.forEach(e => {
             const status = getStatusEvento(e.dataInicio, e.dataFim);
             const rainbow = e.rainbow === true ? '🌈' : '⬜';
-            console.log(`  ${rainbow} ${e.nome} → ${status} (${e.mapas.length} mapas)`);
+            console.log(`  ${rainbow} ${e.nome} → ${status} (${e.regra || 'sem regra'})`);
         });
     </script>
 
