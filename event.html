@@ -264,6 +264,91 @@
             gap: 8px;
         }
 
+        /* ============================================================
+           MEDALHA DO EVENTO
+           ============================================================ */
+        .evento-card .medalha-container {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            z-index: 5;
+            width: 70px;
+            height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            pointer-events: none;  /* ← Permite clicar através */
+        }
+        
+        .evento-card .medalha-container .medalha-img {
+            width: 70px;
+            height: 70px;
+            object-fit: contain;
+            filter: drop-shadow(0 0 15px rgba(255, 215, 0, 0.6));
+            animation: medalhaGlow 2s ease-in-out infinite alternate;
+            border-radius: 0;  /* ← SEM BORDA, SEM ARREDONDAMENTO */
+            background: transparent;  /* ← FUNDO TRANSPARENTE */
+        }
+        
+        /* ===== GLOW DA MEDALHA ===== */
+        @keyframes medalhaGlow {
+            0% {
+                filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.4));
+                transform: scale(1);
+            }
+            100% {
+                filter: drop-shadow(0 0 25px rgba(255, 215, 0, 0.8));
+                transform: scale(1.05);
+            }
+        }
+        
+        /* ===== CORES DIFERENTES PARA CADA REGRA ===== */
+        .evento-card .medalha-container .medalha-img.mvm-oficial {
+            filter: drop-shadow(0 0 15px rgba(41, 128, 185, 0.6));
+            animation: medalhaGlowAzul 2s ease-in-out infinite alternate;
+        }
+        
+        .evento-card .medalha-container .medalha-img.potato-oficial {
+            filter: drop-shadow(0 0 15px rgba(139, 69, 19, 0.6));
+            animation: medalhaGlowMarrom 2s ease-in-out infinite alternate;
+        }
+        
+        .evento-card .medalha-container .medalha-img.regras-moriya {
+            filter: drop-shadow(0 0 15px rgba(39, 174, 96, 0.6));
+            animation: medalhaGlowVerde 2s ease-in-out infinite alternate;
+        }
+        
+        /* ===== ANIMAÇÕES POR COR ===== */
+        @keyframes medalhaGlowAzul {
+            0% { filter: drop-shadow(0 0 10px rgba(41, 128, 185, 0.4)); transform: scale(1); }
+            100% { filter: drop-shadow(0 0 25px rgba(41, 128, 185, 0.8)); transform: scale(1.05); }
+        }
+        
+        @keyframes medalhaGlowMarrom {
+            0% { filter: drop-shadow(0 0 10px rgba(139, 69, 19, 0.4)); transform: scale(1); }
+            100% { filter: drop-shadow(0 0 25px rgba(139, 69, 19, 0.8)); transform: scale(1.05); }
+        }
+        
+        @keyframes medalhaGlowVerde {
+            0% { filter: drop-shadow(0 0 10px rgba(39, 174, 96, 0.4)); transform: scale(1); }
+            100% { filter: drop-shadow(0 0 25px rgba(39, 174, 96, 0.8)); transform: scale(1.05); }
+        }
+        
+        /* ===== TAMANHO RESPONSIVO ===== */
+        @media (max-width: 600px) {
+            .evento-card .medalha-container {
+                width: 35px;
+                height: 35px;
+                top: 5px;
+                right: 5px;
+            }
+            
+            .evento-card .medalha-container .medalha-img {
+                width: 35px;
+                height: 35px;
+            }
+        }
+
         .evento-card .evento-titulo .evento-badge {
             font-size: 12px;
             padding: 4px 16px;
@@ -730,7 +815,8 @@
                 ],
                 videoId: "iLmPcQMI_PE",
                 rainbow: true,
-                regra: "potato-oficial"
+                regra: "potato-oficial",
+                medalha: "images/Medalhas/Operação Flores Negra 666.png"
             },
             {
                 nome: "Moriya Vs Potato Arquive ( Low Tier 1# )",
@@ -744,7 +830,8 @@
                 ],
                 videoId: "Vec9hzWkiag",
                 rainbow: false,
-                regra: "potato-oficial"
+                regra: "potato-oficial",
+                medalha: "images/Medalhas/Operação Flores Negra 1.png"
             },
             {
                 nome: "Moriya Vs Potato Arquive ( Padrão Tier 1# )",
@@ -757,7 +844,8 @@
                 ],
                 videoId: "vKEkuZnHsws",
                 rainbow: false,
-                regra: "potato-oficial"
+                regra: "potato-oficial",
+                medalha: "images/Medalhas/Operação Flores Negra 2.png"
             },
             {
                 nome: "Moriya Vs Potato Arquive ( DELICIA Tier 1# )",
@@ -769,7 +857,8 @@
                 ],
                 videoId: "7jvfrtmugxk",
                 rainbow: false,
-                regra: "potato-oficial"
+                regra: "potato-oficial",
+                medalha: "images/Medalhas/Operação Flores Negra 3.png"
             },
             {
                 nome: "Moriya Vs Potato Arquive ( interlúdio )",
@@ -877,19 +966,19 @@
         }
 
         // ============================================================
-        // RENDERIZAR EVENTOS COM FILTRO
+        // RENDERIZAR EVENTOS COM FILTRO E MEDALHA
         // ============================================================
         let regraAtual = 'todas';
-
+        
         function renderizarEventos() {
             const container = document.getElementById('eventosContainer');
-
+        
             // ===== FILTRA OS EVENTOS =====
             let eventosFiltrados = eventos;
             if (regraAtual !== 'todas') {
                 eventosFiltrados = eventos.filter(e => e.regra === regraAtual);
             }
-
+        
             if (eventosFiltrados.length === 0) {
                 container.innerHTML = `
                     <div style="color: #7f8c8d; text-align: center; padding: 30px;">
@@ -898,15 +987,15 @@
                 `;
                 return;
             }
-
+        
             let html = '';
             eventosFiltrados.forEach((evento) => {
                 const status = getStatusEvento(evento.dataInicio, evento.dataFim);
-
+        
                 let badgeClass = '';
                 let badgeText = '';
                 let badgeIcon = '';
-
+        
                 if (status === 'ao-vivo') {
                     badgeClass = 'badge-ao-vivo';
                     badgeText = 'AO VIVO';
@@ -920,10 +1009,10 @@
                     badgeText = '✅ ENCERRADO';
                     badgeIcon = '';
                 }
-
+        
                 const tituloClass = evento.rainbow === true ? 'rainbow-glow' : '';
                 const tituloIcon = '📌 ';
-
+        
                 // ===== REGRA BADGE =====
                 const regraLabels = {
                     'mvm-oficial': '🔵 MvM Oficiais',
@@ -932,7 +1021,17 @@
                 };
                 const regraLabel = regraLabels[evento.regra] || '📋 Sem regra';
                 const regraClass = evento.regra || '';
-
+        
+                // ===== MEDALHA =====
+                let medalhaHtml = '';
+                if (evento.medalha && evento.medalha.trim() !== '') {
+                    medalhaHtml = `
+                        <div class="medalha-container">
+                            <img src="${evento.medalha}" class="medalha-img ${regraClass}" alt="Medalha">
+                        </div>
+                    `;
+                }
+        
                 // ============================================================
                 // RENDERIZAR MAPAS COM STATUS
                 // ============================================================
@@ -944,7 +1043,7 @@
                         let statusClass = '';
                         let statusBadge = '';
                         let statusLabel = '';
-
+        
                         if (mapa.status === 'completo') {
                             statusClass = 'status-completo';
                             statusBadge = 'status-badge-completo';
@@ -958,7 +1057,7 @@
                             statusBadge = 'status-badge-corrompido';
                             statusLabel = '⚠️ Corrompido';
                         }
-
+        
                         mapasHtml += `
                             <div class="mapa-item ${statusClass}">
                                 <span class="mapa-nome">${mapa.nome}</span>
@@ -978,7 +1077,7 @@
                 const dataFimFormatada = formatarDataHora(evento.dataFim);
                 const horaInicio = formatarHora(evento.dataInicio);
                 const horaFim = formatarHora(evento.dataFim);
-
+        
                 // Vídeo (se tiver)
                 let videoHtml = '';
                 if (evento.videoId && evento.videoId.trim() !== '') {
@@ -994,9 +1093,10 @@
                         </div>
                     `;
                 }
-
+        
                 html += `
                     <div class="evento-card">
+                        ${medalhaHtml}
                         <div class="evento-titulo">
                             <h2>
                                 <span class="icon">${tituloIcon}</span>
@@ -1017,7 +1117,7 @@
                     </div>
                 `;
             });
-
+        
             container.innerHTML = html;
         }
 
