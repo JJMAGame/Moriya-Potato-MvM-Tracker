@@ -237,7 +237,7 @@
             border: 1px solid #2a2a4a;
             transition: all 0.3s ease;
             position: relative;
-            overflow: hidden;
+            overflow: visible;
         }
 
         .evento-card:hover {
@@ -265,8 +265,8 @@
         }
 
         /* ============================================================
-           MEDALHA DO EVENTO
-           ============================================================ */
+           MEDALHA DO EVENTO COM LEGENDA (EXPANDE PARA LADO)
+        ============================================================ */
         .evento-card .medalha-container {
             position: absolute;
             top: 10px;
@@ -275,9 +275,12 @@
             width: 70px;
             height: 70px;
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
-            pointer-events: none;  /* ← Permite clicar através */
+            cursor: pointer;
+            pointer-events: auto;
+            overflow: visible;  /* ← PERMITE QUE A LEGENDA SAIA DO CONTAINER */
         }
         
         .evento-card .medalha-container .medalha-img {
@@ -286,8 +289,13 @@
             object-fit: contain;
             filter: drop-shadow(0 0 15px rgba(255, 215, 0, 0.6));
             animation: medalhaGlow 2s ease-in-out infinite alternate;
-            border-radius: 0;  /* ← SEM BORDA, SEM ARREDONDAMENTO */
-            background: transparent;  /* ← FUNDO TRANSPARENTE */
+            border-radius: 0;
+            background: transparent;
+            transition: transform 0.3s ease;
+        }
+
+        .evento-card .medalha-container:hover .medalha-img {
+            transform: scale(1.1);
         }
         
         /* ===== GLOW DA MEDALHA ===== */
@@ -333,19 +341,69 @@
             0% { filter: drop-shadow(0 0 10px rgba(39, 174, 96, 0.4)); transform: scale(1); }
             100% { filter: drop-shadow(0 0 25px rgba(39, 174, 96, 0.8)); transform: scale(1.05); }
         }
+
+        /* ===== LEGENDA EXPANDE PARA O LADO ===== */
+        .evento-card .medalha-container .medalha-legenda {
+            position: absolute;
+            top: 50%;
+            right: calc(100% + 12px);
+            transform: translateY(-50%);
+            background: rgba(26, 26, 46, 0.95);
+            color: #f0f0f0;
+            padding: 4px 12px;
+            border-radius: 6px;
+            font-size: 10px;
+            font-weight: 600;
+            white-space: nowrap;
+            border: 1px solid #2a2a4a;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+            opacity: 0;
+            transform: translateY(-50%) translateX(10px);
+            transition: all 0.3s ease;
+            pointer-events: none;
+            backdrop-filter: blur(10px);
+            max-width: none;
+        }
+
+        .evento-card .medalha-container:hover .medalha-legenda {
+            opacity: 1;
+            transform: translateY(-50%) translateX(0);
+        }
+
+        /* ===== CORES DA LEGENDA POR REGRA ===== */
+        .evento-card .medalha-container .medalha-legenda.mvm-oficial {
+            border-color: #2980b9;
+            color: #85c1e9;
+        }
+
+        .evento-card .medalha-container .medalha-legenda.potato-oficial {
+            border-color: #8B4513;
+            color: #d4a574;
+        }
+
+        .evento-card .medalha-container .medalha-legenda.regras-moriya {
+            border-color: #27ae60;
+            color: #82e0aa;
+        }
         
         /* ===== TAMANHO RESPONSIVO ===== */
         @media (max-width: 600px) {
             .evento-card .medalha-container {
-                width: 35px;
-                height: 35px;
+                width: 50px;
+                height: 50px;
                 top: 5px;
                 right: 5px;
             }
             
             .evento-card .medalha-container .medalha-img {
-                width: 35px;
-                height: 35px;
+                width: 50px;
+                height: 50px;
+            }
+
+            .evento-card .medalha-container .medalha-legenda {
+                font-size: 8px;
+                padding: 2px 8px;
+                right: calc(100% + 8px);
             }
         }
 
@@ -604,7 +662,7 @@
         }
 
         /* ============================================================
-           LEGENDA DE STATUS (FIXA)
+           LEGENDA DE STATUS (FIXA - DIREITA)
         ============================================================ */
         .legenda-status {
             position: fixed;
@@ -626,7 +684,7 @@
             border-color: #e94560;
         }
 
-        .legenda-titulo {
+        .legenda-status .legenda-titulo {
             color: #e0e0e0;
             font-size: 12px;
             font-weight: 700;
@@ -638,27 +696,27 @@
             padding-bottom: 8px;
         }
 
-        .legenda-item {
+        .legenda-status .legenda-item {
             display: flex;
             align-items: center;
             gap: 10px;
             padding: 4px 0;
         }
 
-        .legenda-cor {
+        .legenda-status .legenda-cor {
             width: 14px;
             height: 14px;
             border-radius: 4px;
             flex-shrink: 0;
         }
 
-        .legenda-texto {
+        .legenda-status .legenda-texto {
             color: #c0c0c0;
             font-size: 13px;
             flex: 1;
         }
 
-        .legenda-badge {
+        .legenda-status .legenda-badge {
             font-size: 12px;
             padding: 2px 8px;
             border-radius: 10px;
@@ -666,8 +724,358 @@
         }
 
         /* ============================================================
+           LEGENDA DE MEDALHAS - SEM CORTE
+           ============================================================ */
+        .legenda-medalhas {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background: rgba(26, 26, 46, 0.92);
+            border: 1px solid #2a2a4a;
+            border-radius: 12px;
+            padding: 15px 18px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.6);
+            z-index: 1000;
+            min-width: 180px;
+            max-width: 300px;
+            max-height: 70vh;
+            overflow-y: auto;
+            overflow-x: visible;  /* ← PERMITE VISUALIZAR O GLOW */
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+        
+        /* ===== ITEM DA LEGENDA (SEM CORTE) ===== */
+        .legenda-medalhas .legenda-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 5px 0;
+            cursor: help;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid rgba(42, 42, 74, 0.3);
+            overflow: visible !important;  /* ← GARANTE QUE NÃO CORTA */
+        }
+        
+        /* ===== MEDALHA NA LEGENDA ===== */
+        .legenda-medalhas .legenda-item .medalha-preview {
+            width: 35px;
+            height: 35px;
+            object-fit: contain;
+            border-radius: 0;
+            background: transparent;
+            flex-shrink: 0;
+            filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.15));  /* ← GLOW SUTIL */
+            transition: all 0.3s ease;
+            overflow: visible !important;  /* ← GARANTE QUE NÃO CORTA */
+        }
+        
+        /* ===== HOVER - AMPLIA COM GLOW ===== */
+        .legenda-medalhas .legenda-item:hover .medalha-preview {
+            transform: scale(1.2);
+            filter: drop-shadow(0 0 25px rgba(255, 215, 0, 0.35));
+        }
+        
+        /* ===== CORES DOS GLOWS POR REGRA (HOVER) ===== */
+        .legenda-medalhas .legenda-item:hover .medalha-preview.mvm-oficial {
+            filter: drop-shadow(0 0 25px rgba(41, 128, 185, 0.4));
+        }
+        
+        .legenda-medalhas .legenda-item:hover .medalha-preview.potato-oficial {
+            filter: drop-shadow(0 0 25px rgba(139, 69, 19, 0.4));
+        }
+        
+        .legenda-medalhas .legenda-item:hover .medalha-preview.regras-moriya {
+            filter: drop-shadow(0 0 25px rgba(39, 174, 96, 0.4));
+        }
+
+        .legenda-medalhas::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .legenda-medalhas::-webkit-scrollbar-track {
+            background: rgba(26, 26, 46, 0.3);
+            border-radius: 2px;
+        }
+
+        .legenda-medalhas::-webkit-scrollbar-thumb {
+            background: #2a2a4a;
+            border-radius: 2px;
+        }
+
+        .legenda-medalhas:hover {
+            transform: scale(1.02);
+            border-color: #e94560;
+        }
+
+        .legenda-medalhas .legenda-titulo {
+            color: #e0e0e0;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 10px;
+            text-align: center;
+            border-bottom: 1px solid #2a2a4a;
+            padding-bottom: 8px;
+            cursor: pointer;
+            user-select: none;
+            transition: all 0.3s ease;
+        }
+
+        .legenda-medalhas .legenda-titulo:hover {
+            color: #e94560;
+        }
+
+        /* ===== CONJUNTO (ACORDEÃO) ===== */
+        .legenda-medalhas .conjunto-item {
+            margin-bottom: 8px;
+        }
+
+        .legenda-medalhas .conjunto-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .legenda-medalhas .conjunto-header {
+            color: #85c1e9;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border-bottom: 1px solid #2a2a4a;
+            padding-bottom: 4px;
+            margin-bottom: 6px;
+            cursor: pointer;
+            user-select: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .legenda-medalhas .conjunto-header:hover {
+            color: #e94560;
+        }
+
+        .legenda-medalhas .conjunto-header .toggle-icon {
+            font-size: 10px;
+            transition: transform 0.3s ease;
+            color: #7f8c8d;
+        }
+
+        .legenda-medalhas .conjunto-header .toggle-icon.aberto {
+            transform: rotate(180deg);
+        }
+
+        /* ===== CONTEÚDO DO CONJUNTO ===== */
+        .legenda-medalhas .conjunto-content {
+            overflow: hidden;
+            max-height: 0;
+            transition: max-height 0.4s ease, opacity 0.3s ease;
+            opacity: 0;
+        }
+
+        .legenda-medalhas .conjunto-content.aberto {
+            max-height: 500px;
+            opacity: 1;
+        }
+
+        .legenda-medalhas .legenda-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 5px 0;
+            cursor: help;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid rgba(42, 42, 74, 0.3);
+        }
+
+        .legenda-medalhas .legenda-item:last-child {
+            border-bottom: none;
+        }
+
+        .legenda-medalhas .legenda-item:hover {
+            transform: translateX(5px);
+        }
+
+        .legenda-medalhas .legenda-item .medalha-preview {
+            width: 35px;
+            height: 35px;
+            object-fit: contain;
+            border-radius: 0;
+            background: transparent;
+            flex-shrink: 0;
+            filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.015));
+            transition: all 0.3s ease;
+        }
+
+        .legenda-medalhas .legenda-item:hover .medalha-preview {
+            transform: scale(1.2);
+            filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.3));
+        }
+
+        .legenda-medalhas .legenda-item .medalha-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .legenda-medalhas .legenda-item .medalha-info .medalha-nome {
+            color: #f0f0f0;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .legenda-medalhas .legenda-item .medalha-info .medalha-credito {
+            color: #88bb88;
+            font-size: 9px;
+            display: block;
+            margin-top: 1px;
+        }
+
+        .legenda-medalhas .legenda-item .medalha-info .medalha-credito strong {
+            color: #aaddaa;
+        }
+
+        /* ============================================================
+           MODAL DE AMPLIAÇÃO DA MEDALHA (SEM REGRA)
+        ============================================================ */
+        .medalha-modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            backdrop-filter: blur(8px);
+            animation: modalFadeIn 0.3s ease;
+        }
+
+        .medalha-modal-overlay.active {
+            display: flex;
+        }
+
+        .medalha-modal-overlay .medalha-modal {
+            background: #16213e;
+            border-radius: 16px;
+            max-width: 500px;
+            width: 100%;
+            padding: 30px;
+            border: 1px solid #2a2a4a;
+            box-shadow: 0 8px 50px rgba(0, 0, 0, 0.8);
+            text-align: center;
+            animation: modalFadeIn 0.3s ease;
+        }
+
+        .medalha-modal-overlay .medalha-modal .modal-close {
+            background: #e94560;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 8px 18px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            float: right;
+            margin-bottom: 15px;
+        }
+
+        .medalha-modal-overlay .medalha-modal .modal-close:hover {
+            background: #ff6b81;
+            transform: scale(1.05);
+        }
+
+        .medalha-modal-overlay .medalha-modal .medalha-ampliada {
+            width: 200px;
+            height: 200px;
+            object-fit: contain;
+            margin: 10px auto;
+            display: block;
+            filter: drop-shadow(0 0 30px rgba(255, 215, 0, 0.5));
+            clear: both;
+        }
+
+        .medalha-modal-overlay .medalha-modal .medalha-ampliada.mvm-oficial {
+            filter: drop-shadow(0 0 30px rgba(41, 128, 185, 0.5));
+        }
+
+        .medalha-modal-overlay .medalha-modal .medalha-ampliada.potato-oficial {
+            filter: drop-shadow(0 0 30px rgba(139, 69, 19, 0.5));
+        }
+
+        .medalha-modal-overlay .medalha-modal .medalha-ampliada.regras-moriya {
+            filter: drop-shadow(0 0 30px rgba(39, 174, 96, 0.5));
+        }
+
+        .medalha-modal-overlay .medalha-modal .medalha-nome-modal {
+            color: #f0f0f0;
+            font-size: 18px;
+            font-weight: 700;
+            margin-top: 10px;
+        }
+
+        .medalha-modal-overlay .medalha-modal .medalha-credito-modal {
+            color: #88bb88;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+
+        .medalha-modal-overlay .medalha-modal .medalha-credito-modal strong {
+            color: #aaddaa;
+        }
+
+        @keyframes modalFadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9) translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        /* ============================================================
            RESPONSIVO
         ============================================================ */
+        @media (max-width: 768px) {
+            .legenda-medalhas {
+                bottom: 10px;
+                left: 10px;
+                padding: 10px 12px;
+                min-width: 140px;
+                max-width: 180px;
+                max-height: 60vh;
+            }
+            
+            .legenda-medalhas .legenda-item .medalha-preview {
+                width: 28px;
+                height: 28px;
+            }
+            
+            .legenda-medalhas .legenda-item .medalha-info .medalha-nome {
+                font-size: 10px;
+            }
+            
+            .legenda-medalhas .legenda-item .medalha-info .medalha-credito {
+                font-size: 8px;
+            }
+
+            .medalha-modal-overlay .medalha-modal .medalha-ampliada {
+                width: 150px;
+                height: 150px;
+            }
+            
+            .medalha-modal-overlay .medalha-modal {
+                padding: 20px;
+            }
+        }
+
         @media (max-width: 600px) {
             .container {
                 padding: 20px;
@@ -718,17 +1126,23 @@
                 min-width: 110px;
             }
 
-            .legenda-titulo {
+            .legenda-status .legenda-titulo {
                 font-size: 10px;
             }
 
-            .legenda-texto {
+            .legenda-status .legenda-texto {
                 font-size: 11px;
             }
 
-            .legenda-cor {
+            .legenda-status .legenda-cor {
                 width: 12px;
                 height: 12px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .legenda-medalhas {
+                display: none;
             }
         }
     </style>
@@ -774,7 +1188,7 @@
     </div>
 
     <!-- ============================================================
-         LEGENDA DE STATUS (FIXA)
+         LEGENDA DE STATUS (FIXA - DIREITA)
     ============================================================ -->
     <div class="legenda-status">
         <div class="legenda-titulo">📊 Status dos Mapas</div>
@@ -792,6 +1206,28 @@
             <span class="legenda-cor" style="background: #e74c3c;"></span>
             <span class="legenda-texto">Corrompido</span>
             <span class="legenda-badge status-badge-corrompido">⚠️</span>
+        </div>
+    </div>
+
+    <!-- ============================================================
+         LEGENDA DE MEDALHAS (FIXA - ESQUERDA COM ACCORDION)
+    ============================================================ -->
+    <div class="legenda-medalhas" id="legendaMedalhas">
+        <div class="legenda-titulo">🏅 Medalhas</div>
+        <div id="medalhasList">
+            <!-- Inserido via JavaScript -->
+        </div>
+    </div>
+
+    <!-- ============================================================
+         MODAL DE AMPLIAÇÃO DA MEDALHA
+    ============================================================ -->
+    <div class="medalha-modal-overlay" id="medalhaModal">
+        <div class="medalha-modal">
+            <button class="modal-close" onclick="fecharMedalhaModal()">✕ Fechar</button>
+            <img id="medalhaAmpliada" class="medalha-ampliada" src="" alt="Medalha Ampliada">
+            <div class="medalha-nome-modal" id="medalhaNomeModal">Nome da Medalha</div>
+            <div class="medalha-credito-modal" id="medalhaCreditoModal">🎨 <strong>Criador(a):</strong> Desconhecido</div>
         </div>
     </div>
 
@@ -816,7 +1252,10 @@
                 videoId: "iLmPcQMI_PE",
                 rainbow: true,
                 regra: "potato-oficial",
-                medalha: "images/Medalhas/Operação Flores Negra 666.png"
+                medalha: "images/Medalhas/Operação Flores Negra 666.png",
+                medalhaNome: "⚔️ Operação Flor Negra interlúdio",
+                medalhaCredito: "Rishi_LockeD",
+                conjunto: "Operação Flor Negra"
             },
             {
                 nome: "Moriya Vs Potato Arquive ( Low Tier 1# )",
@@ -831,7 +1270,10 @@
                 videoId: "Vec9hzWkiag",
                 rainbow: false,
                 regra: "potato-oficial",
-                medalha: "images/Medalhas/Operação Flores Negra 1.png"
+                medalha: "images/Medalhas/Operação Flores Negra 1.png",
+                medalhaNome: "⚔️ Operação Flor Negra Intermediário",
+                medalhaCredito: "Rishi_LockeD",
+                conjunto: "Operação Flor Negra"
             },
             {
                 nome: "Moriya Vs Potato Arquive ( Padrão Tier 1# )",
@@ -845,7 +1287,10 @@
                 videoId: "vKEkuZnHsws",
                 rainbow: false,
                 regra: "potato-oficial",
-                medalha: "images/Medalhas/Operação Flores Negra 2.png"
+                medalha: "images/Medalhas/Operação Flores Negra 2.png",
+                medalhaNome: "⚔️ Operação Flor Negra Advanced",
+                medalhaCredito: "Rishi_LockeD",
+                conjunto: "Operação Flor Negra"
             },
             {
                 nome: "Moriya Vs Potato Arquive ( DELICIA Tier 1# )",
@@ -858,7 +1303,11 @@
                 videoId: "7jvfrtmugxk",
                 rainbow: false,
                 regra: "potato-oficial",
-                medalha: "images/Medalhas/Operação Flores Negra 3.png"
+                medalha: "images/Medalhas/Operação Flores Negra 3.png",
+                medalhaNome: "⚔️ Operação Flor Negra Delícia",
+                medalhaCredito: "Rishi_LockeD",
+                conjunto: "Operação Flor Negra"
+
             },
             {
                 nome: "Moriya Vs Potato Arquive ( interlúdio )",
@@ -906,7 +1355,6 @@
                 mapas: [
                     { nome: "Radar - Rocky Ravage", wave: "7 Wave", status: " " },
                     { nome: "Null - Call Of The Void", wave: "6 Wave", status: " " }
-
                 ],
                 videoId: "",
                 rainbow: false,
@@ -930,12 +1378,11 @@
         // FUNÇÃO PARA DETERMINAR STATUS DO EVENTO
         // ============================================================
         function getStatusEvento(dataInicio, dataFim) {
-            const agora = new Date(); // Data e hora atual COMPLETA
+            const agora = new Date();
         
             const inicio = new Date(dataInicio);
             const fim = new Date(dataFim);
         
-            // Comparação com horário completo
             if (agora >= inicio && agora <= fim) {
                 return 'ao-vivo';
             } else if (agora < inicio) {
@@ -966,6 +1413,186 @@
         }
 
         // ============================================================
+        // FUNÇÃO PARA EXTRAIR NOME DO ARQUIVO
+        // ============================================================
+        function extrairNomeArquivo(caminho) {
+            const partes = caminho.split('/');
+            const arquivo = partes[partes.length - 1];
+            return arquivo.replace(/\.[^/.]+$/, '').replace(/_/g, ' ');
+        }
+
+        // ============================================================
+        // FUNÇÃO PARA EXTRAIR NOME DO CONJUNTO
+        // ============================================================
+        function extrairConjunto(nome) {
+            let nomeLimpo = nome.replace(/[0-9#]+$/, '').trim();
+            nomeLimpo = nomeLimpo.replace(/[^\w\s]/g, '').trim();
+            
+            if (nomeLimpo.includes('Operação')) {
+                const match = nomeLimpo.match(/(Operação\s+[^\d]+)/i);
+                if (match) return match[1].trim();
+            }
+            if (nomeLimpo.includes('Low Tier')) {
+                const match = nomeLimpo.match(/(Low\s+Tier\s+[^\d]+)/i);
+                if (match) return match[1].trim();
+            }
+            if (nomeLimpo.includes('DELICIA Tier')) {
+                const match = nomeLimpo.match(/(DELICIA\s+Tier\s+[^\d]+)/i);
+                if (match) return match[1].trim();
+            }
+            if (nomeLimpo.includes('Padrão Tier')) {
+                const match = nomeLimpo.match(/(Padrão\s+Tier\s+[^\d]+)/i);
+                if (match) return match[1].trim();
+            }
+            return nomeLimpo || 'Outras Medalhas';
+        }
+
+        // ============================================================
+        // FUNÇÕES DO MODAL DE MEDALHA
+        // ============================================================
+        function abrirMedalhaModal(medalhaSrc, medalhaNome, medalhaCredito, medalhaRegra) {
+            const modal = document.getElementById('medalhaModal');
+            const img = document.getElementById('medalhaAmpliada');
+            
+            img.src = medalhaSrc;
+            img.className = `medalha-ampliada ${medalhaRegra || ''}`;
+            document.getElementById('medalhaNomeModal').textContent = medalhaNome || 'Medalha';
+            document.getElementById('medalhaCreditoModal').innerHTML = `🎨 <strong>Criador(a):</strong> ${medalhaCredito || 'Desconhecido'}`;
+            
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function fecharMedalhaModal() {
+            document.getElementById('medalhaModal').classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        document.getElementById('medalhaModal').addEventListener('click', function(e) {
+            if (e.target === this) fecharMedalhaModal();
+        });
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') fecharMedalhaModal();
+        });
+
+        // ============================================================
+        // GERAR LEGENDA DE MEDALHAS (COM ACCORDION)
+        // ============================================================
+        function gerarLegendaMedalhas() {
+            const container = document.getElementById('medalhasList');
+            
+            const medalhasMap = new Map();
+            
+            eventos.forEach(evento => {
+                if (evento.medalha && evento.medalha.trim() !== '') {
+                    const key = evento.medalha;
+                    if (!medalhasMap.has(key)) {
+                        medalhasMap.set(key, {
+                            caminho: evento.medalha,
+                            nome: evento.medalhaNome || extrairNomeArquivo(evento.medalha),
+                            credito: evento.medalhaCredito || 'Desconhecido',
+                            regra: evento.regra || '',
+                            conjunto: evento.conjunto || extrairConjunto(evento.medalhaNome || extrairNomeArquivo(evento.medalha))
+                        });
+                    }
+                }
+            });
+            
+            if (medalhasMap.size === 0) {
+                container.innerHTML = `
+                    <div style="color: #7f8c8d; font-size: 12px; text-align: center; padding: 5px 0;">
+                        Nenhuma medalha cadastrada
+                    </div>
+                `;
+                return;
+            }
+            
+            const conjuntos = {};
+            medalhasMap.forEach((medalha) => {
+                const nomeConjunto = medalha.conjunto || 'Outras Medalhas';
+                if (!conjuntos[nomeConjunto]) {
+                    conjuntos[nomeConjunto] = [];
+                }
+                conjuntos[nomeConjunto].push(medalha);
+            });
+            
+            let html = '';
+            const conjuntoKeys = Object.keys(conjuntos);
+            conjuntoKeys.forEach((nomeConjunto, index) => {
+                const medalhas = conjuntos[nomeConjunto];
+                const isAberto = index === 0;
+                
+                html += `
+                    <div class="conjunto-item">
+                        <div class="conjunto-header" data-conjunto="${index}">
+                            📁 ${nomeConjunto}
+                            <span class="toggle-icon ${isAberto ? 'aberto' : ''}">▼</span>
+                        </div>
+                        <div class="conjunto-content ${isAberto ? 'aberto' : ''}">
+                `;
+                
+                medalhas.forEach((medalha) => {
+                    const regraClass = medalha.regra || '';
+                    html += `
+                        <div class="legenda-item">
+                            <img src="${medalha.caminho}" class="medalha-preview ${regraClass}" alt="${medalha.nome}">
+                            <div class="medalha-info">
+                                <span class="medalha-nome">🏅 ${medalha.nome}</span>
+                                <span class="medalha-credito">🎨 <strong>Criador(a):</strong> ${medalha.credito}</span>
+                            </div>
+                        </div>
+                    `;
+                });
+                
+                html += `
+                        </div>
+                    </div>
+                `;
+            });
+            
+            container.innerHTML = html;
+            
+            document.querySelectorAll('.conjunto-header').forEach(header => {
+                header.addEventListener('click', function() {
+                    const content = this.nextElementSibling;
+                    const icon = this.querySelector('.toggle-icon');
+                    
+                    if (content.classList.contains('aberto')) {
+                        content.classList.remove('aberto');
+                        icon.classList.remove('aberto');
+                        icon.textContent = '▼';
+                    } else {
+                        content.classList.add('aberto');
+                        icon.classList.add('aberto');
+                        icon.textContent = '▼';
+                    }
+                });
+            });
+            
+            const titulo = document.querySelector('.legenda-medalhas .legenda-titulo');
+            if (titulo) {
+                titulo.addEventListener('click', function() {
+                    const contents = document.querySelectorAll('.conjunto-content');
+                    const icons = document.querySelectorAll('.toggle-icon');
+                    const todosAbertos = Array.from(contents).every(c => c.classList.contains('aberto'));
+                    
+                    contents.forEach((content, i) => {
+                        if (todosAbertos) {
+                            content.classList.remove('aberto');
+                            icons[i].classList.remove('aberto');
+                            icons[i].textContent = '▼';
+                        } else {
+                            content.classList.add('aberto');
+                            icons[i].classList.add('aberto');
+                            icons[i].textContent = '▼';
+                        }
+                    });
+                });
+            }
+        }
+
+        // ============================================================
         // RENDERIZAR EVENTOS COM FILTRO E MEDALHA
         // ============================================================
         let regraAtual = 'todas';
@@ -973,7 +1600,6 @@
         function renderizarEventos() {
             const container = document.getElementById('eventosContainer');
         
-            // ===== FILTRA OS EVENTOS =====
             let eventosFiltrados = eventos;
             if (regraAtual !== 'todas') {
                 eventosFiltrados = eventos.filter(e => e.regra === regraAtual);
@@ -1013,7 +1639,6 @@
                 const tituloClass = evento.rainbow === true ? 'rainbow-glow' : '';
                 const tituloIcon = '📌 ';
         
-                // ===== REGRA BADGE =====
                 const regraLabels = {
                     'mvm-oficial': '🔵 MvM Oficiais',
                     'potato-oficial': '🟤 Potato Oficiais',
@@ -1022,19 +1647,27 @@
                 const regraLabel = regraLabels[evento.regra] || '📋 Sem regra';
                 const regraClass = evento.regra || '';
         
-                // ===== MEDALHA =====
+                let nomeMedalha = '';
+                let creditoMedalha = 'Desconhecido';
+                if (evento.medalhaNome) {
+                    nomeMedalha = evento.medalhaNome;
+                } else if (evento.medalha) {
+                    nomeMedalha = extrairNomeArquivo(evento.medalha);
+                }
+                if (evento.medalhaCredito) {
+                    creditoMedalha = evento.medalhaCredito;
+                }
+        
                 let medalhaHtml = '';
                 if (evento.medalha && evento.medalha.trim() !== '') {
                     medalhaHtml = `
-                        <div class="medalha-container">
+                        <div class="medalha-container" onclick="abrirMedalhaModal('${evento.medalha}', '${nomeMedalha}', '${creditoMedalha}', '${regraClass}')">
                             <img src="${evento.medalha}" class="medalha-img ${regraClass}" alt="Medalha">
+                            ${nomeMedalha ? `<span class="medalha-legenda ${regraClass}">🏅 ${nomeMedalha}</span>` : ''}
                         </div>
                     `;
                 }
         
-                // ============================================================
-                // RENDERIZAR MAPAS COM STATUS
-                // ============================================================
                 let mapasHtml = '';
                 if (evento.mapas.length === 0) {
                     mapasHtml = '<div class="sem-mapas">📭 Nenhum mapa registrado</div>';
@@ -1070,15 +1703,11 @@
                     });
                 }
 
-                // ============================================================
-                // DATAS COM HORÁRIO
-                // ============================================================
                 const dataInicioFormatada = formatarDataHora(evento.dataInicio);
                 const dataFimFormatada = formatarDataHora(evento.dataFim);
                 const horaInicio = formatarHora(evento.dataInicio);
                 const horaFim = formatarHora(evento.dataFim);
         
-                // Vídeo (se tiver)
                 let videoHtml = '';
                 if (evento.videoId && evento.videoId.trim() !== '') {
                     videoHtml = `
@@ -1128,16 +1757,10 @@
             const btn = e.target.closest('.filtro-btn');
             if (!btn) return;
 
-            // Remove active de todos
             document.querySelectorAll('.filtro-btn').forEach(b => b.classList.remove('active'));
-
-            // Adiciona active no clicado
             btn.classList.add('active');
 
-            // Atualiza o filtro
             regraAtual = btn.dataset.regra;
-
-            // Re-renderiza os eventos
             renderizarEventos();
 
             console.log(`🎮 Filtro: ${regraAtual}`);
@@ -1147,6 +1770,7 @@
         // INICIALIZAR
         // ============================================================
         renderizarEventos();
+        gerarLegendaMedalhas();
 
         console.log('✅ Eventos carregados!');
         console.log(`📅 ${eventos.length} eventos`);
