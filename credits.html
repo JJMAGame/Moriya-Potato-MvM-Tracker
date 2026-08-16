@@ -12,7 +12,7 @@
         }
 
         /* =========================================================
-           FUNDO PERSONALIZADO (ADICIONAR AQUI!)
+           FUNDO PERSONALIZADO
         ============================================================ */
 
         :root {
@@ -165,7 +165,6 @@
             object-fit: cover;
             display: block;
             margin: 0 auto 10px auto;
-            /* SEM BORDA, SEM ARREDONDAMENTO */
         }
 
         /* ===== AVATAR REDONDO (COM BORDA) ===== */
@@ -230,59 +229,160 @@
 
         /* ============================================================
            BOTÕES SOCIAIS COM TEXTO COMPLETO
-           ============================================================ */
-         .social-buttons {
-             display: flex;
-             justify-content: center;
-             align-items: center;
-             gap: 6px;
-             margin-top: 10px;
-             flex-wrap: wrap;
-         }
-         
-         .social-btn {
-             display: inline-flex;
-             align-items: center;
-             justify-content: center;
-             gap: 5px;
-             padding: 4px 14px;
-             border-radius: 6px;
-             text-decoration: none;
-             font-size: 11px;
-             font-weight: 600;
-             transition: all 0.3s ease;
-             color: white;
-             border: none;
-             cursor: pointer;
-             white-space: nowrap;
-         }
-         
-         .social-btn:hover {
-             transform: scale(1.05);
-             filter: brightness(1.2);
-         }
-         
-         /* ===== CORES DOS BOTÕES ===== */
-         .social-btn.github { background: #333; }
-         .social-btn.github:hover { background: #444; box-shadow: 0 0 20px rgba(51, 51, 51, 0.4); }
-         
-         .social-btn.youtube { background: #ff0000; }
-         .social-btn.youtube:hover { background: #cc0000; box-shadow: 0 0 20px rgba(255, 0, 0, 0.4); }
-         
-         .social-btn.twitter { background: #1da1f2; }
-         .social-btn.twitter:hover { background: #1a8cd8; box-shadow: 0 0 20px rgba(29, 161, 242, 0.4); }
-         
-         .social-btn.discord { background: #5865f2; }
-         .social-btn.discord:hover { background: #4752c4; box-shadow: 0 0 20px rgba(88, 101, 242, 0.4); }
-         
-         .social-btn.steam { background: #171a21; }
-         .social-btn.steam:hover { background: #2a2f3a; box-shadow: 0 0 20px rgba(23, 26, 33, 0.4); }
-         
-         .social-btn.twitch { background: #9146ff; }
-         .social-btn.twitch:hover { background: #7a3bcc; box-shadow: 0 0 20px rgba(145, 70, 255, 0.4); }
-         
-         .social-btn.website { background: #2a7de1; }
-         .social-btn.website:hover { background: #1f6bc4; box-shadow: 0 0 20px rgba(42, 125, 225, 0.4); }
+        ============================================================ */
+        .social-buttons {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 6px;
+            margin-top: 10px;
+            flex-wrap: wrap;
+        }
+        
+        .social-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            padding: 4px 14px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 11px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            color: white;
+            border: none;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+        
+        .social-btn:hover {
+            transform: scale(1.05);
+            filter: brightness(1.2);
+        }
+        
+        /* ===== CORES DOS BOTÕES ===== */
+        .social-btn.github { background: #333; }
+        .social-btn.github:hover { background: #444; box-shadow: 0 0 20px rgba(51, 51, 51, 0.4); }
+        
+        .social-btn.youtube { background: #ff0000; }
+        .social-btn.youtube:hover { background: #cc0000; box-shadow: 0 0 20px rgba(255, 0, 0, 0.4); }
+        
+        .social-btn.twitter { background: #1da1f2; }
+        .social-btn.twitter:hover { background: #1a8cd8; box-shadow: 0 0 20px rgba(29, 161, 242, 0.4); }
+        
+        .social-btn.discord { background: #5865f2; }
+        .social-btn.discord:hover { background: #4752c4; box-shadow: 0 0 20px rgba(88, 101, 242, 0.4); }
+        
+        .social-btn.steam { background: #171a21; }
+        .social-btn.steam:hover { background: #2a2f3a; box-shadow: 0 0 20px rgba(23, 26, 33, 0.4); }
+        
+        .social-btn.twitch { background: #9146ff; }
+        .social-btn.twitch:hover { background: #7a3bcc; box-shadow: 0 0 20px rgba(145, 70, 255, 0.4); }
+        
+        .social-btn.website { background: #2a7de1; }
+        .social-btn.website:hover { background: #1f6bc4; box-shadow: 0 0 20px rgba(42, 125, 225, 0.4); }
+
+        /* ============================================================
+           MEDALHAS DENTRO DO CARD DO COLABORADOR
+        ============================================================ */
+        .colaborador-card .medalhas-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px solid rgba(58, 90, 58, 0.3);
+        }
+
+        .colaborador-card .medalhas-container .medalhas-label {
+            color: #88bb88;
+            font-size: 10px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            width: 100%;
+            text-align: center;
+            margin-bottom: 4px;
+        }
+
+        .colaborador-card .medalhas-container .medalha-mini {
+            position: relative;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-block;
+            filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.15));
+        }
+
+        .colaborador-card .medalhas-container .medalha-mini:hover {
+            transform: scale(1.3);
+            filter: drop-shadow(0 0 25px rgba(255, 215, 0, 0.5));
+            z-index: 10;
+        }
+
+        .colaborador-card .medalhas-container .medalha-mini img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            border-radius: 0;
+            background: transparent;
+        }
+
+        /* ===== GLOW POR REGRA ===== */
+        .colaborador-card .medalhas-container .medalha-mini.mvm-oficial {
+            filter: drop-shadow(0 0 8px rgba(41, 128, 185, 0.2));
+        }
+
+        .colaborador-card .medalhas-container .medalha-mini.mvm-oficial:hover {
+            filter: drop-shadow(0 0 25px rgba(41, 128, 185, 0.5));
+        }
+
+        .colaborador-card .medalhas-container .medalha-mini.potato-oficial {
+            filter: drop-shadow(0 0 8px rgba(139, 69, 19, 0.2));
+        }
+
+        .colaborador-card .medalhas-container .medalha-mini.potato-oficial:hover {
+            filter: drop-shadow(0 0 25px rgba(139, 69, 19, 0.5));
+        }
+
+        .colaborador-card .medalhas-container .medalha-mini.regras-moriya {
+            filter: drop-shadow(0 0 8px rgba(39, 174, 96, 0.2));
+        }
+
+        .colaborador-card .medalhas-container .medalha-mini.regras-moriya:hover {
+            filter: drop-shadow(0 0 25px rgba(39, 174, 96, 0.5));
+        }
+
+        /* ===== TOOLTIP DA MEDALHA ===== */
+        .colaborador-card .medalha-mini .medalha-tooltip {
+            position: absolute;
+            bottom: calc(100% + 8px);
+            left: 50%;
+            transform: translateX(-50%) scale(0.9);
+            background: rgba(26, 26, 46, 0.95);
+            color: #f0f0f0;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 9px;
+            font-weight: 600;
+            white-space: nowrap;
+            border: 1px solid #2a2a4a;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            z-index: 20;
+        }
+
+        .colaborador-card .medalha-mini:hover .medalha-tooltip {
+            opacity: 1;
+            transform: translateX(-50%) scale(1);
+        }
 
         /* ============================================================
            LISTA DE CONTRIBUIÇÕES
@@ -416,6 +516,16 @@
                 height: 60px;
             }
 
+            .colaborador-card .medalhas-container .medalha-mini {
+                width: 32px;
+                height: 32px;
+            }
+
+            .colaborador-card .medalha-mini .medalha-tooltip {
+                font-size: 8px;
+                padding: 2px 8px;
+            }
+
             .contribuicao-item {
                 flex-direction: column;
                 gap: 4px;
@@ -432,10 +542,9 @@
         }
 
         /* ============================================================
-           BORDA ARCO-ÍRIS ANIMADA (VISÍVEL)
-           ============================================================ */
+           BORDA ARCO-ÍRIS ANIMADA
+        ============================================================ */
         
-        /* ===== CARD COM BORDA ARCO-ÍRIS ===== */
         .colaborador-card.rainbow-border {
             position: relative;
             border-radius: 12px;
@@ -443,22 +552,20 @@
             text-align: center;
             transition: all 0.3s ease;
             
-            /* ===== BORDA ARCO-ÍRIS VISÍVEL ===== */
             border: 2px solid transparent;
             background: linear-gradient(#1a3a1a, #1a3a1a) padding-box,
                         linear-gradient(to right,
-                          rgba(255, 0, 0, 0.5),      /* vermelho - 50% opaco */
-                          rgba(255, 165, 0, 0.5),    /* laranja - 50% opaco */
-                          rgba(255, 255, 0, 0.5),    /* amarelo - 50% opaco */
-                          rgba(0, 255, 0, 0.5),      /* verde - 50% opaco */
-                          rgba(0, 0, 255, 0.5),      /* azul - 50% opaco */
-                          rgba(138, 43, 226, 0.5),   /* roxo - 50% opaco */
-                          rgba(255, 0, 255, 0.5),    /* magenta - 50% opaco */
-                          rgba(255, 0, 0, 0.5)       /* vermelho - 50% opaco */
+                          rgba(255, 0, 0, 0.5),
+                          rgba(255, 165, 0, 0.5),
+                          rgba(255, 255, 0, 0.5),
+                          rgba(0, 255, 0, 0.5),
+                          rgba(0, 0, 255, 0.5),
+                          rgba(138, 43, 226, 0.5),
+                          rgba(255, 0, 255, 0.5),
+                          rgba(255, 0, 0, 0.5)
                         ) border-box;
             background-size: 100% 100%, 300% 100%;
             animation: rainbowBorderMove 3s linear infinite;
-            
         }
         
         .colaborador-card.rainbow-border:hover {
@@ -466,9 +573,6 @@
             box-shadow: 0 4px 30px rgba(255, 0, 255, 0.3);
         }
         
-        /* ============================================================
-           CONTRIBUIÇÃO COM BORDA ARCO-ÍRIS (CORRIGIDA)
-           ============================================================ */
         .contribuicao-item.rainbow-border {
             position: relative;
             background: #1a3a1a;
@@ -477,7 +581,6 @@
             margin: 4px 0;
             transition: all 0.3s ease;
             
-            /* ===== BORDA ARCO-ÍRIS ===== */
             border-left: 3px solid transparent;
             background: linear-gradient(#1a3a1a, #1a3a1a) padding-box,
                         linear-gradient(to bottom,
@@ -494,7 +597,6 @@
             animation: rainbowBorderVertical 3s linear infinite;
         }
         
-        /* ===== HOVER CORRIGIDO - MANTÉM A BORDA ARCO-ÍRIS ===== */
         .contribuicao-item.rainbow-border:hover {
             background: linear-gradient(#2a4a2a, #2a4a2a) padding-box,
                         linear-gradient(to bottom,
@@ -512,7 +614,6 @@
             animation: rainbowBorderVertical 3s linear infinite;
         }
         
-        /* ===== KEYFRAMES ===== */
         @keyframes rainbowBorderMove {
             0% { background-position: 0% 0%, 0% 50%; }
             100% { background-position: 0% 0%, 300% 50%; }
@@ -645,7 +746,6 @@
                     }
                 },
 
-
                 {
                     nome: "Rishi_lockeD",
                     avatar: "images/Rishi.png",
@@ -763,23 +863,25 @@
                     tamanho: "grande",
                     rainbowBorder: true
                 },
+            ],
 
-                // ============================================================
-                // ADICIONE NOVOS COLABORADORES AQUI:
-                // ============================================================
+            // ===== MEDALHAS =====
+            medalhas: [
+                {
+                    nome: "⚔️ Operação Flor Negra",
+                    imagem: "images/Medalhas/RL.png",
+                    criador: "Rishi_lockeD",
+                    credito: "Rishi_LockeD",
+                    regra: "potato-oficial"
+                },
+
+                // ===== ADICIONE NOVAS MEDALHAS AQUI =====
                 // {
-                //     nome: "Nome do Colaborador",
-                //     avatar: "caminho/da/imagem.jpg",
-                //     funcao: "Função do colaborador",
-                //     contribuicao: "O que ele fez no projeto",
-                //     formato: "redondo"  // "redondo", "quadrado" ou omitir para solto
-                // },
-                // {
-                //     nome: "Nome com Emoji",
-                //     avatar: "😊",
-                //     funcao: "Função",
-                //     contribuicao: "Contribuição"
-                //     // SEM "formato" = EMOJI SOLTO
+                //     nome: "Nome da Medalha",
+                //     imagem: "caminho/da/imagem.png",
+                //     criador: "NomeDoColaborador",  // ← DEVE COINCIDIR COM O NOME DO COLABORADOR
+                //     credito: "Nome do Criador",
+                //     regra: "potato-oficial"  // mvm-oficial, potato-oficial, regras-moriya
                 // },
             ],
 
@@ -832,13 +934,6 @@
                     data: "26/07/2026",
                     texto: "Criada página de <strong>Eventos</strong> com status automático"
                 },
-                // ============================================================
-                // ADICIONE NOVAS CONTRIBUIÇÕES AQUI:
-                // ============================================================
-                // {
-                //     data: "DD/MM/AAAA",
-                //     texto: "Descrição da contribuição"
-                // },
             ],
 
             // ===== TECNOLOGIAS =====
@@ -872,91 +967,143 @@
             return `${diaSemana}, ${dia} de ${mes} de ${ano} às ${horas}:${minutos}`;
         }
 
-       // ============================================================
-       // RENDERIZAR COLABORADORES (COM BOTÕES DE TEXTO COMPLETO)
-       // ============================================================
-       function renderizarColaboradores() {
-           const grid = document.getElementById('colaboradoresGrid');
-           
-           if (config.colaboradores.length === 0) {
-               grid.innerHTML = `
-                   <div style="color: #88bb88; text-align: center; padding: 20px; grid-column: 1 / -1;">
-                       📭 Nenhum colaborador cadastrado
-                   </div>
-               `;
-               return;
-           }
-       
-           let html = '';
-           config.colaboradores.forEach(colab => {
-               let avatarHtml = '';
-               
-               const isEmoji = colab.avatar && !colab.avatar.includes('/') && !colab.avatar.includes('http') && !colab.avatar.includes('.');
-               
-               if (isEmoji) {
-                   avatarHtml = `<span class="avatar-emoji">${colab.avatar}</span>`;
-               } else {
-                   let classe = 'avatar-img';
-                   
-                   if (colab.formato === 'redondo') {
-                       classe += ' redondo';
-                   } else if (colab.formato === 'quadrado') {
-                       classe += ' quadrado';
-                   }
-                   
-                   if (colab.tamanho === 'grande') {
-                       classe += ' grande';
-                   }
-                   
-                   avatarHtml = `<img src="${colab.avatar}" class="${classe}" alt="${colab.nome}">`;
-               }
-               
-               // ===== VERIFICA SE TEM BORDA ARCO-ÍRIS =====
-               const borderClass = colab.rainbowBorder === true ? 'rainbow-border' : '';
-               
-               // ===== BOTÕES SOCIAIS COM TEXTO COMPLETO =====
-               let socialHtml = '';
-               if (colab.social) {
-                   const socialIcons = {
-                       github: { icon: '🐙', label: 'GitHub' },
-                       youtube: { icon: '▶️', label: 'YouTube' },
-                       twitter: { icon: '🐦', label: 'Twitter' },
-                       discord: { icon: '💬', label: 'Discord' },
-                       steam: { icon: '🎮', label: 'Steam' },
-                       twitch: { icon: '📺', label: 'Twitch' },
-                       website: { icon: '🌐', label: 'Site' }
-                   };
-                   
-                   let buttonsHtml = '';
-                   for (const [key, url] of Object.entries(colab.social)) {
-                       if (url && url.trim() !== '') {
-                           const info = socialIcons[key] || { icon: '🔗', label: key };
-                           buttonsHtml += `
-                               <a href="${url}" target="_blank" class="social-btn ${key}">
-                                   ${info.icon} ${info.label}
-                               </a>
-                           `;
-                       }
-                   }
-                   
-                   if (buttonsHtml) {
-                       socialHtml = `<div class="social-buttons">${buttonsHtml}</div>`;
-                   }
-               }
-               
-               html += `
-                   <div class="colaborador-card ${borderClass}">
-                       ${avatarHtml}
-                       <div class="nome">${colab.nome}</div>
-                       <div class="funcao">${colab.funcao}</div>
-                       <div class="contribuicao">${colab.contribuicao}</div>
-                       ${socialHtml}
-                   </div>
-               `;
-           });
-       
-           grid.innerHTML = html;
-        }   
+        // ============================================================
+        // RENDERIZAR COLABORADORES (COM MEDALHAS)
+        // ============================================================
+        function renderizarColaboradores() {
+            const grid = document.getElementById('colaboradoresGrid');
+            
+            if (config.colaboradores.length === 0) {
+                grid.innerHTML = `
+                    <div style="color: #88bb88; text-align: center; padding: 20px; grid-column: 1 / -1;">
+                        📭 Nenhum colaborador cadastrado
+                    </div>
+                `;
+                return;
+            }
+
+            // ===== CRIA UM MAPA DE MEDALHAS POR CRIADOR =====
+            const medalhasPorCriador = {};
+            config.medalhas.forEach(medalha => {
+                const criador = medalha.criador || 'Desconhecido';
+                if (!medalhasPorCriador[criador]) {
+                    medalhasPorCriador[criador] = [];
+                }
+                medalhasPorCriador[criador].push(medalha);
+            });
+
+            let html = '';
+            config.colaboradores.forEach(colab => {
+                let avatarHtml = '';
+                
+                const isEmoji = colab.avatar && !colab.avatar.includes('/') && !colab.avatar.includes('http') && !colab.avatar.includes('.');
+                
+                if (isEmoji) {
+                    avatarHtml = `<span class="avatar-emoji">${colab.avatar}</span>`;
+                } else {
+                    let classe = 'avatar-img';
+                    
+                    if (colab.formato === 'redondo') {
+                        classe += ' redondo';
+                    } else if (colab.formato === 'quadrado') {
+                        classe += ' quadrado';
+                    }
+                    
+                    if (colab.tamanho === 'grande') {
+                        classe += ' grande';
+                    }
+                    
+                    avatarHtml = `<img src="${colab.avatar}" class="${classe}" alt="${colab.nome}">`;
+                }
+                
+                const borderClass = colab.rainbowBorder === true ? 'rainbow-border' : '';
+                
+                // ===== BOTÕES SOCIAIS =====
+                let socialHtml = '';
+                if (colab.social) {
+                    const socialIcons = {
+                        github: { icon: '🐙', label: 'GitHub' },
+                        youtube: { icon: '▶️', label: 'YouTube' },
+                        twitter: { icon: '🐦', label: 'Twitter' },
+                        discord: { icon: '💬', label: 'Discord' },
+                        steam: { icon: '🎮', label: 'Steam' },
+                        twitch: { icon: '📺', label: 'Twitch' },
+                        website: { icon: '🌐', label: 'Site' }
+                    };
+                    
+                    let buttonsHtml = '';
+                    for (const [key, url] of Object.entries(colab.social)) {
+                        if (url && url.trim() !== '') {
+                            const info = socialIcons[key] || { icon: '🔗', label: key };
+                            buttonsHtml += `
+                                <a href="${url}" target="_blank" class="social-btn ${key}">
+                                    ${info.icon} ${info.label}
+                                </a>
+                            `;
+                        }
+                    }
+                    
+                    if (buttonsHtml) {
+                        socialHtml = `<div class="social-buttons">${buttonsHtml}</div>`;
+                    }
+                }
+
+                // ===== MEDALHAS DO COLABORADOR =====
+                let medalhasHtml = '';
+                const nomeCriador = colab.nome || '';
+                
+                // Busca medalhas deste criador (comparação exata e parcial)
+                let medalhasDoCriador = [];
+                for (const [criador, medalhas] of Object.entries(medalhasPorCriador)) {
+                    if (nomeCriador === criador || 
+                        nomeCriador.includes(criador) || 
+                        criador.includes(nomeCriador) ||
+                        nomeCriador.toLowerCase().includes(criador.toLowerCase()) ||
+                        criador.toLowerCase().includes(nomeCriador.toLowerCase())) {
+                        medalhasDoCriador = medalhasDoCriador.concat(medalhas);
+                    }
+                }
+                
+                // Remove duplicatas
+                medalhasDoCriador = medalhasDoCriador.filter((medalha, index, self) => 
+                    index === self.findIndex(m => m.nome === medalha.nome)
+                );
+                
+                if (medalhasDoCriador.length > 0) {
+                    let medalhasItems = '';
+                    medalhasDoCriador.forEach(medalha => {
+                        const regraClass = medalha.regra || '';
+                        medalhasItems += `
+                            <div class="medalha-mini ${regraClass}" title="${medalha.nome} - Criador: ${medalha.credito || 'Desconhecido'}">
+                                <img src="${medalha.imagem}" alt="${medalha.nome}">
+                                <span class="medalha-tooltip">🏅 ${medalha.nome}</span>
+                            </div>
+                        `;
+                    });
+                    
+                    medalhasHtml = `
+                        <div class="medalhas-container">
+                            <div class="medalhas-label">🏅 Medalhas</div>
+                            ${medalhasItems}
+                        </div>
+                    `;
+                }
+                
+                html += `
+                    <div class="colaborador-card ${borderClass}">
+                        ${avatarHtml}
+                        <div class="nome">${colab.nome}</div>
+                        <div class="funcao">${colab.funcao}</div>
+                        <div class="contribuicao">${colab.contribuicao}</div>
+                        ${socialHtml}
+                        ${medalhasHtml}
+                    </div>
+                `;
+            });
+
+            grid.innerHTML = html;
+        }
+
         // ============================================================
         // RENDERIZAR CONTRIBUIÇÕES
         // ============================================================
@@ -974,7 +1121,6 @@
         
             let html = '';
             config.contribuicoes.forEach(item => {
-                // ===== VERIFICA SE TEM BORDA ARCO-ÍRIS =====
                 const borderClass = item.rainbowBorder === true ? 'rainbow-border' : '';
                 
                 html += `
@@ -987,6 +1133,7 @@
         
             list.innerHTML = html;
         }
+
         // ============================================================
         // RENDERIZAR TECNOLOGIAS
         // ============================================================
@@ -1014,7 +1161,6 @@
         function renderizarVersao() {
             const el = document.getElementById('versaoInfo');
             
-            // Data/hora atual
             const agora = new Date();
             const timestamp = formatarTimestamp(agora);
             
@@ -1036,6 +1182,7 @@
         console.log('✅ Página de créditos carregada!');
         console.log(`📦 ${config.versao}`);
         console.log(`🤝 ${config.colaboradores.length} colaboradores`);
+        console.log(`🏅 ${config.medalhas.length} medalhas`);
         console.log(`📝 ${config.contribuicoes.length} contribuições`);
         console.log(`🕐 Timestamp: ${formatarTimestamp(new Date())}`);
     </script>
