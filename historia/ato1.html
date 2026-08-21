@@ -1,1 +1,647 @@
-TESTE TESTE TESTE
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Capítulo X - Lore Moriya</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --fundo-imagem: url('images/backgrounds.png');
+            --fundo-opacidade: 0.6;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #1a2e1a;
+            padding: 20px;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        /* ===== FUNDO ===== */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            background-image: var(--fundo-imagem);
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            opacity: var(--fundo-opacidade);
+        }
+
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: #1a2e1a;
+            opacity: 0.6;
+        }
+
+        /* ===== BARRA DE ROLAGEM ===== */
+        body::-webkit-scrollbar {
+            width: 6px;
+        }
+        body::-webkit-scrollbar-track {
+            background: rgba(26, 26, 46, 0.2);
+            border-radius: 3px;
+        }
+        body::-webkit-scrollbar-thumb {
+            background: rgba(42, 42, 74, 0.4);
+            border-radius: 3px;
+        }
+        body::-webkit-scrollbar-thumb:hover {
+            background: rgba(42, 42, 74, 0.7);
+        }
+        body {
+            scrollbar-width: thin;
+            scrollbar-color: rgba(42, 42, 74, 0.4) rgba(26, 26, 46, 0.2);
+        }
+
+        /* ============================================================
+           CONTAINER
+           ============================================================ */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: #2a4a2a;
+            border-radius: 16px;
+            padding: 30px 35px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+            border: 1px solid #3a5a3a;
+        }
+
+        /* ============================================================
+           NAVEGAÇÃO TOPO
+           ============================================================ */
+        .nav-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #3a5a3a;
+            margin-bottom: 25px;
+        }
+
+        .nav-top .nav-links {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .nav-top a {
+            color: #85c1e9;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 600;
+            padding: 5px 14px;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
+        }
+
+        .nav-top a:hover {
+            background: #1a3a1a;
+            border-color: #3a5a3a;
+            color: #4caf50;
+        }
+
+        .nav-top a.active {
+            background: #27ae60;
+            color: white;
+            border-color: #27ae60;
+        }
+
+        .nav-top .page-indicator {
+            color: #88bb88;
+            font-size: 13px;
+            font-style: italic;
+        }
+
+        /* ============================================================
+           CABEÇALHO DO CAPÍTULO
+           ============================================================ */
+        .chapter-header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .chapter-header .chapter-number {
+            color: #4caf50;
+            font-size: 14px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .chapter-header .chapter-icon {
+            font-size: 48px;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .chapter-header h1 {
+            color: #f0f0f0;
+            font-size: 28px;
+            font-weight: 700;
+        }
+
+        .chapter-header h1 .highlight {
+            color: #4caf50;
+        }
+
+        .chapter-header .chapter-subtitle {
+            color: #aaddaa;
+            font-size: 15px;
+            margin-top: 4px;
+            font-style: italic;
+        }
+
+        /* ============================================================
+           SEÇÃO: TEXTO
+           ============================================================ */
+        .chapter-text {
+            color: #d0d0d0;
+            font-size: 16px;
+            line-height: 1.9;
+            text-align: justify;
+            margin-bottom: 25px;
+        }
+
+        .chapter-text p {
+            margin-bottom: 14px;
+        }
+
+        .chapter-text p:first-of-type::first-letter {
+            font-size: 48px;
+            font-weight: 700;
+            color: #4caf50;
+            float: left;
+            line-height: 1;
+            margin-right: 8px;
+            font-family: 'Georgia', serif;
+        }
+
+        .chapter-text strong {
+            color: #4caf50;
+        }
+
+        .chapter-text .quote {
+            font-style: italic;
+            color: #b0d0b0;
+            padding: 15px 25px;
+            margin: 15px 0;
+            border-left: 4px solid #4caf50;
+            background: rgba(39, 174, 96, 0.08);
+            border-radius: 4px;
+        }
+
+        .chapter-text .quote::before {
+            content: '"';
+            font-size: 24px;
+            color: #4caf50;
+        }
+
+        .chapter-text .quote::after {
+            content: '"';
+            font-size: 24px;
+            color: #4caf50;
+        }
+
+        /* ============================================================
+           SEÇÃO: IMAGEM
+           ============================================================ */
+        .chapter-image {
+            margin: 20px 0 25px 0;
+            text-align: center;
+        }
+
+        .chapter-image img {
+            max-width: 100%;
+            max-height: 450px;
+            border-radius: 10px;
+            border: 1px solid #3a5a3a;
+            box-shadow: 0 4px 25px rgba(0, 0, 0, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .chapter-image img:hover {
+            border-color: #4caf50;
+            transform: scale(1.01);
+        }
+
+        .chapter-image .image-caption {
+            color: #88bb88;
+            font-size: 13px;
+            font-style: italic;
+            margin-top: 8px;
+        }
+
+        .chapter-image .image-caption strong {
+            color: #aaddaa;
+        }
+
+        /* ============================================================
+           SEÇÃO: VÍDEO (EMBED)
+           ============================================================ */
+        .chapter-video {
+            margin: 20px 0 25px 0;
+        }
+
+        .chapter-video .video-wrapper {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            border-radius: 10px;
+            overflow: hidden;
+            background: #1a2e1a;
+            border: 1px solid #3a5a3a;
+            box-shadow: 0 4px 25px rgba(0, 0, 0, 0.4);
+        }
+
+        .chapter-video .video-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .chapter-video .video-caption {
+            color: #88bb88;
+            font-size: 13px;
+            font-style: italic;
+            margin-top: 8px;
+            text-align: center;
+        }
+
+        .chapter-video .video-caption strong {
+            color: #aaddaa;
+        }
+
+        /* ============================================================
+           TIMELINE (Opcional)
+           ============================================================ */
+        .chapter-timeline {
+            margin: 25px 0;
+            padding-top: 20px;
+            border-top: 2px solid #3a5a3a;
+        }
+
+        .chapter-timeline h3 {
+            color: #4caf50;
+            font-size: 17px;
+            margin-bottom: 12px;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        .timeline-item {
+            display: flex;
+            gap: 20px;
+            padding: 10px 16px;
+            background: rgba(26, 46, 26, 0.3);
+            border-radius: 8px;
+            border-left: 3px solid #4caf50;
+            margin-bottom: 8px;
+        }
+
+        .timeline-item .date {
+            font-weight: 700;
+            color: #85c1e9;
+            min-width: 130px;
+            font-size: 14px;
+        }
+
+        .timeline-item .event {
+            color: #d0d0d0;
+            font-size: 14px;
+        }
+
+        /* ============================================================
+           NAVEGAÇÃO RODAPÉ
+           ============================================================ */
+        .nav-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 25px;
+            padding-top: 20px;
+            border-top: 2px solid #3a5a3a;
+        }
+
+        .nav-bottom .nav-btn {
+            display: inline-block;
+            background: #1a3a1a;
+            color: #85c1e9;
+            padding: 10px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            border: 1px solid #3a5a3a;
+        }
+
+        .nav-bottom .nav-btn:hover {
+            background: #2a4a2a;
+            border-color: #4caf50;
+            color: #4caf50;
+            transform: scale(1.02);
+        }
+
+        .nav-bottom .nav-btn.disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+
+        .nav-bottom .nav-btn .arrow {
+            font-size: 16px;
+        }
+
+        .nav-bottom .nav-center {
+            color: #88bb88;
+            font-size: 13px;
+            font-style: italic;
+        }
+
+        /* ============================================================
+           BOTÃO VOLTAR
+           ============================================================ */
+        .btn-voltar {
+            display: inline-block;
+            background: #27ae60;
+            color: white;
+            padding: 10px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+            border: none;
+            text-align: center;
+        }
+
+        .btn-voltar:hover {
+            background: #2ecc71;
+            transform: scale(1.02);
+            box-shadow: 0 4px 20px rgba(39, 174, 96, 0.4);
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 2px solid #3a5a3a;
+        }
+
+        /* ============================================================
+           RESPONSIVO
+           ============================================================ */
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+
+            .chapter-header h1 {
+                font-size: 22px;
+            }
+
+            .chapter-text {
+                font-size: 15px;
+            }
+
+            .chapter-text p:first-of-type::first-letter {
+                font-size: 36px;
+            }
+
+            .nav-top {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 8px;
+            }
+
+            .nav-top .nav-links {
+                justify-content: center;
+            }
+
+            .nav-bottom {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .timeline-item {
+                flex-direction: column;
+                gap: 4px;
+            }
+
+            .timeline-item .date {
+                min-width: unset;
+            }
+
+            .chapter-image img {
+                max-height: 300px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 15px;
+            }
+
+            .chapter-header h1 {
+                font-size: 18px;
+            }
+
+            .chapter-text {
+                font-size: 14px;
+            }
+
+            .chapter-text p:first-of-type::first-letter {
+                font-size: 28px;
+            }
+
+            .nav-top a {
+                font-size: 12px;
+                padding: 4px 10px;
+            }
+
+            .nav-bottom .nav-btn {
+                font-size: 12px;
+                padding: 8px 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- ============================================================
+             NAVEGAÇÃO TOPO
+             ============================================================ -->
+        <div class="nav-top">
+            <div class="nav-links">
+                <a href="lore.html">📚 Índice</a>
+                <a href="lore-capitulo1.html" class="active">Cap. I</a>
+                <a href="lore-capitulo2.html">Cap. II</a>
+                <a href="lore-capitulo3.html">Cap. III</a>
+                <a href="lore-capitulo4.html">Cap. IV</a>
+                <a href="lore-capitulo5.html">Cap. V</a>
+                <a href="lore-capitulo6.html">Cap. VI</a>
+            </div>
+            <span class="page-indicator">📖 Capítulo X</span>
+        </div>
+
+        <!-- ============================================================
+             CABEÇALHO DO CAPÍTULO
+             ============================================================ -->
+        <div class="chapter-header">
+            <span class="chapter-number">Capítulo X</span>
+            <span class="chapter-icon">⚔️</span>
+            <h1>Título do <span class="highlight">Capítulo</span></h1>
+            <p class="chapter-subtitle">Subtítulo ou descrição do capítulo</p>
+        </div>
+
+        <!-- ============================================================
+             TEXTO
+             ============================================================ -->
+        <div class="chapter-text">
+            <p>
+                <strong>Lorem ipsum dolor sit amet</strong>, consectetur adipiscing elit. 
+                Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+                Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris 
+                nisi ut aliquip ex ea commodo consequat.
+            </p>
+
+            <p>
+                Duis aute irure dolor in reprehenderit in voluptate velit esse cillum 
+                dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non 
+                proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+            </p>
+
+            <div class="quote">
+                "Uma frase marcante ou diálogo importante do capítulo. Algo que 
+                os personagens disseram ou uma reflexão profunda."
+            </div>
+
+            <p>
+                Sed ut perspiciatis unde omnis iste natus error sit voluptatem 
+                accusantium doloremque laudantium, totam rem aperiam, eaque ipsa 
+                quae ab illo inventore veritatis et quasi architecto beatae vitae 
+                dicta sunt explicabo.
+            </p>
+        </div>
+
+        <!-- ============================================================
+             IMAGEM
+             ============================================================ -->
+        <div class="chapter-image">
+            <img src="images/Thub1.png" alt="Descrição da imagem">
+            <div class="image-caption">
+                📸 <strong>Legenda da imagem</strong> — Artista: Nome do Criador
+            </div>
+        </div>
+
+        <!-- ============================================================
+             VÍDEO (EMBED)
+             ============================================================ -->
+        <div class="chapter-video">
+            <div class="video-wrapper">
+                <iframe
+                    src="https://www.youtube.com/embed/VIDEO_ID_AQUI"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen
+                ></iframe>
+            </div>
+            <div class="video-caption">
+                📹 <strong>Título do Vídeo</strong> — Canal: Nome do Canal
+            </div>
+        </div>
+
+        <!-- ============================================================
+             TIMELINE (Opcional - remova se não quiser)
+             ============================================================ -->
+        <div class="chapter-timeline">
+            <h3>📅 Linha do Tempo — Eventos do Capítulo</h3>
+            <div class="timeline-item">
+                <span class="date">📅 XX/XX/XXXX — 18:00</span>
+                <span class="event">🌅 Evento importante acontece</span>
+            </div>
+            <div class="timeline-item">
+                <span class="date">📅 XX/XX/XXXX — 20:30</span>
+                <span class="event">⚔️ Segundo evento importante</span>
+            </div>
+            <div class="timeline-item">
+                <span class="date">📅 XX/XX/XXXX — 22:00</span>
+                <span class="event">🔴 Terceiro evento importante</span>
+            </div>
+        </div>
+
+        <!-- ============================================================
+             NAVEGAÇÃO RODAPÉ
+             ============================================================ -->
+        <div class="nav-bottom">
+            <a href="lore.html" class="nav-btn">
+                <span class="arrow">◀</span> Índice
+            </a>
+            <span class="nav-center">📜 "Uma frase marcante do capítulo"</span>
+            <a href="lore-capitulo2.html" class="nav-btn">
+                Próximo <span class="arrow">▶</span>
+            </a>
+        </div>
+
+        <!-- ============================================================
+             BOTÃO VOLTAR
+             ============================================================ -->
+        <div class="footer">
+            <a href="index.html" class="btn-voltar">⬅ Voltar para o Tracker</a>
+        </div>
+    </div>
+
+    <script>
+        // ============================================================
+        // TIMESTAMP
+        // ============================================================
+        function formatarTimestamp() {
+            const data = new Date();
+            const dias = ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'];
+            const meses = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho',
+                          'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
+
+            const diaSemana = dias[data.getDay()];
+            const dia = String(data.getDate()).padStart(2, '0');
+            const mes = meses[data.getMonth()];
+            const ano = data.getFullYear();
+
+            return `${diaSemana}, ${dia} de ${mes} de ${ano}`;
+        }
+
+        console.log('📖 Template de capítulo carregado!');
+        console.log(`🕐 ${formatarTimestamp()}`);
+    </script>
+
+</body>
+</html>
