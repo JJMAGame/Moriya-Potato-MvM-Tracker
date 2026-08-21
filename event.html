@@ -606,6 +606,30 @@
             color: white;
         }
 
+        /* ===== STATUS CANÔNICO ===== */
+        .mapa-item.status-canonico {
+            border-left-color: #9b59b6 !important;
+            background: rgba(155, 89, 182, 0.15) !important;
+        }
+
+        .mapa-item.status-canonico .mapa-nome {
+            color: #bb86fc !important;
+        }
+
+        .mapa-item.status-canonico .mapa-wave {
+            background: rgba(155, 89, 182, 0.2) !important;
+            color: #bb86fc !important;
+        }
+
+        .mapa-item.status-canonico:hover {
+            background: rgba(155, 89, 182, 0.25) !important;
+        }
+
+        .status-badge-canonico {
+            background: #9b59b6;
+            color: white;
+        }
+
         /* ============================================================
            VÍDEO
         ============================================================ */
@@ -1207,6 +1231,11 @@
             <span class="legenda-texto">Corrompido</span>
             <span class="legenda-badge status-badge-corrompido">⚠️</span>
         </div>
+        <div class="legenda-item">
+            <span class="legenda-cor" style="background: #9b59b6;"></span>
+            <span class="legenda-texto">Canônico / Video</span>
+            <span class="legenda-badge status-badge-canonico">📜</span>
+        </div>
     </div>
 
     <!-- ============================================================
@@ -1245,7 +1274,7 @@
                 dataInicio: "2026-07-31T18:00:00",
                 dataFim: "2026-08-01T00:00:00",
                 mapas: [
-                    { nome: "Yiresa - Black East", wave: "7 Wave", status: "completo" },
+                    { nome: "Yiresa - Black East", wave: "7 Wave", status: "canonico" },
                     { nome: "Sequoia - Forest Fight", wave: "7 Wave", status: "completo" },
                     { nome: "Condemned - Trespasser", wave: "Unica Wave", status: "incompleto" }
                 ],
@@ -1265,7 +1294,7 @@
                     { nome: "Akure - Bronze And Bristle", wave: "8 Wave", status: "completo" },
                     { nome: "Area 52 - Nuclear Threat", wave: "6 Wave", status: "completo" },
                     { nome: "Deathpour - Bloodpour", wave: "6 Wave", status: "completo" },
-                    { nome: "Legerdemain - Legacy Heresy", wave: "5 Wave", status: "completo" }
+                    { nome: "Legerdemain - Legacy Heresy", wave: "5 Wave", status: "canonico" }
                 ],
                 videoId: "Vec9hzWkiag",
                 rainbow: false,
@@ -1706,7 +1735,12 @@
                             statusClass = 'status-corrompido';
                             statusBadge = 'status-badge-corrompido';
                             statusLabel = '⚠️ Corrompido';
+                        } else if (mapa.status === 'canonico') {
+                            statusClass = 'status-canonico';
+                            statusBadge = 'status-badge-canonico';
+                            statusLabel = '📜 Canônico / Video';
                         }
+
         
                         mapasHtml += `
                             <div class="mapa-item ${statusClass}">
