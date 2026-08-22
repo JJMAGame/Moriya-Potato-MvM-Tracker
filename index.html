@@ -236,6 +236,17 @@
             box-shadow: 0 4px 20px rgba(233, 69, 96, 0.5);
         }
 
+        .lightbar-buttons .btn-lore {
+            background: #8B6914;
+            color: white;
+        }
+        
+        .lightbar-buttons .btn-lore:hover {
+            background: #D4A017;
+            transform: scale(1.05);
+            box-shadow: 0 4px 20px rgba(139, 105, 20, 0.5);
+        }
+
         /* ============================================================
            CONTAINER DE BOAS-VINDAS - ESTILO MORIYA
            ============================================================ */
@@ -1481,10 +1492,11 @@
         <div class="lightbar-content">
             <div class="lightbar-buttons">
                 <button class="btn-github" onclick="abrirModalGitHub()">📂 Arquivos Moriya</button>
-                <button class="btn-event" onclick="window.open('event.html?v=' + Date.now(), 'Eventos', 'width=900,height=700')">📅 Eventos</button>
                 <button class="btn-potato" onclick="abrirPotato()">🥔 Conteúdo da Potato</button>
-                <button class="btn-credits" onclick="window.open('credits.html', 'Créditos', 'width=900,height=700')">🎯 Participantes e Créditos</button>
+                <button class="btn-event" onclick="window.open('event.html?v=' + Date.now(), 'Eventos', 'width=900,height=700')">📅 Eventos</button>
+                <button class="btn-lore" onclick="window.location.href='lore.html'">📖 Lore</button>
                 <button class="btn-gallery" onclick="window.location.href='galeria.html'">🎨 Galeria</button>
+                <button class="btn-credits" onclick="window.open('credits.html', 'Créditos', 'width=900,height=700')">🎯 Participantes e Créditos</button>
                 <button class="btn-moriya" onclick="window.open('https://moriyamvm.base44.app/', '_blank')">🌐 Moriya Site</button>
             </div>
         </div>
