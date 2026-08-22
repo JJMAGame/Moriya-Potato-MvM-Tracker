@@ -176,6 +176,28 @@
             font-style: italic;
         }
 
+        /* ===== ÍCONES DO CAPÍTULO LADO A LADO ===== */
+        .chapter-icon-flex {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            margin: 5px auto 10px auto;
+        }
+        
+        .chapter-icon-img {
+            width: 80px;
+            height: 80px;
+            object-fit: contain;
+            transition: all 0.3s ease;
+            filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.2));
+        }
+        
+        .chapter-icon-img:hover {
+            transform: scale(1.1);
+            filter: drop-shadow(0 0 25px rgba(255, 215, 0, 0.5));
+        }
+
         /* ============================================================
            SEÇÃO: TEXTO
            ============================================================ */
@@ -507,7 +529,7 @@
                 <a href="../lore.html">📚 Índice</a>
                 <a href="ato1.html" class="active">ATO. I</a>
             </div>
-            <span class="page-indicator">📖 Capítulo X</span>
+            <span class="page-indicator">📖 ATO. I PARTE 1 - X</span>
         </div>
 
         <!-- ============================================================
@@ -515,7 +537,12 @@
              ============================================================ -->
         <div class="chapter-header">
             <span class="chapter-number">ATO I</span>
-            <span class="chapter-icon">⚔️</span>
+            
+            <span class="chapter-icon chapter-icon-flex">
+                <img src="../images/Medalhas/Operação Flores Negra 666.png" alt="Operação Flor Negra" class="chapter-icon-img">
+                <img src="../images/Medalhas/Operação Ossos, Maquinas e Nostalgia 666.png" alt="Ossos, Máquinas e Nostalgia" class="chapter-icon-img">
+            </span>
+            
             <h1>O Roubo da <span class="highlight">Formula</span></h1>
             <p class="chapter-subtitle">1 Ano após os eventos de Rancher</p>
         </div>
