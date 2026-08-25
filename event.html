@@ -118,17 +118,23 @@
         }
 
         /* ============================================================
-           FILTROS DE REGRAS E OPERAÇÕES
+           FILTROS DE REGRAS
         ============================================================ */
         .regras-filtros {
             display: flex;
+            flex-direction: column;
             gap: 10px;
-            flex-wrap: wrap;
             margin-bottom: 20px;
             padding: 12px 16px;
             background: rgba(26, 26, 46, 0.5);
             border-radius: 10px;
             border: 1px solid #2a2a4a;
+        }
+
+        .regras-filtros .filtro-linha {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
             justify-content: center;
             align-items: center;
         }
@@ -218,7 +224,6 @@
             display: flex;
             align-items: center;
             gap: 6px;
-            margin-left: 10px;
         }
 
         .regras-filtros .filtro-dropdown {
@@ -1251,13 +1256,11 @@
 
             .regras-filtros .filtro-label {
                 font-size: 11px;
-                width: 100%;
                 justify-content: center;
             }
 
             .regras-filtros .filtro-label-operacao {
                 font-size: 11px;
-                margin-left: 0;
             }
 
             .btn-voltar {
@@ -1310,21 +1313,26 @@
              FILTROS DE REGRAS E OPERAÇÕES
         ============================================================ -->
         <div class="regras-filtros" id="regrasFiltros">
-            <span class="filtro-label">🎮 Regras:</span>
-            <button class="filtro-btn todas active" data-regra="todas">📋 Todas</button>
-            <button class="filtro-btn mvm-oficial" data-regra="mvm-oficial">🔵 MvM Oficiais</button>
-            <button class="filtro-btn potato-oficial" data-regra="potato-oficial">🟤 Potato Oficiais</button>
-            <button class="filtro-btn regras-moriya" data-regra="regras-moriya">🟢 Regras Moriya</button>
-            
-            <!-- ===== FILTRO DROPDOWN DE OPERAÇÕES ===== -->
-            <span class="filtro-label-operacao">📁 Operações:</span>
-            <div class="filtro-dropdown" id="operacoesDropdown">
-                <button class="dropdown-btn" id="dropdownBtn">
-                    <span id="operacaoSelecionada">Todas</span>
-                    <span class="arrow" id="dropdownArrow">▼</span>
-                </button>
-                <div class="dropdown-menu" id="dropdownMenu">
-                    <!-- Inserido via JavaScript -->
+            <!-- LINHA 1: REGRAS -->
+            <div class="filtro-linha">
+                <span class="filtro-label">🎮 Regras:</span>
+                <button class="filtro-btn todas active" data-regra="todas">📋 Todas</button>
+                <button class="filtro-btn mvm-oficial" data-regra="mvm-oficial">🔵 MvM Oficiais</button>
+                <button class="filtro-btn potato-oficial" data-regra="potato-oficial">🟤 Potato Oficiais</button>
+                <button class="filtro-btn regras-moriya" data-regra="regras-moriya">🟢 Regras Moriya</button>
+            </div>
+
+            <!-- LINHA 2: OPERAÇÕES (DROPDOWN) -->
+            <div class="filtro-linha">
+                <span class="filtro-label-operacao">📁 Operações:</span>
+                <div class="filtro-dropdown" id="operacoesDropdown">
+                    <button class="dropdown-btn" id="dropdownBtn">
+                        <span id="operacaoSelecionada">Todas</span>
+                        <span class="arrow" id="dropdownArrow">▼</span>
+                    </button>
+                    <div class="dropdown-menu" id="dropdownMenu">
+                        <!-- Inserido via JavaScript -->
+                    </div>
                 </div>
             </div>
         </div>
@@ -1551,7 +1559,7 @@
                 videoId: "vLf9w849jUw",
                 rainbow: true,
                 regra: "potato-oficial",
-                conjunto: "Operação Two Potato"
+                conjunto: "Operação Two Potatos"
             }
         ];
 
