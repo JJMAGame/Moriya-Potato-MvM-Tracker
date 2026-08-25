@@ -118,7 +118,7 @@
         }
 
         /* ============================================================
-           FILTROS DE REGRAS
+           FILTROS DE REGRAS E OPERAÇÕES
         ============================================================ */
         .regras-filtros {
             display: flex;
@@ -130,6 +130,7 @@
             border-radius: 10px;
             border: 1px solid #2a2a4a;
             justify-content: center;
+            align-items: center;
         }
 
         .regras-filtros .filtro-label {
@@ -158,7 +159,7 @@
             transform: scale(1.05);
         }
 
-        /* ===== CORES DOS BOTÕES ===== */
+        /* ===== CORES DOS BOTÕES DE REGRA ===== */
         .regras-filtros .filtro-btn.todas {
             border-color: #7f8c8d;
             color: #7f8c8d;
@@ -205,6 +206,127 @@
             background: #27ae60;
             color: white;
             border-color: #27ae60;
+        }
+
+        /* ============================================================
+           FILTRO DROPDOWN DE OPERAÇÕES
+        ============================================================ */
+        .regras-filtros .filtro-label-operacao {
+            color: #85c1e9;
+            font-size: 13px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-left: 10px;
+        }
+
+        .regras-filtros .filtro-dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .regras-filtros .filtro-dropdown .dropdown-btn {
+            padding: 6px 16px;
+            border: 2px solid #3498db;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            background: transparent;
+            color: #3498db;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .regras-filtros .filtro-dropdown .dropdown-btn:hover {
+            background: #3498db;
+            color: white;
+            transform: scale(1.05);
+        }
+
+        .regras-filtros .filtro-dropdown .dropdown-btn .arrow {
+            font-size: 10px;
+            transition: transform 0.3s ease;
+        }
+
+        .regras-filtros .filtro-dropdown .dropdown-btn .arrow.aberto {
+            transform: rotate(180deg);
+        }
+
+        .regras-filtros .filtro-dropdown .dropdown-menu {
+            display: none;
+            position: absolute;
+            top: calc(100% + 5px);
+            left: 0;
+            background: #1a1a2e;
+            border: 1px solid #2a2a4a;
+            border-radius: 10px;
+            padding: 6px 0;
+            min-width: 220px;
+            max-height: 250px;
+            overflow-y: auto;
+            box-shadow: 0 4px 25px rgba(0, 0, 0, 0.5);
+            z-index: 100;
+        }
+
+        .regras-filtros .filtro-dropdown .dropdown-menu.aberto {
+            display: block;
+        }
+
+        .regras-filtros .filtro-dropdown .dropdown-menu .dropdown-item {
+            display: block;
+            width: 100%;
+            padding: 8px 18px;
+            border: none;
+            background: transparent;
+            color: #c0c0c0;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            text-align: left;
+            transition: all 0.2s ease;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .regras-filtros .filtro-dropdown .dropdown-menu .dropdown-item:hover {
+            background: rgba(52, 152, 219, 0.15);
+            color: #85c1e9;
+        }
+
+        .regras-filtros .filtro-dropdown .dropdown-menu .dropdown-item.active {
+            background: #3498db;
+            color: white;
+        }
+
+        .regras-filtros .filtro-dropdown .dropdown-menu .dropdown-item .count {
+            float: right;
+            color: #7f8c8d;
+            font-size: 11px;
+            background: rgba(255,255,255,0.05);
+            padding: 0 8px;
+            border-radius: 10px;
+        }
+
+        .regras-filtros .filtro-dropdown .dropdown-menu .dropdown-item.active .count {
+            color: rgba(255,255,255,0.7);
+        }
+
+        .regras-filtros .filtro-dropdown .dropdown-menu::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .regras-filtros .filtro-dropdown .dropdown-menu::-webkit-scrollbar-track {
+            background: rgba(26, 26, 46, 0.3);
+            border-radius: 2px;
+        }
+
+        .regras-filtros .filtro-dropdown .dropdown-menu::-webkit-scrollbar-thumb {
+            background: #2a2a4a;
+            border-radius: 2px;
         }
 
         /* ============================================================
@@ -280,7 +402,7 @@
             justify-content: center;
             cursor: pointer;
             pointer-events: auto;
-            overflow: visible;  /* ← PERMITE QUE A LEGENDA SAIA DO CONTAINER */
+            overflow: visible;
         }
         
         .evento-card .medalha-container .medalha-img {
@@ -749,7 +871,7 @@
 
         /* ============================================================
            LEGENDA DE MEDALHAS - SEM CORTE
-           ============================================================ */
+        ============================================================ */
         .legenda-medalhas {
             position: fixed;
             bottom: 20px;
@@ -764,12 +886,11 @@
             max-width: 300px;
             max-height: 70vh;
             overflow-y: auto;
-            overflow-x: visible;  /* ← PERMITE VISUALIZAR O GLOW */
+            overflow-x: visible;
             backdrop-filter: blur(10px);
             transition: all 0.3s ease;
         }
         
-        /* ===== ITEM DA LEGENDA (SEM CORTE) ===== */
         .legenda-medalhas .legenda-item {
             display: flex;
             align-items: center;
@@ -778,10 +899,9 @@
             cursor: help;
             transition: all 0.3s ease;
             border-bottom: 1px solid rgba(42, 42, 74, 0.3);
-            overflow: visible !important;  /* ← GARANTE QUE NÃO CORTA */
+            overflow: visible !important;
         }
         
-        /* ===== MEDALHA NA LEGENDA ===== */
         .legenda-medalhas .legenda-item .medalha-preview {
             width: 35px;
             height: 35px;
@@ -789,18 +909,16 @@
             border-radius: 0;
             background: transparent;
             flex-shrink: 0;
-            filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.15));  /* ← GLOW SUTIL */
+            filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.15));
             transition: all 0.3s ease;
-            overflow: visible !important;  /* ← GARANTE QUE NÃO CORTA */
+            overflow: visible !important;
         }
         
-        /* ===== HOVER - AMPLIA COM GLOW ===== */
         .legenda-medalhas .legenda-item:hover .medalha-preview {
             transform: scale(1.2);
             filter: drop-shadow(0 0 25px rgba(255, 215, 0, 0.35));
         }
         
-        /* ===== CORES DOS GLOWS POR REGRA (HOVER) ===== */
         .legenda-medalhas .legenda-item:hover .medalha-preview.mvm-oficial {
             filter: drop-shadow(0 0 25px rgba(41, 128, 185, 0.4));
         }
@@ -851,7 +969,6 @@
             color: #e94560;
         }
 
-        /* ===== CONJUNTO (ACORDEÃO) ===== */
         .legenda-medalhas .conjunto-item {
             margin-bottom: 8px;
         }
@@ -891,7 +1008,6 @@
             transform: rotate(180deg);
         }
 
-        /* ===== CONTEÚDO DO CONJUNTO ===== */
         .legenda-medalhas .conjunto-content {
             overflow: hidden;
             max-height: 0;
@@ -961,7 +1077,7 @@
         }
 
         /* ============================================================
-           MODAL DE AMPLIAÇÃO DA MEDALHA (SEM REGRA)
+           MODAL DE AMPLIAÇÃO DA MEDALHA
         ============================================================ */
         .medalha-modal-overlay {
             display: none;
@@ -1139,6 +1255,11 @@
                 justify-content: center;
             }
 
+            .regras-filtros .filtro-label-operacao {
+                font-size: 11px;
+                margin-left: 0;
+            }
+
             .btn-voltar {
                 display: block;
             }
@@ -1186,7 +1307,7 @@
         </div>
 
         <!-- ============================================================
-             FILTROS DE REGRAS
+             FILTROS DE REGRAS E OPERAÇÕES
         ============================================================ -->
         <div class="regras-filtros" id="regrasFiltros">
             <span class="filtro-label">🎮 Regras:</span>
@@ -1194,6 +1315,18 @@
             <button class="filtro-btn mvm-oficial" data-regra="mvm-oficial">🔵 MvM Oficiais</button>
             <button class="filtro-btn potato-oficial" data-regra="potato-oficial">🟤 Potato Oficiais</button>
             <button class="filtro-btn regras-moriya" data-regra="regras-moriya">🟢 Regras Moriya</button>
+            
+            <!-- ===== FILTRO DROPDOWN DE OPERAÇÕES ===== -->
+            <span class="filtro-label-operacao">📁 Operações:</span>
+            <div class="filtro-dropdown" id="operacoesDropdown">
+                <button class="dropdown-btn" id="dropdownBtn">
+                    <span id="operacaoSelecionada">Todas</span>
+                    <span class="arrow" id="dropdownArrow">▼</span>
+                </button>
+                <div class="dropdown-menu" id="dropdownMenu">
+                    <!-- Inserido via JavaScript -->
+                </div>
+            </div>
         </div>
 
         <!-- ============================================================
@@ -1336,7 +1469,6 @@
                 medalhaNome: "⚔️ Operação Flor Negra Delícia",
                 medalhaCredito: "Rishi_LockeD",
                 conjunto: "Operação Flor Negra"
-
             },
             {
                 nome: "Moriya Vs Potato Arquive ( interlúdio )",
@@ -1345,7 +1477,7 @@
                 mapas: [
                     { nome: "Underworld - Bones And Blood", wave: "5 Wave", status: " " },
                     { nome: "Hanami - Blossom Beginnings", wave: "6 Wave", status: " " },
-                    { nome: "Rottenburg - Spanner Switchup", wave: "5 Wave", status: " " },
+                    { nome: "Rottenburg - Spanner Switchup", wave: "5 Wave", status: " " }
                 ],
                 videoId: "xmJue7PW-bE",
                 rainbow: true,
@@ -1363,7 +1495,7 @@
                     { nome: "Condemned - Thriller Terror", wave: "5 Wave", status: " " },
                     { nome: "Decay - Night Errors", wave: "7 Wave", status: " " },
                     { nome: "Oxidize - Snowy Slaughter", wave: "6 Wave", status: " " },
-                    { nome: "Rottenburg - Breaking Walls", wave: "6 Wave", status: " " },
+                    { nome: "Rottenburg - Breaking Walls", wave: "6 Wave", status: " " }
                 ],
                 videoId: "ZyeZW4SgfnA",
                 rainbow: false,
@@ -1380,7 +1512,7 @@
                 mapas: [
                     { nome: "Bigrock - Breaking Point", wave: "8 Wave", status: " " },
                     { nome: "Dusk - Chasing Daybreak", wave: "7 Wave", status: " " },
-                    { nome: "Havana - Fishermans Fury", wave: "3 Wave", status: " " },
+                    { nome: "Havana - Fishermans Fury", wave: "3 Wave", status: " " }
                 ],
                 videoId: "LF0PHG7ULWw",
                 rainbow: false,
@@ -1389,7 +1521,6 @@
                 medalhaNome: "⚔️ Operação Ossos, Maquinas e Nostalgia Advanced",
                 medalhaCredito: "Rishi_LockeD",
                 conjunto: "Operação Ossos, Maquinas e Nostalgia"
-
             },
             {
                 nome: "Moriya Vs Potato Arquive ( DELICIA Tier 2# )",
@@ -1398,7 +1529,7 @@
                 mapas: [
                     { nome: "Radar - Rocky Ravage", wave: "7 Wave", status: " " },
                     { nome: "Null - Distorted Reality", wave: "8 Wave", status: " " },
-                    { nome: "Watermine - Hydrophobia", wave: "6 Wave", status: " "}
+                    { nome: "Watermine - Hydrophobia", wave: "6 Wave", status: " " }
                 ],
                 videoId: "Te86slsS1E4",
                 rainbow: false,
@@ -1414,14 +1545,154 @@
                 dataFim: "2026-09-26T00:00:00",
                 mapas: [
                     { nome: "Steep - Bandwidth Beatdown", wave: "6 Wave", status: " " },
-                    { nome: "Bigrock - Denominato", wave: "5 Wave", status: " " },
-                    { nome: "Decompose - Ghoulish Genesis", wave: "Unica Wave", status: " " },
+                    { nome: "Bigrock - Denominator", wave: "5 Wave", status: " " },
+                    { nome: "Decompose - Ghoulish Genesis", wave: "Unica Wave", status: " " }
                 ],
                 videoId: "vLf9w849jUw",
                 rainbow: true,
                 regra: "potato-oficial",
-            },
+                conjunto: "Operação Two Potato"
+            }
         ];
+
+        // ============================================================
+        // VARIÁVEIS DE FILTRO
+        // ============================================================
+        let regraAtual = 'todas';
+        let operacaoAtual = 'todas';
+
+        // ============================================================
+        // FUNÇÃO PARA EXTRAIR OPERAÇÕES DOS EVENTOS
+        // ============================================================
+        function extrairOperacoes() {
+            const operacoes = new Map();
+            
+            eventos.forEach(evento => {
+                let nomeOperacao = null;
+                
+                // Tenta pegar do campo 'conjunto'
+                if (evento.conjunto) {
+                    nomeOperacao = evento.conjunto;
+                }
+                // Se não tiver, tenta do nome da medalha
+                else if (evento.medalhaNome) {
+                    nomeOperacao = evento.medalhaNome.replace(/[⚔️🏅📜]/g, '').trim();
+                }
+                // Se não tiver nada, usa "Sem Operação"
+                else {
+                    nomeOperacao = 'Sem Operação';
+                }
+                
+                if (!operacoes.has(nomeOperacao)) {
+                    operacoes.set(nomeOperacao, []);
+                }
+                operacoes.get(nomeOperacao).push(evento);
+            });
+            
+            return operacoes;
+        }
+
+        // ============================================================
+        // GERAR MENU DROPDOWN DE OPERAÇÕES
+        // ============================================================
+        function gerarDropdownOperacoes() {
+            const menu = document.getElementById('dropdownMenu');
+            const operacoes = extrairOperacoes();
+            
+            let html = `
+                <button class="dropdown-item ${operacaoAtual === 'todas' ? 'active' : ''}" data-operacao="todas">
+                    📋 Todas as Operações
+                    <span class="count">${eventos.length}</span>
+                </button>
+            `;
+            
+            // Ordena as operações por nome
+            const sortedOperacoes = Array.from(operacoes.entries()).sort((a, b) => a[0].localeCompare(b[0]));
+            
+            sortedOperacoes.forEach(([nome, eventosLista]) => {
+                const isActive = operacaoAtual === nome;
+                html += `
+                    <button class="dropdown-item ${isActive ? 'active' : ''}" data-operacao="${nome}">
+                        📁 ${nome}
+                        <span class="count">${eventosLista.length}</span>
+                    </button>
+                `;
+            });
+            
+            menu.innerHTML = html;
+            
+            // Eventos dos itens do dropdown
+            menu.querySelectorAll('.dropdown-item').forEach(item => {
+                item.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    const operacao = this.dataset.operacao;
+                    operacaoAtual = operacao;
+                    
+                    // Atualiza o texto do botão
+                    const label = document.getElementById('operacaoSelecionada');
+                    if (operacao === 'todas') {
+                        label.textContent = 'Todas';
+                    } else {
+                        label.textContent = operacao;
+                    }
+                    
+                    // Fecha o dropdown
+                    fecharDropdown();
+                    
+                    // Re-renderiza os eventos
+                    renderizarEventos();
+                    
+                    console.log(`📁 Operação selecionada: ${operacao}`);
+                });
+            });
+        }
+
+        // ============================================================
+        // FUNÇÕES DO DROPDOWN
+        // ============================================================
+        function abrirDropdown() {
+            const menu = document.getElementById('dropdownMenu');
+            const arrow = document.getElementById('dropdownArrow');
+            menu.classList.add('aberto');
+            arrow.classList.add('aberto');
+        }
+
+        function fecharDropdown() {
+            const menu = document.getElementById('dropdownMenu');
+            const arrow = document.getElementById('dropdownArrow');
+            menu.classList.remove('aberto');
+            arrow.classList.remove('aberto');
+        }
+
+        function toggleDropdown() {
+            const menu = document.getElementById('dropdownMenu');
+            if (menu.classList.contains('aberto')) {
+                fecharDropdown();
+            } else {
+                abrirDropdown();
+            }
+        }
+
+        // Evento do botão do dropdown
+        document.getElementById('dropdownBtn').addEventListener('click', function(e) {
+            e.stopPropagation();
+            toggleDropdown();
+        });
+
+        // Fecha o dropdown ao clicar fora
+        document.addEventListener('click', function(e) {
+            const dropdown = document.getElementById('operacoesDropdown');
+            if (!dropdown.contains(e.target)) {
+                fecharDropdown();
+            }
+        });
+
+        // Fecha o dropdown com ESC
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                fecharDropdown();
+            }
+        });
 
         // ============================================================
         // FUNÇÃO PARA DETERMINAR STATUS DO EVENTO
@@ -1642,16 +1913,30 @@
         }
 
         // ============================================================
-        // RENDERIZAR EVENTOS COM FILTRO E MEDALHA
+        // RENDERIZAR EVENTOS COM FILTRO DE REGRA E OPERAÇÃO
         // ============================================================
-        let regraAtual = 'todas';
-        
         function renderizarEventos() {
             const container = document.getElementById('eventosContainer');
         
             let eventosFiltrados = eventos;
+            
+            // Filtro por regra
             if (regraAtual !== 'todas') {
-                eventosFiltrados = eventos.filter(e => e.regra === regraAtual);
+                eventosFiltrados = eventosFiltrados.filter(e => e.regra === regraAtual);
+            }
+            
+            // Filtro por operação
+            if (operacaoAtual !== 'todas') {
+                eventosFiltrados = eventosFiltrados.filter(e => {
+                    // Tenta pegar do campo 'conjunto'
+                    if (e.conjunto === operacaoAtual) return true;
+                    // Se não tiver conjunto, tenta do nome da medalha
+                    if (e.medalhaNome) {
+                        const nomeLimpo = e.medalhaNome.replace(/[⚔️🏅📜]/g, '').trim();
+                        if (nomeLimpo === operacaoAtual) return true;
+                    }
+                    return false;
+                });
             }
         
             if (eventosFiltrados.length === 0) {
@@ -1743,7 +2028,6 @@
                             statusBadge = 'status-badge-canonico';
                             statusLabel = '📜 Canônico / Video';
                         }
-
         
                         mapasHtml += `
                             <div class="mapa-item ${statusClass}">
@@ -1811,13 +2095,20 @@
             const btn = e.target.closest('.filtro-btn');
             if (!btn) return;
 
-            document.querySelectorAll('.filtro-btn').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-
-            regraAtual = btn.dataset.regra;
-            renderizarEventos();
-
-            console.log(`🎮 Filtro: ${regraAtual}`);
+            // Verifica se é um botão de regra
+            if (btn.dataset.regra === 'todas' || 
+                btn.dataset.regra === 'mvm-oficial' || 
+                btn.dataset.regra === 'potato-oficial' || 
+                btn.dataset.regra === 'regras-moriya') {
+                
+                document.querySelectorAll('.filtro-btn.todas, .filtro-btn.mvm-oficial, .filtro-btn.potato-oficial, .filtro-btn.regras-moriya')
+                    .forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                regraAtual = btn.dataset.regra;
+                renderizarEventos();
+                console.log(`🎮 Filtro de regra: ${regraAtual}`);
+                return;
+            }
         });
 
         // ============================================================
@@ -1825,6 +2116,7 @@
         // ============================================================
         renderizarEventos();
         gerarLegendaMedalhas();
+        gerarDropdownOperacoes();
 
         console.log('✅ Eventos carregados!');
         console.log(`📅 ${eventos.length} eventos`);
