@@ -101,7 +101,7 @@
 
         /* ============================================================
            LIGHTBAR
-        ============================================================ */
+           ============================================================ */
         .lightbar {
            width: 100%;
            background: #1a3a1a;
@@ -429,7 +429,7 @@
             background: #1a2e1a;
             padding: 4px;
             display: block;
-            pointer-events: auto; /* GARANTE QUE A IMAGEM RECEBA CLIQUE */
+            pointer-events: auto;
         }
 
         .welcome-images .welcome-img:hover {
@@ -753,7 +753,7 @@
         }
 
         /* ============================================================
-           BUSCA E FILTROS
+           BUSCA E FILTROS - TABELA POTATO.TF
         ============================================================ */
         .search-box {
             margin-bottom: 20px;
@@ -774,6 +774,34 @@
         }
 
         .search-box input:focus, .search-box select:focus {
+            outline: none;
+            border-color: #27ae60;
+        }
+
+        /* ============================================================
+           BUSCA E FILTROS - TABELA OFICIAL
+        ============================================================ */
+        .official-search-box {
+            margin-top: 25px;
+            border-top: 1px solid #3a5a3a;
+            padding-top: 15px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .official-search-box input, .official-search-box select {
+            padding: 10px 15px;
+            border: 2px solid #3a5a3a;
+            border-radius: 8px;
+            background: #1a3a1a;
+            color: #e0e0e0;
+            font-size: 14px;
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .official-search-box input:focus, .official-search-box select:focus {
             outline: none;
             border-color: #27ae60;
         }
@@ -1335,6 +1363,18 @@
                 font-size: 11px;
                 padding: 6px 12px;
             }
+
+            .official-search-box {
+                margin-top: 15px;
+                padding-top: 12px;
+            }
+
+            .search-box input, .search-box select,
+            .official-search-box input, .official-search-box select {
+                font-size: 12px;
+                padding: 8px 12px;
+                min-width: 150px;
+            }
         }
 
         @media (max-width: 480px) {
@@ -1360,7 +1400,8 @@
                 font-size: 9px;
             }
 
-            .search-box input, .search-box select {
+            .search-box input, .search-box select,
+            .official-search-box input, .official-search-box select {
                 font-size: 12px;
                 padding: 6px 10px;
                 min-width: 120px;
@@ -1405,7 +1446,7 @@
 </head>
 <body>
 
-        <!-- ============================================================
+    <!-- ============================================================
          CONTAINER DE BOAS-VINDAS
          ============================================================ -->
     <div class="welcome-overlay" id="welcomeOverlay">
@@ -1420,7 +1461,7 @@
                 <p class="welcome-subtitle">⚙️ Gerencie seu progresso em missões MvM de forma fácil e rápida!</p>
 
                 <!-- ===== IMAGENS ===== -->
-                 <div class="welcome-images">
+                <div class="welcome-images">
                     <a href="https://moriyamvm.base44.app/" target="_blank" rel="noopener noreferrer" title="Visitar site da Moriya">
                         <img src="images/Moriya.png" alt="Moriya PvE" class="welcome-img" loading="lazy">
                     </a>
@@ -1540,7 +1581,7 @@
         </div>
 
         <!-- ============================================================
-             BUSCA E FILTROS
+             BUSCA E FILTROS - TABELA POTATO.TF
         ============================================================ -->
         <div class="search-box">
             <input type="text" id="searchInput" placeholder="🔍 Buscar missão ou mapa...">
@@ -1582,6 +1623,25 @@
                     <!-- Dados via JavaScript -->
                 </tbody>
             </table>
+        </div>
+
+        <!-- ============================================================
+             BUSCA E FILTROS - TABELA OFICIAL
+        ============================================================ -->
+        <div class="official-search-box">
+            <input type="text" id="searchOfficialInput" placeholder="🔍 Buscar missão ou mapa oficial...">
+            <select id="filterOfficialDifficulty">
+                <option value="">Todas as Dificuldades</option>
+                <option value="Intermediate">Intermediate</option>
+                <option value="Advanced">Advanced</option>
+                <option value="Expert">Expert</option>
+                <option value="Nightmare">Nightmare</option>
+            </select>
+            <select id="filterOfficialStatus">
+                <option value="">Todos os Status</option>
+                <option value="done">✅ Concluídas</option>
+                <option value="pending">⏳ Pendentes</option>
+            </select>
         </div>
 
         <!-- ============================================================
@@ -2685,7 +2745,6 @@
         const filterStatus = document.getElementById('filterStatus');
 
         function renderTable() {
-            // ===== VERIFICA SE HÁ DADOS =====
             if (!missions || missions.length === 0) {
                 tbody.innerHTML = `
                     <tr>
@@ -2767,12 +2826,14 @@
         }
 
         // ============================================================
-        // RENDERIZAR TABELA OFICIAL
+        // RENDERIZAR TABELA OFICIAL COM FILTROS
         // ============================================================
+        const officialBody = document.getElementById('officialBody');
+        const searchOfficialInput = document.getElementById('searchOfficialInput');
+        const filterOfficialDifficulty = document.getElementById('filterOfficialDifficulty');
+        const filterOfficialStatus = document.getElementById('filterOfficialStatus');
+
         function renderOfficialTable() {
-            const officialBody = document.getElementById('officialBody');
-            
-            // ===== VERIFICA SE HÁ DADOS =====
             if (!officialMissions || officialMissions.length === 0) {
                 officialBody.innerHTML = `
                     <tr>
@@ -2785,8 +2846,36 @@
                 return;
             }
 
+            const searchTerm = searchOfficialInput.value.toLowerCase();
+            const diffFilter = filterOfficialDifficulty.value;
+            const statusFilter = filterOfficialStatus.value;
+
+            let filtered = officialMissions.map((m, i) => ({ ...m, index: i, checked: officialCheckedStates[i] }));
+
+            if (searchTerm) {
+                filtered = filtered.filter(m =>
+                    m.map.toLowerCase().includes(searchTerm) ||
+                    m.mission.toLowerCase().includes(searchTerm) ||
+                    m.operation.toLowerCase().includes(searchTerm)
+                );
+            }
+
+            if (diffFilter) {
+                filtered = filtered.filter(m => {
+                    const lowerDiff = m.difficulty.toLowerCase();
+                    const filterLower = diffFilter.toLowerCase();
+                    return lowerDiff.includes(filterLower);
+                });
+            }
+
+            if (statusFilter === 'done') {
+                filtered = filtered.filter(m => m.checked);
+            } else if (statusFilter === 'pending') {
+                filtered = filtered.filter(m => !m.checked);
+            }
+
             officialBody.innerHTML = '';
-            officialMissions.forEach((m, i) => {
+            filtered.forEach((m) => {
                 const row = document.createElement('tr');
                 const rowClass = getRowClass(m.difficulty);
                 if (rowClass) row.className = rowClass;
@@ -2798,7 +2887,7 @@
                     <td class="mission-name">${m.mission}</td>
                     <td class="feito-cell">
                         <label class="checkbox-container">
-                            <input type="checkbox" ${officialCheckedStates[i] ? 'checked' : ''} data-index="${i}">
+                            <input type="checkbox" ${m.checked ? 'checked' : ''} data-index="${m.index}">
                             <span class="checkmark"></span>
                         </label>
                     </td>
@@ -2821,6 +2910,13 @@
 
             atualizarEstatisticas();
         }
+
+        // ============================================================
+        // EVENTOS DE FILTRO DA TABELA OFICIAL
+        // ============================================================
+        searchOfficialInput.addEventListener('input', renderOfficialTable);
+        filterOfficialDifficulty.addEventListener('change', renderOfficialTable);
+        filterOfficialStatus.addEventListener('change', renderOfficialTable);
 
         // ============================================================
         // FUNÇÕES DE EXPORTAÇÃO E IMPORTAÇÃO
@@ -2860,7 +2956,6 @@
                     const data = JSON.parse(e.target.result);
                     
                     if (data.version === '2.0') {
-                        // ===== IMPORTA POTATO.TF =====
                         if (data.potato && data.potato.progress && data.potato.progress.length === missions.length) {
                             checkedStates = data.potato.progress;
                             saveProgress();
@@ -2869,7 +2964,6 @@
                             return;
                         }
                         
-                        // ===== IMPORTA OFICIAIS =====
                         if (data.official && data.official.progress && data.official.progress.length === officialMissions.length) {
                             officialCheckedStates = data.official.progress;
                             saveOfficialProgress();
@@ -3114,13 +3208,12 @@
         }
 
         // ============================================================
-        // INICIALIZAÇÃO (CORRIGIDA)
+        // INICIALIZAÇÃO
         // ============================================================
         searchInput.addEventListener('input', renderTable);
         filterDifficulty.addEventListener('change', renderTable);
         filterStatus.addEventListener('change', renderTable);
 
-        // ===== GARANTE QUE OS DADOS ESTÃO CARREGADOS =====
         function init() {
             try {
                 renderTable();
@@ -3134,7 +3227,6 @@
             }
         }
 
-        // Executa a inicialização
         init();
 
         window.addEventListener('beforeunload', saveProgress);
@@ -3166,7 +3258,6 @@
             }
         }
     
-        // Fechar ao clicar fora do container
         document.addEventListener('click', function(e) {
             const overlay = document.getElementById('welcomeOverlay');
             if (e.target === overlay) {
@@ -3174,14 +3265,12 @@
             }
         });
     
-        // Fechar com ESC
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape') {
                 fecharWelcome();
             }
         });
     
-        // ===== INICIALIZAR =====
         function initWelcome() {
             try {
                 const alreadyShown = localStorage.getItem(WELCOME_KEY);
