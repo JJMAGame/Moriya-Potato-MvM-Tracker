@@ -1107,13 +1107,14 @@
         .medalha-modal-overlay .medalha-modal {
             background: #16213e;
             border-radius: 16px;
-            max-width: 500px;
+            max-width: 550px;
             width: 100%;
             padding: 30px;
             border: 1px solid #2a2a4a;
             box-shadow: 0 8px 50px rgba(0, 0, 0, 0.8);
             text-align: center;
             animation: modalFadeIn 0.3s ease;
+            position: relative;
         }
 
         .medalha-modal-overlay .medalha-modal .modal-close {
@@ -1126,35 +1127,56 @@
             font-weight: 600;
             font-size: 14px;
             transition: all 0.3s ease;
-            float: right;
-            margin-bottom: 15px;
+            position: absolute;
+            top: 12px;
+            right: 16px;
         }
 
         .medalha-modal-overlay .medalha-modal .modal-close:hover {
             background: #ff6b81;
-            transform: scale(1.05);
+            transform: scale(1.05) rotate(90deg);
         }
 
+        /* ===== IMAGEM AMPLIADA NO MODAL ===== */
         .medalha-modal-overlay .medalha-modal .medalha-ampliada {
-            width: 200px;
-            height: 200px;
+            width: 300px;
+            height: 300px;
             object-fit: contain;
-            margin: 10px auto;
+            margin: 15px auto 10px auto;
             display: block;
-            filter: drop-shadow(0 0 30px rgba(255, 215, 0, 0.5));
+            filter: drop-shadow(0 0 50px rgba(255, 215, 0, 0.4));
+            transition: all 0.3s ease;
             clear: both;
         }
 
+        .medalha-modal-overlay .medalha-modal .medalha-ampliada:hover {
+            transform: scale(1.05);
+            filter: drop-shadow(0 0 70px rgba(255, 215, 0, 0.6));
+        }
+
+        /* ===== VARIAÇÕES POR REGRA ===== */
         .medalha-modal-overlay .medalha-modal .medalha-ampliada.mvm-oficial {
-            filter: drop-shadow(0 0 30px rgba(41, 128, 185, 0.5));
+            filter: drop-shadow(0 0 50px rgba(41, 128, 185, 0.4));
+        }
+
+        .medalha-modal-overlay .medalha-modal .medalha-ampliada.mvm-oficial:hover {
+            filter: drop-shadow(0 0 70px rgba(41, 128, 185, 0.6));
         }
 
         .medalha-modal-overlay .medalha-modal .medalha-ampliada.potato-oficial {
-            filter: drop-shadow(0 0 30px rgba(139, 69, 19, 0.5));
+            filter: drop-shadow(0 0 50px rgba(139, 69, 19, 0.4));
+        }
+
+        .medalha-modal-overlay .medalha-modal .medalha-ampliada.potato-oficial:hover {
+            filter: drop-shadow(0 0 70px rgba(139, 69, 19, 0.6));
         }
 
         .medalha-modal-overlay .medalha-modal .medalha-ampliada.regras-moriya {
-            filter: drop-shadow(0 0 30px rgba(39, 174, 96, 0.5));
+            filter: drop-shadow(0 0 50px rgba(39, 174, 96, 0.4));
+        }
+
+        .medalha-modal-overlay .medalha-modal .medalha-ampliada.regras-moriya:hover {
+            filter: drop-shadow(0 0 70px rgba(39, 174, 96, 0.6));
         }
 
         .medalha-modal-overlay .medalha-modal .medalha-nome-modal {
@@ -1570,7 +1592,7 @@
                 regra: "potato-oficial",
                 medalha: "images/Medalhas/Operação Two Potato 666.png",
                 medalhaNome: "⚔️ Operação Two Potato interlúdio",
-                medalhaCredito: "JJMAGame",
+                medalhaCredito: "JJMAGame / Jorge",
                 conjunto: "Operação Two Potatos"
             },
             {
@@ -1586,7 +1608,7 @@
                 videoId: "",
                 medalha: "images/Medalhas/Operação Two Potato 1.png",
                 medalhaNome: "⚔️ Operação Two Potato intermediario",
-                medalhaCredito: "JJMAGame",
+                medalhaCredito: "JJMAGame / Jorge",
                 regra: "potato-oficial",
                 conjunto: "Operação Two Potatos"
             },
@@ -1602,7 +1624,7 @@
                 videoId: "",
                 medalha: "images/Medalhas/Operação Two Potato 2.png",
                 medalhaNome: "⚔️ Operação Two Potato Advanced",
-                medalhaCredito: "JJMAGame",
+                medalhaCredito: "JJMAGame / Jorge",
                 regra: "potato-oficial",
                 conjunto: "Operação Two Potatos"
             },
@@ -1618,7 +1640,7 @@
                 videoId: "",
                 medalha: "images/Medalhas/Operação Two Potato 3.png",
                 medalhaNome: "⚔️ Operação Two Potato Exp",
-                medalhaCredito: "JJMAGame",
+                medalhaCredito: "JJMAGame / Jorge",
                 regra: "potato-oficial",
                 conjunto: "Operação Two Potatos"
             },
@@ -1635,7 +1657,7 @@
                 videoId: "",
                 medalha: "images/Medalhas/Operação Two Potato 4.png",
                 medalhaNome: "⚔️ Operação Two Potato Aniversario",
-                medalhaCredito: "JJMAGame",
+                medalhaCredito: "JJMAGame / Jorge",
                 regra: "potato-oficial",
                 conjunto: "Operação Two Potatos"
             },
@@ -1883,7 +1905,7 @@
         });
 
         // ============================================================
-        // GERAR LEGENDA DE MEDALHAS (COM ACCORDION)
+        // GERAR LEGENDA DE MEDALHAS (COM ACCORDION - FECHADO POR PADRÃO)
         // ============================================================
         function gerarLegendaMedalhas() {
             const container = document.getElementById('medalhasList');
@@ -1927,7 +1949,8 @@
             const conjuntoKeys = Object.keys(conjuntos);
             conjuntoKeys.forEach((nomeConjunto, index) => {
                 const medalhas = conjuntos[nomeConjunto];
-                const isAberto = index === 0;
+                // ===== TODOS OS CONJUNTOS COMEÇAM FECHADOS =====
+                const isAberto = false;  // <-- ALTERADO PARA false
                 
                 html += `
                     <div class="conjunto-item">
