@@ -1,0 +1,1146 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medalhas - Moriya Ultimate Tracker</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --fundo-imagem: url('images/backgrounds.png');
+            --fundo-opacidade: 0.6;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #1a2e1a;
+            padding: 20px;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            background-image: var(--fundo-imagem);
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            opacity: var(--fundo-opacidade);
+        }
+
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: #1a2e1a;
+            opacity: 0.55;
+        }
+
+        /* ===== BARRA DE ROLAGEM ===== */
+        body::-webkit-scrollbar {
+            width: 6px;
+        }
+        body::-webkit-scrollbar-track {
+            background: rgba(26, 26, 46, 0.2);
+            border-radius: 3px;
+        }
+        body::-webkit-scrollbar-thumb {
+            background: rgba(42, 42, 74, 0.4);
+            border-radius: 3px;
+        }
+        body::-webkit-scrollbar-thumb:hover {
+            background: rgba(42, 42, 74, 0.7);
+        }
+        body {
+            scrollbar-width: thin;
+            scrollbar-color: rgba(42, 42, 74, 0.4) rgba(26, 26, 46, 0.2);
+        }
+
+        /* ============================================================
+           CONTAINER
+        ============================================================ */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: #2a4a2a;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+            border: 1px solid #3a5a3a;
+        }
+
+        /* ============================================================
+           CABEÇALHO
+        ============================================================ */
+        .header {
+            text-align: center;
+            padding-bottom: 25px;
+            border-bottom: 2px solid #3a5a3a;
+            margin-bottom: 25px;
+        }
+
+        .header .badge {
+            display: inline-block;
+            background: #e94560;
+            color: white;
+            padding: 4px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+
+        .header h1 {
+            color: #f0f0f0;
+            font-size: 28px;
+            font-weight: 700;
+        }
+
+        .header h1 .highlight {
+            color: #4caf50;
+        }
+
+        .header .subtitle {
+            color: #aaddaa;
+            font-size: 14px;
+            margin-top: 8px;
+            opacity: 0.9;
+        }
+
+        /* ============================================================
+           TOP 3 MEDALHAS (DESTAQUE)
+        ============================================================ */
+        .top3-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: rgba(26, 46, 26, 0.3);
+            border-radius: 12px;
+            border: 1px solid #3a5a3a;
+        }
+
+        .top3-container .top3-title {
+            grid-column: 1 / -1;
+            text-align: center;
+            color: #f0f0f0;
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .top3-container .top3-title .highlight {
+            color: #e94560;
+        }
+
+        .top3-card {
+            background: #1a3a1a;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .top3-card:nth-child(2) {
+            border-color: #ffd700;
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.2);
+        }
+
+        .top3-card:nth-child(3) {
+            border-color: #c0c0c0;
+            box-shadow: 0 0 25px rgba(192, 192, 192, 0.15);
+        }
+
+        .top3-card:nth-child(4) {
+            border-color: #cd7f32;
+            box-shadow: 0 0 20px rgba(205, 127, 50, 0.15);
+        }
+
+        .top3-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .top3-card .top3-position {
+            position: absolute;
+            top: -12px;
+            right: -12px;
+            background: #1a2e1a;
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 700;
+            border: 2px solid #3a5a3a;
+        }
+
+        .top3-card:nth-child(2) .top3-position {
+            border-color: #ffd700;
+            color: #ffd700;
+        }
+
+        .top3-card:nth-child(3) .top3-position {
+            border-color: #c0c0c0;
+            color: #c0c0c0;
+        }
+
+        .top3-card:nth-child(4) .top3-position {
+            border-color: #cd7f32;
+            color: #cd7f32;
+        }
+
+        .top3-card .medalha-img-top {
+            width: 100px;
+            height: 100px;
+            object-fit: contain;
+            display: block;
+            margin: 0 auto 10px auto;
+            filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.2));
+            transition: all 0.3s ease;
+        }
+
+        .top3-card:hover .medalha-img-top {
+            transform: scale(1.05);
+            filter: drop-shadow(0 0 30px rgba(255, 215, 0, 0.4));
+        }
+
+        .top3-card .medalha-nome-top {
+            color: #f0f0f0;
+            font-size: 16px;
+            font-weight: 700;
+        }
+
+        .top3-card .medalha-pontos-top {
+            color: #ffd700;
+            font-size: 14px;
+            font-weight: 600;
+            margin-top: 4px;
+        }
+
+        .top3-card .medalha-conjunto-top {
+            color: #88bb88;
+            font-size: 12px;
+            margin-top: 4px;
+        }
+
+        .top3-card .raridade-tag-top {
+            display: inline-block;
+            padding: 2px 12px;
+            border-radius: 10px;
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-top: 6px;
+        }
+
+        /* ============================================================
+           FILTROS
+        ============================================================ */
+        .filtros {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-bottom: 25px;
+            padding: 15px 20px;
+            background: rgba(26, 46, 26, 0.3);
+            border-radius: 10px;
+            border: 1px solid #3a5a3a;
+            align-items: center;
+        }
+
+        .filtros .filtro-label {
+            color: #85c1e9;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .filtros select {
+            padding: 8px 16px;
+            border: 2px solid #3a5a3a;
+            border-radius: 8px;
+            background: #1a3a1a;
+            color: #e0e0e0;
+            font-size: 13px;
+            cursor: pointer;
+            min-width: 180px;
+        }
+
+        .filtros select:focus {
+            outline: none;
+            border-color: #4caf50;
+        }
+
+        .filtros .filtro-search {
+            flex: 1;
+            min-width: 200px;
+            padding: 8px 16px;
+            border: 2px solid #3a5a3a;
+            border-radius: 8px;
+            background: #1a3a1a;
+            color: #e0e0e0;
+            font-size: 13px;
+        }
+
+        .filtros .filtro-search:focus {
+            outline: none;
+            border-color: #4caf50;
+        }
+
+        .filtros .filtro-count {
+            color: #88bb88;
+            font-size: 13px;
+            margin-left: auto;
+        }
+
+        .filtros .filtro-count strong {
+            color: #f0f0f0;
+        }
+
+        /* ============================================================
+           GRADE DE MEDALHAS
+        ============================================================ */
+        .medalhas-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .medalha-card {
+            background: #1a3a1a;
+            border-radius: 12px;
+            padding: 18px;
+            text-align: center;
+            border: 1px solid #3a5a3a;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .medalha-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 25px rgba(76, 175, 80, 0.15);
+        }
+
+        /* ===== TARJA DE RARIDADE ===== */
+        .medalha-card .raridade-tarja {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+        }
+
+        .medalha-card .raridade-tag {
+            display: inline-block;
+            padding: 2px 12px;
+            border-radius: 10px;
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-top: 6px;
+        }
+
+        /* ===== CORES DAS RARIDADES ===== */
+        .raridade-comum .raridade-tarja { background: #7f8c8d; }
+        .raridade-comum .raridade-tag { background: rgba(127, 140, 141, 0.2); color: #bdc3c7; border: 1px solid #7f8c8d; }
+
+        .raridade-incomum .raridade-tarja { background: #2ecc71; }
+        .raridade-incomum .raridade-tag { background: rgba(46, 204, 113, 0.15); color: #2ecc71; border: 1px solid #2ecc71; }
+
+        .raridade-rara .raridade-tarja { background: #3498db; }
+        .raridade-rara .raridade-tag { background: rgba(52, 152, 219, 0.15); color: #3498db; border: 1px solid #3498db; }
+
+        .raridade-epica .raridade-tarja { background: #9b59b6; }
+        .raridade-epica .raridade-tag { background: rgba(155, 89, 182, 0.15); color: #bb86fc; border: 1px solid #9b59b6; }
+
+        .raridade-mitica .raridade-tarja { background: #e74c3c; }
+        .raridade-mitica .raridade-tag { background: rgba(231, 76, 60, 0.15); color: #ff6b6b; border: 1px solid #e74c3c; }
+
+        .raridade-lendaria .raridade-tarja { background: #ffd700; }
+        .raridade-lendaria .raridade-tag { background: rgba(255, 215, 0, 0.15); color: #ffd700; border: 1px solid #ffd700; }
+
+        /* ===== EFEITO GLOW POR RARIDADE ===== */
+        .raridade-comum:hover { border-color: #7f8c8d; }
+        .raridade-incomum:hover { border-color: #2ecc71; box-shadow: 0 0 30px rgba(46, 204, 113, 0.15); }
+        .raridade-rara:hover { border-color: #3498db; box-shadow: 0 0 30px rgba(52, 152, 219, 0.15); }
+        .raridade-epica:hover { border-color: #9b59b6; box-shadow: 0 0 30px rgba(155, 89, 182, 0.15); }
+        .raridade-mitica:hover { border-color: #e74c3c; box-shadow: 0 0 30px rgba(231, 76, 60, 0.15); }
+        .raridade-lendaria:hover { border-color: #ffd700; box-shadow: 0 0 40px rgba(255, 215, 0, 0.2); }
+
+        .medalha-card .medalha-img {
+            width: 80px;
+            height: 80px;
+            object-fit: contain;
+            display: block;
+            margin: 8px auto 10px auto;
+            filter: drop-shadow(0 0 15px rgba(255, 215, 0, 0.1));
+            transition: all 0.3s ease;
+        }
+
+        .medalha-card:hover .medalha-img {
+            transform: scale(1.05);
+            filter: drop-shadow(0 0 25px rgba(255, 215, 0, 0.2));
+        }
+
+        .medalha-card .medalha-nome {
+            color: #f0f0f0;
+            font-size: 14px;
+            font-weight: 600;
+            line-height: 1.3;
+        }
+
+        .medalha-card .medalha-conjunto {
+            color: #88bb88;
+            font-size: 11px;
+            margin-top: 3px;
+        }
+
+        .medalha-card .medalha-pontos {
+            display: inline-block;
+            background: rgba(255, 215, 0, 0.1);
+            color: #ffd700;
+            padding: 2px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-top: 6px;
+        }
+
+        .medalha-card .medalha-descricao {
+            color: #b0b0b0;
+            font-size: 12px;
+            margin-top: 6px;
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .medalha-card .medalha-credito {
+            color: #666;
+            font-size: 10px;
+            margin-top: 4px;
+        }
+
+        .medalha-card .medalha-regra {
+            position: absolute;
+            top: 10px;
+            right: 8px;
+            font-size: 9px;
+            padding: 2px 8px;
+            border-radius: 8px;
+            font-weight: 600;
+            text-transform: uppercase;
+            background: rgba(0, 0, 0, 0.5);
+            color: #88bb88;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        /* ============================================================
+           MODAL DE DETALHES
+        ============================================================ */
+        .medalha-modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            backdrop-filter: blur(8px);
+            animation: modalFadeIn 0.3s ease;
+        }
+
+        .medalha-modal-overlay.active {
+            display: flex;
+        }
+
+        @keyframes modalFadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9) translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        .medalha-modal {
+            background: #2a4a2a;
+            border-radius: 16px;
+            max-width: 500px;
+            width: 100%;
+            padding: 30px;
+            border: 1px solid #3a5a3a;
+            box-shadow: 0 8px 50px rgba(0, 0, 0, 0.8);
+            text-align: center;
+            position: relative;
+        }
+
+        .medalha-modal .modal-close {
+            position: absolute;
+            top: 12px;
+            right: 16px;
+            background: #e94560;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 34px;
+            height: 34px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .medalha-modal .modal-close:hover {
+            background: #ff6b81;
+            transform: rotate(90deg);
+        }
+
+        .medalha-modal .modal-medalha-img {
+            width: 150px;
+            height: 150px;
+            object-fit: contain;
+            margin: 10px auto;
+            display: block;
+            filter: drop-shadow(0 0 30px rgba(255, 215, 0, 0.3));
+        }
+
+        .medalha-modal .modal-medalha-nome {
+            color: #f0f0f0;
+            font-size: 22px;
+            font-weight: 700;
+        }
+
+        .medalha-modal .modal-medalha-conjunto {
+            color: #88bb88;
+            font-size: 14px;
+            margin-top: 4px;
+        }
+
+        .medalha-modal .modal-medalha-pontos {
+            color: #ffd700;
+            font-size: 18px;
+            font-weight: 700;
+            margin-top: 8px;
+        }
+
+        .medalha-modal .modal-medalha-descricao {
+            color: #d0d0d0;
+            font-size: 14px;
+            line-height: 1.6;
+            margin-top: 12px;
+            text-align: left;
+            padding: 0 10px;
+        }
+
+        .medalha-modal .modal-medalha-credito {
+            color: #88bb88;
+            font-size: 13px;
+            margin-top: 10px;
+        }
+
+        .medalha-modal .modal-medalha-credito strong {
+            color: #aaddaa;
+        }
+
+        .medalha-modal .modal-raridade {
+            display: inline-block;
+            padding: 4px 16px;
+            border-radius: 12px;
+            font-size: 13px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-top: 10px;
+        }
+
+        .modal-raridade.comum { background: rgba(127, 140, 141, 0.2); color: #bdc3c7; border: 1px solid #7f8c8d; }
+        .modal-raridade.incomum { background: rgba(46, 204, 113, 0.2); color: #2ecc71; border: 1px solid #2ecc71; }
+        .modal-raridade.rara { background: rgba(52, 152, 219, 0.2); color: #3498db; border: 1px solid #3498db; }
+        .modal-raridade.epica { background: rgba(155, 89, 182, 0.2); color: #bb86fc; border: 1px solid #9b59b6; }
+        .modal-raridade.mitica { background: rgba(231, 76, 60, 0.2); color: #ff6b6b; border: 1px solid #e74c3c; }
+        .modal-raridade.lendaria { background: rgba(255, 215, 0, 0.2); color: #ffd700; border: 1px solid #ffd700; }
+
+        /* ============================================================
+           BOTÃO VOLTAR
+        ============================================================ */
+        .btn-voltar {
+            display: inline-block;
+            background: #27ae60;
+            color: white;
+            padding: 10px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+            border: none;
+            text-align: center;
+        }
+
+        .btn-voltar:hover {
+            background: #2ecc71;
+            transform: scale(1.02);
+            box-shadow: 0 4px 20px rgba(39, 174, 96, 0.4);
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 2px solid #3a5a3a;
+        }
+
+        /* ============================================================
+           RESPONSIVO
+        ============================================================ */
+        @media (max-width: 768px) {
+            .container { padding: 20px; }
+            .header h1 { font-size: 22px; }
+            .top3-container { grid-template-columns: 1fr 1fr; }
+            .top3-container .top3-title { grid-column: 1 / -1; }
+            .medalhas-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); }
+            .filtros { flex-direction: column; align-items: stretch; }
+            .filtros .filtro-count { margin-left: 0; text-align: center; }
+            .medalha-modal { padding: 20px; margin: 10px; }
+            .medalha-modal .modal-medalha-img { width: 120px; height: 120px; }
+        }
+
+        @media (max-width: 480px) {
+            .container { padding: 15px; }
+            .header h1 { font-size: 18px; }
+            .top3-container { grid-template-columns: 1fr; }
+            .top3-card .medalha-img-top { width: 70px; height: 70px; }
+            .medalhas-grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); }
+            .medalha-card .medalha-img { width: 60px; height: 60px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- ===== CABEÇALHO ===== -->
+        <div class="header">
+            <span class="badge">🏅 Medalhas</span>
+            <h1>Moriya Ultimate <span class="highlight">Tracker</span></h1>
+            <p class="subtitle">📜 Coleção de medalhas conquistadas nos eventos</p>
+        </div>
+
+        <!-- ===== TOP 3 MEDALHAS ===== -->
+        <div class="top3-container" id="top3Container">
+            <div class="top3-title">🏆 <span class="highlight">Top 3</span> Medalhas</div>
+            <!-- Inserido via JavaScript -->
+        </div>
+
+        <!-- ===== FILTROS ===== -->
+        <div class="filtros" id="filtros">
+            <span class="filtro-label">📁 Conjunto:</span>
+            <select id="filtroConjunto">
+                <option value="todos">Todos os Conjuntos</option>
+            </select>
+
+            <span class="filtro-label">⭐ Raridade:</span>
+            <select id="filtroRaridade">
+                <option value="todos">Todas as Raridades</option>
+                <option value="comum">⚪ Comum</option>
+                <option value="incomum">🟢 Incomum</option>
+                <option value="rara">🔵 Rara</option>
+                <option value="epica">🟣 Épica</option>
+                <option value="mitica">🔴 Mítica</option>
+                <option value="lendaria">🟡 Lendária</option>
+            </select>
+
+            <span class="filtro-label">🏷️ Regra:</span>
+            <select id="filtroRegra">
+                <option value="todos">Todas as Regras</option>
+                <option value="mvm-oficial">🔵 MvM Oficiais Events</option>
+                <option value="potato-oficial">🟤 Moriya Vs Potato</option>
+                <option value="moriya">🟢 Moriya Original</option>
+            </select>
+
+            <input type="text" id="filtroBusca" class="filtro-search" placeholder="🔍 Buscar medalha...">
+
+            <span class="filtro-count" id="filtroCount"><strong>0</strong> medalhas</span>
+        </div>
+
+        <!-- ===== GRADE DE MEDALHAS ===== -->
+        <div class="medalhas-grid" id="medalhasGrid">
+            <!-- Inserido via JavaScript -->
+        </div>
+
+        <!-- ===== BOTÃO VOLTAR ===== -->
+        <div class="footer">
+            <a href="index.html" class="btn-voltar">⬅ Voltar para o Tracker</a>
+        </div>
+    </div>
+
+    <!-- ============================================================
+         MODAL DE DETALHES
+    ============================================================ -->
+    <div class="medalha-modal-overlay" id="medalhaModal">
+        <div class="medalha-modal">
+            <button class="modal-close" onclick="fecharModalMedalha()">✕</button>
+            <img id="modalMedalhaImg" class="modal-medalha-img" src="" alt="Medalha">
+            <div class="modal-medalha-nome" id="modalMedalhaNome">Nome da Medalha</div>
+            <div class="modal-medalha-conjunto" id="modalMedalhaConjunto">📁 Conjunto</div>
+            <div class="modal-medalha-pontos" id="modalMedalhaPontos">⭐ 0 pontos</div>
+            <div class="modal-medalha-descricao" id="modalMedalhaDescricao">Descrição da medalha</div>
+            <div class="modal-medalha-credito" id="modalMedalhaCredito">🎨 <strong>Criador(a):</strong> Desconhecido</div>
+            <span class="modal-raridade" id="modalRaridade">⚪ Comum</span>
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- JAVASCRIPT                                                    -->
+    <!-- ============================================================ -->
+
+    <script>
+        // ============================================================
+        // LISTA DE MEDALHAS - CADASTRE AQUI!
+        // ============================================================
+        const medalhas = [
+            // ===== OPERAÇÃO FLOR NEGRA =====
+            {
+                id: 1,
+                nome: "⚔️ Operação Flor Negra interlúdio",
+                imagem: "images/Medalhas/Operação Flores Negra 666.png",
+                conjunto: "Operação Flor Negra",
+                pontos: 10,
+                descricao: "Por participar do interlúdio da Operação Flor Negra. Uma honraria para os primeiros caçadores.",
+                credito: "Rishi_LockeD",
+                regra: "potato-oficial",
+                destaque: true,
+                raridade: "incomum"
+            },
+            {
+                id: 2,
+                nome: "⚔️ Operação Flor Negra Intermediário",
+                imagem: "images/Medalhas/Operação Flores Negra 1.png",
+                conjunto: "Operação Flor Negra",
+                pontos: 15,
+                descricao: "Por completar o Low Tier 1# da Operação Flor Negra. A jornada começa.",
+                credito: "Rishi_LockeD",
+                regra: "potato-oficial",
+                destaque: false,
+                raridade: "rara"
+            },
+            {
+                id: 3,
+                nome: "⚔️ Operação Flor Negra Advanced",
+                imagem: "images/Medalhas/Operação Flores Negra 2.png",
+                conjunto: "Operação Flor Negra",
+                pontos: 25,
+                descricao: "Por completar o Padrão Tier 1# da Operação Flor Negra. A resistência se prova.",
+                credito: "Rishi_LockeD",
+                regra: "potato-oficial",
+                destaque: false,
+                raridade: "rara"
+            },
+            {
+                id: 4,
+                nome: "⚔️ Operação Flor Negra Delícia",
+                imagem: "images/Medalhas/Operação Flores Negra 3.png",
+                conjunto: "Operação Flor Negra",
+                pontos: 30,
+                descricao: "Por completar o DELICIA Tier 1# da Operação Flor Negra. A excelência é recompensada.",
+                credito: "Rishi_LockeD",
+                regra: "potato-oficial",
+                destaque: false,
+                raridade: "mitica"
+            },
+
+            // ===== OPERAÇÃO OSSOS, MÁQUINAS E NOSTALGIA =====
+            {
+                id: 5,
+                nome: "⚔️ Operação Ossos, Máquinas e Nostalgia interlúdio",
+                imagem: "images/Medalhas/Operação Ossos, Maquinas e Nostalgia 666.png",
+                conjunto: "Operação Ossos, Maquinas e Nostalgia",
+                pontos: 10,
+                descricao: "Por participar do interlúdio da Operação Ossos, Máquinas e Nostalgia.",
+                credito: "Rishi_LockeD",
+                regra: "potato-oficial",
+                destaque: true,
+                raridade: "incomum"
+            },
+            {
+                id: 6,
+                nome: "⚔️ Operação Ossos, Máquinas e Nostalgia Intermediário",
+                imagem: "images/Medalhas/Operação Ossos, Maquinas e Nostalgia 1.png",
+                conjunto: "Operação Ossos, Maquinas e Nostalgia",
+                pontos: 15,
+                descricao: "Por completar o Low Tier 2# da Operação Ossos, Máquinas e Nostalgia.",
+                credito: "Rishi_LockeD",
+                regra: "potato-oficial",
+                destaque: false,
+                raridade: "rara"
+            },
+            {
+                id: 7,
+                nome: "⚔️ Operação Ossos, Máquinas e Nostalgia Advanced",
+                imagem: "images/Medalhas/Operação Ossos, Maquinas e Nostalgia 2.png",
+                conjunto: "Operação Ossos, Maquinas e Nostalgia",
+                pontos: 25,
+                descricao: "Por completar o Padrão Tier 2# da Operação Ossos, Máquinas e Nostalgia.",
+                credito: "Rishi_LockeD",
+                regra: "potato-oficial",
+                destaque: false,
+                raridade: "rara"
+            },
+            {
+                id: 8,
+                nome: "⚔️ Operação Ossos, Máquinas e Nostalgia Delícia",
+                imagem: "images/Medalhas/Operação Ossos, Maquinas e Nostalgia 3.png",
+                conjunto: "Operação Ossos, Maquinas e Nostalgia",
+                pontos: 30,
+                descricao: "Por completar o DELICIA Tier 2# da Operação Ossos, Máquinas e Nostalgia.",
+                credito: "Rishi_LockeD",
+                regra: "potato-oficial",
+                destaque: false,
+                raridade: "mitica"
+            },
+            // ===== OPERAÇÃO TWO POTATO =====
+            {
+                id: 9,
+                nome: "⚔️ Operação Two Potato interlúdio",
+                imagem: "images/Medalhas/Operação Two Potato 666.png",
+                conjunto: "Operação Two Potato",
+                pontos: 10,
+                descricao: "Por completar o interlúdio da Operação Two Potato.",
+                credito: "JJMAGame / Jorge",
+                regra: "potato-oficial",
+                destaque: false,
+                raridade: "incomum"
+            },
+            {
+                id: 10,
+                nome: "⚔️ Operação Two Potato intermediario",
+                imagem: "images/Medalhas/Operação Two Potato 1.png",
+                conjunto: "Operação Two Potato",
+                pontos: 15,
+                descricao: "Por completar o interlúdio da Operação Two Potato.",
+                credito: "JJMAGame / Jorge",
+                regra: "potato-oficial",
+                destaque: false,
+                raridade: "rara"
+            },
+            {
+                id: 11,
+                nome: "⚔️ Operação Two Potato Advanced",
+                imagem: "images/Medalhas/Operação Two Potato 2.png",
+                conjunto: "Operação Two Potato",
+                pontos: 25,
+                descricao: "Por completar o interlúdio da Operação Two Potato.",
+                credito: "JJMAGame / Jorge",
+                regra: "potato-oficial",
+                destaque: false,
+                raridade: "rara"
+            },
+            {
+                id: 12,
+                nome: "⚔️ Operação Two Potato DELICIA",
+                imagem: "images/Medalhas/Operação Two Potato 3.png",
+                conjunto: "Operação Two Potato",
+                pontos: 30,
+                descricao: "Por completar o interlúdio da Operação Two Potato.",
+                credito: "JJMAGame / Jorge",
+                regra: "potato-oficial",
+                destaque: false,
+                raridade: "mitica"
+            },
+            {
+                id: 13,
+                nome: "⚔️ Operação Two Potato Especial",
+                imagem: "images/Medalhas/Operação Two Potato 4.png",
+                conjunto: "Operação Two Potato",
+                pontos: 100,
+                descricao: "Por completar o Evento de aniversario da Operação Two Potato do jorge ( Eu agradeço de bom coração).",
+                credito: "JJMAGame / Jorge",
+                regra: "potato-oficial",
+                destaque: true,
+                raridade: "lendaria"
+            },
+
+            // ===== OUTRAS MEDALHAS =====
+            {
+                id: 90,
+                nome: "🏅 Just Two of Us",
+                imagem: "images/Medalhas/RL.png",
+                conjunto: "Moriya Originais",
+                pontos: 0,
+                descricao: "Rishi E Liris",
+                credito: "Rishi_LockeD",
+                regra: "moriya",
+                destaque: false,
+                raridade: "lendaria"
+            },
+            {
+                id: 91,
+                nome: "🏅 Gatos Comedores de Burritos",
+                imagem: "images/Medalhas/Gatos Comedores de Burritos.png",
+                conjunto: "Moriya Originais",
+                pontos: 0,
+                descricao: "Uma marca de beleza não vai mudar quem somos ou como cada pônei se sente sobre nós! - Apple Bloom",
+                credito: "JJMAGame / Jorge",
+                regra: "moriya",
+                destaque: false,
+                raridade: "lendaria"
+            },
+            {
+                id: 92,
+                nome: "🏅 Beta-root",
+                imagem: "images/Medalhas/Beta-root.png",
+                conjunto: "Moriya Originais",
+                pontos: 0,
+                descricao: "'A Matrix é um sistema, Neo. E esse sistema é o nosso inimigo. Mas quando você está lá dentro, o que você vê? Empresários, professores, advogados, carpinteiros. As mentes das pessoas que estamos tentando salvar. Mas até que o façamos, essas pessoas ainda fazem parte do sistema e isso as torna nossas inimigas.— Morpheus' para quem participou da beta do moriya no root",
+                credito: "JJMAGame / Jorge",
+                regra: "moriya",
+                destaque: false,
+                raridade: "lendaria"
+            }
+            
+        ];
+
+        // ============================================================
+        // CONFIGURAÇÃO DAS RARIDADES
+        // ============================================================
+        const raridadesConfig = {
+            comum: { label: '⚪ Comum', class: 'comum', ordem: 0 },
+            incomum: { label: '🟢 Incomum', class: 'incomum', ordem: 1 },
+            rara: { label: '🔵 Rara', class: 'rara', ordem: 2 },
+            epica: { label: '🟣 Épica', class: 'epica', ordem: 3 },
+            mitica: { label: '🔴 Mítica', class: 'mitica', ordem: 4 },
+            lendaria: { label: '🟡 Lendária', class: 'lendaria', ordem: 5 }
+        };
+
+        function getRaridadeInfo(raridade) {
+            return raridadesConfig[raridade] || raridadesConfig.comum;
+        }
+
+        // ============================================================
+        // FUNÇÕES DE RENDERIZAÇÃO
+        // ============================================================
+        function getRegraLabel(regra) {
+            const labels = {
+                'mvm-oficial': '🔵 MvM Oficiais Events',
+                'potato-oficial': '🟤 Moriya Vs Potato',
+                'moriya': '🟢 Moriya Originais'
+            };
+            return labels[regra] || '📋 Sem regra';
+        }
+
+        function renderTop3() {
+            const container = document.getElementById('top3Container');
+            // Pega as medalhas com destaque e ordena por raridade (maior primeiro)
+            let top3 = medalhas
+                .filter(m => m.destaque === true)
+                .sort((a, b) => {
+                    const rarA = getRaridadeInfo(a.raridade).ordem;
+                    const rarB = getRaridadeInfo(b.raridade).ordem;
+                    return rarB - rarA || b.pontos - a.pontos;
+                })
+                .slice(0, 3);
+
+            // Se não tiver 3 medalhas em destaque, preenche com as melhores
+            while (top3.length < 3) {
+                const next = medalhas.find(m => !top3.includes(m));
+                if (next) {
+                    top3.push(next);
+                } else {
+                    break;
+                }
+            }
+
+            let html = '<div class="top3-title">🏆 <span class="highlight">Top 3</span> Medalhas</div>';
+            
+            const posicoes = ['🥇', '🥈', '🥉'];
+            top3.forEach((medalha, index) => {
+                const pos = posicoes[index] || `${index + 1}º`;
+                const rarInfo = getRaridadeInfo(medalha.raridade);
+                
+                html += `
+                    <div class="top3-card" onclick="abrirModalMedalha(${medalha.id})">
+                        <span class="top3-position">${pos}</span>
+                        <img src="${medalha.imagem}" alt="${medalha.nome}" class="medalha-img-top">
+                        <div class="medalha-nome-top">${medalha.nome}</div>
+                        <div class="medalha-pontos-top">⭐ ${medalha.pontos} pontos</div>
+                        <div class="medalha-conjunto-top">📁 ${medalha.conjunto}</div>
+                        <span class="raridade-tag-top" style="background: rgba(255,215,0,0.1); color: #ffd700; border: 1px solid #ffd700;">🟡 ${rarInfo.label}</span>
+                    </div>
+                `;
+            });
+
+            container.innerHTML = html;
+        }
+
+        function renderizarConjuntos() {
+            const select = document.getElementById('filtroConjunto');
+            const conjuntos = [...new Set(medalhas.map(m => m.conjunto))].sort();
+
+            select.innerHTML = '<option value="todos">Todos os Conjuntos</option>';
+            conjuntos.forEach(conjunto => {
+                const count = medalhas.filter(m => m.conjunto === conjunto).length;
+                select.innerHTML += `<option value="${conjunto}">📁 ${conjunto} (${count})</option>`;
+            });
+        }
+
+        function renderizarMedalhas() {
+            const grid = document.getElementById('medalhasGrid');
+            const conjuntoFiltro = document.getElementById('filtroConjunto').value;
+            const raridadeFiltro = document.getElementById('filtroRaridade').value;
+            const regraFiltro = document.getElementById('filtroRegra').value;
+            const buscaFiltro = document.getElementById('filtroBusca').value.toLowerCase();
+
+            let filtradas = medalhas.filter(m => {
+                if (conjuntoFiltro !== 'todos' && m.conjunto !== conjuntoFiltro) return false;
+                if (raridadeFiltro !== 'todos' && m.raridade !== raridadeFiltro) return false;
+                if (regraFiltro !== 'todos' && m.regra !== regraFiltro) return false;
+                if (buscaFiltro && !m.nome.toLowerCase().includes(buscaFiltro) && 
+                    !m.conjunto.toLowerCase().includes(buscaFiltro) &&
+                    !m.descricao.toLowerCase().includes(buscaFiltro)) return false;
+                return true;
+            });
+
+            // ===== ORDENAÇÃO POR RARIDADE (MAIOR PARA MENOR) =====
+            filtradas.sort((a, b) => {
+                const rarA = getRaridadeInfo(a.raridade).ordem;
+                const rarB = getRaridadeInfo(b.raridade).ordem;
+                // Primeiro por raridade (maior primeiro)
+                if (rarA !== rarB) return rarB - rarA;
+                // Depois por pontos (maior primeiro)
+                if (a.pontos !== b.pontos) return b.pontos - a.pontos;
+                // Depois por nome
+                return a.nome.localeCompare(b.nome);
+            });
+
+            document.getElementById('filtroCount').innerHTML = `<strong>${filtradas.length}</strong> medalhas`;
+
+            if (filtradas.length === 0) {
+                grid.innerHTML = `
+                    <div style="grid-column: 1 / -1; text-align: center; color: #88bb88; padding: 40px; font-size: 16px;">
+                        📭 Nenhuma medalha encontrada com estes filtros
+                    </div>
+                `;
+                return;
+            }
+
+            let html = '';
+            filtradas.forEach(medalha => {
+                const rarInfo = getRaridadeInfo(medalha.raridade);
+                const regraClass = medalha.regra || '';
+                const regraLabel = getRegraLabel(medalha.regra);
+                
+                html += `
+                    <div class="medalha-card raridade-${rarInfo.class}" onclick="abrirModalMedalha(${medalha.id})">
+                        <div class="raridade-tarja"></div>
+                        <span class="medalha-regra">${regraLabel}</span>
+                        <img src="${medalha.imagem}" alt="${medalha.nome}" class="medalha-img" loading="lazy">
+                        <div class="medalha-nome">${medalha.nome}</div>
+                        <div class="medalha-conjunto">📁 ${medalha.conjunto}</div>
+                        <div class="medalha-pontos">⭐ ${medalha.pontos} pts</div>
+                        <span class="raridade-tag">${rarInfo.label}</span>
+                        <div class="medalha-descricao">${medalha.descricao}</div>
+                        <div class="medalha-credito">🎨 ${medalha.credito}</div>
+                    </div>
+                `;
+            });
+
+            grid.innerHTML = html;
+        }
+
+        // ============================================================
+        // FUNÇÕES DO MODAL
+        // ============================================================
+        function abrirModalMedalha(id) {
+            const medalha = medalhas.find(m => m.id === id);
+            if (!medalha) return;
+
+            const rarInfo = getRaridadeInfo(medalha.raridade);
+
+            document.getElementById('modalMedalhaImg').src = medalha.imagem;
+            document.getElementById('modalMedalhaNome').textContent = medalha.nome;
+            document.getElementById('modalMedalhaConjunto').textContent = `📁 ${medalha.conjunto}`;
+            document.getElementById('modalMedalhaPontos').textContent = `⭐ ${medalha.pontos} pontos`;
+            document.getElementById('modalMedalhaDescricao').textContent = medalha.descricao;
+            document.getElementById('modalMedalhaCredito').innerHTML = `🎨 <strong>Criador(a):</strong> ${medalha.credito}`;
+            
+            const rarEl = document.getElementById('modalRaridade');
+            rarEl.textContent = rarInfo.label;
+            rarEl.className = `modal-raridade ${rarInfo.class}`;
+
+            document.getElementById('medalhaModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function fecharModalMedalha() {
+            document.getElementById('medalhaModal').classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        document.getElementById('medalhaModal').addEventListener('click', function(e) {
+            if (e.target === this) fecharModalMedalha();
+        });
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') fecharModalMedalha();
+        });
+
+        // ============================================================
+        // EVENTOS DOS FILTROS
+        // ============================================================
+        document.getElementById('filtroConjunto').addEventListener('change', renderizarMedalhas);
+        document.getElementById('filtroRaridade').addEventListener('change', renderizarMedalhas);
+        document.getElementById('filtroRegra').addEventListener('change', renderizarMedalhas);
+        document.getElementById('filtroBusca').addEventListener('input', renderizarMedalhas);
+
+        // ============================================================
+        // INICIALIZAR
+        // ============================================================
+        renderTop3();
+        renderizarConjuntos();
+        renderizarMedalhas();
+
+        console.log('🏅 Página de Medalhas carregada!');
+        console.log(`📊 ${medalhas.length} medalhas cadastradas`);
+        console.log(`📁 ${[...new Set(medalhas.map(m => m.conjunto))].length} conjuntos`);
+        console.log(`⭐ Raridades: Comum, Incomum, Rara, Épica, Mítica, Lendária`);
+    </script>
+
+</body>
+</html>
