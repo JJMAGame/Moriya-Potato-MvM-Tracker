@@ -813,19 +813,26 @@
         }
 
         /* ============================================================
-           LEGENDA DE STATUS (FIXA - DIREITA)
+           LEGENDA DE STATUS (FIXA - DIREITA) - AGORA ACIMA DAS MEDALHAS
         ============================================================ */
-        .legenda-status {
+        .legenda-container {
             position: fixed;
             bottom: 20px;
             right: 20px;
+            display: flex;
+            flex-direction: column-reverse;
+            gap: 10px;
+            z-index: 1000;
+            max-width: 280px;
+        }
+
+        /* ===== LEGENDA DE STATUS ===== */
+        .legenda-status {
             background: rgba(26, 26, 46, 0.92);
             border: 1px solid #2a2a4a;
             border-radius: 12px;
             padding: 15px 18px;
             box-shadow: 0 4px 30px rgba(0, 0, 0, 0.6);
-            z-index: 1000;
-            min-width: 140px;
             backdrop-filter: blur(10px);
             transition: all 0.3s ease;
         }
@@ -875,25 +882,21 @@
         }
 
         /* ============================================================
-           LEGENDA DE MEDALHAS - SEM CORTE
+           LEGENDA DE MEDALHAS - AGORA ABAIXO DO STATUS
         ============================================================ */
         .legenda-medalhas {
-            position: fixed;
-            bottom: 20px;
-            left: 20px;
             background: rgba(26, 26, 46, 0.92);
             border: 1px solid #2a2a4a;
             border-radius: 12px;
             padding: 15px 18px;
             box-shadow: 0 4px 30px rgba(0, 0, 0, 0.6);
-            z-index: 1000;
-            min-width: 180px;
-            max-width: 300px;
-            max-height: 70vh;
-            overflow-y: auto;
-            overflow-x: visible;
             backdrop-filter: blur(10px);
             transition: all 0.3s ease;
+            min-width: 180px;
+            max-width: 300px;
+            max-height: 55vh;
+            overflow-y: auto;
+            overflow-x: visible;
         }
         
         .legenda-medalhas .legenda-item {
@@ -1146,6 +1149,30 @@
             box-shadow: 0 2px 20px rgba(233, 69, 60, 0.5);
         }
 
+        /* ===== BOTÃO VER COLEÇÃO ===== */
+        .medalha-modal-overlay .medalha-modal .btn-ver-colecao {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: linear-gradient(135deg, #f1c40f, #f39c12);
+            color: #1a1a2e;
+            padding: 10px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            margin-top: 12px;
+            box-shadow: 0 4px 15px rgba(241, 196, 15, 0.3);
+        }
+
+        .medalha-modal-overlay .medalha-modal .btn-ver-colecao:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 25px rgba(241, 196, 15, 0.5);
+        }
+
         /* ===== IMAGEM AMPLIADA NO MODAL ===== */
         .medalha-modal-overlay .medalha-modal .medalha-ampliada {
             width: 300px;
@@ -1220,13 +1247,17 @@
            RESPONSIVO
         ============================================================ */
         @media (max-width: 768px) {
-            .legenda-medalhas {
+            .legenda-container {
                 bottom: 10px;
-                left: 10px;
+                right: 10px;
+                max-width: 200px;
+            }
+
+            .legenda-medalhas {
                 padding: 10px 12px;
                 min-width: 140px;
                 max-width: 180px;
-                max-height: 60vh;
+                max-height: 40vh;
             }
             
             .legenda-medalhas .legenda-item .medalha-preview {
@@ -1242,6 +1273,23 @@
                 font-size: 8px;
             }
 
+            .legenda-status {
+                padding: 10px 12px;
+            }
+
+            .legenda-status .legenda-titulo {
+                font-size: 10px;
+            }
+
+            .legenda-status .legenda-texto {
+                font-size: 11px;
+            }
+
+            .legenda-status .legenda-cor {
+                width: 12px;
+                height: 12px;
+            }
+
             .medalha-modal-overlay .medalha-modal .medalha-ampliada {
                 width: 150px;
                 height: 150px;
@@ -1249,6 +1297,11 @@
             
             .medalha-modal-overlay .medalha-modal {
                 padding: 20px;
+            }
+
+            .medalha-modal-overlay .medalha-modal .btn-ver-colecao {
+                font-size: 12px;
+                padding: 8px 18px;
             }
         }
 
@@ -1297,30 +1350,10 @@
             .btn-voltar {
                 display: block;
             }
-
-            .legenda-status {
-                bottom: 10px;
-                right: 10px;
-                padding: 12px 14px;
-                min-width: 110px;
-            }
-
-            .legenda-status .legenda-titulo {
-                font-size: 10px;
-            }
-
-            .legenda-status .legenda-texto {
-                font-size: 11px;
-            }
-
-            .legenda-status .legenda-cor {
-                width: 12px;
-                height: 12px;
-            }
         }
 
         @media (max-width: 480px) {
-            .legenda-medalhas {
+            .legenda-container {
                 display: none;
             }
         }
@@ -1384,39 +1417,41 @@
     </div>
 
     <!-- ============================================================
-         LEGENDA DE STATUS (FIXA - DIREITA)
+         LEGENDAS (FIXAS - DIREITA)
+         STATUS FICA EM CIMA, MEDALHAS EM BAIXO
     ============================================================ -->
-    <div class="legenda-status">
-        <div class="legenda-titulo">📊 Status dos Mapas</div>
-        <div class="legenda-item">
-            <span class="legenda-cor" style="background: #27ae60;"></span>
-            <span class="legenda-texto">Completo</span>
-            <span class="legenda-badge status-badge-completo">✅</span>
+    <div class="legenda-container">
+        <!-- ===== LEGENDA DE STATUS (EM CIMA) ===== -->
+        <div class="legenda-status">
+            <div class="legenda-titulo">📊 Status dos Mapas</div>
+            <div class="legenda-item">
+                <span class="legenda-cor" style="background: #27ae60;"></span>
+                <span class="legenda-texto">Completo</span>
+                <span class="legenda-badge status-badge-completo">✅</span>
+            </div>
+            <div class="legenda-item">
+                <span class="legenda-cor" style="background: #f39c12;"></span>
+                <span class="legenda-texto">Incompleto</span>
+                <span class="legenda-badge status-badge-incompleto">⏳</span>
+            </div>
+            <div class="legenda-item">
+                <span class="legenda-cor" style="background: #e74c3c;"></span>
+                <span class="legenda-texto">Corrompido</span>
+                <span class="legenda-badge status-badge-corrompido">⚠️</span>
+            </div>
+            <div class="legenda-item">
+                <span class="legenda-cor" style="background: #9b59b6;"></span>
+                <span class="legenda-texto">Canônico / Video</span>
+                <span class="legenda-badge status-badge-canonico">📜</span>
+            </div>
         </div>
-        <div class="legenda-item">
-            <span class="legenda-cor" style="background: #f39c12;"></span>
-            <span class="legenda-texto">Incompleto</span>
-            <span class="legenda-badge status-badge-incompleto">⏳</span>
-        </div>
-        <div class="legenda-item">
-            <span class="legenda-cor" style="background: #e74c3c;"></span>
-            <span class="legenda-texto">Corrompido</span>
-            <span class="legenda-badge status-badge-corrompido">⚠️</span>
-        </div>
-        <div class="legenda-item">
-            <span class="legenda-cor" style="background: #9b59b6;"></span>
-            <span class="legenda-texto">Canônico / Video</span>
-            <span class="legenda-badge status-badge-canonico">📜</span>
-        </div>
-    </div>
 
-    <!-- ============================================================
-         LEGENDA DE MEDALHAS (FIXA - ESQUERDA COM ACCORDION)
-    ============================================================ -->
-    <div class="legenda-medalhas" id="legendaMedalhas">
-        <div class="legenda-titulo">🏅 Medalhas</div>
-        <div id="medalhasList">
-            <!-- Inserido via JavaScript -->
+        <!-- ===== LEGENDA DE MEDALHAS (EM BAIXO) ===== -->
+        <div class="legenda-medalhas" id="legendaMedalhas">
+            <div class="legenda-titulo">🏅 Medalhas</div>
+            <div id="medalhasList">
+                <!-- Inserido via JavaScript -->
+            </div>
         </div>
     </div>
 
@@ -1429,6 +1464,10 @@
             <img id="medalhaAmpliada" class="medalha-ampliada" src="" alt="Medalha Ampliada">
             <div class="medalha-nome-modal" id="medalhaNomeModal">Nome da Medalha</div>
             <div class="medalha-credito-modal" id="medalhaCreditoModal">🎨 <strong>Criador(a):</strong> Desconhecido</div>
+            <!-- ===== BOTÃO VER COLEÇÃO ===== -->
+            <a href="Medalhas-museu.html" class="btn-ver-colecao">
+                🏅 Ver Coleção Completa
+            </a>
         </div>
     </div>
 
@@ -1959,7 +1998,7 @@
             conjuntoKeys.forEach((nomeConjunto, index) => {
                 const medalhas = conjuntos[nomeConjunto];
                 // ===== TODOS OS CONJUNTOS COMEÇAM FECHADOS =====
-                const isAberto = false;  // <-- ALTERADO PARA false
+                const isAberto = false;
                 
                 html += `
                     <div class="conjunto-item">
