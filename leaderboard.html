@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leaderboard - Moriya Ultimate Tracker</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --fundo-imagem: url('images/backgrounds.png');
+            --fundo-opacidade: 0.6;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #1a2e1a;
+            padding: 20px;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            background-image: var(--fundo-imagem);
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            opacity: var(--fundo-opacidade);
+        }
+
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: #1a2e1a;
+            opacity: 0.55;
+        }
+
+        /* ===== BARRA DE ROLAGEM ===== */
+        body::-webkit-scrollbar { width: 6px; }
+        body::-webkit-scrollbar-track { background: rgba(26, 26, 46, 0.2); border-radius: 3px; }
+        body::-webkit-scrollbar-thumb { background: rgba(42, 42, 74, 0.4); border-radius: 3px; }
+        body::-webkit-scrollbar-thumb:hover { background: rgba(42, 42, 74, 0.7); }
+        body { scrollbar-width: thin; scrollbar-color: rgba(42, 42, 74, 0.4) rgba(26, 26, 46, 0.2); }
+
+        /* ============================================================
+           BOTÃO MEDALHA - CANTO INFERIOR DIREITO (FORA DA LIGHTBAR)
+        ============================================================ */
+        .btn-medalha-flutuante {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            z-index: 9998;
+            background: linear-gradient(135deg, #f1c40f, #f39c12);
+            border: 3px solid transparent;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            font-size: 30px;
+            cursor: pointer;
+            box-shadow: 0 4px 25px rgba(241, 196, 15, 0.5),
+                        0 0 40px rgba(241, 196, 15, 0.2);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            color: #1a1a2e;
+            animation: medalhaPulse 2.5s ease-in-out infinite;
+            background-clip: padding-box;
+        }
+        
+        /* ===== BORDA GRADIENTE ANIMADA - SEM MASK ===== */
+        .btn-medalha-flutuante::before {
+            content: '';
+            position: absolute;
+            inset: -3px;
+            border-radius: 50%;
+            z-index: -1;
+            background: linear-gradient(135deg, #ffd700, #ff6b00, #ffd700, #ff6b00);
+            background-size: 300% 300%;
+            animation: medalhaBorderGlow 3s ease-in-out infinite;
+        }
+        
+        @keyframes medalhaBorderGlow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        @keyframes medalhaPulse {
+            0% { transform: scale(1); box-shadow: 0 4px 25px rgba(241, 196, 15, 0.5); }
+            50% { transform: scale(1.08); box-shadow: 0 4px 40px rgba(241, 196, 15, 0.8), 0 0 60px rgba(241, 196, 15, 0.3); }
+            100% { transform: scale(1); box-shadow: 0 4px 25px rgba(241, 196, 15, 0.5); }
+        }
+        
+        .btn-medalha-flutuante:hover {
+            transform: scale(1.15) rotate(5deg);
+            box-shadow: 0 4px 40px rgba(241, 196, 15, 0.9), 0 0 80px rgba(241, 196, 15, 0.4);
+        }
+        
+        .btn-medalha-flutuante:active {
+            transform: scale(0.92);
+        }
+        
+        .btn-medalha-flutuante .tooltip {
+            position: absolute;
+            bottom: calc(100% + 12px);
+            right: 50%;
+            transform: translateX(50%) scale(0.9);
+            background: rgba(26, 26, 46, 0.95);
+            color: #f0f0f0;
+            padding: 6px 16px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 600;
+            white-space: nowrap;
+            border: 1px solid #f1c40f;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+        
+        .btn-medalha-flutuante:hover .tooltip {
+            opacity: 1;
+            transform: translateX(50%) scale(1);
+        }
+        
+        /* ===== RESPONSIVO ===== */
+        @media (max-width: 768px) {
+            .btn-medalha-flutuante {
+                width: 50px;
+                height: 50px;
+                font-size: 24px;
+                bottom: 15px;
+                right: 15px;
+            }
+        
+            .btn-medalha-flutuante .tooltip {
+                font-size: 10px;
+                padding: 4px 12px;
+                bottom: calc(100% + 8px);
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .btn-medalha-flutuante {
+                width: 44px;
+                height: 44px;
+                font-size: 20px;
+                bottom: 12px;
+                right: 12px;
+            }
+        
+            .btn-medalha-flutuante .tooltip {
+                display: none;
+            }
+        }
+
+        /* ============================================================
+           CONTAINER
+        ============================================================ */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: #2a4a2a;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+            border: 1px solid #3a5a3a;
+        }
+
+        /* ============================================================
+           CABEÇALHO
+        ============================================================ */
+        .header {
+            text-align: center;
+            padding-bottom: 25px;
+            border-bottom: 2px solid #3a5a3a;
+            margin-bottom: 25px;
+        }
+
+        .header .badge {
+            display: inline-block;
+            background: #e94560;
+            color: white;
+            padding: 4px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+
+        .header h1 {
+            color: #f0f0f0;
+            font-size: 28px;
+            font-weight: 700;
+        }
+
+        .header h1 .highlight {
+            color: #ffd700;
+        }
+
+        .header .subtitle {
+            color: #aaddaa;
+            font-size: 14px;
+            margin-top: 8px;
+            opacity: 0.9;
+        }
+
+        /* ============================================================
+           ESTATÍSTICAS DO LEADERBOARD
+        ============================================================ */
+        .stats-leaderboard {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-bottom: 25px;
+            padding: 15px 20px;
+            background: rgba(26, 46, 26, 0.3);
+            border-radius: 10px;
+            border: 1px solid #3a5a3a;
+        }
+
+        .stats-leaderboard .stat-item {
+            color: #d0d0d0;
+            font-size: 14px;
+        }
+
+        .stats-leaderboard .stat-item strong {
+            color: #ffd700;
+            font-size: 18px;
+        }
+
+        /* ============================================================
+           GRADE DE USUÁRIOS
+        ============================================================ */
+        .user-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .user-card {
+            background: #1a3a1a;
+            border-radius: 12px;
+            padding: 20px;
+            border: 1px solid #3a5a3a;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .user-card:hover {
+            transform: translateY(-5px);
+            border-color: #ffd700;
+            box-shadow: 0 4px 30px rgba(255, 215, 0, 0.15);
+        }
+
+        /* ===== TOP 3 DESTAQUE ===== */
+        .user-card.top1 {
+            border-color: #ffd700;
+            background: rgba(255, 215, 0, 0.05);
+        }
+
+        .user-card.top2 {
+            border-color: #c0c0c0;
+            background: rgba(192, 192, 192, 0.05);
+        }
+
+        .user-card.top3 {
+            border-color: #cd7f32;
+            background: rgba(205, 127, 50, 0.05);
+        }
+
+        .user-card .top-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 28px;
+            font-weight: 700;
+            opacity: 0.3;
+        }
+
+        .user-card.top1 .top-badge { opacity: 1; color: #ffd700; }
+        .user-card.top2 .top-badge { opacity: 1; color: #c0c0c0; }
+        .user-card.top3 .top-badge { opacity: 1; color: #cd7f32; }
+
+        .user-card .user-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            display: block;
+            margin: 0 auto 12px auto;
+            border: 3px solid #3a5a3a;
+            transition: all 0.3s ease;
+        }
+
+        .user-card:hover .user-avatar {
+            border-color: #ffd700;
+        }
+
+        .user-card .user-name {
+            color: #f0f0f0;
+            font-size: 18px;
+            font-weight: 700;
+            text-align: center;
+        }
+
+        .user-card .user-desc {
+            color: #b0b0b0;
+            font-size: 13px;
+            text-align: center;
+            margin-top: 4px;
+            line-height: 1.4;
+        }
+
+        .user-card .user-stats {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px solid #2a4a2a;
+        }
+
+        .user-card .user-stats .stat {
+            text-align: center;
+        }
+
+        .user-card .user-stats .stat .value {
+            color: #ffd700;
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .user-card .user-stats .stat .label {
+            color: #88bb88;
+            font-size: 11px;
+        }
+
+        /* ===== MEDALHAS MINIATURAS ===== */
+        .user-card .mini-medalhas {
+            display: flex;
+            justify-content: center;
+            gap: 4px;
+            margin-top: 8px;
+            flex-wrap: wrap;
+        }
+
+        .user-card .mini-medalhas .mini-medalha {
+            width: 24px;
+            height: 24px;
+            object-fit: contain;
+            filter: drop-shadow(0 0 5px rgba(255, 215, 0, 0.15));
+            transition: all 0.3s ease;
+        }
+
+        .user-card:hover .mini-medalhas .mini-medalha {
+            filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.3));
+        }
+
+        /* ============================================================
+           BOTÃO VOLTAR
+        ============================================================ */
+        .btn-voltar {
+            display: inline-block;
+            background: #27ae60;
+            color: white;
+            padding: 10px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+            border: none;
+            text-align: center;
+        }
+
+        .btn-voltar:hover {
+            background: #2ecc71;
+            transform: scale(1.02);
+            box-shadow: 0 4px 20px rgba(39, 174, 96, 0.4);
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 2px solid #3a5a3a;
+        }
+
+        /* ============================================================
+           RESPONSIVO
+        ============================================================ */
+        @media (max-width: 768px) {
+            .container { padding: 20px; }
+            .header h1 { font-size: 22px; }
+            .user-grid { grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); }
+        }
+
+        @media (max-width: 480px) {
+            .container { padding: 15px; }
+            .header h1 { font-size: 18px; }
+            .user-grid { grid-template-columns: 1fr; }
+            .user-card .user-avatar { width: 60px; height: 60px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ============================================================
+         BOTÃO MEDALHA FLUTUANTE - CANTO INFERIOR DIREITO
+    ============================================================ -->
+    <a href="Medalhas-museu.html" class="btn-medalha-flutuante" title="Museu de Medalhas">
+        🏅
+        <span class="tooltip">🏅 Coleção de Medalhas</span>
+    </a>
+
+    <div class="container">
+        <!-- ===== CABEÇALHO ===== -->
+        <div class="header">
+            <span class="badge">🏆 Leaderboard</span>
+            <h1>Moriya Ultimate <span class="highlight">Tracker</span></h1>
+            <p class="subtitle">📊 Ranking dos caçadores de medalhas</p>
+        </div>
+
+        <!-- ===== ESTATÍSTICAS ===== -->
+        <div class="stats-leaderboard" id="statsLeaderboard">
+            <span class="stat-item">👥 Total de Caçadores: <strong id="totalUsers">0</strong></span>
+            <span class="stat-item">🏅 Total de Medalhas: <strong id="totalMedals">0</strong></span>
+            <span class="stat-item">⭐ Pontos Totais: <strong id="totalPoints">0</strong></span>
+        </div>
+
+        <!-- ===== GRADE DE USUÁRIOS ===== -->
+        <div class="user-grid" id="userGrid">
+            <!-- Inserido via JavaScript -->
+        </div>
+
+        <!-- ===== BOTÃO VOLTAR ===== -->
+        <div class="footer">
+            <a href="index.html" class="btn-voltar">⬅ Voltar para o Tracker</a>
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- JAVASCRIPT                                                    -->
+    <!-- ============================================================ -->
+
+    <script>
+        // ============================================================
+        // DADOS DOS USUÁRIOS - CADASTRE AQUI!
+        // ============================================================
+        const usuarios = [
+            {
+                id: 1,
+                nome: "JJMAGame / Jorge",
+                avatar: "images/perfil/jorge.jpg",
+                descricao: "Boykisser de ULTRAKILL",
+                medalhas: [5, 4, 3, 2, 1, 91, 92] // IDs das medalhas
+            },
+            {
+                id: 2,
+                nome: "Rishi_LockeD",
+                avatar: "images/perfil/Rishi.png",
+                descricao: "TouHou",
+                medalhas: [5, 4, 3, 2, 1, 90, 92]
+            },
+            {
+                id: 3,
+                nome: "Liris",
+                avatar: "images/perfil/Liris.png",
+                descricao: ".",
+                medalhas: [90]
+            },
+            {
+                id: 4,
+                nome: "Minerinho da Pesada",
+                avatar: "images/perfil/minerinho.jpg",
+                descricao: "Eu amo queijo",
+                medalhas: [2,1,]
+            },
+            {
+                id: 5,
+                nome: "💝Layla Eugene💝",
+                avatar: "images/perfil/Layla.jpg",
+                descricao: ".Yipeeee",
+                medalhas: [5,4, 91, 92]
+            },
+            {
+                id: 6,
+                nome: "LegãoTV",
+                avatar: "images/perfil/LegoCity.png",
+                descricao: ".",
+                medalhas: []
+            },
+            {
+                id: 7,
+                nome: "BlueGod",
+                avatar: "images/perfil/BG.png",
+                descricao: ".",
+                medalhas: [2]
+            },
+            {
+                id: 8,
+                nome: "Opa!Uata",
+                avatar: "images/perfil/Uata.png",
+                descricao: ".",
+                medalhas: []
+            },
+            {
+                id: 9,
+                nome: "NicoDoido",
+                avatar: "images/perfil/Nico.png",
+                descricao: ".",
+                medalhas: [2,92]
+            },
+            {
+                id: 10,
+                nome: "Flentru",
+                avatar: "images/perfil/Fler.jpg",
+                descricao: ".",
+                medalhas: [4,3,92]
+            },
+            {
+                id: 11,
+                nome: "Edgyiel",
+                avatar: "images/perfil/Egy.jpg",
+                descricao: "O Coringa da Equipe",
+                medalhas: [5,4,3,1,]
+            },
+            {
+                id: 12,
+                nome: "Erdbeere",
+                avatar: "images/perfil/Beere.jpg",
+                descricao: "Morango",
+                medalhas: [5,4,3,2,1,]
+            },
+            {
+                id: 13,
+                nome: "Matzin",
+                avatar: "images/perfil/Mat.jpg",
+                descricao: ".",
+                medalhas: [5,4,3,1]
+            }
+        ];
+
+        // ============================================================
+        // LISTA DE MEDALHAS (copiada do medalhas-museu.html)
+        // ============================================================
+        const medalhas = [
+            { id: 1, nome: "⚔️ Operação Flor Negra interlúdio", imagem: "images/Medalhas/Operação Flores Negra 666.png", pontos: 10 },
+            { id: 2, nome: "⚔️ Operação Flor Negra Intermediário", imagem: "images/Medalhas/Operação Flores Negra 1.png", pontos: 15 },
+            { id: 3, nome: "⚔️ Operação Flor Negra Advanced", imagem: "images/Medalhas/Operação Flores Negra 2.png", pontos: 25 },
+            { id: 4, nome: "⚔️ Operação Flor Negra Delícia", imagem: "images/Medalhas/Operação Flores Negra 3.png", pontos: 30 },
+            { id: 5, nome: "⚔️ Operação Ossos, Máquinas e Nostalgia interlúdio", imagem: "images/Medalhas/Operação Ossos, Maquinas e Nostalgia 666.png", pontos: 10 },
+            { id: 6, nome: "⚔️ Operação Ossos, Máquinas e Nostalgia Intermediário", imagem: "images/Medalhas/Operação Ossos, Maquinas e Nostalgia 1.png", pontos: 15 },
+            { id: 7, nome: "⚔️ Operação Ossos, Máquinas e Nostalgia Advanced", imagem: "images/Medalhas/Operação Ossos, Maquinas e Nostalgia 2.png", pontos: 25 },
+            { id: 8, nome: "⚔️ Operação Ossos, Máquinas e Nostalgia Delícia", imagem: "images/Medalhas/Operação Ossos, Maquinas e Nostalgia 3.png", pontos: 30 },
+            { id: 9, nome: "⚔️ Operação Two Potato interlúdio", imagem: "images/Medalhas/Operação Two Potato 666.png", pontos: 10 },
+            { id: 10, nome: "⚔️ Operação Two Potato intermediario", imagem: "images/Medalhas/Operação Two Potato 1.png", pontos: 15 },
+            { id: 11, nome: "⚔️ Operação Two Potato Advanced", imagem: "images/Medalhas/Operação Two Potato 2.png", pontos: 25 },
+            { id: 12, nome: "⚔️ Operação Two Potato Delícia", imagem: "images/Medalhas/Operação Two Potato 3.png", pontos: 30 },
+            { id: 13, nome: "⚔️ Operação Two Potato Especial", imagem: "images/Medalhas/Operação Two Potato 4.png", pontos: 100 },
+            { id: 90, nome: "🏅 Just Two of Us", imagem: "images/Medalhas/RL.png", pontos: 0 },
+            { id: 91, nome: "🏅 Gatos Comedores de Burritos", imagem: "images/Medalhas/Gatos Comedores de Burritos.png", pontos: 0 },
+            { id: 92, nome: "🏅 Beta-root", imagem: "images/Medalhas/Beta-root.png", pontos: 10 }
+        ];
+
+        // ============================================================
+        // FUNÇÕES
+        // ============================================================
+        function getMedalhaById(id) {
+            return medalhas.find(m => m.id === id);
+        }
+
+        function calcularPontos(medalhasIds) {
+            let total = 0;
+            medalhasIds.forEach(id => {
+                const medalha = getMedalhaById(id);
+                if (medalha) total += medalha.pontos;
+            });
+            return total;
+        }
+
+        function getMedalhasInfo(ids) {
+            return ids.map(id => getMedalhaById(id)).filter(m => m);
+        }
+
+        function renderizarLeaderboard() {
+            const grid = document.getElementById('userGrid');
+
+            // Calcula pontos e ordena
+            const usuariosComPontos = usuarios.map(u => ({
+                ...u,
+                totalPontos: calcularPontos(u.medalhas),
+                medalhasInfo: getMedalhasInfo(u.medalhas)
+            }));
+
+            // Ordena por pontos (maior primeiro)
+            usuariosComPontos.sort((a, b) => b.totalPontos - a.totalPontos);
+
+            // Atualiza estatísticas
+            document.getElementById('totalUsers').textContent = usuarios.length;
+            document.getElementById('totalMedals').textContent = medalhas.length;
+            const totalPontosGeral = usuariosComPontos.reduce((sum, u) => sum + u.totalPontos, 0);
+            document.getElementById('totalPoints').textContent = totalPontosGeral;
+
+            let html = '';
+            usuariosComPontos.forEach((user, index) => {
+                const posicao = index + 1;
+                let topClass = '';
+                let topEmoji = '';
+
+                if (posicao === 1) { topClass = 'top1'; topEmoji = '🥇'; }
+                else if (posicao === 2) { topClass = 'top2'; topEmoji = '🥈'; }
+                else if (posicao === 3) { topClass = 'top3'; topEmoji = '🥉'; }
+
+                // Pega as 5 primeiras medalhas para exibir como miniaturas
+                const miniMedalhas = user.medalhasInfo.slice(0, 5);
+
+                // Monta a URL do perfil
+                const perfilUrl = `perfil.html?id=${user.id}`;
+
+                html += `
+                    <a href="${perfilUrl}" class="user-card ${topClass}">
+                        <span class="top-badge">${topEmoji}</span>
+                        <img src="${user.avatar}" alt="${user.nome}" class="user-avatar">
+                        <div class="user-name">${user.nome}</div>
+                        <div class="user-desc">${user.descricao}</div>
+                        <div class="user-stats">
+                            <div class="stat">
+                                <div class="value">${user.totalPontos}</div>
+                                <div class="label">⭐ Pontos</div>
+                            </div>
+                            <div class="stat">
+                                <div class="value">${user.medalhas.length}</div>
+                                <div class="label">🏅 Medalhas</div>
+                            </div>
+                            <div class="stat">
+                                <div class="value">#${posicao}</div>
+                                <div class="label">📊 Rank</div>
+                            </div>
+                        </div>
+                        ${miniMedalhas.length > 0 ? `
+                            <div class="mini-medalhas">
+                                ${miniMedalhas.map(m => `
+                                    <img src="${m.imagem}" alt="${m.nome}" class="mini-medalha" title="${m.nome}">
+                                `).join('')}
+                                ${user.medalhas.length > 5 ? `<span style="color:#88bb88; font-size:11px; margin-left:4px;">+${user.medalhas.length - 5}</span>` : ''}
+                            </div>
+                        ` : ''}
+                    </a>
+                `;
+            });
+
+            grid.innerHTML = html;
+        }
+
+        // ============================================================
+        // INICIALIZAR
+        // ============================================================
+        renderizarLeaderboard();
+
+        console.log('🏆 Leaderboard carregado!');
+        console.log(`👥 ${usuarios.length} usuários cadastrados`);
+        console.log(`🏅 ${medalhas.length} medalhas disponíveis`);
+    </script>
+
+</body>
+</html>
