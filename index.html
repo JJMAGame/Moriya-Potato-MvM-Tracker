@@ -248,7 +248,7 @@
         }
 
         /* ============================================================
-           BOTÃO MEDALHA - CANTO INFERIOR DIREITO (FORA DA LIGHTBAR)
+           BOTÃO MEDALHA - CANTO INFERIOR DIREITO
            ============================================================ */
         .btn-medalha-flutuante {
             position: fixed;
@@ -331,8 +331,97 @@
             opacity: 1;
             transform: translateX(50%) scale(1);
         }
+
+        /* ============================================================
+           BOTÃO LEADERBOARD - CANTO INFERIOR DIREITO (ACIMA DA MEDALHA)
+           COM DEGRADÊ AZUL/CIANO
+           ============================================================ */
+        .btn-leaderboard-flutuante {
+            position: fixed;
+            bottom: 100px; /* Acima do botão de medalha */
+            right: 25px;
+            z-index: 9998;
+            background: linear-gradient(135deg, #00b4d8, #0077b6, #023e8a);
+            border: 3px solid transparent;
+            border-radius: 12px;
+            padding: 10px 18px;
+            font-size: 14px;
+            cursor: pointer;
+            box-shadow: 0 4px 25px rgba(0, 180, 216, 0.4),
+                        0 0 40px rgba(0, 180, 216, 0.15);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            color: #ffffff;
+            font-weight: 700;
+            gap: 6px;
+            animation: leaderboardPulse 2.5s ease-in-out infinite;
+            background-clip: padding-box;
+            text-shadow: 0 1px 4px rgba(0,0,0,0.3);
+        }
         
-        /* ===== RESPONSIVO ===== */
+        .btn-leaderboard-flutuante::before {
+            content: '';
+            position: absolute;
+            inset: -3px;
+            border-radius: 12px;
+            z-index: -1;
+            background: linear-gradient(135deg, #00b4d8, #0077b6, #023e8a, #00b4d8);
+            background-size: 300% 300%;
+            animation: leaderboardBorderGlow 3s ease-in-out infinite;
+        }
+        
+        @keyframes leaderboardBorderGlow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        @keyframes leaderboardPulse {
+            0% { transform: scale(1); box-shadow: 0 4px 25px rgba(0, 180, 216, 0.4); }
+            50% { transform: scale(1.05); box-shadow: 0 4px 40px rgba(0, 180, 216, 0.7), 0 0 60px rgba(0, 180, 216, 0.2); }
+            100% { transform: scale(1); box-shadow: 0 4px 25px rgba(0, 180, 216, 0.4); }
+        }
+        
+        .btn-leaderboard-flutuante:hover {
+            transform: scale(1.08) translateY(-2px);
+            box-shadow: 0 4px 40px rgba(0, 180, 216, 0.8), 0 0 80px rgba(0, 180, 216, 0.3);
+        }
+        
+        .btn-leaderboard-flutuante:active {
+            transform: scale(0.95);
+        }
+        
+        .btn-leaderboard-flutuante .tooltip {
+            position: absolute;
+            bottom: calc(100% + 10px);
+            right: 50%;
+            transform: translateX(50%) scale(0.9);
+            background: rgba(26, 26, 46, 0.95);
+            color: #f0f0f0;
+            padding: 5px 14px;
+            border-radius: 8px;
+            font-size: 11px;
+            font-weight: 600;
+            white-space: nowrap;
+            border: 1px solid #00b4d8;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+        
+        .btn-leaderboard-flutuante:hover .tooltip {
+            opacity: 1;
+            transform: translateX(50%) scale(1);
+        }
+
+        /* ============================================================
+           RESPONSIVO DOS BOTÕES
+           ============================================================ */
         @media (max-width: 768px) {
             .btn-medalha-flutuante {
                 width: 50px;
@@ -341,13 +430,26 @@
                 bottom: 15px;
                 right: 15px;
             }
-        
+            
             .btn-medalha-flutuante .tooltip {
                 font-size: 10px;
                 padding: 4px 12px;
                 bottom: calc(100% + 8px);
             }
         
+            .btn-leaderboard-flutuante {
+                padding: 8px 14px;
+                font-size: 12px;
+                bottom: 80px; /* Acima da medalha no mobile */
+                right: 15px;
+            }
+        
+            .btn-leaderboard-flutuante .tooltip {
+                font-size: 10px;
+                padding: 4px 12px;
+                bottom: calc(100% + 8px);
+            }
+
             .toast {
                 bottom: 80px;
                 right: 15px;
@@ -358,7 +460,7 @@
             }
         }
         
-        @media (max-width: 480px) {
+            @media (max-width: 480px) {
             .btn-medalha-flutuante {
                 width: 44px;
                 height: 44px;
@@ -366,8 +468,20 @@
                 bottom: 12px;
                 right: 12px;
             }
-        
+            
             .btn-medalha-flutuante .tooltip {
+                display: none;
+            }
+        
+            .btn-leaderboard-flutuante {
+                padding: 6px 10px;
+                font-size: 10px;
+                bottom: 68px; /* Acima da medalha no mobile pequeno */
+                right: 12px;
+                border-radius: 8px;
+            }
+        
+            .btn-leaderboard-flutuante .tooltip {
                 display: none;
             }
         }
@@ -1195,21 +1309,21 @@
         .toast {
             position: fixed;
             bottom: 30px;
-            right: 100px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
             background: #27ae60;
             color: white;
             padding: 12px 24px;
             border-radius: 8px;
             font-weight: 600;
             box-shadow: 0 4px 15px rgba(0,0,0,0.5);
-            transform: translateY(100px);
             opacity: 0;
             transition: all 0.4s ease;
             z-index: 999;
         }
 
         .toast.show {
-            transform: translateY(0);
+            transform: translateX(-50%) translateY(0);
             opacity: 1;
         }
 
@@ -1515,13 +1629,30 @@
                 bottom: calc(100% + 8px);
             }
 
+            .btn-leaderboard-flutuante {
+                padding: 10px 16px;
+                font-size: 13px;
+                bottom: 15px;
+                left: 15px;
+            }
+
+            .btn-leaderboard-flutuante .tooltip {
+                font-size: 10px;
+                padding: 4px 12px;
+                bottom: calc(100% + 8px);
+            }
+
             .toast {
                 bottom: 80px;
-                right: 15px;
-                left: 15px;
+                left: 50%;
+                transform: translateX(-50%) translateY(100px);
                 text-align: center;
                 font-size: 13px;
                 padding: 10px 16px;
+            }
+
+            .toast.show {
+                transform: translateX(-50%) translateY(0);
             }
         }
 
@@ -1566,6 +1697,18 @@
             .btn-medalha-flutuante .tooltip {
                 display: none;
             }
+
+            .btn-leaderboard-flutuante {
+                padding: 8px 12px;
+                font-size: 11px;
+                bottom: 12px;
+                left: 12px;
+                border-radius: 8px;
+            }
+
+            .btn-leaderboard-flutuante .tooltip {
+                display: none;
+            }
         }
 
         @media (min-width: 1367px) {
@@ -1607,16 +1750,25 @@
 <body>
 
     <!-- ============================================================
-         BOTÃO MEDALHA FLUTUANTE - CANTO INFERIOR DIREITO
-         ============================================================ -->
+         BOTÃO LEADERBOARD - CANTO INFERIOR ESQUERDO
+         (DEGRADÊ AZUL/CIANO)
+    ============================================================ -->
+    <a href="leaderboard.html" class="btn-leaderboard-flutuante" title="Leaderboard">
+        🏆 Ranking
+        <span class="tooltip">🏆 Ver Leaderboard</span>
+    </a>
+
+    <!-- ============================================================
+         BOTÃO MEDALHA - CANTO INFERIOR DIREITO
+    ============================================================ -->
     <a href="Medalhas-museu.html" class="btn-medalha-flutuante" title="Museu de Medalhas">
         🏅
-        <span class="tooltip">Conquistas</span>
+        <span class="tooltip">🏅 Coleção de Medalhas</span>
     </a>
 
     <!-- ============================================================
          CONTAINER DE BOAS-VINDAS
-         ============================================================ -->
+    ============================================================ -->
     <div class="welcome-overlay" id="welcomeOverlay">
         <div class="welcome-container rainbow-border">
             <button class="welcome-close-btn" onclick="fecharWelcome()" aria-label="Fechar">✕</button>
@@ -1631,10 +1783,10 @@
                 <!-- ===== IMAGENS ===== -->
                 <div class="welcome-images">
                     <a href="https://moriyamvm.base44.app/" target="_blank" rel="noopener noreferrer" title="Visitar site da Moriya">
-                        <img src="images/Moriya.png" alt="Moriya PvE" class="welcome-img" loading="lazy">
+                        <img src="images/perfil/Moriya.png" alt="Moriya PvE" class="welcome-img" loading="lazy">
                     </a>
                     <a href="https://archive.potato.tf/" target="_blank" rel="noopener noreferrer" title="Visitar site da Potato.tf">
-                        <img src="images/Potato.png" alt="Potato.tf" class="welcome-img" loading="lazy">
+                        <img src="images/perfil/Potato.png" alt="Potato.tf" class="welcome-img" loading="lazy">
                     </a>
                 </div>
 
@@ -1716,9 +1868,9 @@
     ============================================================ -->
     <div class="container">
        <h1>
-         <img src="images/Moriya.png" alt="Moriya PvE" class="titulo-icon1">  
+         <img src="images/perfil/Moriya.png" alt="Moriya PvE" class="titulo-icon1">  
          ⚙️ JJMAGame / Moriya Ultimate Missions Tracker
-         <img src="images/Potato.png" alt="Potato.tf" class="titulo-icon2">
+         <img src="images/perfil/Potato.png" alt="Potato.tf" class="titulo-icon2">
        </h1>
        
        <!-- ============================================================
@@ -1866,7 +2018,6 @@
     <!-- ============================================================ -->
 
     <script>
-
         // ============================================================
         // ROTAÇÃO DE BACKGROUNDS
         // ============================================================

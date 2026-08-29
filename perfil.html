@@ -59,6 +59,122 @@
         body { scrollbar-width: thin; scrollbar-color: rgba(42, 42, 74, 0.4) rgba(26, 26, 46, 0.2); }
 
         /* ============================================================
+           BOTÃO MEDALHA - CANTO INFERIOR DIREITO (FORA DA LIGHTBAR)
+        ============================================================ */
+        .btn-medalha-flutuante {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            z-index: 9998;
+            background: linear-gradient(135deg, #f1c40f, #f39c12);
+            border: 3px solid transparent;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            font-size: 30px;
+            cursor: pointer;
+            box-shadow: 0 4px 25px rgba(241, 196, 15, 0.5),
+                        0 0 40px rgba(241, 196, 15, 0.2);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            color: #1a1a2e;
+            animation: medalhaPulse 2.5s ease-in-out infinite;
+            background-clip: padding-box;
+        }
+        
+        /* ===== BORDA GRADIENTE ANIMADA - SEM MASK ===== */
+        .btn-medalha-flutuante::before {
+            content: '';
+            position: absolute;
+            inset: -3px;
+            border-radius: 50%;
+            z-index: -1;
+            background: linear-gradient(135deg, #ffd700, #ff6b00, #ffd700, #ff6b00);
+            background-size: 300% 300%;
+            animation: medalhaBorderGlow 3s ease-in-out infinite;
+        }
+        
+        @keyframes medalhaBorderGlow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        @keyframes medalhaPulse {
+            0% { transform: scale(1); box-shadow: 0 4px 25px rgba(241, 196, 15, 0.5); }
+            50% { transform: scale(1.08); box-shadow: 0 4px 40px rgba(241, 196, 15, 0.8), 0 0 60px rgba(241, 196, 15, 0.3); }
+            100% { transform: scale(1); box-shadow: 0 4px 25px rgba(241, 196, 15, 0.5); }
+        }
+        
+        .btn-medalha-flutuante:hover {
+            transform: scale(1.15) rotate(5deg);
+            box-shadow: 0 4px 40px rgba(241, 196, 15, 0.9), 0 0 80px rgba(241, 196, 15, 0.4);
+        }
+        
+        .btn-medalha-flutuante:active {
+            transform: scale(0.92);
+        }
+        
+        .btn-medalha-flutuante .tooltip {
+            position: absolute;
+            bottom: calc(100% + 12px);
+            right: 50%;
+            transform: translateX(50%) scale(0.9);
+            background: rgba(26, 26, 46, 0.95);
+            color: #f0f0f0;
+            padding: 6px 16px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 600;
+            white-space: nowrap;
+            border: 1px solid #f1c40f;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+        
+        .btn-medalha-flutuante:hover .tooltip {
+            opacity: 1;
+            transform: translateX(50%) scale(1);
+        }
+        
+        /* ===== RESPONSIVO ===== */
+        @media (max-width: 768px) {
+            .btn-medalha-flutuante {
+                width: 50px;
+                height: 50px;
+                font-size: 24px;
+                bottom: 15px;
+                right: 15px;
+            }
+        
+            .btn-medalha-flutuante .tooltip {
+                font-size: 10px;
+                padding: 4px 12px;
+                bottom: calc(100% + 8px);
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .btn-medalha-flutuante {
+                width: 44px;
+                height: 44px;
+                font-size: 20px;
+                bottom: 12px;
+                right: 12px;
+            }
+        
+            .btn-medalha-flutuante .tooltip {
+                display: none;
+            }
+        }
+
+        /* ============================================================
            CONTAINER
         ============================================================ */
         .container {
@@ -198,6 +314,8 @@
             text-align: center;
             border: 1px solid #3a5a3a;
             transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
         }
 
         .medalha-card:hover {
@@ -227,6 +345,59 @@
             font-weight: 600;
             margin-top: 4px;
         }
+
+        /* ============================================================
+           TARJAS DE RARIDADE NO PERFIL
+        ============================================================ */
+        .medalha-card .raridade-tarja {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+        }
+
+        .medalha-card .raridade-tag {
+            display: inline-block;
+            padding: 2px 12px;
+            border-radius: 10px;
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-top: 4px;
+        }
+
+        /* ===== CORES DAS RARIDADES ===== */
+        .raridade-comum .raridade-tarja { background: #7f8c8d; }
+        .raridade-comum .raridade-tag { background: rgba(127, 140, 141, 0.2); color: #bdc3c7; border: 1px solid #7f8c8d; }
+
+        .raridade-incomum .raridade-tarja { background: #2ecc71; }
+        .raridade-incomum .raridade-tag { background: rgba(46, 204, 113, 0.15); color: #2ecc71; border: 1px solid #2ecc71; }
+
+        .raridade-rara .raridade-tarja { background: #3498db; }
+        .raridade-rara .raridade-tag { background: rgba(52, 152, 219, 0.15); color: #3498db; border: 1px solid #3498db; }
+
+        .raridade-epica .raridade-tarja { background: #9b59b6; }
+        .raridade-epica .raridade-tag { background: rgba(155, 89, 182, 0.15); color: #bb86fc; border: 1px solid #9b59b6; }
+
+        .raridade-mitica .raridade-tarja { background: #e74c3c; }
+        .raridade-mitica .raridade-tag { background: rgba(231, 76, 60, 0.15); color: #ff6b6b; border: 1px solid #e74c3c; }
+
+        .raridade-lendaria .raridade-tarja { background: #ffd700; }
+        .raridade-lendaria .raridade-tag { background: rgba(255, 215, 0, 0.15); color: #ffd700; border: 1px solid #ffd700; }
+
+        .raridade-contrabando .raridade-tarja { background: #e67e22; }
+        .raridade-contrabando .raridade-tag { background: rgba(230, 126, 34, 0.15); color: #f39c12; border: 1px solid #e67e22; }
+
+        /* ===== EFEITO GLOW POR RARIDADE ===== */
+        .raridade-comum:hover { border-color: #7f8c8d; }
+        .raridade-incomum:hover { border-color: #2ecc71; box-shadow: 0 0 20px rgba(46, 204, 113, 0.15); }
+        .raridade-rara:hover { border-color: #3498db; box-shadow: 0 0 20px rgba(52, 152, 219, 0.15); }
+        .raridade-epica:hover { border-color: #9b59b6; box-shadow: 0 0 20px rgba(155, 89, 182, 0.15); }
+        .raridade-mitica:hover { border-color: #e74c3c; box-shadow: 0 0 20px rgba(231, 76, 60, 0.15); }
+        .raridade-lendaria:hover { border-color: #ffd700; box-shadow: 0 0 30px rgba(255, 215, 0, 0.2); }
+        .raridade-contrabando:hover { border-color: #e67e22; box-shadow: 0 0 20px rgba(230, 126, 34, 0.15); }
 
         /* ============================================================
            SEM MEDALHAS
@@ -292,6 +463,14 @@
 </head>
 <body>
 
+    <!-- ============================================================
+         BOTÃO MEDALHA FLUTUANTE - CANTO INFERIOR DIREITO
+    ============================================================ -->
+    <a href="Medalhas-museu.html" class="btn-medalha-flutuante" title="Museu de Medalhas">
+        🏅
+        <span class="tooltip">🏅 Coleção de Medalhas</span>
+    </a>
+
     <div class="container">
         <!-- ===== NAVEGAÇÃO ===== -->
         <div class="nav-top">
@@ -332,7 +511,7 @@
                 nome: "JJMAGame / Jorge",
                 avatar: "images/perfil/jorge.jpg",
                 descricao: "Boykisser de ULTRAKILL",
-                medalhas: [5, 4, 3, 2, 1, 91, 92] // IDs das medalhas
+                medalhas: [5, 4, 3, 2, 1, 91, 92]
             },
             {
                 id: 2,
@@ -353,14 +532,14 @@
                 nome: "Minerinho da Pesada",
                 avatar: "images/perfil/minerinho.jpg",
                 descricao: "Eu amo queijo",
-                medalhas: [2,1,]
+                medalhas: [2, 1]
             },
             {
                 id: 5,
                 nome: "💝Layla Eugene💝",
                 avatar: "images/perfil/Layla.jpg",
                 descricao: ".Yipeeee",
-                medalhas: [5,4, 91, 92]
+                medalhas: [5, 4, 91, 92]
             },
             {
                 id: 6,
@@ -388,59 +567,76 @@
                 nome: "NicoDoido",
                 avatar: "images/perfil/Nico.png",
                 descricao: ".",
-                medalhas: [2,92]
+                medalhas: [2, 92]
             },
             {
                 id: 10,
                 nome: "Flentru",
                 avatar: "images/perfil/Fler.jpg",
                 descricao: ".",
-                medalhas: [4,3,92]
+                medalhas: [4, 3, 92]
             },
             {
                 id: 11,
                 nome: "Edgyiel",
                 avatar: "images/perfil/Egy.jpg",
                 descricao: "O Coringa da Equipe",
-                medalhas: [5,4,3,1,]
+                medalhas: [5, 4, 3, 1]
             },
             {
                 id: 12,
                 nome: "Erdbeere",
                 avatar: "images/perfil/Beere.jpg",
                 descricao: "Morango",
-                medalhas: [5,4,3,2,1,]
+                medalhas: [5, 4, 3, 2, 1]
             },
             {
                 id: 13,
                 nome: "Matzin",
                 avatar: "images/perfil/Mat.jpg",
                 descricao: ".",
-                medalhas: [5,4,3,1]
+                medalhas: [5, 4, 3, 1]
             }
         ];
 
         // ============================================================
-        // LISTA DE MEDALHAS
+        // LISTA DE MEDALHAS (COPIADA DO MEDALHAS-MUSEU.HTML)
         // ============================================================
         const medalhas = [
-            { id: 1, nome: "⚔️ Operação Flor Negra interlúdio", imagem: "images/Medalhas/Operação Flores Negra 666.png", pontos: 10 },
-            { id: 2, nome: "⚔️ Operação Flor Negra Intermediário", imagem: "images/Medalhas/Operação Flores Negra 1.png", pontos: 15 },
-            { id: 3, nome: "⚔️ Operação Flor Negra Advanced", imagem: "images/Medalhas/Operação Flores Negra 2.png", pontos: 25 },
-            { id: 4, nome: "⚔️ Operação Flor Negra Delícia", imagem: "images/Medalhas/Operação Flores Negra 3.png", pontos: 30 },
-            { id: 5, nome: "⚔️ Operação Ossos, Máquinas e Nostalgia interlúdio", imagem: "images/Medalhas/Operação Ossos, Maquinas e Nostalgia 666.png", pontos: 10 },
-            { id: 6, nome: "⚔️ Operação Ossos, Máquinas e Nostalgia Intermediário", imagem: "images/Medalhas/Operação Ossos, Maquinas e Nostalgia 1.png", pontos: 15 },
-            { id: 7, nome: "⚔️ Operação Ossos, Máquinas e Nostalgia Advanced", imagem: "images/Medalhas/Operação Ossos, Maquinas e Nostalgia 2.png", pontos: 25 },
-            { id: 8, nome: "⚔️ Operação Ossos, Máquinas e Nostalgia Delícia", imagem: "images/Medalhas/Operação Ossos, Maquinas e Nostalgia 3.png", pontos: 30 },
-            { id: 9, nome: "⚔️ Operação Two Potato interlúdio", imagem: "images/Medalhas/Operação Two Potato 666.png", pontos: 10 },
-            { id: 10, nome: "⚔️ Operação Two Potato intermediario", imagem: "images/Medalhas/Operação Two Potato 1.png", pontos: 15 },
-            { id: 11, nome: "⚔️ Operação Two Potato Advanced", imagem: "images/Medalhas/Operação Two Potato 2.png", pontos: 25 },
-            { id: 12, nome: "⚔️ Operação Two Potato DELICIA", imagem: "images/Medalhas/Operação Two Potato 3.png", pontos: 30 },
-            { id: 13, nome: "⚔️ Operação Two Potato Especial", imagem: "images/Medalhas/Operação Two Potato 4.png", pontos: 100 },
-            { id: 90, nome: "🏅 Just Two of Us", imagem: "images/Medalhas/RL.png", pontos: 0 },
-            { id: 91, nome: "🏅 Gatos Comedores de Burritos", imagem: "images/Medalhas/Gatos Comedores de Burritos.png", pontos: 0 },
-            { id: 92, nome: "🏅 Beta-root", imagem: "images/Medalhas/Beta-root.png", pontos: 10 }
+            { id: 1, nome: "⚔️ Operação Flor Negra interlúdio", imagem: "images/Medalhas/Operação Flores Negra 666.png", pontos: 10, raridade: "incomum" },
+            { id: 2, nome: "⚔️ Operação Flor Negra Intermediário", imagem: "images/Medalhas/Operação Flores Negra 1.png", pontos: 15, raridade: "rara" },
+            { id: 3, nome: "⚔️ Operação Flor Negra Advanced", imagem: "images/Medalhas/Operação Flores Negra 2.png", pontos: 25, raridade: "rara" },
+            { id: 4, nome: "⚔️ Operação Flor Negra Delícia", imagem: "images/Medalhas/Operação Flores Negra 3.png", pontos: 30, raridade: "mitica" },
+            { id: 5, nome: "⚔️ Operação Ossos, Máquinas e Nostalgia interlúdio", imagem: "images/Medalhas/Operação Ossos, Maquinas e Nostalgia 666.png", pontos: 10, raridade: "incomum" },
+            { id: 6, nome: "⚔️ Operação Ossos, Máquinas e Nostalgia Intermediário", imagem: "images/Medalhas/Operação Ossos, Maquinas e Nostalgia 1.png", pontos: 15, raridade: "rara" },
+            { id: 7, nome: "⚔️ Operação Ossos, Máquinas e Nostalgia Advanced", imagem: "images/Medalhas/Operação Ossos, Maquinas e Nostalgia 2.png", pontos: 25, raridade: "rara" },
+            { id: 8, nome: "⚔️ Operação Ossos, Máquinas e Nostalgia Delícia", imagem: "images/Medalhas/Operação Ossos, Maquinas e Nostalgia 3.png", pontos: 30, raridade: "mitica" },
+            { id: 9, nome: "⚔️ Operação Two Potato interlúdio", imagem: "images/Medalhas/Operação Two Potato 666.png", pontos: 10, raridade: "incomum" },
+            { id: 10, nome: "⚔️ Operação Two Potato intermediario", imagem: "images/Medalhas/Operação Two Potato 1.png", pontos: 15, raridade: "rara" },
+            { id: 11, nome: "⚔️ Operação Two Potato Advanced", imagem: "images/Medalhas/Operação Two Potato 2.png", pontos: 25, raridade: "rara" },
+            { id: 12, nome: "⚔️ Operação Two Potato DELICIA", imagem: "images/Medalhas/Operação Two Potato 3.png", pontos: 30, raridade: "mitica" },
+            { id: 13, nome: "⚔️ Operação Two Potato Especial", imagem: "images/Medalhas/Operação Two Potato 4.png", pontos: 100, raridade: "lendaria" },
+            { id: 90, nome: "🏅 Just Two of Us", imagem: "images/Medalhas/RL.png", pontos: 0, raridade: "lendaria" },
+            { id: 91, nome: "🏅 Gatos Comedores de Burritos", imagem: "images/Medalhas/Gatos Comedores de Burritos.png", pontos: 0, raridade: "lendaria" },
+            { id: 92, nome: "🏅 Beta-root", imagem: "images/Medalhas/Beta-Root.png", pontos: 10, raridade: "contrabando" }
         ];
+
+        // ============================================================
+        // CONFIGURAÇÃO DAS RARIDADES
+        // ============================================================
+        const raridadesConfig = {
+            comum: { label: '⚪ Comum', class: 'comum', ordem: 0 },
+            incomum: { label: '🟢 Incomum', class: 'incomum', ordem: 1 },
+            rara: { label: '🔵 Rara', class: 'rara', ordem: 2 },
+            epica: { label: '🟣 Épica', class: 'epica', ordem: 3 },
+            contrabando: { label: '🟠 Contrabando', class: 'contrabando', ordem: 4 },
+            mitica: { label: '🔴 Mítica', class: 'mitica', ordem: 5 },
+            lendaria: { label: '🟡 Lendária', class: 'lendaria', ordem: 6 }
+        };
+
+        function getRaridadeInfo(raridade) {
+            return raridadesConfig[raridade] || raridadesConfig.comum;
+        }
 
         // ============================================================
         // FUNÇÕES
@@ -463,7 +659,6 @@
         }
 
         function renderizarPerfil() {
-            // Pega o ID da URL
             const params = new URLSearchParams(window.location.search);
             const userId = params.get('id');
 
@@ -513,7 +708,7 @@
                 </div>
             `;
 
-            // ===== MEDALHAS =====
+            // ===== MEDALHAS COM TARJAS DE RARIDADE =====
             const grid = document.getElementById('medalhasGrid');
 
             if (medalhasInfo.length === 0) {
@@ -525,16 +720,20 @@
                 return;
             }
 
-            // Ordena por pontos (maior primeiro)
             medalhasInfo.sort((a, b) => (b.pontos || 0) - (a.pontos || 0));
 
             let html = '';
             medalhasInfo.forEach(medalha => {
+                const raridade = medalha.raridade || 'comum';
+                const rarInfo = getRaridadeInfo(raridade);
+                
                 html += `
-                    <div class="medalha-card">
+                    <div class="medalha-card raridade-${rarInfo.class}">
+                        <div class="raridade-tarja"></div>
                         <img src="${medalha.imagem}" alt="${medalha.nome}" class="medalha-img">
                         <div class="medalha-nome">${medalha.nome}</div>
                         <div class="medalha-pontos">⭐ ${medalha.pontos || 0} pts</div>
+                        <span class="raridade-tag">${rarInfo.label}</span>
                     </div>
                 `;
             });
@@ -548,6 +747,8 @@
         renderizarPerfil();
 
         console.log('👤 Perfil carregado!');
+        console.log(`📊 ${medalhas.length} medalhas disponíveis`);
+        console.log(`👥 ${usuarios.length} usuários cadastrados`);
     </script>
 
 </body>
