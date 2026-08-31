@@ -354,6 +354,81 @@
         }
 
         /* ============================================================
+           CORES DA DIFICULDADE (MESMAS DO INDEX)
+        ============================================================ */
+        .difficulty-intermediate {
+            background-color: #2d7d46 !important;
+            color: #ffffff;
+            font-weight: 600;
+            padding: 2px 10px;
+            border-radius: 20px;
+            display: inline-block;
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .difficulty-advanced {
+            background-color: #d4a017 !important;
+            color: #1a1a2e;
+            font-weight: 600;
+            padding: 2px 10px;
+            border-radius: 20px;
+            display: inline-block;
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .difficulty-expert {
+            background-color: #e74c3c !important;
+            color: #ffffff;
+            font-weight: 600;
+            padding: 2px 10px;
+            border-radius: 20px;
+            display: inline-block;
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .difficulty-nightmare {
+            background-color: #8e44ad !important;
+            color: #ffffff;
+            font-weight: 600;
+            padding: 2px 10px;
+            border-radius: 20px;
+            display: inline-block;
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .difficulty-master {
+            background-color: #c0392b !important;
+            color: #ffffff;
+            font-weight: 600;
+            padding: 2px 10px;
+            border-radius: 20px;
+            display: inline-block;
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .difficulty-reverse {
+            background-color: #2980b9 !important;
+            color: #ffffff;
+            font-weight: 600;
+            padding: 2px 10px;
+            border-radius: 20px;
+            display: inline-block;
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* ============================================================
            LISTA DE EVENTOS
         ============================================================ */
         .evento-card {
@@ -612,7 +687,7 @@
         }
 
         /* ============================================================
-           MAPAS COM STATUS
+           MAPAS COM STATUS E DIFICULDADE
         ============================================================ */
         .evento-card .mapa-item {
             display: flex;
@@ -813,7 +888,7 @@
         }
 
         /* ============================================================
-           LEGENDA DE STATUS (FIXA - DIREITA) - AGORA ACIMA DAS MEDALHAS
+           LEGENDA DE STATUS (FIXA - DIREITA) - ACIMA DAS MEDALHAS
         ============================================================ */
         .legenda-container {
             position: fixed;
@@ -882,7 +957,7 @@
         }
 
         /* ============================================================
-           LEGENDA DE MEDALHAS - AGORA ABAIXO DO STATUS
+           LEGENDA DE MEDALHAS - ABAIXO DO STATUS
         ============================================================ */
         .legenda-medalhas {
             background: rgba(26, 26, 46, 0.92);
@@ -1303,6 +1378,16 @@
                 font-size: 12px;
                 padding: 8px 18px;
             }
+
+            .evento-card .mapa-item {
+                flex-wrap: wrap;
+                gap: 6px;
+            }
+
+            .evento-card .mapa-item .mapa-nome {
+                font-size: 13px;
+                width: 100%;
+            }
         }
 
         @media (max-width: 600px) {
@@ -1321,11 +1406,6 @@
             .evento-card .evento-titulo {
                 flex-direction: column;
                 align-items: flex-start;
-            }
-
-            .evento-card .mapa-item {
-                flex-wrap: wrap;
-                gap: 8px;
             }
 
             .regras-filtros {
@@ -1350,11 +1430,31 @@
             .btn-voltar {
                 display: block;
             }
+
+            .difficulty-intermediate,
+            .difficulty-advanced,
+            .difficulty-expert,
+            .difficulty-nightmare,
+            .difficulty-master,
+            .difficulty-reverse {
+                font-size: 9px;
+                padding: 2px 8px;
+            }
         }
 
         @media (max-width: 480px) {
             .legenda-container {
                 display: none;
+            }
+
+            .evento-card .mapa-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 4px;
+            }
+
+            .evento-card .mapa-item .mapa-nome {
+                font-size: 12px;
             }
         }
     </style>
@@ -1488,9 +1588,9 @@
                 dataInicio: "2026-07-31T18:00:00",
                 dataFim: "2026-08-01T00:00:00",
                 mapas: [
-                    { nome: "Yiresa - Black East", wave: "7 Wave", status: "canonico" },
-                    { nome: "Sequoia - Forest Fight", wave: "7 Wave", status: "completo" },
-                    { nome: "Condemned - Trespasser", wave: "Unica Wave", status: "incompleto" }
+                    { nome: "Yiresa - Black East", wave: "7 Wave", status: "canonico", dificuldade: "Intermediate" },
+                    { nome: "Sequoia - Forest Fight", wave: "7 Wave", status: "completo", dificuldade: "Advanced" },
+                    { nome: "Condemned - Trespasser", wave: "Unica Wave", status: "incompleto", dificuldade: "Nightmare" }
                 ],
                 videoId: "iLmPcQMI_PE",
                 rainbow: true,
@@ -1505,10 +1605,10 @@
                 dataInicio: "2026-08-07T18:00:00",
                 dataFim: "2026-08-07T21:30:00",
                 mapas: [
-                    { nome: "Akure - Bronze And Bristle", wave: "8 Wave", status: "completo" },
-                    { nome: "Area 52 - Nuclear Threat", wave: "6 Wave", status: "completo" },
-                    { nome: "Deathpour - Bloodpour", wave: "6 Wave", status: "completo" },
-                    { nome: "Legerdemain - Legacy Heresy", wave: "5 Wave", status: "canonico" }
+                    { nome: "Akure - Bronze And Bristle", wave: "8 Wave", status: "completo", dificuldade: "Intermediate" },
+                    { nome: "Area 52 - Nuclear Threat", wave: "6 Wave", status: "completo", dificuldade: "Intermediate" },
+                    { nome: "Deathpour - Bloodpour", wave: "6 Wave", status: "completo", dificuldade: "Intermediate" },
+                    { nome: "Legerdemain - Legacy Heresy", wave: "5 Wave", status: "canonico", dificuldade: "Intermediate" }
                 ],
                 videoId: "Vec9hzWkiag",
                 rainbow: false,
@@ -1523,9 +1623,9 @@
                 dataInicio: "2026-08-14T18:00:00",
                 dataFim: "2026-08-15T00:00:00",
                 mapas: [
-                    { nome: "Bogland - Bog Business", wave: "8 Wave", status: "completo" },
-                    { nome: "Condemned - Unholy Undead", wave: "5 Wave", status: "completo" },
-                    { nome: "Derelict - Shadow Wave", wave: "6 Wave", status: "completo" }
+                    { nome: "Bogland - Bog Business", wave: "8 Wave", status: "completo", dificuldade: "Advanced" },
+                    { nome: "Condemned - Unholy Undead", wave: "5 Wave", status: "completo", dificuldade: "Advanced" },
+                    { nome: "Derelict - Shadow Wave", wave: "6 Wave", status: "completo", dificuldade: "Advanced" }
                 ],
                 videoId: "vKEkuZnHsws",
                 rainbow: false,
@@ -1540,8 +1640,8 @@
                 dataInicio: "2026-08-21T18:00:00",
                 dataFim: "2026-08-22T00:00:00",
                 mapas: [
-                    { nome: "Hurricane - The Thunderous Fury Of A Robotic Typhoon", wave: "5 Wave", status: "incompleto" },
-                    { nome: "Traumatic - Bloodwater", wave: "6 Wave", status: "completo" }
+                    { nome: "Hurricane - The Thunderous Fury Of A Robotic Typhoon", wave: "5 Wave", status: "incompleto", dificuldade: "Expert" },
+                    { nome: "Traumatic - Bloodwater", wave: "6 Wave", status: "completo", dificuldade: "Intermediate" }
                 ],
                 videoId: "7jvfrtmugxk",
                 rainbow: false,
@@ -1559,9 +1659,9 @@
                 dataInicio: "2026-08-28T18:00:00",
                 dataFim: "2026-08-29T00:00:00",
                 mapas: [
-                    { nome: "Underworld - Bones And Blood", wave: "5 Wave Reverse", status: "completo" },
-                    { nome: "Hanami - Blossom Beginnings", wave: "6 Wave Reverse", status: "completo" },
-                    { nome: "Rottenburg - Spanner Switchup", wave: "5 Wave Reverse", status: "completo" }
+                    { nome: "Underworld - Bones And Blood", wave: "5 Wave Reverse", status: "completo", dificuldade: "Reverse Advanced" },
+                    { nome: "Hanami - Blossom Beginnings", wave: "6 Wave Reverse", status: "completo", dificuldade: "Reverse Intermediate" },
+                    { nome: "Rottenburg - Spanner Switchup", wave: "5 Wave Reverse", status: "completo", dificuldade: "Reverse Intermediate" }
                 ],
                 videoId: "xmJue7PW-bE",
                 rainbow: true,
@@ -1576,10 +1676,10 @@
                 dataInicio: "2026-09-04T18:00:00",
                 dataFim: "2026-09-05T00:00:00",
                 mapas: [
-                    { nome: "Condemned - Thriller Terror", wave: "5 Wave", status: " " },
-                    { nome: "Decay - Night Errors", wave: "7 Wave", status: " " },
-                    { nome: "Oxidize - Snowy Slaughter", wave: "6 Wave", status: " " },
-                    { nome: "Rottenburg - Breaking Walls", wave: "6 Wave", status: " " }
+                    { nome: "Condemned - Thriller Terror", wave: "5 Wave", status: " ", dificuldade: "Intermediate" },
+                    { nome: "Decay - Night Errors", wave: "7 Wave", status: " ", dificuldade: "Intermediate" },
+                    { nome: "Oxidize - Snowy Slaughter", wave: "6 Wave", status: " ", dificuldade: "Intermediate" },
+                    { nome: "Rottenburg - Breaking Walls", wave: "6 Wave", status: " ", dificuldade: "Reverse Intermediate" }
                 ],
                 videoId: "ZyeZW4SgfnA",
                 rainbow: false,
@@ -1594,9 +1694,9 @@
                 dataInicio: "2026-09-11T18:00:00",
                 dataFim: "2026-09-12T00:00:00",
                 mapas: [
-                    { nome: "Bigrock - Breaking Point", wave: "8 Wave", status: " " },
-                    { nome: "Dusk - Chasing Daybreak", wave: "7 Wave", status: " " },
-                    { nome: "Havana - Fishermans Fury", wave: "3 Wave", status: " " }
+                    { nome: "Bigrock - Breaking Point", wave: "8 Wave", status: " ", dificuldade: "Advanced" },
+                    { nome: "Dusk - Chasing Daybreak", wave: "7 Wave", status: " ", dificuldade: "Advanced" },
+                    { nome: "Havana - Fishermans Fury", wave: "3 Wave", status: " ", dificuldade: "Advanced" }
                 ],
                 videoId: "LF0PHG7ULWw",
                 rainbow: false,
@@ -1611,9 +1711,9 @@
                 dataInicio: "2026-09-18T18:00:00",
                 dataFim: "2026-09-19T00:00:00",
                 mapas: [
-                    { nome: "Radar - Rocky Ravage", wave: "7 Wave", status: " " },
-                    { nome: "Null - Distorted Reality", wave: "8 Wave", status: " " },
-                    { nome: "Watermine - Hydrophobia", wave: "6 Wave", status: " " }
+                    { nome: "Radar - Rocky Ravage", wave: "7 Wave", status: " ", dificuldade: "Advanced" },
+                    { nome: "Null - Distorted Reality", wave: "8 Wave", status: " ", dificuldade: "Advanced" },
+                    { nome: "Watermine - Hydrophobia", wave: "6 Wave", status: " ", dificuldade: "Intermediate" }
                 ],
                 videoId: "Te86slsS1E4",
                 rainbow: false,
@@ -1631,9 +1731,9 @@
                 dataInicio: "2026-09-25T18:00:00",
                 dataFim: "2026-09-26T00:00:00",
                 mapas: [
-                    { nome: "Rottenburg - Spanner Switchup", wave: "5 Wave Reverse", status: " " },
-                    { nome: "Bigrock - Denominator", wave: "5 Wave Reverse", status: " " },
-                    { nome: "Decompose - Ghoulish Genesis", wave: "Unica Wave ", status: " " }
+                    { nome: "Rottenburg - Spanner Switchup", wave: "5 Wave Reverse", status: " ", dificuldade: "Reverse Intermediate" },
+                    { nome: "Bigrock - Denominator", wave: "5 Wave Reverse", status: " ", dificuldade: "Reverse Advanced" },
+                    { nome: "Decompose - Ghoulish Genesis", wave: "Unica Wave ", status: " ", dificuldade: "Advanced" }
                 ],
                 videoId: "vLf9w849jUw",
                 rainbow: true,
@@ -1648,10 +1748,10 @@
                 dataInicio: "2026-10-02T18:00:00",
                 dataFim: "2026-10-03T00:00:00",
                 mapas: [
-                    { nome: "Steep - Mnemonic Mechanics", wave: "6 Wave", status: " " },
-                    { nome: "Waterfront - Diode Charge", wave: "3 Wave", status: " " },
-                    { nome: "Skeleclipse - Crescent Calamity", wave: "6 Wave", status: " " },
-                    { nome: "Skeleclipse - Sunburn", wave: "5 Wave", status: " " },
+                    { nome: "Steep - Mnemonic Mechanics", wave: "6 Wave", status: " ", dificuldade: "Intermediate" },
+                    { nome: "Waterfront - Diode Charge", wave: "3 Wave", status: " ", dificuldade: "Intermediate" },
+                    { nome: "Skeleclipse - Crescent Calamity", wave: "6 Wave", status: " ", dificuldade: "Intermediate" },
+                    { nome: "Skeleclipse - Sunburn", wave: "5 Wave", status: " ", dificuldade: "Intermediate" }
                 ],
                 videoId: "",
                 medalha: "images/Medalhas/Operação Two Potato 1.png",
@@ -1665,9 +1765,9 @@
                 dataInicio: "2026-10-16T18:00:00",
                 dataFim: "2026-10-17T00:00:00",
                 mapas: [
-                    { nome: "Steep - Bandwidth Beatdown", wave: "6 Wave", status: " " },
-                    { nome: "Waterfront - Unescapable Undine", wave: "5 Wave", status: " " },
-                    { nome: "Villa - Recalled To Life", wave: "6 Wave", status: " " },
+                    { nome: "Steep - Bandwidth Beatdown", wave: "6 Wave", status: " ", dificuldade: "Advanced" },
+                    { nome: "Waterfront - Unescapable Undine", wave: "5 Wave", status: " ", dificuldade: "Advanced" },
+                    { nome: "Villa - Recalled To Life", wave: "6 Wave", status: " ", dificuldade: "Advanced" }
                 ],
                 videoId: "",
                 medalha: "images/Medalhas/Operação Two Potato 2.png",
@@ -1681,9 +1781,9 @@
                 dataInicio: "2026-10-23T18:00:00",
                 dataFim: "2026-10-24T00:00:00",
                 mapas: [
-                    { nome: "Teien - Shogun Slaughter", wave: "5 Wave", status: " " },
-                    { nome: "Teien - Program Seppuku", wave: "7 Wave", status: " " },
-                    { nome: "Rancher - Contact", wave: "7 Wave", status: " " },
+                    { nome: "Teien - Shogun Slaughter", wave: "5 Wave", status: " ", dificuldade: "Reverse Advanced" },
+                    { nome: "Teien - Program Seppuku", wave: "7 Wave", status: " ", dificuldade: "Advanced" },
+                    { nome: "Rancher - Contact", wave: "7 Wave", status: " ", dificuldade: "Advanced" }
                 ],
                 videoId: "",
                 medalha: "images/Medalhas/Operação Two Potato 3.png",
@@ -1697,10 +1797,10 @@
                 dataInicio: "2026-10-25T18:00:00",
                 dataFim: "2026-10-26T00:00:00",
                 mapas: [
-                    { nome: "Coldtown - Chilling Clique", wave: "7 Wave", status: " " },
-                    { nome: "Lotus - LED-Motif", wave: "6 Wave", status: " " },
-                    { nome: "Cyberia - Launch Sequence", wave: "6 Wave", status: " " },
-                    { nome: "Winterbridge - Corrupted Catharsis", wave: "4 Wave", status: " " },
+                    { nome: "Coldtown - Chilling Clique", wave: "7 Wave", status: " ", dificuldade: "Intermediate" },
+                    { nome: "Lotus - LED-Motif", wave: "6 Wave", status: " ", dificuldade: "Advanced" },
+                    { nome: "Cyberia - Launch Sequence", wave: "6 Wave", status: " ", dificuldade: "Advanced" },
+                    { nome: "Winterbridge - Corrupted Catharsis", wave: "4 Wave", status: " ", dificuldade: "Advanced" }
                 ],
                 videoId: "",
                 medalha: "images/Medalhas/Operação Two Potato 4.png",
@@ -1708,8 +1808,32 @@
                 medalhaCredito: "JJMAGame / Jorge",
                 regra: "potato-oficial",
                 conjunto: "Operação Two Potatos"
-            },
+            }
         ];
+
+        // ============================================================
+        // FUNÇÕES DE DIFICULDADE (MESMAS DO INDEX.HTML)
+        // ============================================================
+        function getDifficultyClass(difficulty) {
+            const lower = difficulty.toLowerCase();
+            if (lower.includes('intermediate')) return 'difficulty-intermediate';
+            if (lower.includes('advanced')) return 'difficulty-advanced';
+            if (lower.includes('expert')) return 'difficulty-expert';
+            if (lower.includes('nightmare')) return 'difficulty-nightmare';
+            if (lower.includes('master')) return 'difficulty-master';
+            return 'difficulty-reverse';
+        }
+
+        function getDifficultyLabel(difficulty) {
+            const lower = difficulty.toLowerCase();
+            if (lower.includes('intermediate')) return 'Intermediate';
+            if (lower.includes('advanced')) return 'Advanced';
+            if (lower.includes('expert')) return 'Expert';
+            if (lower.includes('nightmare')) return 'Nightmare';
+            if (lower.includes('master')) return 'Master';
+            if (lower.includes('reverse')) return 'Reverse';
+            return difficulty;
+        }
 
         // ============================================================
         // VARIÁVEIS DE FILTRO
@@ -2186,10 +2310,15 @@
                             statusLabel = '📜 Canônico / Video';
                         }
         
+                        // ===== DIFICULDADE =====
+                        const diffClass = mapa.dificuldade ? getDifficultyClass(mapa.dificuldade) : '';
+                        const diffLabel = mapa.dificuldade ? getDifficultyLabel(mapa.dificuldade) : '';
+        
                         mapasHtml += `
                             <div class="mapa-item ${statusClass}">
                                 <span class="mapa-nome">${mapa.nome}</span>
                                 <span style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+                                    ${mapa.dificuldade ? `<span class="${diffClass}">${diffLabel}</span>` : ''}
                                     ${mapa.wave ? `<span class="mapa-wave">${mapa.wave}</span>` : ''}
                                     ${statusLabel ? `<span class="mapa-status-badge ${statusBadge}">${statusLabel}</span>` : ''}
                                 </span>
