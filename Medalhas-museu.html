@@ -750,6 +750,8 @@
         // LISTA DE MEDALHAS - CADASTRE AQUI!
         // ============================================================
         const medalhas = [
+            //============================================== MVM ==============================================
+            
             // ===== OPERAÇÃO FLOR NEGRA =====
             {
                 id: 1,
@@ -910,6 +912,32 @@
                 destaque: true,
                 raridade: "lendaria"
             },
+            {
+                id: 14,
+                nome: "🏅 Iron Man - Moriya MvM",
+                imagem: "images/Medalhas/Iron Man.png",
+                conjunto: "Moriya Originais",
+                pontos: 60,
+                descricao: "Resistir a Missão Mech Mutilation da Mannworks",
+                credito: "Rishi_LockeD",
+                regra: "moriya",
+                destaque: false,
+                raridade: "epica"
+            },
+
+            //============================================================ DEEP ROCKS =======================================================================
+            {
+                id: 21,
+                nome: "🏅 Deep Dive Elite - Deep Rock Galactic",
+                imagem: "images/Medalhas/Deep Dive Elite.png",
+                conjunto: "Deep Rocks Galactic",
+                pontos: 30,
+                descricao: "Participe de 3 Deep Dives ELITE em um evento da quinta feira",
+                credito: "Rishi_LockeD",
+                regra: "DRG",
+                destaque: false,
+                raridade: "epica"
+            },
             // ===== OUTRAS MEDALHAS =====
             {
                 id: 90,
@@ -953,55 +981,55 @@
                 imagem: "images/Medalhas/ColectorNO.png",
                 conjunto: "Moriya Originais",
                 pontos: 25,
-                descricao: "'A Matrix é um sistema, Neo. E esse sistema é o nosso inimigo...' para quem participou da beta do Moriya no root",
+                descricao: "Medalha para os melhores jogadores da função Collector",
                 credito: "JJMAGame / Jorge",
                 regra: "moriya",
                 destaque: false,
                 raridade: "epica"
             },
             {
-                id: 93,
+                id: 94,
                 nome: "🏅 Medalha de Honra da função Suporte",
                 imagem: "images/Medalhas/SuporteNO.png",
                 conjunto: "Moriya Originais",
                 pontos: 25,
-                descricao: "'A Matrix é um sistema, Neo. E esse sistema é o nosso inimigo...' para quem participou da beta do Moriya no root",
+                descricao: "Medalha para os melhores jogadores da função Suporte",
                 credito: "JJMAGame / Jorge",
                 regra: "moriya",
                 destaque: false,
                 raridade: "epica"
             },
             {
-                id: 94,
+                id: 95,
                 nome: "🏅 Medalha de Honra da função Ataque",
                 imagem: "images/Medalhas/Placeholder.png",
                 conjunto: "Moriya Originais",
                 pontos: 25,
-                descricao: "'A Matrix é um sistema, Neo. E esse sistema é o nosso inimigo...' para quem participou da beta do Moriya no root",
+                descricao: "Medalha para os melhores jogadores da função Ataque",
                 credito: "JJMAGame / Jorge",
                 regra: "moriya",
                 destaque: false,
                 raridade: "epica"
             },
             {
-                id: 94,
+                id: 96,
                 nome: "🏅 Medalha de Honra da função Defesa",
                 imagem: "images/Medalhas/Placeholder.png",
                 conjunto: "Moriya Originais",
                 pontos: 25,
-                descricao: "'A Matrix é um sistema, Neo. E esse sistema é o nosso inimigo...' para quem participou da beta do Moriya no root",
+                descricao: "Medalha para os melhores jogadores da função Defesa",
                 credito: "JJMAGame / Jorge",
                 regra: "moriya",
                 destaque: false,
                 raridade: "epica"
             },
             {
-                id: 94,
+                id: 97,
                 nome: "🏅 Medalha de Honra da função Coringa",
-                imagem: "images/Medalhas/Placeholder.png",
+                imagem: "images/Medalhas/CoringaNO.png",
                 conjunto: "Moriya Originais",
                 pontos: 25,
-                descricao: "'A Matrix é um sistema, Neo. E esse sistema é o nosso inimigo...' para quem participou da beta do Moriya no root",
+                descricao: "Medalha para os melhores jogadores da função Coringa",
                 credito: "JJMAGame / Jorge",
                 regra: "moriya",
                 destaque: false,
@@ -1033,7 +1061,8 @@
             const labels = {
                 'mvm-oficial': '🔵 MvM Oficiais Events',
                 'potato-oficial': '🟤 Moriya Vs Potato',
-                'moriya': '🟢 Moriya Originais'
+                'moriya': '🟢 Moriya Originais',
+                'DRG': '⛏️ Deep Rock Galactic'
             };
             return labels[regra] || '📋 Sem regra';
         }

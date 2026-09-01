@@ -541,7 +541,7 @@
                 nome: "Edgyiel",
                 avatar: "images/perfil/Egy.jpg",
                 descricao: "O Coringa da Equipe",
-                medalhas: [5,4,3,1,]
+                medalhas: [97,5,4,3,1,]
             },
             {
                 id: 12,
@@ -562,23 +562,49 @@
         // ============================================================
         // LISTA DE MEDALHAS (copiada do medalhas-museu.html)
         // ============================================================
-        const medalhas = [
-            { id: 1, nome: "⚔️ Operação Flor Negra interlúdio", imagem: "images/Medalhas/Operação Flores Negra 666.png", pontos: 10 },
-            { id: 2, nome: "⚔️ Operação Flor Negra Intermediário", imagem: "images/Medalhas/Operação Flores Negra 1.png", pontos: 15 },
-            { id: 3, nome: "⚔️ Operação Flor Negra Advanced", imagem: "images/Medalhas/Operação Flores Negra 2.png", pontos: 25 },
-            { id: 4, nome: "⚔️ Operação Flor Negra Delícia", imagem: "images/Medalhas/Operação Flores Negra 3.png", pontos: 30 },
-            { id: 5, nome: "⚔️ Operação Ossos, Máquinas e Nostalgia interlúdio", imagem: "images/Medalhas/Operação Ossos, Maquinas e Nostalgia 666.png", pontos: 10 },
-            { id: 6, nome: "⚔️ Operação Ossos, Máquinas e Nostalgia Intermediário", imagem: "images/Medalhas/Operação Ossos, Maquinas e Nostalgia 1.png", pontos: 15 },
-            { id: 7, nome: "⚔️ Operação Ossos, Máquinas e Nostalgia Advanced", imagem: "images/Medalhas/Operação Ossos, Maquinas e Nostalgia 2.png", pontos: 25 },
-            { id: 8, nome: "⚔️ Operação Ossos, Máquinas e Nostalgia Delícia", imagem: "images/Medalhas/Operação Ossos, Maquinas e Nostalgia 3.png", pontos: 30 },
-            { id: 9, nome: "⚔️ Operação Two Potato interlúdio", imagem: "images/Medalhas/Operação Two Potato 666.png", pontos: 10 },
-            { id: 10, nome: "⚔️ Operação Two Potato intermediario", imagem: "images/Medalhas/Operação Two Potato 1.png", pontos: 15 },
-            { id: 11, nome: "⚔️ Operação Two Potato Advanced", imagem: "images/Medalhas/Operação Two Potato 2.png", pontos: 25 },
-            { id: 12, nome: "⚔️ Operação Two Potato Delícia", imagem: "images/Medalhas/Operação Two Potato 3.png", pontos: 30 },
-            { id: 13, nome: "⚔️ Operação Two Potato Especial", imagem: "images/Medalhas/Operação Two Potato 4.png", pontos: 100 },
-            { id: 90, nome: "🏅 Just Two of Us", imagem: "images/Medalhas/RL.png", pontos: 0 },
-            { id: 91, nome: "🏅 Gatos Comedores de Burritos", imagem: "images/Medalhas/Gatos Comedores de Burritos.png", pontos: 0 },
-            { id: 92, nome: "🏅 Beta-root", imagem: "images/Medalhas/Beta-root.png", pontos: 10 }
+       const medalhas = [
+            // ============================================================
+            // OPERAÇÃO FLOR NEGRA
+            // ============================================================
+            { id: 1, nome: "⚔️ Operação Flor Negra interlúdio", imagem: "images/Medalhas/Operação Flores Negra 666.png", pontos: 10, raridade: "incomum" },
+            { id: 2, nome: "⚔️ Operação Flor Negra Intermediário", imagem: "images/Medalhas/Operação Flores Negra 1.png", pontos: 15, raridade: "rara" },
+            { id: 3, nome: "⚔️ Operação Flor Negra Advanced", imagem: "images/Medalhas/Operação Flores Negra 2.png", pontos: 25, raridade: "rara" },
+            { id: 4, nome: "⚔️ Operação Flor Negra Delícia", imagem: "images/Medalhas/Operação Flores Negra 3.png", pontos: 30, raridade: "mitica" },
+        
+            // ============================================================
+            // OPERAÇÃO OSSOS, MÁQUINAS E NOSTALGIA
+            // ============================================================
+            { id: 5, nome: "⚔️ Operação Ossos, Máquinas e Nostalgia interlúdio", imagem: "images/Medalhas/Operação Ossos, Maquinas e Nostalgia 666.png", pontos: 10, raridade: "incomum" },
+            { id: 6, nome: "⚔️ Operação Ossos, Máquinas e Nostalgia Intermediário", imagem: "images/Medalhas/Operação Ossos, Maquinas e Nostalgia 1.png", pontos: 15, raridade: "rara" },
+            { id: 7, nome: "⚔️ Operação Ossos, Máquinas e Nostalgia Advanced", imagem: "images/Medalhas/Operação Ossos, Maquinas e Nostalgia 2.png", pontos: 25, raridade: "rara" },
+            { id: 8, nome: "⚔️ Operação Ossos, Máquinas e Nostalgia Delícia", imagem: "images/Medalhas/Operação Ossos, Maquinas e Nostalgia 3.png", pontos: 30, raridade: "mitica" },
+        
+            // ============================================================
+            // OPERAÇÃO TWO POTATO
+            // ============================================================
+            { id: 9, nome: "⚔️ Operação Two Potato interlúdio", imagem: "images/Medalhas/Operação Two Potato 666.png", pontos: 10, raridade: "incomum" },
+            { id: 10, nome: "⚔️ Operação Two Potato intermediario", imagem: "images/Medalhas/Operação Two Potato 1.png", pontos: 15, raridade: "rara" },
+            { id: 11, nome: "⚔️ Operação Two Potato Advanced", imagem: "images/Medalhas/Operação Two Potato 2.png", pontos: 25, raridade: "rara" },
+            { id: 12, nome: "⚔️ Operação Two Potato DELICIA", imagem: "images/Medalhas/Operação Two Potato 3.png", pontos: 30, raridade: "mitica" },
+            { id: 13, nome: "⚔️ Operação Two Potato Especial", imagem: "images/Medalhas/Operação Two Potato 4.png", pontos: 100, raridade: "lendaria" },
+        
+            // ============================================================
+            // MORIYA ORIGINAIS
+            // ============================================================
+            { id: 14, nome: "🏅 Iron Man - Moriya MvM", imagem: "images/Medalhas/Iron Man.png", pontos: 60, raridade: "epica" },
+            { id: 90, nome: "🏅 Just Two of Us", imagem: "images/Medalhas/RL.png", pontos: 0, raridade: "lendaria" },
+            { id: 91, nome: "🏅 Gatos Comedores de Burritos", imagem: "images/Medalhas/Gatos Comedores de Burritos.png", pontos: 0, raridade: "lendaria" },
+            { id: 92, nome: "🏅 Beta-root", imagem: "images/Medalhas/Beta-Root.png", pontos: 10, raridade: "contrabando" },
+            { id: 93, nome: "🏅 Medalha de Honra - Collector", imagem: "images/Medalhas/ColectorNO.png", pontos: 25, raridade: "epica" },
+            { id: 94, nome: "🏅 Medalha de Honra - Suporte", imagem: "images/Medalhas/SuporteNO.png", pontos: 25, raridade: "epica" },
+            { id: 95, nome: "🏅 Medalha de Honra - Ataque", imagem: "images/Medalhas/Placeholder.png", pontos: 25, raridade: "epica" },
+            { id: 96, nome: "🏅 Medalha de Honra - Defesa", imagem: "images/Medalhas/Placeholder.png", pontos: 25, raridade: "epica" },
+            { id: 97, nome: "🏅 Medalha de Honra - Coringa", imagem: "images/Medalhas/CoringaNO.png", pontos: 25, raridade: "epica" },
+        
+            // ============================================================
+            // DEEP ROCK GALACTIC
+            // ============================================================
+            { id: 21, nome: "🏅 Deep Dive Elite - Deep Rock Galactic", imagem: "images/Medalhas/Deep Dive Elite.png", pontos: 30, raridade: "epica" }
         ];
 
         // ============================================================
