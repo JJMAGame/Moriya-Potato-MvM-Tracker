@@ -24,7 +24,6 @@
             position: relative;
         }
 
-        /* ===== FUNDO ===== */
         body::before {
             content: '';
             position: fixed;
@@ -53,29 +52,12 @@
             opacity: 0.6;
         }
 
-        /* ===== BARRA DE ROLAGEM ===== */
-        body::-webkit-scrollbar {
-            width: 6px;
-        }
-        body::-webkit-scrollbar-track {
-            background: rgba(26, 26, 46, 0.2);
-            border-radius: 3px;
-        }
-        body::-webkit-scrollbar-thumb {
-            background: rgba(42, 42, 74, 0.4);
-            border-radius: 3px;
-        }
-        body::-webkit-scrollbar-thumb:hover {
-            background: rgba(42, 42, 74, 0.7);
-        }
-        body {
-            scrollbar-width: thin;
-            scrollbar-color: rgba(42, 42, 74, 0.4) rgba(26, 26, 46, 0.2);
-        }
+        body::-webkit-scrollbar { width: 6px; }
+        body::-webkit-scrollbar-track { background: rgba(26, 26, 46, 0.2); border-radius: 3px; }
+        body::-webkit-scrollbar-thumb { background: rgba(42, 42, 74, 0.4); border-radius: 3px; }
+        body::-webkit-scrollbar-thumb:hover { background: rgba(42, 42, 74, 0.7); }
+        body { scrollbar-width: thin; scrollbar-color: rgba(42, 42, 74, 0.4) rgba(26, 26, 46, 0.2); }
 
-        /* ============================================================
-           CONTAINER
-           ============================================================ */
         .container {
             max-width: 900px;
             margin: 0 auto;
@@ -86,9 +68,7 @@
             border: 1px solid #3a5a3a;
         }
 
-        /* ============================================================
-           NAVEGAÇÃO TOPO
-           ============================================================ */
+        /* ===== NAVEGAÇÃO ===== */
         .nav-top {
             display: flex;
             justify-content: space-between;
@@ -100,11 +80,7 @@
             margin-bottom: 25px;
         }
 
-        .nav-top .nav-links {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
+        .nav-top .nav-links { display: flex; gap: 10px; flex-wrap: wrap; }
 
         .nav-top a {
             color: #85c1e9;
@@ -117,27 +93,12 @@
             border: 1px solid transparent;
         }
 
-        .nav-top a:hover {
-            background: #1a3a1a;
-            border-color: #3a5a3a;
-            color: #4caf50;
-        }
+        .nav-top a:hover { background: #1a3a1a; border-color: #3a5a3a; color: #4caf50; }
+        .nav-top a.active { background: #27ae60; color: white; border-color: #27ae60; }
 
-        .nav-top a.active {
-            background: #27ae60;
-            color: white;
-            border-color: #27ae60;
-        }
+        .nav-top .page-indicator { color: #88bb88; font-size: 13px; font-style: italic; }
 
-        .nav-top .page-indicator {
-            color: #88bb88;
-            font-size: 13px;
-            font-style: italic;
-        }
-
-        /* ============================================================
-           CABEÇALHO DO CAPÍTULO
-           ============================================================ */
+        /* ===== CABEÇALHO ===== */
         .chapter-header {
             text-align: center;
             margin-bottom: 25px;
@@ -153,10 +114,25 @@
             margin-bottom: 4px;
         }
 
-        .chapter-header .chapter-icon {
-            font-size: 48px;
-            display: block;
-            margin-bottom: 5px;
+        .chapter-icon-flex {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            margin: 5px auto 10px auto;
+        }
+
+        .chapter-icon-img {
+            width: 80px;
+            height: 80px;
+            object-fit: contain;
+            transition: all 0.3s ease;
+            filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.2));
+        }
+
+        .chapter-icon-img:hover {
+            transform: scale(1.1);
+            filter: drop-shadow(0 0 25px rgba(255, 215, 0, 0.5));
         }
 
         .chapter-header h1 {
@@ -165,42 +141,10 @@
             font-weight: 700;
         }
 
-        .chapter-header h1 .highlight {
-            color: #4caf50;
-        }
+        .chapter-header h1 .highlight { color: #4caf50; }
+        .chapter-header .chapter-subtitle { color: #aaddaa; font-size: 15px; margin-top: 4px; font-style: italic; }
 
-        .chapter-header .chapter-subtitle {
-            color: #aaddaa;
-            font-size: 15px;
-            margin-top: 4px;
-            font-style: italic;
-        }
-
-        /* ===== ÍCONES DO CAPÍTULO LADO A LADO ===== */
-        .chapter-icon-flex {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 15px;
-            margin: 5px auto 10px auto;
-        }
-        
-        .chapter-icon-img {
-            width: 80px;
-            height: 80px;
-            object-fit: contain;
-            transition: all 0.3s ease;
-            filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.2));
-        }
-        
-        .chapter-icon-img:hover {
-            transform: scale(1.1);
-            filter: drop-shadow(0 0 25px rgba(255, 215, 0, 0.5));
-        }
-
-        /* ============================================================
-           SEÇÃO: TEXTO
-           ============================================================ */
+        /* ===== TEXTO ===== */
         .chapter-text {
             color: #d0d0d0;
             font-size: 16px;
@@ -209,9 +153,7 @@
             margin-bottom: 25px;
         }
 
-        .chapter-text p {
-            margin-bottom: 14px;
-        }
+        .chapter-text p { margin-bottom: 14px; }
 
         .chapter-text p:first-of-type::first-letter {
             font-size: 48px;
@@ -223,9 +165,7 @@
             font-family: 'Georgia', serif;
         }
 
-        .chapter-text strong {
-            color: #4caf50;
-        }
+        .chapter-text strong { color: #4caf50; }
 
         .chapter-text .quote {
             font-style: italic;
@@ -237,57 +177,46 @@
             border-radius: 4px;
         }
 
-        .chapter-text .quote::before {
-            content: '"';
-            font-size: 24px;
-            color: #4caf50;
+        .chapter-text .quote::before { content: '"'; font-size: 24px; color: #4caf50; }
+        .chapter-text .quote::after { content: '"'; font-size: 24px; color: #4caf50; }
+
+        .part-title {
+            color: #f0f0f0;
+            font-size: 22px;
+            font-weight: 700;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #3a5a3a;
+            display: flex;
+            align-items: center;
+            gap: 12px;
         }
 
-        .chapter-text .quote::after {
-            content: '"';
-            font-size: 24px;
-            color: #4caf50;
+        .part-title .part-icon { font-size: 24px; }
+        .part-title .part-number { color: #88bb88; font-size: 14px; font-weight: 400; }
+
+        .sub-title {
+            color: #85c1e9;
+            font-size: 18px;
+            font-weight: 600;
+            margin-top: 20px;
+            margin-bottom: 10px;
         }
 
-        /* ============================================================
-           SEÇÃO: IMAGEM
-           ============================================================ */
-        .chapter-image {
-            margin: 20px 0 25px 0;
-            text-align: center;
-        }
+        .sub-title .highlight { color: #e94560; }
 
-        .chapter-image img {
-            max-width: 100%;
-            max-height: 450px;
-            border-radius: 10px;
-            border: 1px solid #3a5a3a;
-            box-shadow: 0 4px 25px rgba(0, 0, 0, 0.4);
-            transition: all 0.3s ease;
+        .event-highlight {
+            background: rgba(233, 69, 96, 0.1);
+            border-left: 4px solid #e94560;
+            padding: 15px 20px;
+            border-radius: 4px;
+            margin: 15px 0;
         }
+        .event-highlight strong { color: #e94560; }
 
-        .chapter-image img:hover {
-            border-color: #4caf50;
-            transform: scale(1.01);
-        }
-
-        .chapter-image .image-caption {
-            color: #88bb88;
-            font-size: 13px;
-            font-style: italic;
-            margin-top: 8px;
-        }
-
-        .chapter-image .image-caption strong {
-            color: #aaddaa;
-        }
-
-        /* ============================================================
-           SEÇÃO: VÍDEO (EMBED)
-           ============================================================ */
-        .chapter-video {
-            margin: 20px 0 25px 0;
-        }
+        /* ===== VÍDEO ===== */
+        .chapter-video { margin: 20px 0 25px 0; }
 
         .chapter-video .video-wrapper {
             position: relative;
@@ -317,25 +246,40 @@
             text-align: center;
         }
 
-        .chapter-video .video-caption strong {
-            color: #aaddaa;
+        .chapter-video .video-caption strong { color: #aaddaa; }
+
+        /* ===== IMAGEM ===== */
+        .chapter-image {
+            margin: 20px 0 25px 0;
+            text-align: center;
         }
 
-        /* ============================================================
-           TIMELINE (Opcional)
-           ============================================================ */
+        .chapter-image img {
+            max-width: 100%;
+            max-height: 450px;
+            border-radius: 10px;
+            border: 1px solid #3a5a3a;
+            box-shadow: 0 4px 25px rgba(0, 0, 0, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .chapter-image img:hover { border-color: #4caf50; transform: scale(1.01); }
+
+        .chapter-image .image-caption {
+            color: #88bb88;
+            font-size: 13px;
+            font-style: italic;
+            margin-top: 8px;
+        }
+
+        /* ===== TIMELINE ===== */
         .chapter-timeline {
             margin: 25px 0;
             padding-top: 20px;
             border-top: 2px solid #3a5a3a;
         }
 
-        .chapter-timeline h3 {
-            color: #4caf50;
-            font-size: 17px;
-            margin-bottom: 12px;
-            font-family: 'Segoe UI', sans-serif;
-        }
+        .chapter-timeline h3 { color: #4caf50; font-size: 17px; margin-bottom: 12px; }
 
         .timeline-item {
             display: flex;
@@ -345,7 +289,10 @@
             border-radius: 8px;
             border-left: 3px solid #4caf50;
             margin-bottom: 8px;
+            transition: all 0.3s ease;
         }
+
+        .timeline-item:hover { background: rgba(26, 46, 26, 0.5); transform: translateX(5px); }
 
         .timeline-item .date {
             font-weight: 700;
@@ -354,14 +301,12 @@
             font-size: 14px;
         }
 
-        .timeline-item .event {
-            color: #d0d0d0;
-            font-size: 14px;
-        }
+        .timeline-item .event { color: #d0d0d0; font-size: 14px; }
 
-        /* ============================================================
-           NAVEGAÇÃO RODAPÉ
-           ============================================================ */
+        .timeline-item.danger { border-left-color: #e94560; background: rgba(233, 69, 96, 0.1); }
+        .timeline-item.danger .event { color: #e94560; }
+
+        /* ===== NAVEGAÇÃO RODAPÉ ===== */
         .nav-bottom {
             display: flex;
             justify-content: space-between;
@@ -386,32 +331,11 @@
             border: 1px solid #3a5a3a;
         }
 
-        .nav-bottom .nav-btn:hover {
-            background: #2a4a2a;
-            border-color: #4caf50;
-            color: #4caf50;
-            transform: scale(1.02);
-        }
+        .nav-bottom .nav-btn:hover { background: #2a4a2a; border-color: #4caf50; color: #4caf50; transform: scale(1.02); }
 
-        .nav-bottom .nav-btn.disabled {
-            opacity: 0.4;
-            cursor: not-allowed;
-            pointer-events: none;
-        }
+        .nav-bottom .nav-center { color: #88bb88; font-size: 13px; font-style: italic; }
 
-        .nav-bottom .nav-btn .arrow {
-            font-size: 16px;
-        }
-
-        .nav-bottom .nav-center {
-            color: #88bb88;
-            font-size: 13px;
-            font-style: italic;
-        }
-
-        /* ============================================================
-           BOTÃO VOLTAR
-           ============================================================ */
+        /* ===== BOTÃO VOLTAR ===== */
         .btn-voltar {
             display: inline-block;
             background: #27ae60;
@@ -427,140 +351,78 @@
             text-align: center;
         }
 
-        .btn-voltar:hover {
-            background: #2ecc71;
-            transform: scale(1.02);
-            box-shadow: 0 4px 20px rgba(39, 174, 96, 0.4);
-        }
+        .btn-voltar:hover { background: #2ecc71; transform: scale(1.02); box-shadow: 0 4px 20px rgba(39, 174, 96, 0.4); }
 
-        .footer {
-            text-align: center;
-            margin-top: 20px;
-            padding-top: 20px;
-            border-top: 2px solid #3a5a3a;
-        }
+        .footer { text-align: center; margin-top: 20px; padding-top: 20px; border-top: 2px solid #3a5a3a; }
 
-        /* ============================================================
-           RESPONSIVO
-           ============================================================ */
+        /* ===== RESPONSIVO ===== */
         @media (max-width: 768px) {
-            .container {
-                padding: 20px;
-            }
-
-            .chapter-header h1 {
-                font-size: 22px;
-            }
-
-            .chapter-text {
-                font-size: 15px;
-            }
-
-            .chapter-text p:first-of-type::first-letter {
-                font-size: 36px;
-            }
-
-            .nav-top {
-                flex-direction: column;
-                align-items: stretch;
-                gap: 8px;
-            }
-
-            .nav-top .nav-links {
-                justify-content: center;
-            }
-
-            .nav-bottom {
-                flex-direction: column;
-                align-items: center;
-            }
-
-            .timeline-item {
-                flex-direction: column;
-                gap: 4px;
-            }
-
-            .timeline-item .date {
-                min-width: unset;
-            }
-
-            .chapter-image img {
-                max-height: 300px;
-            }
+            .container { padding: 20px; }
+            .chapter-header h1 { font-size: 22px; }
+            .chapter-text { font-size: 15px; }
+            .chapter-text p:first-of-type::first-letter { font-size: 36px; }
+            .part-title { font-size: 19px; }
+            .nav-top { flex-direction: column; align-items: stretch; gap: 8px; }
+            .nav-top .nav-links { justify-content: center; }
+            .nav-bottom { flex-direction: column; align-items: center; }
+            .timeline-item { flex-direction: column; gap: 4px; }
+            .timeline-item .date { min-width: unset; }
+            .chapter-image img { max-height: 300px; }
         }
 
         @media (max-width: 480px) {
-            .container {
-                padding: 15px;
-            }
-
-            .chapter-header h1 {
-                font-size: 18px;
-            }
-
-            .chapter-text {
-                font-size: 14px;
-            }
-
-            .chapter-text p:first-of-type::first-letter {
-                font-size: 28px;
-            }
-
-            .nav-top a {
-                font-size: 12px;
-                padding: 4px 10px;
-            }
-
-            .nav-bottom .nav-btn {
-                font-size: 12px;
-                padding: 8px 18px;
-            }
+            .container { padding: 15px; }
+            .chapter-header h1 { font-size: 18px; }
+            .chapter-text { font-size: 14px; }
+            .chapter-text p:first-of-type::first-letter { font-size: 28px; }
+            .part-title { font-size: 17px; }
+            .nav-top a { font-size: 12px; padding: 4px 10px; }
+            .nav-bottom .nav-btn { font-size: 12px; padding: 8px 18px; }
         }
     </style>
 </head>
 <body>
 
     <div class="container">
-        <!-- ============================================================
-             NAVEGAÇÃO TOPO
-             ============================================================ -->
+
+        <!-- ===== NAVEGAÇÃO TOPO ===== -->
         <div class="nav-top">
             <div class="nav-links">
                 <a href="Lore.html">📚 Índice</a>
-                <a href="ato1.html" class="active">ATO. I</a>
+                <a href="ato1.html" class="active">ATO I</a>
             </div>
-            <span class="page-indicator">📖 ATO. I PARTE 1 - X</span>
+            <span class="page-indicator">📖 ATO I — O Roubo da Fórmula</span>
         </div>
 
-        <!-- ============================================================
-             CABEÇALHO DO CAPÍTULO
-             ============================================================ -->
+        <!-- ===== CABEÇALHO ===== -->
         <div class="chapter-header">
             <span class="chapter-number">ATO I</span>
-            
-            <span class="chapter-icon chapter-icon-flex">
+            <span class="chapter-icon-flex">
                 <img src="images/Medalhas/Operação Flores Negra 666.png" alt="Operação Flor Negra" class="chapter-icon-img">
-                <img src="images/Medalhas/Operação Ossos, Maquinas e Nostalgia 666.png" alt="Ossos, Máquinas e Nostalgia" class="chapter-icon-img">
+                <img src="images/Medalhas/Operação Flores Negra 1.png" alt="Ossos, Máquinas e Nostalgia" class="chapter-icon-img">
+                <img src="images/Medalhas/Operação Flores Negra 2.png" alt="Ossos, Máquinas e Nostalgia" class="chapter-icon-img">
+                <img src="images/Medalhas/Operação Flores Negra 3.png" alt="Ossos, Máquinas e Nostalgia" class="chapter-icon-img">
             </span>
-            
-            <h1>O Roubo da <span class="highlight">Formula</span></h1>
-            <p class="chapter-subtitle">1 Ano após os eventos de Rancher</p>
+            <h1>O Roubo da <span class="highlight">Fórmula</span></h1>
+            <p class="chapter-subtitle">1 ano após os eventos de Rancher</p>
         </div>
 
         <!-- ============================================================
-             TEXTO
+             PARTE 1
              ============================================================ -->
         <div class="chapter-text">
-            <h1>PARTE 1: A Festa</span></h1>
+            <div class="part-title">
+                <span class="part-icon">🎉</span>
+                Parte 1: A Festa
+                <span class="part-number">— O início do caos</span>
+            </div>
+
             <p>
-                <strong>Hoje é dia de Festa!</strong> Na noite do dia <strong>31/07/2026</strong>, tiveram uma comemoração antecipada da paz. 
-                Passaram-se 355 dias desde a luta que aconteceu no Rancher, e os heróis Rishi, Bluegod, Liris e Jorge 
-                levaram seus lanchinhos para comemorar o momento.
+                <strong>Hoje é dia de festa!</strong> Na noite do dia <strong>31/07/2026</strong>, eles tiveram uma comemoração antecipada da paz. Passaram-se 355 dias desde a luta que aconteceu no Rancher, e os <strong>heróis Rishi, Bluegod, Liris e Jorge</strong> levaram seus lanchinhos para comemorar o momento.
             </p>
 
             <p>
-                Depois de muito suco de laranja, a maioria fica bem cansada e decide dormir nos seus aposentos, 
-                mas o que eles não esperavam é que estavam sendo observados.
+                Depois de muito suco de laranja, a maioria fica bem cansada e decide dormir nos seus aposentos, mas o que eles não esperavam é que estavam sendo observados.
             </p>
 
             <div class="quote">
@@ -568,208 +430,288 @@
             </div>
 
             <p>
-                Todos estavam na sua caminha, ninando ao som de música lo-fi de Kirby
-                até que escutaram um estrondo bem alto vindo da cozinha... Todos pegaram suas armas
-                e foram atrás dele até a floresta. Depois da floresta, quando eles menos espera, estavam em <strong>Yireza</strong>
-                sobre ataque de robots, e a <strong>figura misteriosa</strong> estava la
+                Todos estavam na sua caminha, ninando ao som de música lo-fi de Kirby, até que escutaram um estrondo bem alto vindo da cozinha... Todos pegaram suas armas e foram atrás dele até a floresta. Depois da floresta, quando eles menos esperavam, estavam em <strong>Yireza</strong> sobre ataque de robôs, e a <strong>figura misteriosa</strong> estava lá.
             </p>
         </div>
+
+        <!-- ===== VÍDEO 1 ===== -->
         <div class="chapter-video">
             <div class="video-wrapper">
-                <iframe
-                    src="https://www.youtube.com/embed/-ZG8q_IvJw8"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowfullscreen
-                ></iframe>
+                <iframe src="https://www.youtube.com/embed/-ZG8q_IvJw8" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
             </div>
-            <div class="video-caption">
-                📹 <strong>A Primeira Invasão nas terras do Moriya</strong> — Canal: JJMAGame / Jorge
-            </div>
+            <div class="video-caption">📹 <strong>A Primeira Invasão nas terras do Moriya</strong> — Canal: JJMAGame / Jorge</div>
         </div>
+
+        <!-- ============================================================
+             PARTE 2
+             ============================================================ -->
         <div class="chapter-text">
-            <h1>PARTE 2: A Queda de Yireza</span></h1>
+            <div class="part-title">
+                <span class="part-icon">💥</span>
+                Parte 2: A Queda de Yireza
+                <span class="part-number">— A primeira batalha</span>
+            </div>
+
             <p>
-                <strong>Após a luta</strong>, a figura desconhecida, mesmo com muita facilidade, fugiu, deixando uma carta para trás, 
-                revelando assim a próxima localização, onde há uma pequena base deles. A carta dizia:
+                <strong>Após a luta,</strong> a figura desconhecida, mesmo com muita facilidade, fugiu, deixando uma carta para trás, revelando assim a próxima localização, onde há uma pequena base deles. A carta dizia:
             </p>
 
             <div class="quote">
                 Caro anti-laranja:
-
-                Falta a última peça para conseguirmos chegar até Supremo. Preciso que você
-                procure nas redondezas de Yireza uma fórmula específica de suco de laranja para completar a
-                máquina. Espero que você não seja visto pelos moriyanos, porque..."
-                <br>
-                <br>
-                <i>[O meio da pagina foi queimada pelo caos]</i>
-                <br>
-                <br>
-                <strong>Vá para Legerdemain, inicie a operação A.N.U.S</strong>
+                <br><br>
+                Falta a última peça para conseguirmos chegar até Supremo. Preciso que você procure nas redondezas de Yireza uma fórmula específica de suco de laranja para completar a máquina. Espero que você não seja visto pelos moriyanos, porque..."
+                <br><br>
+                <i>[O meio da página foi queimado pelo caos]</i>
+                <br><br>
+                <strong>Vá para Legerdemain, inicie a operação A.N.U.S.</strong>
             </div>
 
             <p>
-                O nome é meio engraçado, mas a gargalhada durou pouco tempo, então eles pegaram
-                a Estrela do kirby e foram em viagem a Legerdemain, e esperaram até a noite.
+                O nome é meio engraçado, mas a gargalhada durou pouco tempo. Então eles pegaram a Estrela do Kirby e foram em viagem a Legerdemain, e esperaram até a noite.
             </p>
         </div>
+
+        <!-- ===== VÍDEO 2 ===== -->
         <div class="chapter-video">
             <div class="video-wrapper">
-                <iframe
-                    src="https://www.youtube.com/embed/5LuRhKRXCtU"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowfullscreen
-                ></iframe>
+                <iframe src="https://www.youtube.com/embed/5LuRhKRXCtU" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
             </div>
-            <div class="video-caption">
-                📹 <strong>Ataques Nortunos Nucleares(A.N.U.S)</strong> — Canal: JJMAGame / Jorge
-            </div>
+            <div class="video-caption">📹 <strong>Ataques Noturnos Nucleares (A.N.U.S)</strong> — Canal: JJMAGame / Jorge</div>
         </div>
+
+        <!-- ============================================================
+             PARTE 3
+             ============================================================ -->
         <div class="chapter-text">
-            <h1>PARTE 3: Uma Casa Assombrada</span></h1>
-
-            <p>
-                <strong>Ainda é noite</strong>, e todos estão cansados do que aconteceu. 
-                Todos estão com os ouvidos zunindo e tontos com a barulheira de bombas e tiros. 
-                Então, após o robô mais forte ser derrotado, eles todos recuaram e propuseram a paz em Legerdemain.
-            </p>
-            <p>
-                Os heróis estão extremamente cansados pelas lutas prolongadas da noite e decidem dormir em 
-                uma casa alugada em um lugar próximo chamado <strong>"Kondemned"</strong> uma casa de repouso humilde
-            </p>
-            <p>
-                Todos entraram, guardaram suas coisas e foram dormir. No meio deles, 
-                eles conheceram <b>Erdbeere e Flentru</b>, que estavam cansados de uma longa caminhada.
-            </p>
-            <h1>Madrugada (3:00)</h1>
-
-            <p>
-                Todos estavam dormindo escutando <strong>"Música tema do Pai de Família 44100Hz / 144kbps"</strong>
-                Até que todos ficam paralisados e escutam ao longe uma das coisas perturbadoras para eles...
-            </p>
-            <div class="chapter-video">
-            <div class="video-wrapper">
-                <iframe
-                    src="https://www.youtube.com/embed/knMG9_OB5eQ"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowfullscreen
-                ></iframe>
+            <div class="part-title">
+                <span class="part-icon">🏚️</span>
+                Parte 3: Uma Casa Assombrada
+                <span class="part-number">— O encontro com Karlinhos</span>
             </div>
-            <p>
-                Então foi descoberto que esse lugar onde eles estão é, na verdade, de uma lenda:
-                onde quem entra aqui acabam sendo capturado e transformado em cavalos
 
-                Os heróis têm que se proteger bem eles mesmos, pois na verdade eles estão em <strong>Condemned</strong>
-                onde habita a lenda do <strong>Karlinhos.</strong>
+            <p>
+                <strong>Ainda é noite,</strong> e todos estão cansados do que aconteceu. Todos estão com os ouvidos zunindo e tontos com a barulheira de bombas e tiros. Então, após o robô mais forte ser derrotado, eles todos recuaram e propuseram a paz em Legerdemain.
+            </p>
+
+            <p>
+                Os heróis estão extremamente cansados pelas lutas prolongadas da noite e decidem dormir em uma casa alugada em um lugar próximo chamado <strong>"Kondemned"</strong>, uma casa de repouso humilde.
+            </p>
+
+            <p>
+                Todos entraram, guardaram suas coisas e foram dormir. No meio deles, eles conheceram <strong>Erdbeere e Flentru</strong>, que estavam cansados de uma longa caminhada.
+            </p>
+
+            <div class="sub-title">🌙 Madrugada <span class="highlight">(3:00)</span></div>
+
+            <p>
+                Todos estavam dormindo escutando <strong>"Música tema do Pai de Família 44100Hz / 144kbps"</strong> até que todos ficam paralisados e escutam ao longe uma das coisas perturbadoras para eles...
             </p>
         </div>
-        
 
-        <!-- ============================================================
-             IMAGEM
-             ============================================================ -->
-        <div class="chapter-image">
-            <img src="images/backgrounds.png" alt="Um placeholder">
-            <div class="image-caption">
-                📸 <strong>Legenda da imagem</strong> — Artista: Minerinho da Pesada
-            </div>
-        </div>
-
-        <!-- ============================================================
-             VÍDEO (EMBED)
-             ============================================================ 
+        <!-- ===== VÍDEO 3 ===== -->
         <div class="chapter-video">
             <div class="video-wrapper">
-                <iframe
-                    src="https://www.youtube.com/embed/VIDEO_ID_AQUI"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowfullscreen
-                ></iframe>
+                <iframe src="https://www.youtube.com/embed/knMG9_OB5eQ" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
             </div>
-            <div class="video-caption">
-                📹 <strong>Título do Vídeo</strong> — Canal: Nome do Canal
+            <div class="video-caption">📹 <strong>O Despertar de Karlinhos</strong> — Canal: Pontaly</div>
+        </div>
+
+        <div class="chapter-text">
+            <p>
+                Então foi descoberto que esse lugar onde eles estão é, na verdade, parte de uma lenda: onde quem entra aqui acaba sendo capturado e transformado em cavalos.
+            </p>
+
+            <p>
+                Os heróis têm que se proteger bem, pois na verdade eles estão em Condemned, onde habita a lenda do <strong>Karlinhos.</strong>
+            </p>
+        </div>
+
+        <!-- ===== VÍDEO 4 ===== -->
+        <div class="chapter-video">
+            <div class="video-wrapper">
+                <iframe src="https://www.youtube.com/embed/HDcLR99lMz0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
             </div>
-        </div> -->
+            <div class="video-caption">📹 <strong>A Batalha de Karlinhos</strong> — Canal: JJMAGame / Jorge</div>
+        </div>
 
         <!-- ============================================================
-             TIMELINE (Opcional - remova se não quiser)
+             PARTE 4
              ============================================================ -->
+        <div class="chapter-text">
+            <div class="part-title">
+                <span class="part-icon">💀</span>
+                Parte 4: A Primeira Derrota
+                <span class="part-number">— A queda dos heróis</span>
+            </div>
+
+            <p>
+                Karlinhos foi adormecido por um feitiço de sono, e a horda de zumbis dele foi derrotada, mas custou muita energia dos heróis. Com várias lutas sem descanso necessário, a próxima poderia ser <strong>uma derrota certa</strong>.
+            </p>
+
+            <div class="sub-title">⏰ <span class="highlight">18 horas depois</span></div>
+
+            <p>
+                Foi relatado que haveria um ataque em Hurricane e parecia ser um ataque bem grande, então os heróis foram para lá.
+            </p>
+
+            <p>
+                Eles estavam exaustos, mesmo tendo descansado um tempo considerável. A batalha contra Karlinhos foi cansativa e dolorosa, mas mesmo assim foram para Hurricane para proteger a cidade. O que eles não esperavam é que era exatamente isso que os inimigos queriam.
+            </p>
+
+            <div class="sub-title">🔥 <span class="highlight">O Final do Hurricane</span></div>
+
+            <p>
+                Todos estão caídos. Toda a cidade foi tomada por membros da <strong>"AJ"</strong>. Havia tanques em todos os lados, e lá tinha um robozinho com os olhos laranja com a fórmula do suco de laranja. Todos não conseguem escutar o que eles estão falando e a intenção da fórmula ainda naquele momento é desconhecida.
+            </p>
+
+            <div class="event-highlight">
+                <strong>⚡ Momento Crítico:</strong> Ao lado apareceu um robô de cajado. Ele levanta e bate o cajado no chão, e os heróis são engolidos por um portal roxo.
+            </div>
+
+            <div class="sub-title">🔮 <span class="highlight">Bem-vindo à sua prisão particular</span></div>
+
+            <p>
+                ...Todos acordam em um lugar completamente destruído e familiar, parecendo uma cópia do mundo normal, mas com a ambientação roxa. Com uma determinação inabalável, eles tentam se recuperar para sair dali o mais rápido possível. Mas para conseguir isso, eles precisam matar pelo menos uma horda de zumbis desse lugar.
+            </p>
+
+            <p style="text-align: center; font-size: 18px; color: #e94560; font-weight: 700;">💀 Mais um banho de sangue...</p>
+        </div>
+
+        <!-- ============================================================
+             PARTE 5
+             ============================================================ -->
+        <div class="chapter-text">
+            <div class="part-title">
+                <span class="part-icon">🌟</span>
+                Parte 5: A Esperança
+                <span class="part-number">— O que virá a seguir</span>
+            </div>
+
+            <p>
+                <strong>Finalmente um descanso.</strong> Os monstros foram derrotados, mas agora eles podem descansar um pouco. Nesse lugar estranho e quente, todos tentam entender o que está acontecendo e por que está acontecendo, como que a gente foi derrotado por aqueles robôs.
+            </p>
+
+            <p>
+                Então hoje foi o momento de aprendizado, o momento em que todos têm que se levantar e encarar aquilo com mais seriedade e com muita delícia nas veias.
+            </p>
+
+            <p>
+                Agora, como diabos saímos daqui?
+            </p>
+
+            <div class="sub-title">🔥 <span class="highlight">Enquanto isso...</span></div>
+
+            <p>
+                Enquanto isso, a figura misteriosa que estava atrás da fórmula do suco de laranja vai até o seu mestre e entrega a ele a fórmula do suco de laranja, e é informado que alguns heróis da Comunidade Moriya foram derrotados.
+            </p>
+
+            <p>
+                O mestre ordena que comece a invasão completa, para o nascimento do novo mundo e do Supremo.
+            </p>
+
+            <p style="text-align: center; color: #88bb88; padding: 20px; font-style: italic;">
+                📖 <em>"Falta a última peça para conseguirmos chegar até Supremo..."</em>
+            </p>
+
+            <div class="chapter-video">
+                <div class="video-wrapper">
+                    <iframe src="https://www.youtube.com/embed/eBqCDuwZsCs" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+                <div class="video-caption">📹 <strong>Quem vai saber</strong> — Canal: Shiro Sagisu</div>
+            </div>
+
+            <p style="text-align: center; color: #666; padding: 10px;">🔮 <strong>FIM DO ATO 1</strong></p>
+        </div>
+
+        <!-- ===== IMAGEM ===== -->
+        <div class="chapter-image">
+            <img src="images/backgrounds.png" alt="Cena do capítulo">
+            <div class="image-caption">📸 <strong>Cena ilustrativa do capítulo</strong> — Artista: Minerinho da Pesada</div>
+        </div>
+
+        <!-- ===== TIMELINE ===== -->
         <div class="chapter-timeline">
             <h3>📅 Linha do Tempo — Eventos do Capítulo</h3>
+
             <div class="timeline-item">
-                <span class="date">📅 10/08/2025</span>
-                <span class="event">🌅 Aconteceu um ataque no Rancher, e foi tenso, um ataque em espesifico durou +20 minutos</span>
+                <span class="date">📅 10/08/2025 — 19:00</span>
+                <span class="event">🌅 Ataque no Rancher — batalha de +20 minutos</span>
             </div>
             <div class="timeline-item">
                 <span class="date">📅 30/07/2026 — 23:00</span>
-                <span class="event">⚔️ Uma Festa de harmonia antecipada</span>
+                <span class="event">🎉 Festa de harmonia antecipada</span>
             </div>
             <div class="timeline-item">
-                <span class="date">📅 31/07/2026 — 4:00 - 6:00</span>
-                <span class="event">🔴 Roubo da formula</span>
+                <span class="date">📅 31/07/2026 — 04:00</span>
+                <span class="event">🔴 Roubo da fórmula do suco de laranja</span>
             </div>
             <div class="timeline-item">
-                <span class="date">📅 31/07/2026 — 6:00 - 12:00</span>
-                <span class="event">🏙️ Chegada a Yireza</span>
+                <span class="date">📅 31/07/2026 — 06:00</span>
+                <span class="event">🏙️ Chegada a Yireza e início do ataque</span>
             </div>
             <div class="timeline-item">
-                <span class="date">📅 31/07/2026 — 12:01 - 19:00</span>
-                <span class="event">✈️ ida até Legerdemain </span>
+                <span class="date">📅 31/07/2026 — 12:00</span>
+                <span class="event">✈️ Viagem para Legerdemain</span>
             </div>
             <div class="timeline-item">
-                <span class="date">📅 31/07/2026 — 19:00 - 21:00</span>
-                <span class="event">✈️ Fim da luta em Legerdemain </span>
+                <span class="date">📅 31/07/2026 — 19:00</span>
+                <span class="event">⚔️ Fim da batalha em Legerdemain</span>
             </div>
             <div class="timeline-item">
-                <span class="date">📅 01/01/2026 — 21:00 - 2:59</span>
-                <span class="event">✈️ Descanso em "Kondemned" </span>
+                <span class="date">📅 01/08/2026 — 21:00</span>
+                <span class="event">🛏️ Chegada e descanso em "Condemned"</span>
             </div>
             <div class="timeline-item">
-                <span class="date">📅 01/01/2026 — 3:00</span>
-                <span class="event">✈️ Batalha contra a horda de Zombies do Karlinhos </span>
+                <span class="date">📅 01/08/2026 — 03:00</span>
+                <span class="event">⚔️ Batalha contra a horda de zumbis de Karlinhos</span>
+            </div>
+            <div class="timeline-item">
+                <span class="date">📅 01/08/2026 — 03:33</span>
+                <span class="event">💤 Derrota de Karlinhos pelo feitiço de sono</span>
+            </div>
+            <div class="timeline-item">
+                <span class="date">📅 01/08/2026 — 18:33</span>
+                <span class="event">⚔️ A Batalha de Hurricane — os heróis são derrotados</span>
+            </div>
+            <div class="timeline-item danger">
+                <span class="date">📅 01/08/2026 — 20:00</span>
+                <span class="event">🔴 Heróis são engolidos pelo portal roxo</span>
+            </div>
+            <div class="timeline-item">
+                <span class="date">📅 01/08/2026 — 22:00</span>
+                <span class="event">⚔️ Heróis derrotam a horda de zumbis</span>
+            </div>
+            <div class="timeline-item">
+                <span class="date">📅 01/08/2026 — 23:00</span>
+                <span class="event">🔴 A figura misteriosa consegue entregar a fórmula aos membros da "AJ"</span>
             </div>
         </div>
 
-        <!-- ============================================================
-             NAVEGAÇÃO RODAPÉ
-             ============================================================ -->
+        <!-- ===== NAVEGAÇÃO RODAPÉ ===== -->
         <div class="nav-bottom">
-            <a href="Lore.html" class="nav-btn">
-                <span class="arrow">◀</span> Índice
-            </a>
+            <a href="Lore.html" class="nav-btn"><span class="arrow">◀</span> Índice</a>
             <span class="nav-center">📜 "Vá para Legerdemain, inicie a operação A.N.U.S"</span>
-            <a href="index.html" class="nav-btn">
-                Próximo <span class="arrow">▶</span>
-            </a>
+            <a href="Lore.html" class="nav-btn">Próximo <span class="arrow">▶</span></a>
         </div>
 
-        <!-- ============================================================
-             BOTÃO VOLTAR
-             ============================================================ -->
+        <!-- ===== BOTÃO VOLTAR ===== -->
         <div class="footer">
             <a href="index.html" class="btn-voltar">⬅ Voltar para o Tracker</a>
         </div>
+
     </div>
 
     <script>
-        // ============================================================
-        // TIMESTAMP
-        // ============================================================
         function formatarTimestamp() {
             const data = new Date();
             const dias = ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'];
             const meses = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho',
                           'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
-
-            const diaSemana = dias[data.getDay()];
-            const dia = String(data.getDate()).padStart(2, '0');
-            const mes = meses[data.getMonth()];
-            const ano = data.getFullYear();
-
-            return `${diaSemana}, ${dia} de ${mes} de ${ano}`;
+            return `${dias[data.getDay()]}, ${String(data.getDate()).padStart(2, '0')} de ${meses[data.getMonth()]} de ${data.getFullYear()}`;
         }
-
-        console.log('📖 Template de capítulo carregado!');
+        console.log('📖 ATO I — O Roubo da Fórmula carregado!');
         console.log(`🕐 ${formatarTimestamp()}`);
+        console.log('📚 5 partes documentadas | 🎬 5 vídeos incorporados');
     </script>
 
 </body>
