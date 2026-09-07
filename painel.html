@@ -1,0 +1,1111 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Status da Comunidade - Moriya Ultimate Tracker</title>
+    <style>
+        /* ===== RESET E FUNDO ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --fundo-imagem: url('images/backgrounds.png');
+            --fundo-opacidade: 0.6;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #1a2e1a;
+            padding: 20px;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            background-image: var(--fundo-imagem);
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            opacity: var(--fundo-opacidade);
+        }
+
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: #1a2e1a;
+            opacity: 0.6;
+        }
+
+        /* ===== BARRA DE ROLAGEM ===== */
+        body::-webkit-scrollbar {
+            width: 6px;
+        }
+        body::-webkit-scrollbar-track {
+            background: rgba(26, 26, 46, 0.2);
+            border-radius: 3px;
+        }
+        body::-webkit-scrollbar-thumb {
+            background: rgba(42, 42, 74, 0.4);
+            border-radius: 3px;
+        }
+        body::-webkit-scrollbar-thumb:hover {
+            background: rgba(42, 42, 74, 0.7);
+        }
+        body {
+            scrollbar-width: thin;
+            scrollbar-color: rgba(42, 42, 74, 0.4) rgba(26, 26, 46, 0.2);
+        }
+
+        /* ============================================================
+           BOTÃO VOLTAR (FLUTUANTE)
+        ============================================================ */
+        .btn-voltar-flutuante {
+            position: fixed;
+            bottom: 25px;
+            left: 25px;
+            z-index: 9998;
+            background: #27ae60;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(39, 174, 96, 0.4);
+            border: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-voltar-flutuante:hover {
+            background: #2ecc71;
+            transform: scale(1.05);
+            box-shadow: 0 4px 30px rgba(39, 174, 96, 0.6);
+        }
+
+        @media (max-width: 768px) {
+            .btn-voltar-flutuante {
+                bottom: 15px;
+                left: 15px;
+                font-size: 12px;
+                padding: 8px 14px;
+            }
+        }
+
+        /* ============================================================
+           CONTAINER PRINCIPAL
+        ============================================================ */
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: #2a4a2a;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+            border: 1px solid #3a5a3a;
+        }
+
+        /* ============================================================
+           CABEÇALHO
+        ============================================================ */
+        .header {
+            text-align: center;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #3a5a3a;
+            margin-bottom: 25px;
+        }
+
+        .header .badge {
+            display: inline-block;
+            background: #e94560;
+            color: white;
+            padding: 4px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+
+        .header h1 {
+            color: #f0f0f0;
+            font-size: 28px;
+            font-weight: 700;
+        }
+
+        .header h1 .highlight {
+            color: #4caf50;
+        }
+
+        .header .subtitle {
+            color: #aaddaa;
+            font-size: 14px;
+            margin-top: 6px;
+            opacity: 0.9;
+        }
+
+        /* ============================================================
+           CARD DE STATUS (FOTO + LOCALIZAÇÃO)
+        ============================================================ */
+        .status-card {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 25px;
+            background: #1a3a1a;
+            border-radius: 12px;
+            padding: 20px 25px;
+            border: 1px solid #3a5a3a;
+            margin-bottom: 25px;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .status-card:hover {
+            border-color: #4caf50;
+            box-shadow: 0 4px 25px rgba(76, 175, 80, 0.1);
+        }
+
+        .status-card .foto-equipe {
+            flex-shrink: 0;
+            width: 150px;
+            height: 150px;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 3px solid #4caf50;
+            box-shadow: 0 4px 20px rgba(76, 175, 80, 0.2);
+            transition: all 0.3s ease;
+            background: #1a2e1a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .status-card .foto-equipe img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .status-card .foto-equipe .placeholder {
+            font-size: 60px;
+            color: #3a5a3a;
+            user-select: none;
+        }
+
+        .status-card .foto-equipe:hover {
+            border-color: #ffd700;
+            transform: scale(1.02);
+            box-shadow: 0 4px 30px rgba(255, 215, 0, 0.2);
+        }
+
+        .status-card .info-equipe {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .status-card .info-equipe .nome-equipe {
+            color: #f0f0f0;
+            font-size: 22px;
+            font-weight: 700;
+        }
+
+        .status-card .info-equipe .nome-equipe .highlight {
+            color: #4caf50;
+        }
+
+        .status-card .info-equipe .localizacao {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #85c1e9;
+            font-size: 16px;
+            margin-top: 6px;
+        }
+
+        .status-card .info-equipe .localizacao .pin {
+            font-size: 20px;
+        }
+
+        .status-card .info-equipe .localizacao .local {
+            font-weight: 600;
+        }
+
+        .status-card .info-equipe .status-texto {
+            color: #b0b0b0;
+            font-size: 14px;
+            margin-top: 6px;
+            line-height: 1.5;
+        }
+
+        .status-card .info-equipe .status-texto strong {
+            color: #aaddaa;
+        }
+
+        /* ============================================================
+           PLACAR GIGANTE (DINHEIRO ARRECADADO)
+        ============================================================ */
+        .placar-container {
+            background: linear-gradient(135deg, #1a3a1a, #2a4a2a);
+            border-radius: 12px;
+            padding: 20px 25px;
+            border: 2px solid #ffd700;
+            box-shadow: 0 0 40px rgba(255, 215, 0, 0.1), inset 0 0 60px rgba(255, 215, 0, 0.03);
+            margin-bottom: 25px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .placar-container:hover {
+            border-color: #ff6b00;
+            box-shadow: 0 0 60px rgba(255, 215, 0, 0.15);
+        }
+
+        .placar-container .placar-label {
+            color: #88bb88;
+            font-size: 14px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .placar-container .placar-valor {
+            color: #ffd700;
+            font-size: 64px;
+            font-weight: 800;
+            text-shadow: 0 0 30px rgba(255, 215, 0, 0.15);
+            line-height: 1.2;
+            margin: 4px 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            letter-spacing: 2px;
+        }
+
+        .placar-container .placar-valor .moeda {
+            font-size: 36px;
+            color: #f1c40f;
+        }
+
+        .placar-container .placar-sub {
+            color: #66aa66;
+            font-size: 13px;
+            font-style: italic;
+        }
+
+        /* ============================================================
+           LINHA DO TEMPO
+        ============================================================ */
+        .timeline-section {
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 2px solid #3a5a3a;
+        }
+
+        .timeline-section .timeline-title {
+            color: #f0f0f0;
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .timeline-section .timeline-title .highlight {
+            color: #4caf50;
+        }
+
+        .timeline-item {
+            display: flex;
+            gap: 20px;
+            padding: 10px 16px;
+            background: rgba(26, 46, 26, 0.3);
+            border-radius: 8px;
+            border-left: 3px solid #4caf50;
+            margin-bottom: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .timeline-item:hover {
+            background: rgba(26, 46, 26, 0.5);
+            transform: translateX(5px);
+        }
+
+        .timeline-item .date {
+            font-weight: 700;
+            color: #85c1e9;
+            min-width: 130px;
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+
+        .timeline-item .event {
+            color: #d0d0d0;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .timeline-item .event strong {
+            color: #4caf50;
+        }
+
+        .timeline-item.danger {
+            border-left-color: #e94560;
+            background: rgba(233, 69, 96, 0.1);
+        }
+
+        .timeline-item.danger .event {
+            color: #e94560;
+        }
+
+        .timeline-item.success {
+            border-left-color: #27ae60;
+            background: rgba(39, 174, 96, 0.08);
+        }
+
+        .timeline-item.success .event {
+            color: #2ecc71;
+        }
+
+        .timeline-item.warning {
+            border-left-color: #f39c12;
+            background: rgba(243, 156, 18, 0.08);
+        }
+
+        .timeline-item.warning .event {
+            color: #f39c12;
+        }
+
+        /* ============================================================
+           RODAPÉ COM AVISO DE FICÇÃO
+        ============================================================ */
+        .footer {
+            margin-top: 25px;
+            padding-top: 20px;
+            border-top: 2px solid #3a5a3a;
+            text-align: center;
+        }
+
+        .footer .timestamp {
+            color: #88bb88;
+            font-size: 13px;
+        }
+
+        .footer .timestamp strong {
+            color: #aaddaa;
+        }
+
+        .footer .aviso-ficcao {
+            background: rgba(233, 69, 96, 0.12);
+            border: 1px solid rgba(233, 69, 96, 0.25);
+            border-radius: 10px;
+            padding: 14px 20px;
+            margin-top: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            transition: all 0.3s ease;
+        }
+
+        .footer .aviso-ficcao:hover {
+            background: rgba(233, 69, 96, 0.18);
+            border-color: rgba(233, 69, 96, 0.4);
+        }
+
+        .footer .aviso-ficcao .icone {
+            font-size: 24px;
+            flex-shrink: 0;
+        }
+
+        .footer .aviso-ficcao .texto {
+            color: #d0d0d0;
+            font-size: 13px;
+            line-height: 1.6;
+            text-align: center;
+        }
+
+        .footer .aviso-ficcao .texto strong {
+            color: #e94560;
+        }
+
+        .footer .aviso-ficcao .texto .highlight-verde {
+            color: #4caf50;
+        }
+
+        /* ============================================================
+           POP-UP DE BOAS-VINDAS (OVERLAY)
+        ============================================================ */
+        .popup-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.82);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            backdrop-filter: blur(6px);
+            animation: popupFadeIn 0.4s ease;
+        }
+
+        .popup-overlay.active {
+            display: flex;
+        }
+
+        @keyframes popupFadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.92) translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        .popup-container {
+            background: #2a4a2a;
+            border-radius: 16px;
+            max-width: 560px;
+            width: 100%;
+            max-height: 92vh;
+            overflow-y: auto;
+            padding: 30px 35px 25px 35px;
+            border: 3px solid transparent;
+            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.7);
+            position: relative;
+            background-image: linear-gradient(#2a4a2a, #2a4a2a),
+                              linear-gradient(to right,
+                                  #ff0000, #ff7700, #ffff00, #00ff00,
+                                  #0000ff, #8b00ff, #ff00ff, #ff0000
+                              );
+            background-origin: padding-box, border-box;
+            background-clip: padding-box, border-box;
+            background-size: 100% 100%, 300% 100%;
+            animation: popupBorderMove 4s linear infinite;
+        }
+
+        @keyframes popupBorderMove {
+            0% { background-position: 0% 0%, 0% 50%; }
+            100% { background-position: 0% 0%, 300% 50%; }
+        }
+
+        .popup-container::-webkit-scrollbar {
+            width: 5px;
+        }
+        .popup-container::-webkit-scrollbar-track {
+            background: #1a2e1a;
+            border-radius: 3px;
+        }
+        .popup-container::-webkit-scrollbar-thumb {
+            background: #3a5a3a;
+            border-radius: 3px;
+        }
+
+        .popup-close-btn {
+            position: absolute;
+            top: 10px;
+            right: 12px;
+            background: #e94560;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+        }
+
+        .popup-close-btn:hover {
+            background: #ff6b81;
+            transform: scale(1.08) rotate(90deg);
+        }
+
+        .popup-content {
+            text-align: center;
+        }
+
+        .popup-content .popup-icon {
+            font-size: 48px;
+            display: block;
+            margin-bottom: 6px;
+        }
+
+        .popup-content .popup-title {
+            color: #f0f0f0;
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .popup-content .popup-title .highlight {
+            color: #4caf50;
+        }
+
+        .popup-content .popup-subtitle {
+            color: #aaddaa;
+            font-size: 14px;
+            margin-bottom: 16px;
+            opacity: 0.9;
+        }
+
+        .popup-content .popup-text {
+            color: #d0d0d0;
+            font-size: 14px;
+            line-height: 1.8;
+            text-align: left;
+            margin: 10px 0 16px 0;
+        }
+
+        .popup-content .popup-text strong {
+            color: #4caf50;
+        }
+
+        .popup-content .popup-text .destaque {
+            color: #e94560;
+        }
+
+        .popup-content .popup-divider {
+            width: 60px;
+            height: 2px;
+            background: #4caf50;
+            margin: 12px auto;
+            opacity: 0.4;
+        }
+
+        .popup-content .popup-aviso {
+            background: rgba(233, 69, 96, 0.12);
+            border: 1px solid rgba(233, 69, 96, 0.2);
+            border-radius: 8px;
+            padding: 10px 14px;
+            margin: 12px 0 16px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-align: left;
+        }
+
+        .popup-content .popup-aviso .aviso-icon {
+            font-size: 20px;
+            flex-shrink: 0;
+        }
+
+        .popup-content .popup-aviso .aviso-texto {
+            color: #c0c0c0;
+            font-size: 12px;
+            line-height: 1.5;
+        }
+
+        .popup-content .popup-aviso .aviso-texto strong {
+            color: #e94560;
+        }
+
+        .popup-content .popup-btn {
+            display: inline-block;
+            background: #27ae60;
+            color: white;
+            padding: 10px 36px;
+            border: none;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .popup-content .popup-btn:hover {
+            background: #2ecc71;
+            transform: scale(1.03);
+            box-shadow: 0 4px 20px rgba(39, 174, 96, 0.4);
+        }
+
+        /* ============================================================
+           RESPONSIVO
+        ============================================================ */
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+
+            .header h1 {
+                font-size: 22px;
+            }
+
+            .status-card {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+                padding: 18px;
+            }
+
+            .status-card .foto-equipe {
+                width: 120px;
+                height: 120px;
+            }
+
+            .status-card .info-equipe .localizacao {
+                justify-content: center;
+            }
+
+            .placar-container .placar-valor {
+                font-size: 42px;
+            }
+
+            .placar-container .placar-valor .moeda {
+                font-size: 28px;
+            }
+
+            .timeline-item {
+                flex-direction: column;
+                gap: 4px;
+            }
+
+            .timeline-item .date {
+                min-width: unset;
+                font-size: 13px;
+            }
+
+            .btn-voltar-flutuante {
+                bottom: 15px;
+                left: 15px;
+                font-size: 12px;
+                padding: 8px 14px;
+            }
+
+            .footer .aviso-ficcao {
+                flex-direction: column;
+                gap: 6px;
+                padding: 12px 16px;
+            }
+
+            .footer .aviso-ficcao .icone {
+                font-size: 20px;
+            }
+
+            .footer .aviso-ficcao .texto {
+                font-size: 12px;
+            }
+
+            .popup-container {
+                padding: 22px 18px 18px 18px;
+                margin: 10px;
+            }
+
+            .popup-content .popup-title {
+                font-size: 20px;
+            }
+
+            .popup-content .popup-text {
+                font-size: 13px;
+            }
+
+            .popup-content .popup-aviso {
+                flex-direction: column;
+                gap: 4px;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 15px;
+            }
+
+            .header h1 {
+                font-size: 18px;
+            }
+
+            .status-card .foto-equipe {
+                width: 90px;
+                height: 90px;
+            }
+
+            .status-card .info-equipe .nome-equipe {
+                font-size: 18px;
+            }
+
+            .placar-container .placar-valor {
+                font-size: 32px;
+            }
+
+            .placar-container .placar-valor .moeda {
+                font-size: 22px;
+            }
+
+            .timeline-item .event {
+                font-size: 13px;
+            }
+
+            .btn-voltar-flutuante {
+                bottom: 12px;
+                left: 12px;
+                font-size: 11px;
+                padding: 6px 12px;
+            }
+
+            .footer .aviso-ficcao .texto {
+                font-size: 11px;
+            }
+
+            .popup-container {
+                padding: 16px 12px 14px 12px;
+            }
+
+            .popup-content .popup-title {
+                font-size: 17px;
+            }
+
+            .popup-content .popup-text {
+                font-size: 12px;
+            }
+
+            .popup-content .popup-btn {
+                padding: 8px 28px;
+                font-size: 13px;
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ============================================================
+         POP-UP DE BOAS-VINDAS
+    ============================================================ -->
+    <div class="popup-overlay" id="popupOverlay">
+        <div class="popup-container">
+            <button class="popup-close-btn" onclick="fecharPopup()" aria-label="Fechar">✕</button>
+
+            <div class="popup-content">
+                <span class="popup-icon">📊</span>
+                <h2 class="popup-title">
+                    Painel de <span class="highlight">Status</span>
+                </h2>
+                <p class="popup-subtitle">📍 Acompanhe a evolução da comunidade Moriya</p>
+
+                <div class="popup-divider"></div>
+
+                <div class="popup-text">
+                    <p>
+                        <strong>Bem-vindo, caçador!</strong> Este é o painel oficial da
+                        <strong>comunidade Moriya</strong>, onde você pode acompanhar em tempo real
+                        o status da nossa operação.
+                    </p>
+                    <p style="margin-top: 8px;">
+                        🛡️ Confira a <strong>localização atual</strong>, o
+                        <strong class="destaque">total arrecadado</strong> em missões e eventos,
+                        e a <strong>linha do tempo</strong> com os principais acontecimentos da nossa jornada.
+                    </p>
+                </div>
+
+                <!-- ===== AVISO DE FICÇÃO DENTRO DO POPUP ===== -->
+                <div class="popup-aviso">
+                    <span class="aviso-icon">📢</span>
+                    <span class="aviso-texto">
+                        <strong>ATENÇÃO:</strong> Todas as informações são <strong>obras de ficção</strong>,
+                        criadas para entretenimento e imersão na <strong style="color:#4caf50;">lore do universo Moriya</strong>.
+                    </span>
+                </div>
+
+                <button class="popup-btn" onclick="fecharPopup()">
+                    🚀 Continuar
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================
+         BOTÃO VOLTAR FLUTUANTE
+    ============================================================ -->
+    <a href="index.html" class="btn-voltar-flutuante">
+        ⬅ Voltar
+    </a>
+
+    <!-- ============================================================
+         CONTAINER PRINCIPAL
+    ============================================================ -->
+    <div class="container">
+
+        <!-- ===== CABEÇALHO ===== -->
+        <div class="header">
+            <span class="badge">📊 Status</span>
+            <h1>Comunidade <span class="highlight">Moriya</span></h1>
+            <p class="subtitle">📌 Painel de status e evolução da comunidade</p>
+        </div>
+
+        <!-- ============================================================
+             CARD DE STATUS (FOTO + LOCALIZAÇÃO)
+        ============================================================ -->
+        <div class="status-card">
+            <div class="foto-equipe">
+                <!--
+                    ============================================================
+                    ALTERE A FOTO DA EQUIPE AQUI!
+                    ============================================================
+                    Opção 1: Descomente a linha abaixo e coloque o caminho da imagem
+                    Opção 2: Mantenha o placeholder (emoji) se não tiver imagem
+                -->
+                <!-- <img src="images/perfil/Moriya.png" alt="Foto da Comunidade Moriya"> -->
+                <span class="placeholder">🛡️</span>
+            </div>
+            <div class="info-equipe">
+                <div class="nome-equipe">
+                    ⚔️ <span class="highlight">Moriya</span> Protectors
+                </div>
+                <div class="localizacao">
+                    <span class="pin">📍</span>
+                    <!--
+                        ============================================================
+                        ALTERE A LOCALIZAÇÃO AQUI!
+                        ============================================================
+                    -->
+                    <span class="local">América Latina — Brasil - MoriyaLandia</span>
+                </div>
+                <div class="status-texto">
+                    <!--
+                        ============================================================
+                        ALTERE O STATUS DA COMUNIDADE AQUI!
+                        ============================================================
+                    -->
+                    <strong>🔴 Status:</strong> Em operação ativa · Aceitando novos recrutas
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================================
+             PLACAR GIGANTE (DINHEIRO ARRECADADO)
+        ============================================================ -->
+        <div class="placar-container">
+            <div class="placar-label">💰 Total Arrecadado nas missões e eventos</div>
+            <!--
+                ============================================================
+                ALTERE O VALOR ARRECADADO AQUI!
+                ============================================================
+            -->
+            <div class="placar-valor">
+                <span class="moeda">$</span> 9.650,00
+            </div>
+            <div class="placar-sub">📈 Em calculo</div>
+        </div>
+
+        <!-- ============================================================
+             LINHA DO TEMPO
+        ============================================================ -->
+        <div class="timeline-section">
+            <div class="timeline-title">
+                📜 <span class="highlight">Linha do Tempo</span> — Eventos da Comunidade
+            </div>
+
+            <!--
+                ============================================================
+                ALTERE OS EVENTOS DA LINHA DO TEMPO AQUI!
+                ============================================================
+                Classe extra (opcional):
+                - .danger  → borda vermelha (evento crítico)
+                - .success → borda verde (conquista)
+                - .warning → borda laranja (aviso)
+            -->
+            <div class="timeline-item success">
+                <span class="date">📅 10/08/2025 — 19:00</span>
+                <span class="event">🌅 Ataque no Rancher — batalha de +20 minutos</span>
+            </div>
+            <div class="timeline-item success">
+                <span class="date">📅 11/08/2025 — 12:00</span>
+                <span class="event">🌅 Foi dado o pagamento de R$7000</span>
+            </div>
+            <div class="timeline-item">
+                <span class="date">📅 30/07/2026 — 23:00</span>
+                <span class="event">🎉 Festa de harmonia antecipada ( - R$1000 )</span>
+            </div>
+            <div class="timeline-item warning">
+                <span class="date">📅 31/07/2026 — 04:00</span>
+                <span class="event">🔴 Roubo da fórmula do suco de laranja</span>
+            </div>
+            <div class="timeline-item warning">
+                <span class="date">📅 31/07/2026 — 06:00</span>
+                <span class="event">🏙️ Chegada a Yireza e início do ataque</span>
+            </div>
+            <div class="timeline-item success">
+                <span class="date">📅 31/07/2026 — 08:00</span>
+                <span class="event">🏙️ Recompensa ( + R$ 2000 )</span>
+            </div>
+            <div class="timeline-item">
+                <span class="date">📅 31/07/2026 — 12:00</span>
+                <span class="event">✈️ Viagem para Legerdemain ( - R$ 350 para 6 )</span>
+            </div>
+            <div class="timeline-item success">
+                <span class="date">📅 31/07/2026 — 19:00</span>
+                <span class="event">⚔️ Fim da batalha em Legerdemain ( + R$ 2300 )</span>
+            </div>
+            <div class="timeline-item">
+                <span class="date">📅 01/08/2026 — 21:00</span>
+                <span class="event">🛏️ Chegada e descanso em "Condemned" ( - R$ 300 )</span>
+            </div>
+            <div class="timeline-item">
+                <span class="date">📅 01/08/2026 — 03:00</span>
+                <span class="event">⚔️ Batalha contra a horda de zumbis de Karlinhos</span>
+            </div>
+            <div class="timeline-item success">
+                <span class="date">📅 01/08/2026 — 03:33</span>
+                <span class="event">💤 Derrota de Karlinhos pelo feitiço de sono ( + R$ 303 de reembolso )</span>
+            </div>
+            <div class="timeline-item danger">
+                <span class="date">📅 01/08/2026 — 18:33</span>
+                <span class="event">⚔️ A Batalha de Hurricane — os heróis são derrotados ( - R$ 500 )</span>
+            </div>
+            <div class="timeline-item danger">
+                <span class="date">📅 01/08/2026 — 20:00</span>
+                <span class="event">🔴 Heróis são engolidos pelo portal roxo</span>
+            </div>
+        </div>
+
+        <!-- ============================================================
+             RODAPÉ COM AVISO DE FICÇÃO
+        ============================================================ -->
+        <div class="footer">
+            <div class="timestamp">
+                🕐 Última atualização: <strong id="timestampStatus"></strong>
+            </div>
+
+            <!-- ===== AVISO DE FICÇÃO ===== -->
+            <div class="aviso-ficcao">
+                <span class="icone">📢</span>
+                <span class="texto">
+                    <strong>ATENÇÃO:</strong> Todas as informações exibidas neste painel são
+                    <strong>obras de ficção</strong>, criadas para fins de entretenimento e
+                    imersão na <span class="highlight-verde">lore do universo Moriya</span>.
+                    Qualquer semelhança com a realidade é mera coincidência.
+                    <span style="display:inline-block; margin-top:4px; color:#88bb88; font-size:12px;">
+                        🎭 Aproveite a jornada, caçador!
+                    </span>
+                </span>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- JAVASCRIPT                                                    -->
+    <!-- ============================================================ -->
+    <script>
+        // ============================================================
+        // TIMESTAMP
+        // ============================================================
+        function formatarTimestamp() {
+            const data = new Date();
+            const dias = ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'];
+            const meses = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho',
+                          'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
+
+            const diaSemana = dias[data.getDay()];
+            const dia = String(data.getDate()).padStart(2, '0');
+            const mes = meses[data.getMonth()];
+            const ano = data.getFullYear();
+            const horas = String(data.getHours()).padStart(2, '0');
+            const minutos = String(data.getMinutes()).padStart(2, '0');
+
+            return `${diaSemana}, ${dia} de ${mes} de ${ano} às ${horas}:${minutos}`;
+        }
+
+        document.getElementById('timestampStatus').textContent = formatarTimestamp();
+
+        // ============================================================
+        // POP-UP DE BOAS-VINDAS
+        // ============================================================
+        const POPUP_KEY = 'moriya_painel_popup';
+
+        function mostrarPopup() {
+            const overlay = document.getElementById('popupOverlay');
+            if (overlay) {
+                overlay.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+        }
+
+        function fecharPopup() {
+            const overlay = document.getElementById('popupOverlay');
+            if (overlay) {
+                overlay.classList.remove('active');
+                document.body.style.overflow = '';
+                try {
+                    localStorage.setItem(POPUP_KEY, 'true');
+                } catch (e) {}
+            }
+        }
+
+        // Fecha o popup clicando fora
+        document.getElementById('popupOverlay').addEventListener('click', function(e) {
+            if (e.target === this) {
+                fecharPopup();
+            }
+        });
+
+        // Fecha o popup com ESC
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                fecharPopup();
+            }
+        });
+
+        // Inicializa o popup (mostra apenas uma vez)
+        function initPopup() {
+            try {
+                const jaVisto = localStorage.getItem(POPUP_KEY);
+                if (!jaVisto) {
+                    setTimeout(function() {
+                        mostrarPopup();
+                    }, 600);
+                }
+            } catch (e) {
+                setTimeout(function() {
+                    mostrarPopup();
+                }, 600);
+            }
+        }
+
+        // Inicializa
+        initPopup();
+
+        console.log('📊 Painel de Status da Comunidade carregado!');
+        console.log('🕐 ' + formatarTimestamp());
+        console.log('📌 Personalize: foto, localização, valor arrecadado e linha do tempo.');
+        console.log('📢 Todas as informações são fictícias — apenas para entretenimento.');
+        console.log('🎬 Pop-up de boas-vindas exibido (aparece apenas uma vez por navegador).');
+    </script>
+
+</body>
+</html>
