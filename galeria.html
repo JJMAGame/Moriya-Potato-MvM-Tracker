@@ -420,7 +420,6 @@
             border-color: #e94560;
         }
 
-        /* ===== THUMBNAIL EM TAMANHO GRANDE (CLICADA) ===== */
         .modal-thumbs .thumb-item.ampliado {
             width: 100%;
             height: 200px;
@@ -437,12 +436,12 @@
         }
 
         /* ============================================================
-           MÚSICAS NO MODAL
+           MÚSICAS NO MODAL (SEM CAPA)
            ============================================================ */
         .modal-music-list {
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 10px;
             margin-top: 10px;
             padding-top: 12px;
             border-top: 1px solid #3a5a3a;
@@ -458,10 +457,11 @@
         .modal-music-item {
             display: flex;
             align-items: center;
+            justify-content: space-between;
             gap: 12px;
             background: #1a3a1a;
             border-radius: 10px;
-            padding: 10px 14px;
+            padding: 12px 16px;
             transition: all 0.3s ease;
             border: 1px solid transparent;
         }
@@ -469,16 +469,6 @@
         .modal-music-item:hover {
             border-color: #3a5a3a;
             background: #2a4a2a;
-        }
-
-        .modal-music-item .music-cover {
-            width: 60px;
-            height: 60px;
-            border-radius: 6px;
-            background-size: cover;
-            background-position: center;
-            flex-shrink: 0;
-            background-color: #1a2e1a;
         }
 
         .modal-music-item .music-info {
@@ -601,7 +591,8 @@
             .video-card .video-thumb { height: 110px; }
             .header h1 { font-size: 18px; }
             .modal-thumbs .thumb-item { width: 50px; height: 38px; }
-            .modal-music-item .music-cover { width: 40px; height: 40px; }
+            .modal-music-item { flex-direction: column; align-items: flex-start; gap: 8px; }
+            .modal-music-item .music-links { width: 100%; justify-content: flex-start; }
             .modal-music-item .music-links .music-link { font-size: 9px; padding: 2px 8px; }
         }
     </style>
@@ -769,7 +760,6 @@
                             name: "EXPECTATIONS",
                             artist: "Snurper_ Bob",
                             duration: "3:47",
-                            cover: "images/Music Cape/IMPASSE.png",
                             links: {
                                 youtube: "https://youtu.be/U_W_dxNgUDI?si=m_TRGY8lZVZy_Wf7&t=777",
                             }
@@ -778,7 +768,6 @@
                             name: "Reaching For A Finality",
                             artist: "Snurper_ Bob",
                             duration: "6:58",
-                            cover: "images/Music Cape/IMPASSE.png",
                             links: {
                                 youtube: "https://youtu.be/U_W_dxNgUDI?si=qtFwz21Y_YVrL8xj&t=1009",
                             }
@@ -787,7 +776,6 @@
                             name: "Higher Than the Black Sky (Demo)",
                             artist: "Duv",
                             duration: "3:39",
-                            cover: "images/Music Cape/Duv1.jpg",
                             links: {
                                 youtube: "https://youtu.be/rZsSYhdH5vs?si=3TJdfeTtS4Ntsn3d",
                             }
@@ -808,7 +796,6 @@
                             name: "The Calm",
                             artist: "Valve Studio Orchestra - Team Fortress 2",
                             duration: "2:32",
-                            cover: "images/Music Cape/TF2.jpg",
                             links: {
                                 youtube: "https://youtu.be/8l5HUNZ7hhs?si=cWFxpvij5FEnIEZx",
                                 spotify: "https://open.spotify.com/intl-pt/track/0s1Y2MFgpqH3j6vdBMelZt?autoplay_ok=1",
@@ -818,7 +805,6 @@
                             name: "RUN!",
                             artist: "Sohus Alf, Troels Rohde Jørgensen - Deep Rock Galactic",
                             duration: "2:28",
-                            cover: "images/Music Cape/DRG.jpg",
                             links: {
                                 youtube: "https://youtu.be/RmRRfd2-VeM?si=olYjejp2rLPimu42",
                                 spotify: "https://open.spotify.com/intl-pt/album/1WZWsf39bn1bNMxysFgSL1"
@@ -828,7 +814,6 @@
                             name: "Hydrophobia",
                             artist: "Chris Christodoulou - Risk of Rain 2",
                             duration: "2:51",
-                            cover: "images/Music Cape/ROR.jpg",
                             links: {
                                 youtube: "https://youtu.be/DDcRbrZWFno?si=kNDK5dPfY4Of0e5B",
                                 spotify: "https://open.spotify.com/intl-pt/track/1XMfSk9yWjZdUNo1WuEIWF"
@@ -838,7 +823,6 @@
                             name: "Divinity of the Office",
                             artist: "Consumer Softproducts - Cruelty Squad ",
                             duration: "2:45",
-                            cover: "images/Music Cape/CSQUAD.jpg",
                             links: {
                                 youtube: "https://youtu.be/JsUQT9uwJlQ?si=t5W39YId3FwYrisK",
                                 spotify: "https://open.spotify.com/intl-pt/track/5ckZg1YXkJ5Ef6fC7FrTfp"
@@ -848,7 +832,6 @@
                             name: "Wartrauma",
                             artist: "Sound Of Syndrome, Tommi J.Vieno - Barotrauma",
                             duration: "8:46",
-                            cover: "images/Music Cape/BARO.jpg",
                             links: {
                                 spotify: "https://open.spotify.com/intl-pt/track/7dGqvtteYgnorMoYr5juXT"
                             }
@@ -857,7 +840,6 @@
                             name: "Marching Upstream Part II",
                             artist: "Sound Of Syndrome - Barotrauma",
                             duration: "6:07",
-                            cover: "images/Music Cape/BARO.jpg",
                             links: {
                                 spotify: "https://open.spotify.com/intl-pt/track/5PVWCHgcnHHPAATzdjDZld"
                             }
@@ -866,7 +848,6 @@
                             name: "Hoods",
                             artist: "Brandon McKagan - Trepang²",
                             duration: "2:16",
-                            cover: "images/Music Cape/TRE2.jpg",
                             links: {
                                 youtube: "https://youtu.be/NMIZcHnGUQE?si=o2I1J2knO0NNvO1a",
                                 spotify: "https://open.spotify.com/intl-pt/track/6O9TxWMNWBtuA0hnhjaquK"
@@ -876,7 +857,6 @@
                             name: "The Creation of V1",
                             artist: "MEGACHEB - PRIME: I WANT TO EAT YOUR HEART",
                             duration: "1:20",
-                            cover: "images/Music Cape/MEGACHEB.jpg",
                             links: {
                                 youtube: "https://youtu.be/V-c5fbQhh-c?si=KELq3zeY2TiYYmFy&t=1346",
                             }
@@ -885,7 +865,6 @@
                             name: "I WILL YOU TO DIE",
                             artist: "MEGACHEB - PRIME: I WANT TO EAT YOUR HEART",
                             duration: "10:55",
-                            cover: "images/Music Cape/MEGACHEB.jpg",
                             links: {
                                 youtube: "https://youtu.be/V-c5fbQhh-c?si=8EEXFfPAaT74u-oD&t=182",
                             }
@@ -906,7 +885,6 @@
                             name: "The Calm",
                             artist: "Valve Studio Orchestra - Team Fortress 2",
                             duration: "2:32",
-                            cover: "images/Music Cape/TF2.jpg",
                             links: {
                                 youtube: "https://youtu.be/8l5HUNZ7hhs?si=cWFxpvij5FEnIEZx",
                                 spotify: "https://open.spotify.com/intl-pt/track/0s1Y2MFgpqH3j6vdBMelZt?autoplay_ok=1",
@@ -916,7 +894,6 @@
                             name: "Terra Pluviam",
                             artist: "Chris Christodoulou - Risk of Rain 2",
                             duration: "7:41",
-                            cover: "images/Music Cape/ROR.jpg",
                             links: {
                                 youtube: "https://youtu.be/8FlsEBR6GD8?si=eyn51WTKtK2gZXVc",
                                 spotify: "https://open.spotify.com/intl-pt/track/5uqAryGdzYHdBd9SMGpmWW?autoplay_ok=1"
@@ -926,7 +903,6 @@
                             name: "I Welcome the Darkness",
                             artist: "Sohus Alf, Troels Rohde Jørgensen - Deep Rock Galactic",
                             duration: "4:02",
-                            cover: "images/Music Cape/DRG.jpg",
                             links: {
                                 youtube: "https://youtu.be/9DCumnJv9aw?si=djkUVM4-GhIKlDbg",
                                 spotify: "https://open.spotify.com/intl-pt/track/73Ng46ZWfYGJFKq1z3EkeH?autoplay_ok=1"
@@ -936,7 +912,6 @@
                             name: "Subway",
                             artist: "Brandon McKagan - Trepang²",
                             duration: "3:37",
-                            cover: "images/Music Cape/TRE2.jpg",
                             links: {
                                 youtube: "https://youtu.be/bA31BFAyX6c?si=a5DKqaWxnqpBMw60",
                                 spotify: "https://open.spotify.com/intl-pt/track/1gzmmW1sBeK5l7HQwCWUEg?si=029c2edb802440fe"
@@ -946,7 +921,6 @@
                             name: "Danger Coffin",
                             artist: "Brandon McKagan - Trepang²",
                             duration: "1:50",
-                            cover: "images/Music Cape/TRE2.jpg",
                             links: {
                                 youtube: "https://youtu.be/_VS70ASLGB8?si=cKX5EyqFVUxBJSae",
                                 spotify: "https://open.spotify.com/intl-pt/track/4FElQt9FU0slwAu2PfRxA3?si=3aa45eedbb1240be"
@@ -956,7 +930,6 @@
                             name: "Angelo Bronte Theme",
                             artist: "Woody Jackson - Red Dead Redemption 2",
                             duration: "4:49",
-                            cover: "images/Music Cape/RDR2.jpg",
                             links: {
                                 youtube: "https://youtu.be/awTN2hbzdmw?si=y8ALBuG2ycOIcLQ4",                               
                             }
@@ -965,7 +938,6 @@
                             name: "Hell March 2.5",
                             artist: "Ian Arsenault - Command & Conquer: Red Alert",
                             duration: "4:38",
-                            cover: "images/Music Cape/COMCONHell.jpg",
                             links: {
                                 youtube: "https://youtu.be/awTN2hbzdmw?si=y8ALBuG2ycOIcLQ4",                               
                             }
@@ -986,7 +958,6 @@
                             name: "Tick Tock",
                             artist: "Simon Viklund - Payday 2",
                             duration: "2:46",
-                            cover: "images/Music Cape/PD2.jpg",
                             links: {
                                 youtube: "https://youtu.be/BJKOJUjVc9o?si=NacE4Fh_Dew9uSCD",
                                 spotify: "https://open.spotify.com/intl-pt/track/0C6fashHy9nZgN33sT66wd?si=3ef51d28c7d9464c"
@@ -996,7 +967,6 @@
                             name: "Razormind",
                             artist: "Simon Viklund - Payday 2",
                             duration: "4:35",
-                            cover: "images/Music Cape/PD2.jpg",
                             links: {
                                 youtube: "https://youtu.be/_Fl_LJBixfg?si=bnM0a2PgmfoN0XrE",
                                 spotify: "https://open.spotify.com/intl-pt/track/5XnwT2VYXoDz0ahj4XrsWl?si=063b66aab7f640c3"
@@ -1006,7 +976,6 @@
                             name: "Horrors of Hoxxes",
                             artist: "Sohus Alf, Troels Rohde Jørgensen - Deep Rock Galactic",
                             duration: "3:53",
-                            cover: "images/Music Cape/DRG.jpg",
                             links: {
                                 youtube: "https://youtu.be/fpIBULiXneU?si=U_w9H_0JABVjSfeW",
                                 spotify: "https://open.spotify.com/intl-pt/track/5AOvQKiVFrSPUqQqNSjtOM?si=31f6131e8d9e4eb7"
@@ -1016,7 +985,6 @@
                             name: "A Distant Terror",
                             artist: "Sohus Alf, Troels Rohde Jørgensen - Deep Rock Galactic",
                             duration: "2:49",
-                            cover: "images/Music Cape/DRG.jpg",
                             links: {
                                 youtube: "https://youtu.be/9IRahP_pB3s?si=TYQlt0wNqs9iF_EN",
                                 spotify: "https://open.spotify.com/intl-pt/track/6Fhtx7gpGxZcNyIbXj2vpR?si=74dc45d5f79b4887"
@@ -1026,7 +994,6 @@
                             name: "Do Robots Dream of Eternal Sleep",
                             artist: "Heaven Pierce Her - Ultrakill",
                             duration: "2:16",
-                            cover: "images/Music Cape/ULTRAV.jpg",
                             links: {
                                 youtube: "https://youtu.be/yILthll0pzU?si=HDgho1rMVg0N6qIV",
                             }
@@ -1035,7 +1002,6 @@
                             name: "Hear! The Siren Song Call of Death",
                             artist: "Heaven Pierce Her - Ultrakill",
                             duration: "5:20",
-                            cover: "images/Music Cape/ULTRAV.jpg",
                             links: {
                                 youtube: "https://youtu.be/Dr60CInvNkY?si=Zg3UGKFb-zmhqICx",
                             }
@@ -1044,7 +1010,6 @@
                             name: "Suffering Leaves Suffering Leaves",
                             artist: "Heaven Pierce Her - Ultrakill",
                             duration: "2:19",
-                            cover: "images/Music Cape/ULTRAV.jpg",
                             links: {
                                 youtube: "https://youtu.be/J8aw90II1bs?si=TaZvsgz07wEDHgms",
                             }
@@ -1053,7 +1018,6 @@
                             name: "Danse Macabre",
                             artist: "Heaven Pierce Her - Ultrakill",
                             duration: "3:36",
-                            cover: "images/Music Cape/ULTRAV.jpg",
                             links: {
                                 youtube: "https://youtu.be/AjGb1w88Lr0?si=EzK7anHbqrBN3K5Z",
                             }
@@ -1062,7 +1026,6 @@
                             name: "TENEBRE ROSSO BREAKCORE",
                             artist: "lipucka",
                             duration: "3:22",
-                            cover: "images/Music Cape/lipucka.jpg",
                             links: {
                                 youtube: "https://youtu.be/_EUjgJVJVM4?si=P-F2P-jKMNeh2_kX",
                             }
@@ -1071,7 +1034,6 @@
                             name: "BLOOD DRAIN BREAKCORE",
                             artist: "OZERONTY",
                             duration: "3:29",
-                            cover: "images/Music Cape/OZERONTY.jpg",
                             links: {
                                 youtube: "https://youtu.be/UE9P44oORik?si=vf27EqRTbB5fAHzs",
                             }
@@ -1080,7 +1042,6 @@
                             name: "Final Destination",
                             artist: "Nobuo Uematsu - Super Smash Bros Brawl",
                             duration: "2:58",
-                            cover: "images/Music Cape/SSBB.webp",
                             links: {
                                 youtube: "https://youtu.be/52i7DhGWO8Q?si=igJhGJqFOGjkmoMI",
                             }
@@ -1100,7 +1061,6 @@
                             name: "Gates of hell",
                             artist: " Darren Korb - Hades",
                             duration: "3:36",
-                            cover: "images/Music Cape/HADES.jpg",
                             links: {
                                 youtube: "https://www.youtube.com/watch?v=FZb8sTjQ5gU&list=RDFZb8sTjQ5gU&start_radio=1&pp=ygUUSGFkZXMgLSBnYXRlIG9mIGhlbGygBwE%3D",
                             }
@@ -1109,7 +1069,6 @@
                             name: "Breaking Point OST",
                             artist: "Call Of Duty World At War",
                             duration: "24:22",
-                            cover: "images/Music Cape/COFWAW.jpg",
                             links: {
                                 youtube: "https://youtu.be/4tWUqCxJNVY?si=imSCj463eg0cDK1O",
                             }
@@ -1118,7 +1077,6 @@
                             name: "Downfall OST",
                             artist: "Call Of Duty World At War",
                             duration: "22:41",
-                            cover: "images/Music Cape/COFWAW.jpg",
                             links: {
                                 youtube: "https://youtu.be/GNO0kArln1E?si=tydTEMwBi8xoTPg-",
                             }
@@ -1127,7 +1085,6 @@
                             name: "The World Looks White",
                             artist: "Heaven Pierce Her - Ultrakill",
                             duration: "2:38",
-                            cover: "images/Music Cape/ULTRAV.jpg",
                             links: {
                                 youtube: "https://youtu.be/A1pAt3KTMLY?si=cNifqAbnQCZ9FsHH",
                             }
@@ -1136,7 +1093,6 @@
                             name: "Bull of Hell",
                             artist: "Heaven Pierce Her - Ultrakill",
                             duration: "3:42",
-                            cover: "images/Music Cape/ULTRAV.jpg",
                             links: {
                                 youtube: "https://youtu.be/IQKe-U9XnmU?si=m7gSdjiOME2S9TPj",
                             }
@@ -1145,7 +1101,6 @@
                             name: "Primordial Beat",
                             artist: "Touhou 14 Double Dealing Character",
                             duration: "5:55",
-                            cover: "images/Music Cape/TH14.jpg",
                             links: {
                                 youtube: "https://youtu.be/poTg46ccsIU?si=GC9cUs1-ZmiLQblQ",
                             }
@@ -1154,7 +1109,6 @@
                             name: "OBSESSION",
                             artist: "Forsaken",
                             duration: "3:31",
-                            cover: "images/Music Cape/FOR.jpg",
                             links: {
                                 youtube: "https://youtu.be/2vbzvDwevXA?si=Et_tPVNWA2-ytHAB",
                             }
@@ -1173,7 +1127,6 @@
                 //             name: "Nome da Música",
                 //             artist: "Nome do Artista",
                 //             duration: "3:45",
-                //             cover: "images/capa.jpg",
                 //             links: {
                 //                 youtube: "URL",
                 //                 spotify: "URL"
@@ -1305,7 +1258,7 @@
                 thumbsContainer.innerHTML = '<span style="color: #88bb88; font-size: 12px;">Nenhuma thumbnail adicional</span>';
             }
 
-            // ===== MÚSICAS =====
+            // ===== MÚSICAS (SEM CAPA) =====
             const musicContainer = document.getElementById('modalMusicList');
             musicContainer.innerHTML = '';
 
@@ -1329,12 +1282,7 @@
                     const item = document.createElement('div');
                     item.className = 'modal-music-item';
 
-                    // Capa
-                    const coverDiv = document.createElement('div');
-                    coverDiv.className = 'music-cover';
-                    coverDiv.style.backgroundImage = `url('${music.cover || 'images/default_cover.jpg'}')`;
-
-                    // Informações
+                    // Informações (sem capa)
                     const infoDiv = document.createElement('div');
                     infoDiv.className = 'music-info';
                     infoDiv.innerHTML = `
@@ -1368,7 +1316,6 @@
                         linksDiv.innerHTML = '<span style="color: #666; font-size: 10px;">Sem links</span>';
                     }
 
-                    item.appendChild(coverDiv);
                     item.appendChild(infoDiv);
                     item.appendChild(linksDiv);
                     musicContainer.appendChild(item);
