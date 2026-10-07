@@ -455,6 +455,7 @@
             margin-bottom: 15px;
             padding-bottom: 12px;
             border-bottom: 1px solid #2a2a4a;
+            padding-right: 90px; /* Espaço para a medalha */
         }
 
         .evento-card .evento-titulo h2 {
@@ -467,13 +468,38 @@
         }
 
         /* ============================================================
-           MEDALHA DO EVENTO COM LEGENDA (EXPANDE PARA LADO)
+           CONTAINER DE LOGO + MEDALHA (TOPO DIREITO)
         ============================================================ */
         .evento-card .medalha-container {
             position: absolute;
             top: 10px;
             right: 10px;
             z-index: 5;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            pointer-events: auto;
+        }
+
+        /* ===== LOGO DA OPERAÇÃO (AO LADO DA MEDALHA) ===== */
+        .evento-card .medalha-container .logo-operacao {
+            height: 70px;
+            max-width: 320px;
+            object-fit: contain;
+            filter: drop-shadow(0 0 12px rgba(255, 255, 255, 0.2));
+            transition: all 0.3s ease;
+            opacity: 0.9;
+            cursor: pointer;
+        }
+
+        .evento-card .medalha-container .logo-operacao:hover {
+            transform: scale(1.05);
+            opacity: 1;
+            filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.4));
+        }
+
+        .evento-card .medalha-container .medalha-wrapper {
+            position: relative;
             width: 70px;
             height: 70px;
             display: flex;
@@ -481,7 +507,6 @@
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            pointer-events: auto;
             overflow: visible;
         }
         
@@ -496,7 +521,7 @@
             transition: transform 0.3s ease;
         }
 
-        .evento-card .medalha-container:hover .medalha-img {
+        .evento-card .medalha-container .medalha-wrapper:hover .medalha-img {
             transform: scale(1.1);
         }
         
@@ -565,9 +590,10 @@
             pointer-events: none;
             backdrop-filter: blur(10px);
             max-width: none;
+            z-index: 10;
         }
 
-        .evento-card .medalha-container:hover .medalha-legenda {
+        .evento-card .medalha-container .medalha-wrapper:hover .medalha-legenda {
             opacity: 1;
             transform: translateY(-50%) translateX(0);
         }
@@ -589,12 +615,21 @@
         }
         
         /* ===== TAMANHO RESPONSIVO ===== */
-        @media (max-width: 600px) {
+        @media (max-width: 700px) {
             .evento-card .medalha-container {
-                width: 50px;
-                height: 50px;
+                gap: 8px;
                 top: 5px;
                 right: 5px;
+            }
+            
+            .evento-card .medalha-container .logo-operacao {
+                height: 40px;
+                max-width: 160px;
+            }
+
+            .evento-card .medalha-container .medalha-wrapper {
+                width: 50px;
+                height: 50px;
             }
             
             .evento-card .medalha-container .medalha-img {
@@ -606,6 +641,17 @@
                 font-size: 8px;
                 padding: 2px 8px;
                 right: calc(100% + 8px);
+            }
+
+            .evento-card .evento-titulo {
+                padding-right: 70px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .evento-card .medalha-container .logo-operacao {
+                height: 30px;
+                max-width: 120px;
             }
         }
 
@@ -1406,6 +1452,7 @@
             .evento-card .evento-titulo {
                 flex-direction: column;
                 align-items: flex-start;
+                padding-right: 70px;
             }
 
             .regras-filtros {
@@ -1598,7 +1645,8 @@
                 medalha: "images/Medalhas/Operação Flores Negra 666.png",
                 medalhaNome: "⚔️ Operação Flor Negra interlúdio",
                 medalhaCredito: "Rishi_LockeD",
-                conjunto: "Operação Flor Negra"
+                conjunto: "Operação Flor Negra",
+                logoOperacao: "images/operation/operacao-flor-negra.png" // ← ADICIONE A LOGO AQUI
             },
             {
                 nome: "Moriya Vs Potato Archive ( Low Tier 1# )",
@@ -1616,7 +1664,8 @@
                 medalha: "images/Medalhas/Operação Flores Negra 1.png",
                 medalhaNome: "⚔️ Operação Flor Negra Intermediário",
                 medalhaCredito: "Rishi_LockeD",
-                conjunto: "Operação Flor Negra"
+                conjunto: "Operação Flor Negra",
+                logoOperacao: "images/operation/operacao-flor-negra.png" // ← ADICIONE A LOGO AQUI
             },
             {
                 nome: "Moriya Vs Potato Archive ( Padrão Tier 1# )",
@@ -1633,7 +1682,8 @@
                 medalha: "images/Medalhas/Operação Flores Negra 2.png",
                 medalhaNome: "⚔️ Operação Flor Negra Advanced",
                 medalhaCredito: "Rishi_LockeD",
-                conjunto: "Operação Flor Negra"
+                conjunto: "Operação Flor Negra",
+                logoOperacao: "images/operation/operacao-flor-negra.png"
             },
             {
                 nome: "Moriya Vs Potato Archive ( DELICIA Tier 1# )",
@@ -1649,7 +1699,8 @@
                 medalha: "images/Medalhas/Operação Flores Negra 3.png",
                 medalhaNome: "⚔️ Operação Flor Negra Delícia",
                 medalhaCredito: "Rishi_LockeD",
-                conjunto: "Operação Flor Negra"
+                conjunto: "Operação Flor Negra",
+                logoOperacao: "images/operation/operacao-flor-negra.png"
             },
             //--------------------------------
             //Operação Ossos, Maquinas e Nostalgia
@@ -1669,7 +1720,8 @@
                 medalha: "images/Medalhas/Operação Ossos, Maquinas e Nostalgia 666.png",
                 medalhaNome: "⚔️ Operação Ossos, Maquinas e Nostalgia interlúdio",
                 medalhaCredito: "Rishi_LockeD",
-                conjunto: "Operação Ossos, Maquinas e Nostalgia"
+                conjunto: "Operação Ossos, Maquinas e Nostalgia",
+                logoOperacao: "images/operation/operacao-ossos-maquinas-nostalgia.png" // ← ADICIONE A LOGO AQUI
             },
             {
                 nome: "Moriya Vs Potato Archive ( Low Tier 2# )",
@@ -1687,7 +1739,8 @@
                 medalha: "images/Medalhas/Operação Ossos, Maquinas e Nostalgia 1.png",
                 medalhaNome: "⚔️ Operação Ossos, Maquinas e Nostalgia intermediário",
                 medalhaCredito: "Rishi_LockeD",
-                conjunto: "Operação Ossos, Maquinas e Nostalgia"
+                conjunto: "Operação Ossos, Maquinas e Nostalgia",
+                logoOperacao: "images/operation/operacao-ossos-maquinas-nostalgia.png"
             },
             {
                 nome: "Moriya Vs Potato Archive ( Padrão Tier 2# )",
@@ -1703,7 +1756,8 @@
                 medalha: "images/Medalhas/Operação Ossos, Maquinas e Nostalgia 2.png",
                 medalhaNome: "⚔️ Operação Ossos, Maquinas e Nostalgia Advanced",
                 medalhaCredito: "Rishi_LockeD",
-                conjunto: "Operação Ossos, Maquinas e Nostalgia"
+                conjunto: "Operação Ossos, Maquinas e Nostalgia",
+                logoOperacao: "images/operation/operacao-ossos-maquinas-nostalgia.png"
             },
             {
                 nome: "Moriya Vs Potato Archive ( DELICIA Tier 2# )",
@@ -1719,7 +1773,8 @@
                 medalha: "images/Medalhas/Operação Ossos, Maquinas e Nostalgia 3.png",
                 medalhaNome: "⚔️ Operação Ossos, Maquinas e Nostalgia Delicia",
                 medalhaCredito: "Rishi_LockeD",
-                conjunto: "Operação Ossos, Maquinas e Nostalgia"
+                conjunto: "Operação Ossos, Maquinas e Nostalgia",
+                logoOperacao: "images/operation/operacao-ossos-maquinas-nostalgia.png"
             },
             //--------------------------------
             //Operação Two Potatos
@@ -1739,7 +1794,8 @@
                 medalha: "images/Medalhas/Operação Two Potato 666.png",
                 medalhaNome: "⚔️ Operação Two Potato interlúdio",
                 medalhaCredito: "JJMAGame / Jorge",
-                conjunto: "Operação Two Potatos"
+                conjunto: "Operação Two Potatos",
+                logoOperacao: "images/operation/operacao-two-potato.png" // ← ADICIONE A LOGO AQUI
             },
             {
                 nome: "Moriya Vs Potato Archive ( Low Tier 3# )",
@@ -1756,7 +1812,8 @@
                 medalhaNome: "⚔️ Operação Two Potato intermediario",
                 medalhaCredito: "JJMAGame / Jorge",
                 regra: "potato-oficial",
-                conjunto: "Operação Two Potatos"
+                conjunto: "Operação Two Potatos",
+                logoOperacao: "images/operation/operacao-two-potato.png"
             },
             {
                 nome: "Moriya Vs Potato Archive ( Padrão Tier 3# )",
@@ -1772,7 +1829,8 @@
                 medalhaNome: "⚔️ Operação Two Potato Advanced",
                 medalhaCredito: "JJMAGame / Jorge",
                 regra: "potato-oficial",
-                conjunto: "Operação Two Potatos"
+                conjunto: "Operação Two Potatos",
+                logoOperacao: "images/operation/operacao-two-potato.png"
             },
             {
                 nome: "Moriya Vs Potato Archive ( DELICIA Tier 3# )",
@@ -1788,7 +1846,8 @@
                 medalhaNome: "⚔️ Operação Two Potato Exp",
                 medalhaCredito: "JJMAGame / Jorge",
                 regra: "potato-oficial",
-                conjunto: "Operação Two Potatos"
+                conjunto: "Operação Two Potatos",
+                logoOperacao: "images/operation/operacao-two-potato.png"
             },
             {
                 nome: "Moriya Vs Potato Archive ( Especial )",
@@ -1808,7 +1867,8 @@
                 medalhaNome: "⚔️ Operação Two Potato Aniversario",
                 medalhaCredito: "JJMAGame / Jorge",
                 regra: "potato-oficial",
-                conjunto: "Operação Two Potatos"
+                conjunto: "Operação Two Potatos",
+                logoOperacao: "images/operation/operacao-two-potato.png"
             },
             {
                 nome: "Moriya Vs Potato Archive ( Desconhecido )",
@@ -1825,6 +1885,7 @@
                 medalhaNome: "⚔️ Desconhecido",
                 medalhaCredito: "Desconhecido",
                 conjunto: "Desconhecido"
+                // logoOperacao: "" // ← Sem logo por enquanto
             },
         ];
 
@@ -2290,12 +2351,28 @@
                     creditoMedalha = evento.medalhaCredito;
                 }
         
-                let medalhaHtml = '';
-                if (evento.medalha && evento.medalha.trim() !== '') {
-                    medalhaHtml = `
-                        <div class="medalha-container" onclick="abrirMedalhaModal('${evento.medalha}', '${nomeMedalha}', '${creditoMedalha}', '${regraClass}')">
-                            <img src="${evento.medalha}" class="medalha-img ${regraClass}" alt="Medalha">
-                            ${nomeMedalha ? `<span class="medalha-legenda ${regraClass}">🏅 ${nomeMedalha}</span>` : ''}
+                // ===== CONTAINER DE LOGO + MEDALHA =====
+                let medalhaContainerHtml = '';
+                if ((evento.medalha && evento.medalha.trim() !== '') || (evento.logoOperacao && evento.logoOperacao.trim() !== '')) {
+                    let logoHtml = '';
+                    if (evento.logoOperacao && evento.logoOperacao.trim() !== '') {
+                        logoHtml = `<img src="${evento.logoOperacao}" class="logo-operacao" alt="Logo da Operação">`;
+                    }
+                    
+                    let medalhaHtmlInterno = '';
+                    if (evento.medalha && evento.medalha.trim() !== '') {
+                        medalhaHtmlInterno = `
+                            <div class="medalha-wrapper" onclick="abrirMedalhaModal('${evento.medalha}', '${nomeMedalha}', '${creditoMedalha}', '${regraClass}')">
+                                <img src="${evento.medalha}" class="medalha-img ${regraClass}" alt="Medalha">
+                                ${nomeMedalha ? `<span class="medalha-legenda ${regraClass}">🏅 ${nomeMedalha}</span>` : ''}
+                            </div>
+                        `;
+                    }
+                    
+                    medalhaContainerHtml = `
+                        <div class="medalha-container">
+                            ${logoHtml}
+                            ${medalhaHtmlInterno}
                         </div>
                     `;
                 }
@@ -2366,7 +2443,7 @@
         
                 html += `
                     <div class="evento-card">
-                        ${medalhaHtml}
+                        ${medalhaContainerHtml}
                         <div class="evento-titulo">
                             <h2>
                                 <span class="icon">${tituloIcon}</span>
