@@ -1517,6 +1517,201 @@
         }
 
         /* ============================================================
+           DESTAQUE DO ARQUIVO MAIS RECENTE
+           ============================================================ */
+        .file-list li.mais-recente {
+            position: relative;
+            background: linear-gradient(135deg, #1a3a1a, #2a4a2a) !important;
+            border: 2px solid #ffd700 !important;
+            box-shadow: 0 0 25px rgba(255, 215, 0, 0.3),
+                        0 0 50px rgba(255, 215, 0, 0.15) !important;
+            animation: destaquePulse 2.5s ease-in-out infinite;
+            transform: scale(1.02);
+            z-index: 5;
+            margin-bottom: 12px !important;
+        }
+
+        .file-list li.mais-recente:hover {
+            transform: scale(1.04) !important;
+            border-color: #ffed4e !important;
+            box-shadow: 0 0 35px rgba(255, 215, 0, 0.5),
+                        0 0 70px rgba(255, 215, 0, 0.25) !important;
+        }
+
+        @keyframes destaquePulse {
+            0% { 
+                box-shadow: 0 0 20px rgba(255, 215, 0, 0.3), 
+                            0 0 40px rgba(255, 215, 0, 0.1);
+                border-color: #ffd700;
+            }
+            50% { 
+                box-shadow: 0 0 35px rgba(255, 215, 0, 0.6), 
+                            0 0 70px rgba(255, 215, 0, 0.25);
+                border-color: #ffed4e;
+            }
+            100% { 
+                box-shadow: 0 0 20px rgba(255, 215, 0, 0.3), 
+                            0 0 40px rgba(255, 215, 0, 0.1);
+                border-color: #ffd700;
+            }
+        }
+
+        .file-list li.mais-recente::before {
+            content: '✨';
+            position: absolute;
+            top: -8px;
+            left: -8px;
+            font-size: 18px;
+            animation: sparkleRotate 3s linear infinite;
+            z-index: 10;
+        }
+
+        @keyframes sparkleRotate {
+            0% { transform: rotate(0deg) scale(1); }
+            50% { transform: rotate(180deg) scale(1.2); }
+            100% { transform: rotate(360deg) scale(1); }
+        }
+
+        /* ===== SELO "MAIS RECENTE" ===== */
+        .file-list li .selo-recente {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background: linear-gradient(135deg, #ffd700, #ff8c00);
+            color: #000000 !important;
+            font-size: 9px;
+            font-weight: 900;
+            padding: 3px 10px;
+            border-radius: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            box-shadow: 0 2px 10px rgba(255, 215, 0, 0.5), 
+                        0 0 0 2px #16213e;
+            animation: seloPulse 1.5s ease-in-out infinite;
+            white-space: nowrap;
+            z-index: 10;
+            border: 1px solid rgba(0, 0, 0, 0.3);
+            text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+        }
+
+        @keyframes seloPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.08); }
+        }
+
+        .file-list li.mais-recente > span:not(.selo-recente) {
+            color: #ffd700 !important;
+            font-weight: 700;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+        }
+
+        .file-list li.mais-recente .file-date {
+            color: #ffed4e !important;
+            font-weight: 700;
+        }
+
+        /* ============================================================
+           BOTÃO "VER MAIS ARQUIVOS" (ACCORDION)
+           ============================================================ */
+        .btn-ver-mais {
+            width: 100%;
+            background: linear-gradient(135deg, #2a2a4a, #1a1a2e);
+            color: #85c1e9;
+            border: 2px dashed #2a2a4a;
+            border-radius: 8px;
+            padding: 12px 16px;
+            margin: 8px 0 5px 0;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 13px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-ver-mais:hover {
+            background: linear-gradient(135deg, #3a3a5a, #2a2a4a);
+            border-color: #27ae60;
+            color: #4caf50;
+            transform: scale(1.01);
+            box-shadow: 0 4px 15px rgba(39, 174, 96, 0.15);
+        }
+
+        .btn-ver-mais .seta {
+            display: inline-block;
+            transition: transform 0.4s ease;
+            font-size: 12px;
+        }
+
+        .btn-ver-mais.aberto .seta {
+            transform: rotate(180deg);
+        }
+
+        .btn-ver-mais .contador {
+            background: rgba(76, 175, 80, 0.15);
+            color: #4caf50;
+            padding: 2px 10px;
+            border-radius: 10px;
+            font-size: 11px;
+            font-weight: 700;
+            border: 1px solid rgba(76, 175, 80, 0.3);
+        }
+
+        /* ===== LISTA DE OUTROS ARQUIVOS (FECHADA POR PADRÃO) ===== */
+        .file-list li.outros-arquivos-wrapper {
+            background: transparent !important;
+            border: none !important;
+            padding: 0 !important;
+            margin: 0 !important;
+            cursor: default !important;
+            display: block !important;
+            transform: none !important;
+            box-shadow: none !important;
+        }
+
+        .file-list li.outros-arquivos-wrapper:hover {
+            background: transparent !important;
+            transform: none !important;
+        }
+
+        .file-list .outros-arquivos-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease, opacity 0.3s ease;
+            opacity: 0;
+        }
+
+        .file-list .outros-arquivos-content.aberto {
+            max-height: 2000px;
+            opacity: 1;
+        }
+
+        .file-list .outros-arquivos-content li {
+            margin: 5px 0 !important;
+            background: #1a1a2e !important;
+            border: 1px solid #2a2a4a !important;
+            padding: 12px 16px !important;
+            border-radius: 8px !important;
+            cursor: pointer !important;
+            transition: all 0.3s ease !important;
+            color: #c0c0c0 !important;
+            display: flex !important;
+            justify-content: space-between !important;
+            align-items: center !important;
+        }
+
+        .file-list .outros-arquivos-content li:hover {
+            background: #16213e !important;
+            border-color: #27ae60 !important;
+            transform: scale(1.01) !important;
+        }
+
+        /* ============================================================
            RESPONSIVO
            ============================================================ */
         @media (max-width: 768px) {
@@ -3359,14 +3554,40 @@
             showToast('🔄 Lista atualizada!', 'info');
         }
 
+        // ============================================================
+        // FUNÇÃO AUXILIAR: DETERMINAR ARQUIVO MAIS RECENTE
+        // ============================================================
+        function encontrarArquivoMaisRecente(jsonFiles) {
+            if (!jsonFiles || jsonFiles.length === 0) return null;
+
+            let maisRecente = null;
+            let dataMaisRecente = null;
+
+            jsonFiles.forEach(file => {
+                const match = file.name.match(/(\d{4}-\d{2}-\d{2})/);
+                if (match) {
+                    const data = new Date(match[1]);
+                    if (!dataMaisRecente || data > dataMaisRecente) {
+                        dataMaisRecente = data;
+                        maisRecente = file;
+                    }
+                }
+            });
+
+            return maisRecente || jsonFiles[0];
+        }
+
+        // ============================================================
+        // LISTAR ARQUIVOS DO GITHUB (COM ACCORDION - FECHADO POR PADRÃO)
+        // ============================================================
         async function listarArquivosGitHub() {
             const fileList = document.getElementById('fileList');
             fileList.innerHTML = '<li class="loading">⏳ Carregando arquivos...</li>';
-        
+
             try {
                 const url = `https://api.github.com/repos/${GITHUB_REPO}/contents/${SAVE_FOLDER}?ref=${GITHUB_BRANCH}`;
                 const response = await fetch(url);
-        
+
                 if (response.status === 403) {
                     const reset = response.headers.get('X-RateLimit-Reset');
                     let mensagem = '⚠️ Limite de requisições excedido!';
@@ -3392,51 +3613,123 @@
                     showToast('⚠️ Limite de requisições excedido. Aguarde alguns minutos.', 'error');
                     return;
                 }
-        
+
                 if (response.status === 404) {
                     fileList.innerHTML = `<li class="empty">📂 Pasta "${SAVE_FOLDER}" não encontrada</li>`;
                     return;
                 }
-        
+
                 if (!response.ok) {
                     throw new Error(`Erro ${response.status}`);
                 }
-        
+
                 const data = await response.json();
                 const jsonFiles = data.filter(item => item.type === 'file' && item.name.endsWith('.json'));
-        
+
                 if (jsonFiles.length === 0) {
                     fileList.innerHTML = '<li class="empty">📭 Nenhum arquivo .json encontrado</li>';
                     return;
                 }
-        
-                jsonFiles.sort((a, b) => new Date(b.sha) - new Date(a.sha));
-        
-                fileList.innerHTML = '';
-                jsonFiles.forEach(file => {
-                    const li = document.createElement('li');
-                    let dataExibicao = '';
+
+                // ===== ORDENAR POR DATA (MAIS RECENTE PRIMEIRO) =====
+                jsonFiles.sort((a, b) => {
+                    const matchA = a.name.match(/(\d{4}-\d{2}-\d{2})/);
+                    const matchB = b.name.match(/(\d{4}-\d{2}-\d{2})/);
+                    
+                    if (matchA && matchB) {
+                        return new Date(matchB[1]) - new Date(matchA[1]);
+                    }
+                    if (matchA) return -1;
+                    if (matchB) return 1;
+                    return 0;
+                });
+
+                // ===== SEPARAR O MAIS RECENTE DOS OUTROS =====
+                const arquivoMaisRecente = encontrarArquivoMaisRecente(jsonFiles);
+                const outrosArquivos = jsonFiles.filter(f => f.name !== arquivoMaisRecente.name);
+
+                // ===== FUNÇÃO AUXILIAR PARA FORMATAR DATA =====
+                function formatarData(file) {
                     const match = file.name.match(/(\d{4}-\d{2}-\d{2})/);
                     if (match) {
                         const partes = match[1].split('-');
-                        dataExibicao = `${partes[2]}/${partes[1]}/${partes[0]}`;
-                    } else {
-                        const dataCommit = new Date(file.sha);
-                        dataExibicao = dataCommit.toLocaleDateString('pt-BR');
+                        return `${partes[2]}/${partes[1]}/${partes[0]}`;
                     }
-        
-                    li.innerHTML = `
-                        <span>📄 ${file.name}</span>
-                        <span class="file-date">${dataExibicao}</span>
-                    `;
-        
-                    li.addEventListener('click', () => {
-                        importarArquivo(file.download_url, file.name);
-                    });
-        
-                    fileList.appendChild(li);
+                    return 'Data Inválida';
+                }
+
+                // ===== RENDERIZAR LISTA =====
+                fileList.innerHTML = '';
+
+                // ===== 1. ARQUIVO MAIS RECENTE (SEMPRE VISÍVEL) =====
+                const liRecente = document.createElement('li');
+                liRecente.className = 'mais-recente';
+                liRecente.innerHTML = `
+                    <span class="selo-recente">🆕 MAIS RECENTE</span>
+                    <span>📄 ${arquivoMaisRecente.name}</span>
+                    <span class="file-date">${formatarData(arquivoMaisRecente)}</span>
+                `;
+                liRecente.addEventListener('click', () => {
+                    importarArquivo(arquivoMaisRecente.download_url, arquivoMaisRecente.name);
                 });
-        
+                fileList.appendChild(liRecente);
+
+                // ===== 2. OUTROS ARQUIVOS (FECHADOS POR PADRÃO) =====
+                if (outrosArquivos.length > 0) {
+                    // Botão "Ver mais"
+                    const liBotao = document.createElement('li');
+                    liBotao.className = 'outros-arquivos-wrapper';
+                    liBotao.innerHTML = `
+                        <button class="btn-ver-mais" id="btnVerMais">
+                            <span class="seta">▼</span>
+                            <span>Ver mais arquivos antigos</span>
+                            <span class="contador">${outrosArquivos.length}</span>
+                        </button>
+                        <ul class="outros-arquivos-content" id="outrosArquivosContent" style="list-style:none; padding:0; margin:0;">
+                            ${outrosArquivos.map(file => `
+                                <li data-url="${file.download_url}" data-name="${file.name}">
+                                    <span>📄 ${file.name}</span>
+                                    <span class="file-date">${formatarData(file)}</span>
+                                </li>
+                            `).join('')}
+                        </ul>
+                    `;
+                    fileList.appendChild(liBotao);
+
+                    // ===== EVENTOS DO BOTÃO "VER MAIS" =====
+                    const btnVerMais = document.getElementById('btnVerMais');
+                    const content = document.getElementById('outrosArquivosContent');
+
+                    btnVerMais.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        const aberto = content.classList.contains('aberto');
+                        
+                        if (aberto) {
+                            content.classList.remove('aberto');
+                            btnVerMais.classList.remove('aberto');
+                            btnVerMais.querySelector('span:nth-child(2)').textContent = 'Ver mais arquivos antigos';
+                        } else {
+                            content.classList.add('aberto');
+                            btnVerMais.classList.add('aberto');
+                            btnVerMais.querySelector('span:nth-child(2)').textContent = 'Ocultar arquivos antigos';
+                        }
+                    });
+
+                    // ===== EVENTOS DE CLIQUE NOS OUTROS ARQUIVOS =====
+                    content.querySelectorAll('li').forEach(li => {
+                        li.addEventListener('click', (e) => {
+                            e.stopPropagation();
+                            const url = li.dataset.url;
+                            const name = li.dataset.name;
+                            importarArquivo(url, name);
+                        });
+                    });
+                }
+
+                console.log(`📁 ${jsonFiles.length} arquivos carregados`);
+                console.log(`🆕 Mais recente: ${arquivoMaisRecente.name}`);
+                console.log(`📦 Outros (ocultos): ${outrosArquivos.length}`);
+
             } catch (error) {
                 console.error('Erro ao listar arquivos:', error);
                 fileList.innerHTML = `
